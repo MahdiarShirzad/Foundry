@@ -1,26 +1,121 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Static ink — never flips inside .on-ink, so mint buttons keep dark text. */
+  --color-ink: #0e1b1d;
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-accent: var(--accent);
+  --color-mint: var(--mint);
+  --color-mint-tint: var(--mint-tint);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/*
+ * Palette sampled from the Foundry brand assets (public/logo.png, public/icon.png):
+ * ink #0e1b1d · mint #50cfba · deep teal #0e7c6c — presented on a paper-white
+ * field so the original dark-teal wordmark stays exactly as designed.
+ * `.on-ink` flips the same system for the dark bands (architecture, closing).
+ */
+:root {
+  color-scheme: light;
+
+  --bg: #f3f6f4;
+  --panel: #ffffff;
+  --fg: #0e1b1d;
+  --muted: #3d5450;
+  --faint: #5a716c;
+  --line: rgb(14 27 29 / 0.14);
+  --line-2: rgb(14 27 29 / 0.34);
+  --grid: rgb(14 27 29 / 0.06);
+  --accent: #0e7c6c;
+  --mint: #50cfba;
+  --mint-tint: rgb(80 207 186 / 0.16);
+}
+
+.on-ink {
+  color-scheme: dark;
+
+  --bg: #0e1b1d;
+  --panel: #142825;
+  --fg: #e9f5f2;
+  --muted: #9db6b0;
+  --faint: #7f9a94;
+  --line: rgb(233 245 242 / 0.16);
+  --line-2: rgb(233 245 242 / 0.36);
+  --grid: rgb(233 245 242 / 0.05);
+  --accent: #50cfba;
+  --mint-tint: rgb(80 207 186 / 0.14);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--mint);
+  color: #0e1b1d;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Engineering-grid texture used sparingly in the hero and closing bands. */
+.blueprint {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 54px 54px;
+}
+
+/*
+ * Current moving through the system. Dash periods are chosen to divide the
+ * 180-unit keyframe so the loop is seamless.
+ */
+@keyframes flow-dash {
+  to {
+    stroke-dashoffset: -180;
+  }
+}
+
+.flow {
+  animation: flow-dash 7s linear infinite;
+}
+
+.flow-slow {
+  animation-duration: 11s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .flow {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
