@@ -1,6 +1,7 @@
 /**
  * The eight Foundry stages — single source of truth for the hero cycle
- * diagram and the stage ledger. Copy condensed from the repository README.
+ * diagram, the stage ledger, and the documentation reference page.
+ * Copy condensed from the repository README.
  */
 export type Stage = {
   id: string;
@@ -134,4 +135,13 @@ export const STAGES: Stage[] = [
     ],
     next: "01 Idea Lab — insights & iteration",
   },
+];
+
+/** Who Foundry is for — shared by the landing page and the About page. */
+export const AUDIENCES: [string, string, string][] = [
+  ["01", "Aspiring founders", "Turning early ideas into structured opportunities."],
+  ["02", "Indie hackers", "Looking for a more organized product-building workflow."],
+  ["03", "Startup teams", "Coordinating research, validation and execution."],
+  ["04", "Product builders", "Wanting decisions grounded in customer evidence."],
+  ["05", "Entrepreneurs", "Managing the journey from concept to launch and beyond."],
 ];

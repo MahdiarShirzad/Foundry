@@ -1,13 +1,6 @@
 import Eyebrow from "./eyebrow";
 import Reveal from "./reveal";
-
-const AUDIENCES: [string, string, string][] = [
-  ["01", "Aspiring founders", "Turning early ideas into structured opportunities."],
-  ["02", "Indie hackers", "Looking for a more organized product-building workflow."],
-  ["03", "Startup teams", "Coordinating research, validation and execution."],
-  ["04", "Product builders", "Wanting decisions grounded in customer evidence."],
-  ["05", "Entrepreneurs", "Managing the journey from concept to launch and beyond."],
-];
+import { AUDIENCES } from "./data";
 
 const CLOSING_LINES = ["Build with clarity.", "Validate with evidence.", "Launch with purpose."];
 
