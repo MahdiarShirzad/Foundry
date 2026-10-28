@@ -81,7 +81,7 @@ export default function Nav() {
       }`}
     >
       <div className="mx-auto flex h-16 w-full max-w-[1240px] items-center justify-between gap-6 border-x border-line px-6 sm:px-10">
-        <Link href="/#top" className="flex shrink-0 items-center" aria-label="Foundry — home">
+        <Link href="/" className="flex shrink-0 items-center" aria-label="Foundry — home">
           <Image
             src="/logo.png"
             alt="Foundry"
