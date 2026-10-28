@@ -24,6 +24,8 @@ type NavGroup = { title: string; items: NavItem[] };
 
 const PAGE_TITLES: Record<string, string> = {
   "/dashboard": "Overview",
+  "/dashboard/idea-lab": "Idea Lab",
+  "/dashboard/market-intelligence": "Market Intelligence",
   "/dashboard/modules": "Modules",
 };
 
@@ -86,12 +88,22 @@ const GROUPS: NavGroup[] = [
   },
   {
     title: "Cycle",
-    items: STAGES.map((stage) => ({
-      label: stage.name,
-      href: `/dashboard/modules#${stageSlug(stage.id)}`,
-      meta: stage.id,
-      anchored: true,
-    })),
+    items: STAGES.map((stage) => {
+      // Stages with a dedicated workspace link straight to it; later stages
+      // still deep-link into the cycle reference until their routes exist.
+      const route =
+        stage.id === "01"
+          ? "/dashboard/idea-lab"
+          : stage.id === "02"
+            ? "/dashboard/market-intelligence"
+            : null;
+      return {
+        label: stage.name,
+        href: route ?? `/dashboard/modules#${stageSlug(stage.id)}`,
+        meta: stage.id,
+        anchored: !route,
+      };
+    }),
   },
   {
     title: "Reference",
@@ -249,6 +261,12 @@ function CommandDialog({ open, onClose }: { open: boolean; onClose: () => void }
   const destinations = useMemo(
     () => [
       { label: "Overview", href: "/dashboard", hint: "Workspace" },
+      { label: "Idea Lab", href: "/dashboard/idea-lab", hint: "Cycle" },
+      {
+        label: "Market Intelligence",
+        href: "/dashboard/market-intelligence",
+        hint: "Cycle",
+      },
       { label: "Modules", href: "/dashboard/modules", hint: "Workspace" },
       { label: "Documentation", href: "/docs", hint: "Reference" },
       { label: "The Eight Stages", href: "/docs/eight-stages", hint: "Documentation" },
