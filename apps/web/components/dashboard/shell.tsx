@@ -28,6 +28,7 @@ const PAGE_TITLES: Record<string, string> = {
   "/dashboard/market-intelligence": "Market Intelligence",
   "/dashboard/validation-lab": "Validation Lab",
   "/dashboard/mvp-studio": "MVP Studio",
+  "/dashboard/product-roadmap": "Product Roadmap",
   "/dashboard/modules": "Modules",
 };
 
@@ -102,7 +103,9 @@ const GROUPS: NavGroup[] = [
               ? "/dashboard/validation-lab"
               : stage.id === "04"
                 ? "/dashboard/mvp-studio"
-                : null;
+                : stage.id === "05"
+                  ? "/dashboard/product-roadmap"
+                  : null;
       return {
         label: stage.name,
         href: route ?? `/dashboard/modules#${stageSlug(stage.id)}`,

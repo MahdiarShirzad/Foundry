@@ -1,12 +1,12 @@
 "use client";
 
-import type { Feature } from "@/lib/mvp-studio/types";
+import type { Feature, MVPProject } from "@/lib/mvp-studio/types";
 
 export function MVPProjectOverview({
   project,
   features,
 }: {
-  project: any;
+  project: MVPProject;
   features: Feature[];
 }) {
   const included = features.filter((f) => f.scope === "Must Have").length;

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AnimatePresence } from "motion/react";
 
 import { DEMO_MVP_PROJECTS } from "@/lib/mvp-studio/demo";
+import type { MVPProject } from "@/lib/mvp-studio/types";
 
 import { AddFeatureDialog } from "./dialogs/add-feature-dialog";
 import { DefineMVPScopeDialog } from "./dialogs/define-mvp-scope-dialog";
@@ -11,11 +12,11 @@ import { DefineMVPScopeDialog } from "./dialogs/define-mvp-scope-dialog";
 export function MVPStudioHeader({
   project,
   onChangeProject,
-  projects = DEMO_MVP_PROJECTS as any,
+  projects = DEMO_MVP_PROJECTS,
 }: {
-  project: any;
+  project: MVPProject;
   onChangeProject: (id: string) => void;
-  projects?: any[];
+  projects?: MVPProject[];
 }) {
   const [addOpen, setAddOpen] = useState(false);
   const [scopeOpen, setScopeOpen] = useState(false);
@@ -37,7 +38,7 @@ export function MVPStudioHeader({
           <label className="flex items-center gap-2 border border-line px-2.5 py-1.5">
             <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">Product</span>
             <select value={project.id} onChange={(e) => onChangeProject(e.target.value)} className="bg-transparent text-[12px] text-fg outline-none" aria-label="Select product idea for MVP studio">
-              {(projects as any[]).map((p: any) => (
+              {projects.map((p) => (
                 <option key={p.id} value={p.id}>
                   {p.name} · {p.ref}
                 </option>
