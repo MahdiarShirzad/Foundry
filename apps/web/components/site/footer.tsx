@@ -26,6 +26,15 @@ const GROUPS: { title: string; links: LinkItem[] }[] = [
     ],
   },
   {
+    title: "Account",
+    links: [
+      { label: "Sign in", href: "/login" },
+      { label: "Create account", href: "/register" },
+      { label: "Verify email", href: "/verify-email" },
+      { label: "Reset password", href: "/forgot-password" },
+    ],
+  },
+  {
     title: "Project",
     links: [
       { label: "About", href: "/about" },
@@ -51,7 +60,7 @@ export default function Footer() {
   return (
     <footer>
       <div className="px-6 py-12 sm:px-10">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_repeat(4,1fr)]">
           <div className="flex flex-col gap-4">
             {/* self-start: a flex-column parent would otherwise stretch the
                 image and distort the lockup's aspect ratio. */}
@@ -97,15 +106,27 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-mono text-[11px] tracking-[0.14em] text-faint">
-            © 2026 Foundry
-          </p>
-          <Link
-            href="/#top"
-            className="font-mono text-[11px] uppercase tracking-[0.18em] text-faint transition-colors hover:text-accent"
-          >
-            Back to top ↑
-          </Link>
+          <p className="font-mono text-[11px] tracking-[0.14em] text-faint">© 2026 Foundry</p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link
+              href="/terms"
+              className="font-mono text-[11px] uppercase tracking-[0.18em] text-faint transition-colors hover:text-accent"
+            >
+              Terms
+            </Link>
+            <Link
+              href="/privacy"
+              className="font-mono text-[11px] uppercase tracking-[0.18em] text-faint transition-colors hover:text-accent"
+            >
+              Privacy
+            </Link>
+            <Link
+              href="/#top"
+              className="font-mono text-[11px] uppercase tracking-[0.18em] text-faint transition-colors hover:text-accent"
+            >
+              Back to top ↑
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

@@ -405,7 +405,7 @@ export const DOCS: Doc[] = [
     blocks: [
       {
         type: "p",
-        text: "`apps/web` uses the Next.js App Router. All public routes live inside the `(site)` route group, which renders the shared header, the hairline page frame, and the footer — so navigation is identical everywhere.",
+        text: "`apps/web` uses the Next.js App Router with two route groups. Marketing, documentation and legal pages live in `(site)`, which renders the shared header, the hairline page frame and the footer. Authentication screens live in `(auth)`, which replaces that chrome with the brand rail and a single form column.",
       },
       { type: "h2", text: "Route table" },
       {
@@ -422,6 +422,13 @@ export const DOCS: Doc[] = [
           ["/docs/web-routes", "Documentation — Web Routes", "Live"],
           ["/docs/backend-api", "Documentation — Backend API", "Live"],
           ["/about", "About Foundry", "Live"],
+          ["/login", "Sign in — accepts a validated `?next=` destination", "Live"],
+          ["/register", "Create an account", "Live"],
+          ["/forgot-password", "Request a password reset", "Live"],
+          ["/reset-password", "Set a new password; reads `?token=`", "Live"],
+          ["/verify-email", "Confirm an address with a six-digit code", "Live"],
+          ["/terms", "Terms of service", "Live"],
+          ["/privacy", "Privacy policy", "Live"],
           ["/api-reference", "API reference for the running backend", "Live"],
           ["/guides", "Long-form workflow walkthroughs", "Scaffold"],
           ["/examples", "Worked end-to-end scenarios", "Scaffold"],
@@ -442,9 +449,10 @@ export const DOCS: Doc[] = [
       {
         type: "ol",
         items: [
-          "Create a folder under `app/(site)/` named after the route.",
+          "Create a folder under `app/(site)/` — or `app/(auth)/` for a form screen — named after the route.",
           "Add a `page.tsx` that exports a component and its own `metadata`.",
-          "Return content only — the shared layout already provides header, frame, and footer.",
+          "Return content only: the group layout already provides the header, frame and footer, or the auth rail and form column.",
+          "Read URL state (`?token=`, `?next=`) from the page's `searchParams` prop and pass a validated value into the client form.",
         ],
       },
       {
@@ -455,7 +463,7 @@ export const DOCS: Doc[] = [
       },
       {
         type: "note",
-        text: "The scaffolded routes (Guides, Examples, Playground, Changelog) all render through `components/site/scaffold.tsx`, so they stay visually consistent and can be replaced one at a time as each feature ships.",
+        text: "The scaffolded routes (Guides, Examples, Playground, Changelog) all render through `components/site/scaffold.tsx`. The auth screens are complete on the client but have no API behind them yet: see [Backend API](/docs/backend-api) for what the server actually exposes.",
       },
     ],
   },

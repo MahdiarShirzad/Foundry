@@ -11,6 +11,8 @@
   --color-line: var(--line);
   --color-line-2: var(--line-2);
   --color-accent: var(--accent);
+  --color-danger: var(--danger);
+  --color-danger-tint: var(--danger-tint);
   --color-mint: var(--mint);
   --color-mint-tint: var(--mint-tint);
   --font-sans: var(--font-geist-sans);
@@ -37,6 +39,10 @@
   --accent: #0e7c6c;
   --mint: #50cfba;
   --mint-tint: rgb(80 207 186 / 0.16);
+  /* Form feedback only — a desaturated brick that sits beside the teal
+     without introducing a second brand colour. */
+  --danger: #a2382b;
+  --danger-tint: rgb(162 56 43 / 0.09);
 }
 
 .on-ink {
@@ -52,6 +58,8 @@
   --grid: rgb(233 245 242 / 0.05);
   --accent: #50cfba;
   --mint-tint: rgb(80 207 186 / 0.14);
+  --danger: #f0937f;
+  --danger-tint: rgb(240 147 127 / 0.14);
 }
 
 html {

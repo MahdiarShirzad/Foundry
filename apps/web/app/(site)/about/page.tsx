@@ -25,7 +25,7 @@ const PRINCIPLES: [string, string, string][] = [
   [
     "03",
     "Open by design",
-    "A NestJS backend with JWT authentication, Prisma persistence and REST endpoints documented from the source — built to be inspected, extended and self-hosted.",
+    "A NestJS backend, documented from its source, with the auth and domain modules the README plans for it — built to be inspected, extended and self-hosted.",
   ],
 ];
 

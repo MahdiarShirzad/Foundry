@@ -21,6 +21,8 @@ const MOBILE_GROUPS: { title: string; items: { label: string; href: string }[] }
   {
     title: "Pages",
     items: [
+      { label: "Sign in", href: "/login" },
+      { label: "Create account", href: "/register" },
       { label: "Documentation", href: "/docs" },
       { label: "API Reference", href: "/api-reference" },
       { label: "Changelog", href: "/changelog" },
@@ -113,9 +115,16 @@ export default function Nav() {
         <div className="flex items-center gap-3">
           <Link
             href="/#stages"
-            className="hidden h-9 items-center border border-line-2 px-4 font-mono text-[11px] uppercase tracking-[0.18em] text-fg transition-colors hover:border-accent hover:text-accent sm:inline-flex"
+            className="hidden h-9 items-center border border-line-2 px-4 font-mono text-[11px] uppercase tracking-[0.18em] text-fg transition-colors hover:border-accent hover:text-accent xl:inline-flex"
           >
-            Explore<span className="hidden lg:inline">&nbsp;the ecosystem</span>
+            Explore<span className="hidden 2xl:inline">&nbsp;the ecosystem</span>
+          </Link>
+
+          <Link
+            href="/login"
+            className="inline-flex h-9 items-center bg-mint px-4 font-mono text-[11px] uppercase tracking-[0.18em] text-ink transition duration-200 hover:brightness-95"
+          >
+            Sign in
           </Link>
 
           <button
