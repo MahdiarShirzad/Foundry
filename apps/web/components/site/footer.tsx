@@ -30,6 +30,9 @@ const GROUPS: { title: string; links: LinkItem[] }[] = [
     links: [
       { label: "About", href: "/about" },
       { label: "API Reference", href: "/api-reference" },
+      { label: "Guides", href: "/guides" },
+      { label: "Examples", href: "/examples" },
+      { label: "Playground", href: "/playground" },
       { label: "Changelog", href: "/changelog" },
     ],
   },

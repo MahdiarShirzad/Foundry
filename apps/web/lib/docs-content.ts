@@ -82,8 +82,8 @@ export const DOCS: Doc[] = [
       {
         type: "ul",
         items: [
-          "**Node.js** — a current LTS release (the repository is developed on Node 24).",
-          "**pnpm** — the workspace package manager (`packageManager` is pinned to pnpm 12).",
+          "**Node.js** — 20 or newer (the web app types against Node 20; Next.js 16 requires 20.9+).",
+          "**pnpm** — the workspace package manager, pinned to `pnpm@12.5.1` in `apps/web/package.json`.",
           "**Git** — for version control.",
           "**PostgreSQL** — only needed once you work on the API's persistence layer; nothing requires a database to run the current apps.",
         ],
@@ -422,8 +422,11 @@ export const DOCS: Doc[] = [
           ["/docs/web-routes", "Documentation — Web Routes", "Live"],
           ["/docs/backend-api", "Documentation — Backend API", "Live"],
           ["/about", "About Foundry", "Live"],
-          ["/api-reference", "API reference for the backend", "Planned"],
-          ["/changelog", "Release notes", "Planned"],
+          ["/api-reference", "API reference for the running backend", "Live"],
+          ["/guides", "Long-form workflow walkthroughs", "Scaffold"],
+          ["/examples", "Worked end-to-end scenarios", "Scaffold"],
+          ["/playground", "Sandbox for walking an idea through the modules", "Scaffold"],
+          ["/changelog", "Release notes", "Scaffold"],
         ],
       },
       { type: "h2", text: "Deep links" },
@@ -452,7 +455,7 @@ export const DOCS: Doc[] = [
       },
       {
         type: "note",
-        text: "Planned routes render a lightweight scaffold page until the feature ships — see [API Reference](/api-reference) and [Changelog](/changelog) for the pattern.",
+        text: "The scaffolded routes (Guides, Examples, Playground, Changelog) all render through `components/site/scaffold.tsx`, so they stay visually consistent and can be replaced one at a time as each feature ships.",
       },
     ],
   },

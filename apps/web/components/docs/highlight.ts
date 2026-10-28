@@ -11,6 +11,9 @@ const highlighter: Promise<Highlighter> = createHighlighter({
 const THEME = "github-dark-dimmed";
 
 export async function highlight(code: string, lang: string): Promise<string> {
+  // Shiki consults `Date.now()` internally, which Next blocks during
+  // prerendering. The output is pure, so cache it: docs pages stay static.
+  "use cache";
   const h = await highlighter;
   const safeLang = h.getLoadedLanguages().includes(lang) ? lang : "text";
   return h.codeToHtml(code, { lang: safeLang, theme: THEME });

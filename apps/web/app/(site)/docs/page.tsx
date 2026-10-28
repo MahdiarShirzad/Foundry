@@ -4,7 +4,7 @@ import DocView, { getDoc } from "@/components/docs/doc-view";
 const indexDoc = getDoc("index");
 
 export const metadata: Metadata = {
-  title: "Documentation — Foundry",
+  title: "Documentation",
   description: indexDoc?.description ?? "Foundry documentation.",
 };
 

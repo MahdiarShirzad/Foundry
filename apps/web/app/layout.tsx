@@ -13,7 +13,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Foundry — One idea. Eight stages. One ecosystem.",
+  title: {
+    default: "Foundry — One idea. Eight stages. One ecosystem.",
+    template: "%s — Foundry",
+  },
   description:
     "Foundry is a startup builder ecosystem: eight connected stages — idea, market research, validation, MVP, roadmap, launch, feedback and analytics — in one workflow, so every stage informs the next.",
 };

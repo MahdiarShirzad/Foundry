@@ -139,7 +139,7 @@ export default async function DocRenderer({ blocks }: { blocks: Block[] }) {
           case "table":
             return (
               <div key={i} className="mt-7 overflow-x-auto">
-                <table className="w-full border-collapse text-left text-[14.5px]">
+                <table className="w-full min-w-[520px] border-collapse text-left text-[14.5px]">
                   <thead>
                     <tr>
                       {block.head.map((cell, j) => (

@@ -14,9 +14,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const doc = getDoc(slug);
-  if (!doc) return { title: "Not found — Foundry" };
+  if (!doc) return { title: "Not found" };
   return {
-    title: `${doc.title} — Foundry`,
+    title: doc.title,
     description: doc.description,
   };
 }

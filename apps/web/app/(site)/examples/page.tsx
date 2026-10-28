@@ -14,7 +14,7 @@ export default function ExamplesPage() {
       eyebrow="E"
       title="Examples"
       description="Worked, end-to-end scenarios showing the eight modules applied to a real product idea — the research inputs, the validation criteria, the scope and the metrics that follow. A condensed version of this walkthrough already ships in the documentation."
-      primary={{ href: "/docs/the-foundry-workflow", label: "The workflow walkthrough" }}
+      primary={{ href: "/docs/workflow", label: "The workflow walkthrough" }}
       secondary={{ href: "/docs", label: "Read the documentation" }}
     />
   );

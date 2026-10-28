@@ -11,6 +11,31 @@ type Props = {
   label?: string;
 };
 
+/** Async clipboard API first; if the document isn't focused (or the browser
+ *  withholds the permission) fall back to the selection-based copy path. */
+async function writeToClipboard(text: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    // fall through
+  }
+  try {
+    const field = document.createElement("textarea");
+    field.value = text;
+    field.setAttribute("readonly", "");
+    field.style.position = "fixed";
+    field.style.top = "-9999px";
+    document.body.appendChild(field);
+    field.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(field);
+    return ok;
+  } catch {
+    return false;
+  }
+}
+
 /** Dark, hairline-framed code block with a working copy control. */
 export default function CodeBlock({ html, code, lang, label }: Props) {
   const [copied, setCopied] = useState(false);
@@ -19,14 +44,10 @@ export default function CodeBlock({ html, code, lang, label }: Props) {
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
   async function copy() {
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopied(true);
-      window.clearTimeout(timer.current);
-      timer.current = window.setTimeout(() => setCopied(false), 1600);
-    } catch {
-      // Clipboard unavailable (permissions) — fail quietly, code stays selectable.
-    }
+    if (!(await writeToClipboard(code))) return;
+    setCopied(true);
+    window.clearTimeout(timer.current);
+    timer.current = window.setTimeout(() => setCopied(false), 1600);
   }
 
   return (

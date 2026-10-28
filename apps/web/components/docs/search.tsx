@@ -118,14 +118,15 @@ export default function DocsSearch({ entries }: { entries: SearchEntry[] }) {
         type="button"
         onClick={() => setOpen(true)}
         aria-haspopup="dialog"
-        className="flex h-8 w-full items-center justify-between gap-3 border border-line px-3 text-left transition-colors hover:border-accent/60 hover:text-accent lg:w-[210px]"
+        aria-label="Search the documentation"
+        className="flex h-8 w-8 shrink-0 items-center justify-between gap-3 border border-line px-2 text-left transition-colors hover:border-accent/60 hover:text-accent sm:w-[168px] sm:px-3 lg:w-[210px]"
       >
         <span className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-faint">
-          <svg width="12" height="12" viewBox="0 0 16 16" aria-hidden className="fill-none stroke-current stroke-[1.5]">
+          <svg width="12" height="12" viewBox="0 0 16 16" aria-hidden className="shrink-0 fill-none stroke-current stroke-[1.5]">
             <circle cx="7" cy="7" r="4.5" />
             <path d="m10.5 10.5 4 4" strokeLinecap="round" />
           </svg>
-          Search
+          <span className="hidden sm:inline">Search</span>
         </span>
         <kbd className="hidden border border-line px-1.5 py-0.5 font-mono text-[10px] text-faint sm:block">
           ⌘K

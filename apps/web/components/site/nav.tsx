@@ -13,6 +13,7 @@ const PRIMARY: { label: string; href: string; match: (path: string) => boolean }
   { label: "Documentation", href: "/docs", match: (p) => p === "/docs" || p.startsWith("/docs/") },
   { label: "API Reference", href: "/api-reference", match: (p) => p === "/api-reference" },
   { label: "Changelog", href: "/changelog", match: (p) => p === "/changelog" },
+  { label: "About", href: "/about", match: (p) => p === "/about" },
 ];
 
 /** Mobile menu groups: pages plus landing-page section jumps. */
@@ -28,7 +29,7 @@ const MOBILE_GROUPS: { title: string; items: { label: string; href: string }[] }
     ],
   },
   {
-    title: "On this page",
+    title: "Landing sections",
     items: [
       { label: "The problem", href: "/#problem" },
       { label: "Eight stages", href: "/#stages" },
