@@ -30,6 +30,7 @@ const PAGE_TITLES: Record<string, string> = {
   "/dashboard/mvp-studio": "MVP Studio",
   "/dashboard/product-roadmap": "Product Roadmap",
   "/dashboard/launch-center": "Launch Center",
+  "/dashboard/feedback-hub": "Feedback Hub",
   "/dashboard/modules": "Modules",
 };
 
@@ -106,8 +107,10 @@ const GROUPS: NavGroup[] = [
                 ? "/dashboard/mvp-studio"
                   : stage.id === "05"
                     ? "/dashboard/product-roadmap"
-                    : stage.id === "06"
-                      ? "/dashboard/launch-center"
+                  : stage.id === "06"
+                    ? "/dashboard/launch-center"
+                    : stage.id === "07"
+                      ? "/dashboard/feedback-hub"
                       : null;
       return {
         label: stage.name,

@@ -169,7 +169,7 @@ export const DEMO_CHANNELS: Channel[] = [
   },
 ];
 
-export const DEMO_CHECKLIST_ITEMS = [
+export const DEMO_CHECKLIST_ITEMS: ChecklistItem[] = [
   {
     id: "cl-001",
     productId: "helio-notes",

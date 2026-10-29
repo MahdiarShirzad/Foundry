@@ -11,8 +11,7 @@ import {
   getChannelsForProduct,
   getChecklistItemsForProduct,
 } from "@/lib/launch-center/demo";
-import { LAUNCH_SECTIONS, type LaunchSection } from "@/lib/launch-center/types";
-
+import type { LaunchSection } from "@/lib/launch-center/types";
 import { LaunchCenterHeader } from "./launch-center-header";
 import { LaunchOverview } from "./launch-overview";
 import { LaunchWorkspaceNavigation } from "./launch-workspace-navigation";
