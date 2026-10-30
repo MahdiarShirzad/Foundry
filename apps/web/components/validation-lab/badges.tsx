@@ -74,6 +74,38 @@ export function ValidationEmptyState({
   );
 }
 
+/** Presentational error state for a future data integration. */
+export function ValidationErrorState({ onRetry }: { onRetry: () => void }) {
+  return (
+    <section className="border border-line bg-panel" role="alert">
+      <header className="border-b border-line px-4 py-3">
+        <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-danger">Load failed</p>
+        <p className="mt-1 text-[11.5px] text-muted">Presentational error state</p>
+      </header>
+      <div className="flex flex-col items-center justify-center gap-3 px-6 py-12 text-center">
+        <div className="flex items-center gap-2 border border-danger/50 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.18em] text-danger">
+          <span aria-hidden className="size-1.5 bg-danger" />
+          Validation workspace unavailable
+        </div>
+        <h3 className="text-[clamp(1.1rem,2vw,1.4rem)] font-medium tracking-[-0.03em] text-fg">
+          The validation workspace could not be loaded.
+        </h3>
+        <p className="max-w-[46ch] text-[12px] leading-relaxed text-muted">
+          This shows how the workspace behaves when a future data integration fails. No request
+          was made, and no hypothesis, experiment, or finding was changed or lost.
+        </p>
+        <button
+          type="button"
+          onClick={onRetry}
+          className="mt-1 border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+        >
+          Retry (preview)
+        </button>
+      </div>
+    </section>
+  );
+}
+
 export function ValidationSkeleton() {
   return (
     <div className="space-y-4" aria-busy="true">
