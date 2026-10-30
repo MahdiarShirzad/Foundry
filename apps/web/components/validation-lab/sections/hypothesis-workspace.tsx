@@ -116,7 +116,7 @@ export function HypothesisWorkspace({
     <button
       type="button"
       onClick={() => setOpen(true)}
-      className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+      className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
     >
       New Hypothesis
     </button>
@@ -189,7 +189,7 @@ export function HypothesisWorkspace({
                     }`}
                   >
                     <span
-                      className={`pt-0.5 font-mono text-[8px] tracking-[0.08em] ${
+                      className={`pt-0.5 font-mono text-[10px] tracking-[0.08em] ${
                         active ? "text-accent" : "text-line-2"
                       }`}
                     >
@@ -205,7 +205,7 @@ export function HypothesisWorkspace({
                       <span className="mt-1 line-clamp-2 block text-[11.5px] leading-relaxed text-muted">
                         {h.statement}
                       </span>
-                      <span className="mt-2 flex flex-wrap items-center gap-2 font-mono text-[8.5px] uppercase tracking-[0.12em] text-faint">
+                      <span className="mt-2 flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
                         <span>{h.category}</span>
                         <span aria-hidden className="size-0.5 bg-line-2" />
                         <span>{h.importance} importance</span>
@@ -241,7 +241,7 @@ export function HypothesisWorkspace({
               <header className="border-b border-line px-5 py-4 sm:px-6">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
                       Hypothesis detail
                     </p>
                     <h3 className="mt-2 text-[1.35rem] font-medium leading-tight tracking-[-0.03em] text-fg">
@@ -257,7 +257,7 @@ export function HypothesisWorkspace({
                 <div className="mt-4 flex flex-wrap items-center gap-2">
                   <label
                     htmlFor="vl-hypothesis-status"
-                    className="font-mono text-[8.5px] uppercase tracking-[0.16em] text-faint"
+                    className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint"
                   >
                     Status
                   </label>
@@ -275,7 +275,7 @@ export function HypothesisWorkspace({
                       </option>
                     ))}
                   </select>
-                  <span className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                     Label you set · never inferred
                   </span>
                 </div>
@@ -308,7 +308,7 @@ export function HypothesisWorkspace({
                         <li key={e.id} className="flex flex-wrap items-center justify-between gap-2 border border-line px-3 py-2">
                           <span className="min-w-0 text-[12.5px] text-fg">{e.title}</span>
                           <span className="flex shrink-0 items-center gap-2">
-                            <span className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                               {e.method}
                             </span>
                             <ValidationStatusBadge status={e.status} />

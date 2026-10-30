@@ -46,8 +46,8 @@ export function IdeaListItem({
         ) : null}
 
         <span className="flex items-baseline justify-between gap-3">
-          <span className="font-mono text-[9px] tracking-[0.16em] text-faint">{idea.ref}</span>
-          <span className="shrink-0 font-mono text-[9px] uppercase tracking-[0.1em] text-faint">
+          <span className="font-mono text-[10px] tracking-[0.16em] text-faint">{idea.ref}</span>
+          <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
             {formatUpdated(idea.updatedAt)}
           </span>
         </span>
@@ -70,7 +70,7 @@ export function IdeaListItem({
         <span className="mt-2.5 flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
           <IdeaStatus status={idea.status} />
           <span aria-hidden className="size-0.5 bg-line-2" />
-          <span className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
             {idea.category}
           </span>
         </span>

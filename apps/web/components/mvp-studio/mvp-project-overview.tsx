@@ -30,12 +30,12 @@ export function MVPProjectOverview({
     <section className="border border-line bg-panel">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
         <div>
-          <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
             MVP Overview
           </p>
           <p className="mt-1 text-[11.5px] text-muted">Project scope and progress snapshot</p>
         </div>
-        <p className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+        <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
           <span className="text-fg">{project.ref}</span>
           <span aria-hidden className="size-0.5 bg-line-2" />
           <span className="text-accent">{project.status}</span>
@@ -44,7 +44,7 @@ export function MVPProjectOverview({
 
       <div className="grid gap-px bg-line lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
         <article className="bg-panel px-4 py-4">
-          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
             Project
           </p>
           <h2 className="mt-2 text-[1.35rem] font-medium tracking-[-0.03em] text-fg">
@@ -56,13 +56,13 @@ export function MVPProjectOverview({
 
           <dl className="mt-4 grid gap-x-6 gap-y-3 sm:grid-cols-2">
             <div>
-              <dt className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                 Target audience
               </dt>
               <dd className="mt-1 text-[12px] leading-snug text-fg">{project.targetAudience}</dd>
             </div>
             <div>
-              <dt className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                 Current MVP scope
               </dt>
               <dd className="mt-1 text-[12px] leading-snug text-fg">{project.currentScope}</dd>
@@ -72,10 +72,10 @@ export function MVPProjectOverview({
 
         <article className="bg-panel px-4 py-4">
           <div className="flex items-baseline justify-between gap-3">
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
               Feature counts
             </p>
-            <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+            <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
               {ready} ready
             </p>
           </div>
@@ -102,7 +102,7 @@ export function MVPProjectOverview({
                       }}
                     />
                   </div>
-                  <span className="w-24 shrink-0 text-right font-mono text-[8.5px] uppercase tracking-[0.12em] text-faint">
+                  <span className="w-24 shrink-0 text-right font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
                     {row.hint}
                   </span>
                 </div>
@@ -110,7 +110,7 @@ export function MVPProjectOverview({
             ))}
           </dl>
 
-          <p className="mt-4 border-t border-line pt-3 font-mono text-[8.5px] uppercase leading-relaxed tracking-[0.14em] text-faint">
+          <p className="mt-4 border-t border-line pt-3 font-mono text-[10px] uppercase leading-relaxed tracking-[0.14em] text-faint">
             {total === 0
               ? "No features proposed yet"
               : `${completed} of ${total} features complete · presentational counts`}

@@ -8,7 +8,7 @@ import type { IdeaDraft } from "@/lib/idea-lab/types";
 
 import { IdeaStatus } from "./idea-status";
 
-const LABEL = "font-mono text-[9px] uppercase tracking-[0.2em] text-faint";
+const LABEL = "font-mono text-[10px] uppercase tracking-[0.2em] text-faint";
 const INPUT =
   "mt-2 w-full border border-line bg-panel px-3 text-[16px] text-fg outline-none transition-colors placeholder:text-faint/65 hover:border-line-2 focus:border-accent sm:text-[13.5px]";
 const TEXTAREA = `${INPUT} resize-none py-2.5 leading-relaxed`;
@@ -162,7 +162,7 @@ export function IdeaCaptureModal({
       >
         <header className="flex shrink-0 items-start justify-between gap-4 border-b border-line px-5 py-4 sm:px-6 sm:py-5">
           <div className="min-w-0">
-            <p className="flex items-center gap-2.5 font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+            <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
               <span aria-hidden className="size-1.5 bg-mint" />
               New capture · Stage 01
             </p>
@@ -259,7 +259,7 @@ export function IdeaCaptureModal({
                           type="button"
                           onClick={() => setCategory(active ? "" : option)}
                           aria-pressed={active}
-                          className={`border px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.12em] transition-colors ${
+                          className={`border px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors ${
                             active
                               ? "border-accent/50 bg-mint-tint text-accent"
                               : "border-line text-faint hover:border-line-2 hover:text-fg"
@@ -288,7 +288,7 @@ export function IdeaCaptureModal({
                     onClick={() => setExpanded((value) => !value)}
                     aria-expanded={expanded}
                     aria-controls="capture-more"
-                    className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-faint transition-colors hover:text-accent"
+                    className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-faint transition-colors hover:text-accent"
                   >
                     <span
                       aria-hidden
@@ -341,12 +341,12 @@ export function IdeaCaptureModal({
               </div>
 
               <aside className="hidden lg:block">
-                <p className="font-mono text-[8.5px] uppercase tracking-[0.2em] text-faint">
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-faint">
                   Inbox preview
                 </p>
                 <div className="mt-2 border border-line bg-panel p-3">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-mono text-[8px] uppercase tracking-[0.14em] text-faint">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                       New capture
                     </span>
                     <IdeaStatus status="inbox" />
@@ -358,7 +358,7 @@ export function IdeaCaptureModal({
                     {summary.trim() || "A one-line description will land here."}
                   </p>
                   <div className="mt-3 border-t border-line pt-2">
-                    <p className="font-mono text-[8px] uppercase tracking-[0.13em] text-faint">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.13em] text-faint">
                       {category || "Uncategorised"}
                     </p>
                     <div className="mt-1.5 flex flex-wrap gap-x-2 gap-y-1">
@@ -366,13 +366,13 @@ export function IdeaCaptureModal({
                         previewTags.map((tag) => (
                           <span
                             key={tag}
-                            className="break-all font-mono text-[8px] uppercase tracking-[0.1em] text-accent"
+                            className="break-all font-mono text-[10px] uppercase tracking-[0.1em] text-accent"
                           >
                             #{tag.replace(/\s+/g, "-")}
                           </span>
                         ))
                       ) : (
-                        <span className="font-mono text-[8px] uppercase tracking-[0.1em] text-faint/70">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-faint/70">
                           no tags yet
                         </span>
                       )}
@@ -404,7 +404,7 @@ export function IdeaCaptureModal({
             </AnimatePresence>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <p className="order-2 font-mono text-[8px] uppercase tracking-[0.14em] text-faint sm:order-1">
+              <p className="order-2 font-mono text-[10px] uppercase tracking-[0.14em] text-faint sm:order-1">
                 Preview form · nothing is stored
               </p>
 
@@ -412,7 +412,7 @@ export function IdeaCaptureModal({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="h-10 border border-line px-4 font-mono text-[9px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-line-2 hover:text-fg sm:h-9"
+                  className="h-10 border border-line px-4 font-mono text-[10px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-line-2 hover:text-fg sm:h-9"
                 >
                   Cancel
                 </button>

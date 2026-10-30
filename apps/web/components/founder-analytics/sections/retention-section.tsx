@@ -46,7 +46,7 @@ export function RetentionSection({
       <section aria-label="Retention summary" className="space-y-3">
         <header className="flex flex-wrap items-baseline justify-between gap-2">
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
               Retention overview
             </p>
             <p className="mt-1 max-w-[72ch] text-[11.5px] text-muted">
@@ -55,7 +55,7 @@ export function RetentionSection({
               cohort definitions.
             </p>
           </div>
-          <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+          <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
             demo data
           </p>
         </header>
@@ -68,7 +68,7 @@ export function RetentionSection({
           title="Cohort retention"
           description="Share of each sample signup cohort that was still active in later weeks."
           action={
-            <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
               last {dataset.cohorts?.length ?? 0} cohorts
             </span>
           }
@@ -102,7 +102,7 @@ export function RetentionSection({
                     ] as const
                   ).map(([label, text]) => (
                     <div key={label} className="flex gap-2">
-                      <dt className="w-[6.5rem] shrink-0 font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+                      <dt className="w-[6.5rem] shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                         {label}
                       </dt>
                       <dd className="min-w-0 text-[11.5px] leading-relaxed text-muted">{text}</dd>
@@ -112,7 +112,7 @@ export function RetentionSection({
               </li>
             ))}
           </ul>
-          <p className="mt-3 border-t border-line pt-2.5 font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+          <p className="mt-3 border-t border-line pt-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
             Authored by hand · no automated analysis
           </p>
         </Panel>

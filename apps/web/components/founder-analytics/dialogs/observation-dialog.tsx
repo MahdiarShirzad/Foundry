@@ -71,14 +71,14 @@ export function ObservationDialog({
           <button
             type="button"
             onClick={onClose}
-            className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent hover:text-accent"
+            className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent hover:text-accent"
           >
             Cancel
           </button>
           <button
             form="observation-form"
             type="submit"
-            className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+            className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
           >
             {initial ? "Save changes" : "Add observation"}
           </button>
@@ -148,7 +148,7 @@ export function ObservationDialog({
           />
         </Field>
 
-        <p className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+        <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           Local UI state only · no storage, no sync, no analysis
         </p>
       </form>

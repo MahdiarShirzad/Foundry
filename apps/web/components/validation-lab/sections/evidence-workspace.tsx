@@ -42,11 +42,11 @@ function EvidenceStep({
   return (
     <section className="border border-line">
       <header className="flex items-center justify-between gap-3 border-b border-line bg-bg/60 px-3 py-2">
-        <p className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-fg">
+        <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-fg">
           <span aria-hidden className={`size-1.5 ${accent}`} />
           {index} · {label}
         </p>
-        <span className="hidden font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint sm:block">
+        <span className="hidden font-mono text-[10px] uppercase tracking-[0.14em] text-faint sm:block">
           {hint}
         </span>
       </header>
@@ -129,7 +129,7 @@ export function EvidenceWorkspace({
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+                className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
               >
                 Add Finding
               </button>
@@ -197,7 +197,7 @@ export function EvidenceWorkspace({
                     }`}
                   >
                     <span
-                      className={`pt-0.5 font-mono text-[8px] tracking-[0.08em] ${
+                      className={`pt-0.5 font-mono text-[10px] tracking-[0.08em] ${
                         active ? "text-accent" : "text-line-2"
                       }`}
                     >
@@ -213,7 +213,7 @@ export function EvidenceWorkspace({
                       <span className="mt-1 line-clamp-2 block text-[11.5px] leading-relaxed text-muted">
                         {f.observation}
                       </span>
-                      <span className="mt-2 flex flex-wrap items-center gap-2 font-mono text-[8.5px] uppercase tracking-[0.12em] text-faint">
+                      <span className="mt-2 flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
                         <span className="truncate">{f.sourceLabel}</span>
                         <span aria-hidden className="size-0.5 bg-line-2" />
                         <span>{f.date}</span>
@@ -247,7 +247,7 @@ export function EvidenceWorkspace({
               <header className="border-b border-line px-5 py-4 sm:px-6">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
                       Evidence detail
                     </p>
                     <h3 className="mt-2 text-[1.35rem] font-medium leading-tight tracking-[-0.03em] text-fg">
@@ -262,27 +262,27 @@ export function EvidenceWorkspace({
 
                 <div className="mt-4 grid gap-3 sm:grid-cols-2">
                   <div className="border border-line px-3 py-2">
-                    <p className="font-mono text-[8.5px] uppercase tracking-[0.16em] text-faint">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
                       From experiment
                     </p>
                     <p className="mt-1 text-[12px] text-fg">
                       {experiment?.title ?? "Unlinked experiment"}
                     </p>
                     {experiment ? (
-                      <p className="mt-0.5 font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+                      <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                         {experiment.method} · {experiment.status}
                       </p>
                     ) : null}
                   </div>
                   <div className="border border-line px-3 py-2">
-                    <p className="font-mono text-[8.5px] uppercase tracking-[0.16em] text-faint">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
                       Bearing on hypothesis
                     </p>
                     <p className="mt-1 text-[12px] text-fg">
                       {hypothesis?.title ?? "Unlinked hypothesis"}
                     </p>
                     {hypothesis ? (
-                      <p className="mt-0.5 font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+                      <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                         {hypothesis.category} · status {hypothesis.status}
                       </p>
                     ) : null}
@@ -319,7 +319,7 @@ export function EvidenceWorkspace({
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="text-fg">Assessed as</span>
-                        <span className="border border-line-2 px-2 py-[3px] font-mono text-[8.5px] uppercase leading-none tracking-[0.13em] text-fg">
+                        <span className="border border-line-2 px-2 py-[3px] font-mono text-[10px] uppercase leading-none tracking-[0.13em] text-fg">
                           {hypothesis.status}
                         </span>
                         <span className="text-muted">— “{hypothesis.title}”</span>
@@ -346,7 +346,7 @@ export function EvidenceWorkspace({
                   <p className="text-muted">{selected.limitations}</p>
                 </EvidenceStep>
 
-                <p className="border-t border-line pt-3 font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+                <p className="border-t border-line pt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                   Sample evidence · no real participants, sources, or statistical claims
                 </p>
               </div>

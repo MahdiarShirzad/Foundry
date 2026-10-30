@@ -165,7 +165,7 @@ export function ResearchNotesWorkspace({
                         }`}
                       >
                         <span
-                          className={`pt-0.5 font-mono text-[8px] tracking-[0.08em] ${
+                          className={`pt-0.5 font-mono text-[10px] tracking-[0.08em] ${
                             active ? "text-accent" : "text-line-2"
                           }`}
                         >
@@ -177,7 +177,7 @@ export function ResearchNotesWorkspace({
                             <span className="text-[13px] font-medium leading-snug tracking-[-0.01em] text-fg">
                               {note.title}
                             </span>
-                            <span className="shrink-0 font-mono text-[8px] uppercase tracking-[0.1em] text-faint">
+                            <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
                               {formatMarketUpdated(note.date)}
                             </span>
                           </span>
@@ -188,14 +188,14 @@ export function ResearchNotesWorkspace({
 
                           <span className="mt-2 flex flex-wrap items-center gap-1.5">
                             <EvidenceBadge type={note.evidence} />
-                            <span className="truncate font-mono text-[8px] uppercase tracking-[0.1em] text-faint">
+                            <span className="truncate font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
                               {note.relatedLabel}
                             </span>
                           </span>
 
                           <span className="mt-1.5 flex items-center gap-1.5">
                             <span aria-hidden className="size-1 bg-line-2" />
-                            <span className="truncate font-mono text-[8px] uppercase tracking-[0.1em] text-faint">
+                            <span className="truncate font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
                               {note.source}
                             </span>
                           </span>
@@ -234,7 +234,7 @@ export function ResearchNotesWorkspace({
               <header className="border-b border-line px-5 pb-5 pt-5 sm:px-7">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-faint">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                       Research note · {formatMarketDate(selected.date)}
                     </p>
                     <h2 className="mt-1.5 max-w-[30ch] text-[clamp(1.4rem,2.4vw,1.9rem)] font-medium leading-[1.08] tracking-[-0.035em] text-fg">
@@ -283,7 +283,7 @@ export function ResearchNotesWorkspace({
 
               <div className="border-b border-line bg-bg/35 px-5 py-3 sm:px-7">
                 <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] leading-relaxed text-muted">
-                  <span className="font-mono text-[8px] uppercase tracking-[0.14em] text-faint">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                     Evidence type ·
                   </span>
                   <span className="font-medium text-fg">
@@ -311,7 +311,7 @@ export function ResearchNotesWorkspace({
 
               <footer className="flex flex-wrap items-center justify-between gap-2 border-t border-line bg-bg/40 px-5 py-3 sm:px-7">
                 <SampleNotice />
-                <span className="font-mono text-[8px] uppercase tracking-[0.12em] text-faint">
+                <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
                   Edited {formatMarketUpdated(selected.date)} · no external source fetched
                 </span>
               </footer>

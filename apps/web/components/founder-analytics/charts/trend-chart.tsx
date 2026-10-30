@@ -138,13 +138,13 @@ export default function TrendChart({
           {unit ? <span className="text-faint">{unit}</span> : null}
         </span>
         {previous ? (
-          <span className="flex items-baseline gap-2 font-mono text-[9.5px] uppercase tracking-[0.14em] text-faint">
+          <span className="flex items-baseline gap-2 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
             <span aria-hidden className="block h-px w-4 border-t border-dashed border-faint" />
             previous window
           </span>
         ) : null}
         {caption ? (
-          <span className="ml-auto font-mono text-[9.5px] uppercase tracking-[0.14em] text-faint">
+          <span className="ml-auto font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
             {caption}
           </span>
         ) : null}
@@ -194,7 +194,7 @@ export default function TrendChart({
                     x={PAD.left - 6}
                     y={yPos + 3}
                     textAnchor="end"
-                    className="fill-faint font-mono text-[9px]"
+                    className="fill-faint font-mono text-[10px]"
                   >
                     {formatValue(value, format)}
                   </text>
@@ -238,7 +238,7 @@ export default function TrendChart({
                   textAnchor={
                     index === 0 ? "start" : index === starts.length - 1 ? "end" : "middle"
                   }
-                  className="fill-faint font-mono text-[9px]"
+                  className="fill-faint font-mono text-[10px]"
                 >
                   {formatShortDate(start)}
                 </text>
@@ -287,7 +287,7 @@ export default function TrendChart({
             className="pointer-events-none absolute top-1 z-10 min-w-[9.5rem] border border-line bg-bg px-2.5 py-2 shadow-[0_10px_24px_-16px_rgb(14_27_29/0.55)]"
             style={{ left: Math.min(Math.max(x(active) - 72, 0), Math.max(chartWidth - 170, 0)) }}
           >
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
               Week of {formatShortDate(starts[active])}
             </p>
             <p className="mt-1 flex items-baseline justify-between gap-4">

@@ -4,7 +4,6 @@ import { Panel } from "@/components/dashboard/panel";
 
 import type { AnalyticsProduct, RangeKey } from "@/lib/founder-analytics/types";
 import type { AnalyticsDataset } from "@/lib/founder-analytics/types";
-import { getSeriesSlice } from "@/lib/founder-analytics/demo";
 
 import DistributionBars from "../charts/distribution-bars";
 import TrendChart from "../charts/trend-chart";
@@ -57,7 +56,7 @@ export function UserBehaviorSection({
       <section className="border border-line bg-panel" aria-label="Audience segment">
         <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
               Segment explorer
             </p>
             <p className="mt-1 text-[11.5px] text-muted">
@@ -83,7 +82,7 @@ export function UserBehaviorSection({
         {segment ? (
           <dl className="grid grid-cols-2 divide-line sm:grid-cols-4 sm:divide-x">
             <div className="px-4 py-3.5">
-              <dt className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                 Users · latest week
               </dt>
               <dd className="mt-2 font-mono text-[20px] leading-none tracking-[-0.02em] text-fg">
@@ -91,7 +90,7 @@ export function UserBehaviorSection({
               </dd>
             </div>
             <div className="border-t border-line px-4 py-3.5 sm:border-t-0">
-              <dt className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                 Sessions · full window
               </dt>
               <dd className="mt-2 font-mono text-[20px] leading-none tracking-[-0.02em] text-fg">
@@ -99,7 +98,7 @@ export function UserBehaviorSection({
               </dd>
             </div>
             <div className="border-t border-line px-4 py-3.5 sm:border-t-0">
-              <dt className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                 Avg session · latest week
               </dt>
               <dd className="mt-2 font-mono text-[20px] leading-none tracking-[-0.02em] text-fg">
@@ -108,7 +107,7 @@ export function UserBehaviorSection({
               </dd>
             </div>
             <div className="border-t border-line px-4 py-3.5 sm:border-t-0">
-              <dt className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                 Share of audience
               </dt>
               <dd className="mt-2 font-mono text-[20px] leading-none tracking-[-0.02em] text-fg">
@@ -172,13 +171,13 @@ export function UserBehaviorSection({
               <tr>
                 <th
                   scope="col"
-                  className="border-b border-line pb-1.5 font-mono text-[9px] font-normal uppercase tracking-[0.18em] text-faint"
+                  className="border-b border-line pb-1.5 font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-faint"
                 >
                   Product area
                 </th>
                 <th
                   scope="col"
-                  className="border-b border-line pb-1.5 text-right font-mono text-[9px] font-normal uppercase tracking-[0.18em] text-faint"
+                  className="border-b border-line pb-1.5 text-right font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-faint"
                 >
                   Interactions
                 </th>
@@ -224,7 +223,7 @@ export function UserBehaviorSection({
               })}
             </tbody>
           </table>
-          <p className="mt-3 border-t border-line pt-2.5 font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+          <p className="mt-3 border-t border-line pt-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
             Sample interactions · counts are predefined, nothing is aggregated at runtime
           </p>
         </Panel>
@@ -243,7 +242,7 @@ export function UserBehaviorSection({
           ) : (
             <div className="space-y-4">
               <div>
-                <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                   {product.name} · {segment.name}
                 </p>
                 <h3 className="mt-1.5 text-[1.15rem] font-medium tracking-[-0.02em] text-fg">
@@ -253,7 +252,7 @@ export function UserBehaviorSection({
               </div>
               <div className="grid grid-cols-2 gap-px border border-line bg-line">
                 <div className="bg-panel px-3 py-3">
-                  <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
                     Interactions
                   </p>
                   <p className="mt-1.5 font-mono text-[18px] leading-none text-fg">
@@ -261,7 +260,7 @@ export function UserBehaviorSection({
                   </p>
                 </div>
                 <div className="bg-panel px-3 py-3">
-                  <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
                     Sample window
                   </p>
                   <p className="mt-1.5 font-mono text-[12px] leading-tight text-fg">
@@ -270,7 +269,7 @@ export function UserBehaviorSection({
                 </div>
               </div>
               <div className="border border-dashed border-accent/50 bg-mint-tint/30 px-3 py-3">
-                <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-accent">
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
                   Interpretation note
                 </p>
                 <p className="mt-2 text-[12px] leading-relaxed text-muted">{area.note}</p>
@@ -278,7 +277,7 @@ export function UserBehaviorSection({
               <button
                 type="button"
                 onClick={() => onAreaChange(null)}
-                className="border border-line px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent hover:text-accent"
+                className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent hover:text-accent"
               >
                 Clear selection
               </button>

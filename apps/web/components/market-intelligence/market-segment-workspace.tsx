@@ -178,7 +178,7 @@ export function MarketSegmentWorkspace({
                         }`}
                       >
                         <span
-                          className={`pt-0.5 font-mono text-[8px] tracking-[0.08em] ${
+                          className={`pt-0.5 font-mono text-[10px] tracking-[0.08em] ${
                             active ? "text-accent" : "text-line-2"
                           }`}
                         >
@@ -194,11 +194,11 @@ export function MarketSegmentWorkspace({
                           </span>
 
                           <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
-                            <span className="font-mono text-[8px] uppercase tracking-[0.11em] text-faint">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.11em] text-faint">
                               {segment.customerType}
                             </span>
                             <span aria-hidden className="size-0.5 bg-line-2" />
-                            <span className="font-mono text-[8px] uppercase tracking-[0.11em] text-faint">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.11em] text-faint">
                               {formatMarketUpdated(segment.updatedAt)}
                             </span>
                           </span>
@@ -209,7 +209,7 @@ export function MarketSegmentWorkspace({
 
                           <span className="mt-2 flex flex-wrap items-center gap-2">
                             <EvidenceBadge type={segment.evidence} />
-                            <span className="font-mono text-[8px] uppercase tracking-[0.1em] text-faint">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
                               {segment.painPoints.length} pain points
                             </span>
                           </span>
@@ -248,7 +248,7 @@ export function MarketSegmentWorkspace({
               <header className="border-b border-line px-5 pb-5 pt-5 sm:px-7">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-faint">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                       {selected.customerType} · market segment
                     </p>
                     <h2 className="mt-1.5 text-[clamp(1.5rem,2.6vw,2rem)] font-medium leading-[1.05] tracking-[-0.035em] text-fg">
@@ -265,7 +265,7 @@ export function MarketSegmentWorkspace({
                   {selected.description}
                 </p>
 
-                <p className="mt-4 border-t border-line pt-3 font-mono text-[8.5px] uppercase tracking-[0.11em] text-faint">
+                <p className="mt-4 border-t border-line pt-3 font-mono text-[10px] uppercase tracking-[0.11em] text-faint">
                   Updated {formatMarketUpdated(selected.updatedAt)} · {relatedOpportunities.length}{" "}
                   related {relatedOpportunities.length === 1 ? "opportunity" : "opportunities"}
                 </p>
@@ -319,7 +319,7 @@ export function MarketSegmentWorkspace({
 
               <footer className="flex flex-wrap items-center justify-between gap-2 border-t border-line bg-bg/40 px-5 py-3 sm:px-7">
                 <SampleNotice />
-                <span className="font-mono text-[8px] uppercase tracking-[0.12em] text-faint">
+                <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
                   No persona generation · sample observations only
                 </span>
               </footer>

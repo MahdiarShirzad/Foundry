@@ -19,7 +19,7 @@ import {
   type MarketIdea,
 } from "@/lib/market-intelligence/types";
 
-const LABEL = "font-mono text-[8.5px] uppercase tracking-[0.18em] text-faint";
+const LABEL = "font-mono text-[10px] uppercase tracking-[0.18em] text-faint";
 const INPUT =
   "mt-1.5 w-full border border-line bg-panel px-3 text-[16px] text-fg outline-none transition-colors placeholder:text-faint/60 hover:border-line-2 focus:border-accent sm:text-[13px]";
 const TEXTAREA = `${INPUT} resize-none py-2.5 leading-relaxed`;
@@ -123,7 +123,7 @@ function DialogShell({
       >
         <header className="flex shrink-0 items-start justify-between gap-4 border-b border-line px-5 py-4 sm:px-6 sm:py-5">
           <div className="min-w-0">
-            <p className="flex items-center gap-2.5 font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+            <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
               <span aria-hidden className="size-1.5 bg-mint" />
               {eyebrow}
             </p>
@@ -188,7 +188,7 @@ function FormField({
       {error ? (
         <p
           id={`${id}-error`}
-          className="mt-1.5 flex items-center gap-1.5 font-mono text-[8px] uppercase tracking-[0.1em] text-danger"
+          className="mt-1.5 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.1em] text-danger"
         >
           <span aria-hidden className="size-1 bg-danger" />
           {error}
@@ -253,14 +253,14 @@ function DialogFooter({
     <footer className="shrink-0 border-t border-line bg-bg px-5 py-3.5 sm:px-6">
       {notice ? <PreviewNotice>{notice}</PreviewNotice> : null}
       <div className="flex flex-col gap-7 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
-        <p className="font-mono text-[8px] uppercase leading-relaxed tracking-[0.13em] text-faint">
+        <p className="font-mono text-[10px] uppercase leading-relaxed tracking-[0.13em] text-faint">
           Preview form · nothing is stored
         </p>
         <div className="grid grid-cols-2 gap-2 sm:flex sm:items-center">
           <button
             type="button"
             onClick={onClose}
-            className="h-10 border border-line px-4 font-mono text-[9px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-line-2 hover:text-fg sm:h-9"
+            className="h-10 border border-line px-4 font-mono text-[10px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-line-2 hover:text-fg sm:h-9"
           >
             Cancel
           </button>
@@ -426,7 +426,7 @@ export function AddResearchDialog({
                     type="button"
                     onClick={() => setEvidence(type)}
                     aria-pressed={active}
-                    className={`inline-flex items-center gap-1.5 border px-2.5 py-1.5 font-mono text-[8px] uppercase tracking-[0.11em] transition-colors ${
+                    className={`inline-flex items-center gap-1.5 border px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.11em] transition-colors ${
                       active
                         ? "border-accent bg-mint-tint/50 text-accent"
                         : "border-line text-faint hover:border-line-2 hover:text-fg"
@@ -575,7 +575,7 @@ export function AddCompetitorDialog({ onClose }: { onClose: () => void }) {
           </OptionalField>
 
           <div className="border border-line bg-bg/40 px-3 py-2.5">
-            <p className="font-mono text-[8px] uppercase tracking-[0.13em] text-faint">
+            <p className="font-mono text-[10px] uppercase tracking-[0.13em] text-faint">
               Manual entry only
             </p>
             <p className="mt-1 text-[10.5px] leading-relaxed text-faint">

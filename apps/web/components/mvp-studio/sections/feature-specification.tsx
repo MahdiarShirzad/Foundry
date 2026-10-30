@@ -21,7 +21,7 @@ function SpecBlock({
 }) {
   return (
     <div>
-      <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">{term}</p>
+      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">{term}</p>
       <div className="mt-1.5">{children}</div>
     </div>
   );
@@ -70,7 +70,7 @@ export function FeatureSpecification({
             <button
               type="button"
               onClick={onAddFeature}
-              className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+              className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
             >
               Add Feature
             </button>
@@ -85,7 +85,7 @@ export function FeatureSpecification({
       title="Specifications"
       subtitle={`${features.length} feature specifications · ${projectWord(features)}`}
       action={
-        <span className="border border-line px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+        <span className="border border-line px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           Local edits only
         </span>
       }
@@ -93,7 +93,7 @@ export function FeatureSpecification({
       <div className="grid gap-px bg-line lg:grid-cols-[minmax(0,19rem)_minmax(0,1fr)]">
         {/* ------------------------------------------------------------ list */}
         <div className="bg-panel">
-          <p className="border-b border-line px-4 py-3 font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+          <p className="border-b border-line px-4 py-3 font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
             Select a feature
           </p>
           <ul className="max-h-[34rem] overflow-y-auto">
@@ -127,7 +127,7 @@ export function FeatureSpecification({
             <article key={selected.id} className="px-4 py-4 sm:px-6 sm:py-5">
               <header className="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-4">
                 <div className="min-w-0">
-                  <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
                     Feature specification
                   </p>
                   <h3 className="mt-2 text-[clamp(1.15rem,2vw,1.45rem)] font-medium tracking-[-0.03em] text-fg">
@@ -210,7 +210,7 @@ export function FeatureSpecification({
                 </SpecBlock>
               </div>
 
-              <p className="mt-5 border-t border-line pt-3 font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+              <p className="mt-5 border-t border-line pt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                 Editing is a local UI demonstration · changes are not saved or synced anywhere
               </p>
             </article>

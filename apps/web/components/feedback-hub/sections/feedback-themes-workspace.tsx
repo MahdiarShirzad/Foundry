@@ -73,14 +73,14 @@ export function FeedbackThemesWorkspace({
     <section className="border border-line bg-panel" aria-label="Themes and insights">
       <header className="flex flex-wrap items-baseline justify-between gap-2 border-b border-line px-4 py-3">
         <div>
-          <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
             Themes &amp; Insights
           </p>
           <p className="mt-1 text-[11.5px] text-muted">
             {themes.length} manually documented theme{themes.length !== 1 ? "s" : ""}
           </p>
         </div>
-        <p className="border border-line px-2 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+        <p className="border border-line px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           Sample insights · written by hand · no automated analysis
         </p>
       </header>
@@ -104,7 +104,7 @@ export function FeedbackThemesWorkspace({
                   >
                     <span className="flex items-baseline justify-between gap-2">
                       <span className="text-[12.5px] font-medium text-fg">{t.name}</span>
-                      <span className="shrink-0 font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+                      <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                         {t.importance}
                       </span>
                     </span>
@@ -113,7 +113,7 @@ export function FeedbackThemesWorkspace({
                     </span>
                     <span className="mt-1.5 flex flex-wrap items-center gap-1.5">
                       <FeedbackStatusBadge status={t.reviewStatus} />
-                      <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                         {t.relatedFeedbackIds.length} linked
                       </span>
                     </span>
@@ -134,7 +134,7 @@ export function FeedbackThemesWorkspace({
               className="space-y-5 px-5 py-5 sm:px-6"
             >
               <header>
-                <p className="flex items-center gap-2.5 font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+                <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
                   <span aria-hidden className="size-1.5 bg-mint" />
                   Theme detail · {selected.id}
                 </p>
@@ -168,7 +168,7 @@ export function FeedbackThemesWorkspace({
                           <span className="mt-1 block text-[12px] leading-relaxed text-muted">
                             “{f.excerpt}”
                           </span>
-                          <span className="mt-1.5 block font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+                          <span className="mt-1.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                             Open record → {f.status}
                           </span>
                         </button>
@@ -232,13 +232,13 @@ export function FeedbackThemesWorkspace({
                     type="button"
                     onClick={() => saveNotes(selected.id)}
                     disabled={notesValue === (selected.internalNotes ?? "")}
-                    className="border border-accent/60 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-accent transition-colors hover:border-accent disabled:border-line disabled:text-faint"
+                    className="border border-accent/60 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-accent transition-colors hover:border-accent disabled:border-line disabled:text-faint"
                   >
                     Save note
                   </button>
                   <span
                     role="status"
-                    className="font-mono text-[9px] uppercase tracking-[0.14em] text-faint"
+                    className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint"
                   >
                     {savedId === selected.id && notesValue === (selected.internalNotes ?? "")
                       ? "Saved to this preview"

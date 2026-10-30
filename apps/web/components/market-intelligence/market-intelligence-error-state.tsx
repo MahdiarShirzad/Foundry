@@ -11,7 +11,7 @@ export function MarketIntelligenceErrorState({
       className="flex min-h-[24rem] items-center border border-line bg-panel md:min-h-[32rem]"
     >
       <div className="w-full max-w-[48rem] px-6 py-12 sm:px-10 sm:py-14">
-        <p className="flex items-center gap-2.5 font-mono text-[9px] uppercase tracking-[0.22em] text-danger">
+        <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-danger">
           <span aria-hidden className="size-1.5 bg-danger" />
           Presentation state · error
         </p>
@@ -35,13 +35,13 @@ export function MarketIntelligenceErrorState({
           <button
             type="button"
             onClick={onOverview}
-            className="h-9 border border-line px-3 font-mono text-[9px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent hover:text-accent"
+            className="h-9 border border-line px-3 font-mono text-[10px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent hover:text-accent"
           >
             Return to overview
           </button>
         </div>
 
-        <p className="mt-8 border-t border-line pt-3 font-mono text-[8.5px] uppercase leading-relaxed tracking-[0.14em] text-faint">
+        <p className="mt-8 border-t border-line pt-3 font-mono text-[10px] uppercase leading-relaxed tracking-[0.14em] text-faint">
           No request was made · this state is part of the interface preview
         </p>
       </div>

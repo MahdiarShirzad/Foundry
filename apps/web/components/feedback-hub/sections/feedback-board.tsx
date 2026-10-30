@@ -50,14 +50,14 @@ export function FeedbackBoard({
     <section className="border border-line bg-panel" aria-label="Feedback board">
       <header className="flex flex-wrap items-baseline justify-between gap-2 border-b border-line px-4 py-3">
         <div>
-          <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
             Feedback Board
           </p>
           <p className="mt-1 text-[11.5px] text-muted">
             Review workflow by status — change a card&apos;s status with its menu
           </p>
         </div>
-        <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+        <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           {feedback.length} cards
         </p>
       </header>
@@ -68,7 +68,7 @@ export function FeedbackBoard({
           return (
             <article key={status} className="min-w-0 bg-panel">
               <header className="flex items-center justify-between gap-2 border-b border-line px-3 py-2">
-                <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-fg">
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-fg">
                   {status}
                 </p>
                 <p className="font-mono text-[10px] text-faint">{items.length}</p>
@@ -152,7 +152,7 @@ export function FeedbackBoard({
           className="space-y-3 border-t border-line px-4 py-4"
         >
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-accent">
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
               Selected card · {selected.id}
             </p>
             <div className="flex flex-wrap items-center gap-2">
@@ -184,7 +184,7 @@ export function FeedbackBoard({
                 </Select>
               </div>
             </div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+            <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
               {selected.source} · {selected.date}
               {selected.productArea ? ` · ${selected.productArea}` : ""}
             </p>
@@ -192,7 +192,7 @@ export function FeedbackBoard({
         </motion.div>
       ) : (
         <div className="border-t border-line px-4 py-4">
-          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
             Select a card to inspect it
           </p>
         </div>

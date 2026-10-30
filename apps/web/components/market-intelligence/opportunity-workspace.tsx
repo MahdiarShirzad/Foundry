@@ -228,7 +228,7 @@ export function OpportunityWorkspace({
                         }`}
                       >
                         <span
-                          className={`pt-0.5 font-mono text-[8px] tracking-[0.08em] ${
+                          className={`pt-0.5 font-mono text-[10px] tracking-[0.08em] ${
                             active ? "text-accent" : "text-line-2"
                           }`}
                         >
@@ -254,7 +254,7 @@ export function OpportunityWorkspace({
                             ) : null}
                           </span>
 
-                          <span className="mt-1.5 block truncate font-mono text-[8px] uppercase tracking-[0.1em] text-faint">
+                          <span className="mt-1.5 block truncate font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
                             {relatedSegment?.name ?? "Unassigned segment"} ·{" "}
                             {formatMarketUpdated(opportunity.updatedAt)}
                           </span>
@@ -291,7 +291,7 @@ export function OpportunityWorkspace({
               className="w-full min-w-0"
             >
               <header className="border-b border-line px-5 pb-5 pt-5 sm:px-7">
-                <p className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-faint">
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                   Opportunity · {segment?.name ?? "Unassigned segment"}
                 </p>
                 <div className="mt-1.5 flex flex-wrap items-start justify-between gap-3">
@@ -310,7 +310,7 @@ export function OpportunityWorkspace({
 
                 <div className="mt-4 border-t border-line pt-3">
                   <p className="flex flex-wrap items-center gap-2">
-                    <span className="font-mono text-[8px] uppercase tracking-[0.14em] text-faint">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                       Evidence maturity
                     </span>
                     <span className="text-[11px] leading-relaxed text-muted">
@@ -340,7 +340,7 @@ export function OpportunityWorkspace({
                           type="button"
                           onClick={() => changeStatus(option)}
                           aria-pressed={active}
-                          className={`inline-flex h-7 items-center gap-1.5 border px-2.5 font-mono text-[8px] uppercase tracking-[0.12em] transition-colors ${
+                          className={`inline-flex h-7 items-center gap-1.5 border px-2.5 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors ${
                             active
                               ? "border-accent bg-mint-tint/50 text-accent"
                               : "border-line text-faint hover:border-line-2 hover:text-fg"
@@ -399,7 +399,7 @@ export function OpportunityWorkspace({
                         <span className="block text-[12px] font-medium text-fg transition-colors group-hover:text-accent">
                           {supportingNote.title}
                         </span>
-                        <span className="mt-0.5 block font-mono text-[8px] uppercase tracking-[0.1em] text-faint">
+                        <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
                           {supportingNote.source}
                         </span>
                       </span>
@@ -427,7 +427,7 @@ export function OpportunityWorkspace({
 
               <footer className="flex flex-wrap items-center justify-between gap-2 border-t border-line bg-bg/40 px-5 py-3 sm:px-7">
                 <SampleNotice />
-                <span className="font-mono text-[8px] uppercase tracking-[0.12em] text-faint">
+                <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
                   Updated {formatMarketUpdated(selected.updatedAt)} · no scoring applied
                 </span>
               </footer>

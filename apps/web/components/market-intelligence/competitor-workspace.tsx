@@ -167,7 +167,7 @@ export function CompetitorWorkspace({
                         }`}
                       >
                         <span
-                          className={`pt-0.5 font-mono text-[8px] tracking-[0.08em] ${
+                          className={`pt-0.5 font-mono text-[10px] tracking-[0.08em] ${
                             active ? "text-accent" : "text-line-2"
                           }`}
                         >
@@ -183,11 +183,11 @@ export function CompetitorWorkspace({
                           </span>
 
                           <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
-                            <span className="font-mono text-[8px] uppercase tracking-[0.11em] text-faint">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.11em] text-faint">
                               {competitor.category}
                             </span>
                             <span aria-hidden className="size-0.5 bg-line-2" />
-                            <span className="font-mono text-[8px] uppercase tracking-[0.11em] text-faint">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.11em] text-faint">
                               {formatMarketUpdated(competitor.updatedAt)}
                             </span>
                           </span>
@@ -198,7 +198,7 @@ export function CompetitorWorkspace({
 
                           <span className="mt-2 flex flex-wrap items-center gap-1.5">
                             <EvidenceBadge type={competitor.evidence} />
-                            <span className="truncate font-mono text-[8px] uppercase tracking-[0.1em] text-faint">
+                            <span className="truncate font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
                               {competitor.pricing.includes("Not published")
                                 ? "Pricing unknown"
                                 : "Pricing noted"}
@@ -239,7 +239,7 @@ export function CompetitorWorkspace({
               <header className="border-b border-line px-5 pb-5 pt-5 sm:px-7">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-faint">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                       {selected.category} · competitor profile
                     </p>
                     <h2 className="mt-1.5 text-[clamp(1.5rem,2.6vw,2rem)] font-medium leading-[1.05] tracking-[-0.035em] text-fg">
@@ -257,12 +257,12 @@ export function CompetitorWorkspace({
                 </p>
 
                 <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line pt-3">
-                  <span className="inline-flex items-center gap-1.5 font-mono text-[8.5px] uppercase tracking-[0.11em] text-faint">
+                  <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.11em] text-faint">
                     <span aria-hidden className="size-1 bg-accent" />
                     {selected.website}
                     <span className="text-faint/65">· sample domain</span>
                   </span>
-                  <span className="font-mono text-[8.5px] uppercase tracking-[0.11em] text-faint">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.11em] text-faint">
                     Updated {formatMarketUpdated(selected.updatedAt)}
                   </span>
                 </div>
@@ -309,7 +309,7 @@ export function CompetitorWorkspace({
 
               <footer className="flex flex-wrap items-center justify-between gap-2 border-t border-line bg-bg/40 px-5 py-3 sm:px-7">
                 <SampleNotice />
-                <span className="font-mono text-[8px] uppercase tracking-[0.12em] text-faint">
+                <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
                   {RESEARCH_STATUS_META[selected.status].label} · no external analysis
                 </span>
               </footer>

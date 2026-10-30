@@ -57,7 +57,7 @@ export function ProductAreasWorkspace({
       {/* ------------------------------------------------------------ list --- */}
       <nav aria-label="Product areas" className="min-w-0 bg-panel">
         <header className="border-b border-line px-4 py-3">
-          <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
             Product Areas
           </p>
           <p className="mt-1 text-[11px] text-muted">
@@ -81,7 +81,7 @@ export function ProductAreasWorkspace({
                 >
                   <span className="flex items-baseline justify-between gap-2">
                     <span className="text-[12.5px] font-medium text-fg">{a.name}</span>
-                    <span className="shrink-0 font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+                    <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                       {a.feedbackCount} fb
                     </span>
                   </span>
@@ -106,7 +106,7 @@ export function ProductAreasWorkspace({
             className="space-y-5 px-5 py-5 sm:px-6"
           >
             <header>
-              <p className="flex items-center gap-2.5 font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+              <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
                 <span aria-hidden className="size-1.5 bg-mint" />
                 Product area · {selected.id}
               </p>
@@ -125,7 +125,7 @@ export function ProductAreasWorkspace({
                 { label: "Feature requests", value: selected.featureRequests },
               ].map((stat) => (
                 <article key={stat.label} className="bg-panel px-4 py-3">
-                  <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                     {stat.label}
                   </p>
                   <p className="mt-1.5 text-[1.35rem] font-medium tracking-[-0.03em] text-fg">
@@ -146,7 +146,7 @@ export function ProductAreasWorkspace({
               <PanelLabel>Related feedback records · {relatedFeedback.length}</PanelLabel>
               {relatedFeedback.length === 0 ? (
                 <div className="mt-2 border border-dashed border-line px-4 py-6 text-center">
-                  <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-faint">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-faint">
                     Empty product area
                   </p>
                   <p className="mx-auto mt-2 max-w-[40ch] text-[12px] leading-relaxed text-muted">
@@ -200,7 +200,7 @@ export function ProductAreasWorkspace({
               )}
             </div>
 
-            <p className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+            <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
               Counts are read from the mock records · no quality or health scoring
             </p>
           </motion.div>

@@ -82,14 +82,14 @@ export function AddFeedbackDialog({
           <button
             type="button"
             onClick={onClose}
-            className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent hover:text-accent"
+            className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent hover:text-accent"
           >
             {confirmed ? "Close" : "Cancel"}
           </button>
           <button
             form="add-feedback-form"
             type="submit"
-            className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+            className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
           >
             {confirmed ? "Added (local)" : "Add feedback"}
           </button>
@@ -195,7 +195,7 @@ export function AddFeedbackDialog({
           </Field>
         </div>
 
-        <p className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+        <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           No external ingestion · no email or support-desk parsing · demo record only
         </p>
       </form>

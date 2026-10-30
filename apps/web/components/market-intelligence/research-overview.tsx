@@ -26,10 +26,10 @@ export function ResearchOverview({ idea }: { idea: MarketIdea }) {
     <section aria-label="Research overview" className="border border-line bg-panel">
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-line px-4 py-2.5">
         <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-          <h2 className="font-mono text-[9px] uppercase tracking-[0.2em] text-fg">
+          <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] text-fg">
             Research overview
           </h2>
-          <span className="font-mono text-[8.5px] uppercase tracking-[0.13em] text-faint">
+          <span className="font-mono text-[10px] uppercase tracking-[0.13em] text-faint">
             {idea.name} · updated {formatMarketShortDate(idea.updatedAt)}
           </span>
         </div>
@@ -40,10 +40,10 @@ export function ResearchOverview({ idea }: { idea: MarketIdea }) {
         {TILES.map((tile) => (
           <div key={tile.key} className="min-w-0 bg-panel px-4 py-3.5">
             <div className="flex items-center justify-between gap-2">
-              <dt className="font-mono text-[8px] uppercase tracking-[0.16em] text-faint">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
                 {tile.label}
               </dt>
-              <span aria-hidden className="font-mono text-[8px] tracking-[0.1em] text-line-2">
+              <span aria-hidden className="font-mono text-[10px] tracking-[0.1em] text-line-2">
                 {tile.index}
               </span>
             </div>
@@ -58,7 +58,7 @@ export function ResearchOverview({ idea }: { idea: MarketIdea }) {
       </dl>
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-line bg-bg/45 px-4 py-2">
-        <p className="font-mono text-[8px] uppercase tracking-[0.13em] text-faint">
+        <p className="font-mono text-[10px] uppercase tracking-[0.13em] text-faint">
           <span className="text-accent">{reviewed}</span> research {reviewed === 1 ? "note" : "notes"} reviewed
         </p>
         <span aria-hidden className="hidden h-2.5 w-px bg-line sm:block" />

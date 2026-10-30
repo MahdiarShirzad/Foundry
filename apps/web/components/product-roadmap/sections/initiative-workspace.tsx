@@ -11,7 +11,6 @@ import { AddInitiativeDialog } from "../dialogs/roadmap-dialogs";
 export function InitiativeWorkspace({
   initiatives,
   milestones,
-  releases,
 }: {
   initiatives: Initiative[];
   milestones: Milestone[];
@@ -38,7 +37,7 @@ export function InitiativeWorkspace({
   const milestone = selected ? milestones.find((m) => m.id === selected.associatedMilestoneId) : null;
 
   if (initiatives.length === 0) {
-    return <ProductRoadmapEmptyState title="No initiatives" description="Add initiatives to start planning your roadmap." action={<button type="button" onClick={() => setOpen(true)} className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg">Add Initiative</button>} />;
+    return <ProductRoadmapEmptyState title="No initiatives" description="Add initiatives to start planning your roadmap." action={<button type="button" onClick={() => setOpen(true)} className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg">Add Initiative</button>} />;
   }
 
   return (
@@ -46,10 +45,10 @@ export function InitiativeWorkspace({
       <section className="bg-panel">
         <header className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3">
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">Initiatives</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">Initiatives</p>
             <p className="mt-1 text-[11px] text-muted">{filtered.length} shown</p>
           </div>
-          <button type="button" onClick={() => setOpen(true)} className="border border-line px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-fg">Add</button>
+          <button type="button" onClick={() => setOpen(true)} className="border border-line px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-fg">Add</button>
         </header>
         <div className="flex flex-wrap items-center gap-2 border-b border-line px-4 py-2">
           <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search initiatives" className="h-7 flex-1 border border-line bg-panel px-2 text-[12px] text-fg outline-none focus:border-accent" />
@@ -77,7 +76,7 @@ export function InitiativeWorkspace({
                 </div>
                 <p className="mt-1 line-clamp-2 text-[11.5px] text-muted">{i.description}</p>
                 <div className="mt-2 flex items-center gap-2">
-                  <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-faint">{i.period}</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">{i.period}</span>
                   <RoadmapStatusBadge status={i.status} />
                 </div>
               </button>
@@ -91,7 +90,7 @@ export function InitiativeWorkspace({
             <header className="border-b border-line px-6 py-4">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
-                  <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">Initiative Detail</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">Initiative Detail</p>
                   <h3 className="mt-2 text-[1.3rem] font-medium tracking-[-0.03em] text-fg">{selected.name}</h3>
                   <p className="mt-1 text-[11.5px] text-muted">{selected.period}</p>
                 </div>
@@ -103,37 +102,37 @@ export function InitiativeWorkspace({
             </header>
             <div className="space-y-6 px-6 py-5">
               <div>
-                <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">Description</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">Description</p>
                 <p className="mt-2 text-[12.5px] leading-relaxed text-fg">{selected.description}</p>
               </div>
               <div>
-                <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">Product objective</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">Product objective</p>
                 <p className="mt-2 text-[12px] leading-relaxed text-muted">{selected.objective}</p>
               </div>
               <div>
-                <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">User problem</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">User problem</p>
                 <p className="mt-2 text-[12px] leading-relaxed text-muted">{selected.userProblem}</p>
               </div>
               <div>
-                <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">Rationale</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">Rationale</p>
                 <p className="mt-2 text-[12px] leading-relaxed text-muted">{selected.rationale}</p>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">Related features</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">Related features</p>
                   <ul className="mt-2 space-y-1 text-[12px] text-muted">
                     {selected.relatedFeatures.length === 0 ? <li>None noted</li> : selected.relatedFeatures.map((f) => <li key={f}>• {f}</li>)}
                   </ul>
                 </div>
                 <div>
-                  <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">Dependencies</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">Dependencies</p>
                   <ul className="mt-2 space-y-1 text-[12px] text-muted">
                     {selected.dependencies.length === 0 ? <li>None</li> : selected.dependencies.map((d) => <li key={d}>• {d}</li>)}
                   </ul>
                 </div>
               </div>
               <div>
-                <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">Associated milestone</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">Associated milestone</p>
                 <p className="mt-2 text-[12px] text-fg">{milestone?.name ?? selected.associatedMilestoneId ?? "None"}</p>
               </div>
             </div>

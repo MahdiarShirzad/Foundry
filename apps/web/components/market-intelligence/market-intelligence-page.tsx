@@ -302,7 +302,7 @@ export default function MarketIntelligencePage() {
         )}
       </AnimatePresence>
 
-      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[8px] uppercase tracking-[0.14em] text-faint">
+      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
         <span aria-hidden className="size-1.5 bg-accent" />
         {MARKET_SECTION_META[section].label} · {idea.ref} {idea.name}
         <span aria-hidden className="size-0.5 bg-line-2" />

@@ -30,17 +30,17 @@ export function ValidationOverview({
     <section className="border border-line bg-panel">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
         <div>
-          <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">Validation Overview</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">Validation Overview</p>
           <p className="mt-1 text-[11.5px] text-muted">State of validation work for the selected idea</p>
         </div>
-        <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
           {testing > 0 ? `Actively testing · ${testing}` : "No test currently running"}
         </p>
       </header>
       <div className="grid gap-px bg-line sm:grid-cols-2 xl:grid-cols-4">
         {items.map((item) => (
           <article key={item.label} className="bg-panel px-4 py-3.5">
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">{item.label}</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">{item.label}</p>
             <p className="mt-2 text-[1.6rem] font-medium tracking-[-0.03em] text-fg">{item.value}</p>
             <p className="mt-1 text-[11px] text-muted">{item.hint}</p>
           </article>

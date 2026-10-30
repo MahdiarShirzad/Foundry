@@ -31,7 +31,7 @@ export function LaunchPlanTimeline({
   const selected = tasks.find((t) => t.id === selectedId) ?? filtered[0] ?? tasks[0] ?? null;
 
   if (tasks.length === 0) {
-    return <LaunchCenterEmptyState title="Empty launch plan" description="Add launch tasks to start planning." action={<button type="button" onClick={() => setOpen(true)} className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg">Add Launch Task</button>} />;
+    return <LaunchCenterEmptyState title="Empty launch plan" description="Add launch tasks to start planning." action={<button type="button" onClick={() => setOpen(true)} className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg">Add Launch Task</button>} />;
   }
 
   const groups = LAUNCH_PHASES.map((p) => ({ phase: p, items: filtered.filter((t) => t.phase === p) }));
@@ -40,10 +40,10 @@ export function LaunchPlanTimeline({
     <section className="border border-line bg-panel">
       <header className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3">
         <div>
-          <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">Launch Plan</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">Launch Plan</p>
           <p className="mt-1 text-[11px] text-muted">{filtered.length} task{filtered.length !== 1 ? "s" : ""}</p>
         </div>
-        <button type="button" onClick={() => setOpen(true)} className="border border-line px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-fg">Add task</button>
+        <button type="button" onClick={() => setOpen(true)} className="border border-line px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-fg">Add task</button>
       </header>
       <div className="flex flex-wrap items-center gap-2 border-b border-line px-4 py-2">
         <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search tasks" className="h-7 flex-1 border border-line bg-panel px-2 text-[12px] text-fg outline-none focus:border-accent" />
@@ -60,7 +60,7 @@ export function LaunchPlanTimeline({
         {groups.map((g) => (
           <article key={g.phase} className="bg-panel">
             <header className="border-b border-line px-3 py-2 flex items-center justify-between">
-              <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-fg">{g.phase}</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-fg">{g.phase}</p>
               <p className="text-[11px] text-faint">{g.items.length}</p>
             </header>
             <div className="space-y-2 p-2">
@@ -81,7 +81,7 @@ export function LaunchPlanTimeline({
                         <LaunchStatusBadge status={t.status} />
                       </div>
                       <p className="mt-1 text-[11px] text-muted">{t.date}</p>
-                      <div className="mt-2 font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+                      <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                         {t.owner ? <span>{t.owner}</span> : null}
                         {t.owner && t.relatedChannelId ? <span>·</span> : null}
                         {t.relatedChannelId ? <span>Channel</span> : null}
@@ -96,7 +96,7 @@ export function LaunchPlanTimeline({
       </div>
       {selected && (
         <div className="bg-panel p-4 border-t border-line">
-          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-accent">Selected task</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">Selected task</p>
           <h3 className="mt-1 text-[13px] font-medium text-fg">{selected.title}</h3>
           <p className="mt-1 text-[11.5px] text-muted">{selected.description}</p>
           <div className="mt-2 flex items-center gap-2">

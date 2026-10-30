@@ -70,7 +70,7 @@ export function FeatureBacklog({
             <button
               type="button"
               onClick={onAddFeature}
-              className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+              className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
             >
               Add Feature
             </button>
@@ -92,7 +92,7 @@ export function FeatureBacklog({
         <button
           type="button"
           onClick={onAddFeature}
-          className="border border-accent/70 bg-mint-tint/60 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-accent transition-colors hover:bg-mint-tint"
+          className="border border-accent/70 bg-mint-tint/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-accent transition-colors hover:bg-mint-tint"
         >
           + Add Feature
         </button>
@@ -136,7 +136,7 @@ export function FeatureBacklog({
                 id="mvp-filter-priority"
                 value={filters.priority}
                 onChange={(event) => setFilters({ ...filters, priority: event.target.value })}
-                className={`h-8 min-w-0 border bg-panel px-1.5 font-mono text-[9px] uppercase tracking-[0.1em] outline-none transition-colors focus:border-accent ${
+                className={`h-8 min-w-0 border bg-panel px-1.5 font-mono text-[10px] uppercase tracking-[0.1em] outline-none transition-colors focus:border-accent ${
                   filters.priority === "all" ? "border-line text-faint" : "border-accent/60 text-accent"
                 }`}
               >
@@ -155,7 +155,7 @@ export function FeatureBacklog({
                 id="mvp-filter-status"
                 value={filters.status}
                 onChange={(event) => setFilters({ ...filters, status: event.target.value })}
-                className={`h-8 min-w-0 border bg-panel px-1.5 font-mono text-[9px] uppercase tracking-[0.1em] outline-none transition-colors focus:border-accent ${
+                className={`h-8 min-w-0 border bg-panel px-1.5 font-mono text-[10px] uppercase tracking-[0.1em] outline-none transition-colors focus:border-accent ${
                   filters.status === "all" ? "border-line text-faint" : "border-accent/60 text-accent"
                 }`}
               >
@@ -174,7 +174,7 @@ export function FeatureBacklog({
                 id="mvp-filter-scope"
                 value={filters.scope}
                 onChange={(event) => setFilters({ ...filters, scope: event.target.value })}
-                className={`h-8 min-w-0 border bg-panel px-1.5 font-mono text-[9px] uppercase tracking-[0.1em] outline-none transition-colors focus:border-accent ${
+                className={`h-8 min-w-0 border bg-panel px-1.5 font-mono text-[10px] uppercase tracking-[0.1em] outline-none transition-colors focus:border-accent ${
                   filters.scope === "all" ? "border-line text-faint" : "border-accent/60 text-accent"
                 }`}
               >
@@ -191,7 +191,7 @@ export function FeatureBacklog({
               <button
                 type="button"
                 onClick={() => setFilters(CLEAR)}
-                className="flex w-full items-center justify-center gap-2 border border-line px-2 py-1.5 font-mono text-[9px] uppercase tracking-[0.14em] text-faint transition-colors hover:border-accent hover:text-accent"
+                className="flex w-full items-center justify-center gap-2 border border-line px-2 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint transition-colors hover:border-accent hover:text-accent"
               >
                 Clear filters
               </button>
@@ -200,7 +200,7 @@ export function FeatureBacklog({
 
           {filtered.length === 0 ? (
             <div className="px-4 py-8 text-center">
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-faint">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-faint">
                 No matching results
               </p>
               <p className="mx-auto mt-2 max-w-[34ch] text-[12px] leading-relaxed text-muted">
@@ -209,7 +209,7 @@ export function FeatureBacklog({
               <button
                 type="button"
                 onClick={() => setFilters(CLEAR)}
-                className="mt-3 border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+                className="mt-3 border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
               >
                 Clear filters
               </button>
@@ -238,7 +238,7 @@ export function FeatureBacklog({
                       <div className="mt-2 flex flex-wrap items-center gap-1.5">
                         <FeaturePriorityBadge priority={f.priority} />
                         <FeatureScopeBadge scope={f.scope} />
-                        <span className="font-mono text-[8.5px] uppercase tracking-[0.12em] text-faint">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
                           {f.area}
                         </span>
                       </div>
@@ -257,7 +257,7 @@ export function FeatureBacklog({
               <header className="border-b border-line px-4 py-4 sm:px-6">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
                       Feature detail
                     </p>
                     <h3 className="mt-2 text-[clamp(1.15rem,2vw,1.45rem)] font-medium tracking-[-0.03em] text-fg">
@@ -278,7 +278,7 @@ export function FeatureBacklog({
               <div className="flex-1 space-y-5 px-4 py-4 sm:px-6 sm:py-5">
                 <div className="grid gap-3 border border-line px-3 py-3 sm:grid-cols-2">
                   <label className="block">
-                    <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                       Status
                     </span>
                     <select
@@ -298,7 +298,7 @@ export function FeatureBacklog({
                     </select>
                   </label>
                   <label className="block">
-                    <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                       Scope classification
                     </span>
                     <select
@@ -318,7 +318,7 @@ export function FeatureBacklog({
                 </div>
 
                 <div>
-                  <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                     Description
                   </p>
                   <p className="mt-1.5 text-[13px] leading-relaxed text-fg">
@@ -327,7 +327,7 @@ export function FeatureBacklog({
                 </div>
 
                 <div>
-                  <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                     User problem
                   </p>
                   <p className="mt-1.5 text-[12.5px] leading-relaxed text-muted">
@@ -336,7 +336,7 @@ export function FeatureBacklog({
                 </div>
 
                 <div>
-                  <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                     User story
                   </p>
                   <p className="mt-1.5 border-l-2 border-accent/50 pl-3 text-[12.5px] italic leading-relaxed text-fg">
@@ -345,7 +345,7 @@ export function FeatureBacklog({
                 </div>
 
                 <div>
-                  <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
                     Acceptance criteria · {selected.acceptanceCriteria.length}
                   </p>
                   <ul className="mt-1.5 space-y-1.5">
@@ -359,7 +359,7 @@ export function FeatureBacklog({
                 </div>
               </div>
 
-              <p className="border-t border-line px-4 py-2.5 font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint sm:px-6">
+              <p className="border-t border-line px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint sm:px-6">
                 Status and scope changes are local UI state · nothing is persisted
               </p>
             </article>

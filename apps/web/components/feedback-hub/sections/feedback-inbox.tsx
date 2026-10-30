@@ -123,7 +123,7 @@ export function FeedbackInbox({
               <button
                 type="button"
                 onClick={() => setDialogOpen(true)}
-                className="border border-accent/70 bg-mint-tint/60 px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-accent transition-colors hover:bg-mint-tint"
+                className="border border-accent/70 bg-mint-tint/60 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-accent transition-colors hover:bg-mint-tint"
               >
                 Add Feedback
               </button>
@@ -147,7 +147,7 @@ export function FeedbackInbox({
       <section className="min-w-0 bg-panel" aria-label="Feedback inbox list">
         <header className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3">
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">Inbox</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">Inbox</p>
             <p className="mt-1 text-[11px] text-muted">
               {filtered.length === feedback.length
                 ? `${feedback.length} records`
@@ -157,7 +157,7 @@ export function FeedbackInbox({
           <button
             type="button"
             onClick={() => setDialogOpen(true)}
-            className="border border-line px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+            className="border border-line px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
           >
             Add
           </button>
@@ -232,7 +232,7 @@ export function FeedbackInbox({
               type="button"
               onClick={() => setFilters(EMPTY_FILTERS)}
               disabled={!filtersActive}
-              className="border border-line px-2 font-mono text-[9px] uppercase tracking-[0.14em] text-faint transition-colors hover:border-accent hover:text-accent disabled:opacity-50 disabled:hover:border-line disabled:hover:text-faint"
+              className="border border-line px-2 font-mono text-[10px] uppercase tracking-[0.14em] text-faint transition-colors hover:border-accent hover:text-accent disabled:opacity-50 disabled:hover:border-line disabled:hover:text-faint"
             >
               Clear filters
             </button>
@@ -242,7 +242,7 @@ export function FeedbackInbox({
         <div className="max-h-[30rem] overflow-y-auto lg:max-h-[38rem]">
           {filtered.length === 0 ? (
             <div className="px-4 py-8 text-center">
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-faint">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-faint">
                 No matching results
               </p>
               <p className="mx-auto mt-2 max-w-[32ch] text-[12px] leading-relaxed text-muted">
@@ -251,7 +251,7 @@ export function FeedbackInbox({
               <button
                 type="button"
                 onClick={() => setFilters(EMPTY_FILTERS)}
-                className="mt-3 border border-line px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+                className="mt-3 border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
               >
                 Reset filters
               </button>
@@ -283,7 +283,7 @@ export function FeedbackInbox({
                         <FeedbackCategoryBadge category={f.category} />
                         <FeedbackPriorityBadge priority={f.priority} />
                       </div>
-                      <p className="mt-1.5 font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+                      <p className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                         {f.date} · {f.source}
                         {f.productArea ? ` · ${f.productArea}` : ""}
                       </p>

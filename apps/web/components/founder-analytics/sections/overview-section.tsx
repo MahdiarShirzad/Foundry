@@ -90,7 +90,7 @@ export function OverviewSection({
                     ? "Overlay the previous window of the same length"
                     : `A ${range}-week comparison needs ${range * 2} sample weeks of history`
                 }
-                className={`flex h-[26px] items-center gap-2 border px-2 font-mono text-[9.5px] uppercase tracking-[0.14em] transition-colors ${
+                className={`flex h-[26px] items-center gap-2 border px-2 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
                   compare && canCompare
                     ? "border-accent/40 bg-mint-tint text-accent"
                     : "border-line text-faint hover:text-fg"
@@ -142,14 +142,14 @@ export function OverviewSection({
               <li key={entry.id} className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-2.5 first:pt-0 last:pb-0">
                 <span aria-hidden className="mt-[6px] size-1.5 shrink-0 bg-mint" />
                 <p className="min-w-0 flex-1 text-[12.5px] leading-relaxed text-fg">{entry.text}</p>
-                <span className="shrink-0 font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+                <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                   {entry.source}
                 </span>
               </li>
             ))}
           </ul>
         )}
-        <p className="mt-3 border-t border-line pt-2.5 font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+        <p className="mt-3 border-t border-line pt-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
           Sample observations · written by hand for this demo
         </p>
       </Panel>

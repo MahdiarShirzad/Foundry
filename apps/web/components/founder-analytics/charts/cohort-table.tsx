@@ -28,13 +28,13 @@ export default function CohortTable({ rows }: { rows: CohortRow[] }) {
             <tr>
               <th
                 scope="col"
-                className="border-b border-line pb-1.5 font-mono text-[9px] font-normal uppercase tracking-[0.18em] text-faint"
+                className="border-b border-line pb-1.5 font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-faint"
               >
                 Cohort
               </th>
               <th
                 scope="col"
-                className="border-b border-line pb-1.5 text-right font-mono text-[9px] font-normal uppercase tracking-[0.18em] text-faint"
+                className="border-b border-line pb-1.5 text-right font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-faint"
               >
                 Size
               </th>
@@ -42,7 +42,7 @@ export default function CohortTable({ rows }: { rows: CohortRow[] }) {
                 <th
                   key={week}
                   scope="col"
-                  className="border-b border-line pb-1.5 text-right font-mono text-[9px] font-normal uppercase tracking-[0.18em] text-faint"
+                  className="border-b border-line pb-1.5 text-right font-mono text-[10px] font-normal uppercase tracking-[0.18em] text-faint"
                 >
                   {week}
                 </th>
@@ -94,7 +94,7 @@ export default function CohortTable({ rows }: { rows: CohortRow[] }) {
           weeks. Dashed cells have not been observed yet.
         </p>
         <span className="flex shrink-0 items-center gap-[3px]" aria-hidden>
-          <span className="font-mono text-[8px] uppercase tracking-[0.12em] text-faint">less</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">less</span>
           {swatches.map((value) => (
             <span
               key={value}
@@ -102,7 +102,7 @@ export default function CohortTable({ rows }: { rows: CohortRow[] }) {
               style={{ backgroundColor: "var(--accent)", opacity: value }}
             />
           ))}
-          <span className="font-mono text-[8px] uppercase tracking-[0.12em] text-faint">more</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">more</span>
         </span>
       </div>
     </div>

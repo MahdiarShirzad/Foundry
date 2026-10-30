@@ -73,7 +73,7 @@ export function IdeaToolbar({
           ) : null}
         </AnimatePresence>
 
-        <span className="shrink-0 border-l border-line pl-2.5 font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+        <span className="shrink-0 border-l border-line pl-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           {String(count).padStart(2, "0")}
         </span>
       </div>
@@ -88,7 +88,7 @@ export function IdeaToolbar({
                 type="button"
                 onClick={() => onStatusChange(option.value)}
                 aria-pressed={active}
-                className={`relative px-1.5 py-1 font-mono text-[9px] uppercase tracking-[0.14em] transition-colors ${
+                className={`relative px-1.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
                   active ? "text-accent" : "text-faint hover:text-fg"
                 }`}
               >

@@ -113,15 +113,15 @@ export function IdeaSelect({
         aria-expanded={open}
         aria-controls={open ? listboxId : undefined}
         onClick={toggle}
-        className={`flex h-8 w-full min-w-0 max-w-full items-center gap-2 border bg-panel px-2.5 transition-colors ${
+        className={`flex h-9 w-full min-w-0 max-w-full items-center gap-2 border bg-panel px-2.5 transition-colors ${
           open ? "border-accent text-accent" : "border-line hover:border-line-2"
         }`}
       >
-        <span className="shrink-0 font-mono text-[8.5px] uppercase tracking-[0.16em] text-faint">
+        <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
           {label}
         </span>
         <span aria-hidden className="h-3 w-px shrink-0 bg-line" />
-        <span className="min-w-0 truncate font-mono text-[9.5px] uppercase tracking-[0.1em] text-fg">
+        <span className="min-w-0 truncate font-mono text-[11px] uppercase tracking-[0.1em] text-fg">
           {selected?.shortLabel ?? selected?.label}
         </span>
         <svg

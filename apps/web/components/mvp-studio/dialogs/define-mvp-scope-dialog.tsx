@@ -82,14 +82,14 @@ export function DefineMVPScopeDialog({
           <button
             type="button"
             onClick={onClose}
-            className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent hover:text-accent"
+            className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent hover:text-accent"
           >
             Cancel
           </button>
           <button
             form="mvp-define-scope-form"
             type="submit"
-            className="border border-accent/70 bg-mint-tint/60 px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-accent transition-colors hover:bg-mint-tint"
+            className="border border-accent/70 bg-mint-tint/60 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-accent transition-colors hover:bg-mint-tint"
           >
             Save definition
           </button>
@@ -200,7 +200,7 @@ export function DefineMVPScopeDialog({
           />
         </div>
 
-        <p className="border-t border-line pt-3 font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+        <p className="border-t border-line pt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           No scope rule, validation engine or backend is involved
         </p>
       </form>

@@ -52,7 +52,7 @@ export default function DistributionBars({
         })}
       </ul>
 
-      <p className="mt-3 border-t border-line pt-2.5 font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+      <p className="mt-3 border-t border-line pt-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
         {caption ?? `${total.toLocaleString("en-US")} ${unit} in the sample`}
       </p>
     </div>

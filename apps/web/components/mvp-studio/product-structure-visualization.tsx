@@ -20,7 +20,7 @@ export function ProductStructureVisualization({
   return (
     <section className="border border-line bg-panel">
       <header className="border-b border-line px-4 py-3">
-        <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
           Product Structure
         </p>
         <p className="mt-1 text-[11.5px] text-muted">
@@ -30,7 +30,7 @@ export function ProductStructureVisualization({
 
       <div className="grid gap-px bg-line lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
         <article className="bg-panel px-4 py-4">
-          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
             Core product areas
           </p>
           <ul className="mt-3 grid gap-2 sm:grid-cols-3">
@@ -44,14 +44,14 @@ export function ProductStructureVisualization({
                 >
                   <div className="flex items-baseline justify-between gap-2">
                     <p className="text-[12.5px] font-medium text-fg">{area.name}</p>
-                    <p className="font-mono text-[9px] tabular-nums text-faint">
+                    <p className="font-mono text-[10px] tabular-nums text-faint">
                       {inArea.length}
                     </p>
                   </div>
                   <p className="text-[11px] leading-snug text-muted">{area.blurb}</p>
                   <div className="mt-auto flex items-center gap-1.5 pt-1">
                     <span aria-hidden className="size-1.5 bg-mint" />
-                    <span className="font-mono text-[8.5px] uppercase tracking-[0.12em] text-faint">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
                       {inMvp} in MVP
                     </span>
                   </div>
@@ -60,13 +60,13 @@ export function ProductStructureVisualization({
             })}
           </ul>
 
-          <p className="mt-3 border-t border-line pt-3 font-mono text-[8.5px] uppercase leading-relaxed tracking-[0.14em] text-faint">
+          <p className="mt-3 border-t border-line pt-3 font-mono text-[10px] uppercase leading-relaxed tracking-[0.14em] text-faint">
             Areas group backlog features · counts update with scope changes
           </p>
         </article>
 
         <article className="bg-panel px-4 py-4">
-          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
             User journey · entry point to primary value
           </p>
           <ol className="mt-3 space-y-1.5">
@@ -75,13 +75,13 @@ export function ProductStructureVisualization({
                 <div className="flex items-stretch gap-3">
                   <span
                     aria-hidden
-                    className="flex w-6 shrink-0 items-center justify-center border border-line font-mono text-[9px] text-faint"
+                    className="flex w-6 shrink-0 items-center justify-center border border-line font-mono text-[10px] text-faint"
                   >
                     {index + 1}
                   </span>
                   <div className="flex min-w-0 flex-1 items-center justify-between gap-3 border border-line px-3 py-2">
                     <p className="truncate text-[12.5px] text-fg">{step.step}</p>
-                    <p className="shrink-0 font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+                    <p className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                       {step.note}
                     </p>
                   </div>
@@ -89,7 +89,7 @@ export function ProductStructureVisualization({
                 {index < journey.length - 1 ? (
                   <div aria-hidden className="ml-3 flex h-3.5 items-center">
                     <span className="h-full w-px bg-line-2" />
-                    <span className="ml-1 font-mono text-[9px] leading-none text-faint">
+                    <span className="ml-1 font-mono text-[10px] leading-none text-faint">
                       ↓
                     </span>
                   </div>
@@ -97,7 +97,7 @@ export function ProductStructureVisualization({
               </li>
             ))}
           </ol>
-          <p className="mt-3 border-t border-line pt-3 font-mono text-[8.5px] uppercase leading-relaxed tracking-[0.14em] text-faint">
+          <p className="mt-3 border-t border-line pt-3 font-mono text-[10px] uppercase leading-relaxed tracking-[0.14em] text-faint">
             Keep the first version focused on this path
           </p>
         </article>

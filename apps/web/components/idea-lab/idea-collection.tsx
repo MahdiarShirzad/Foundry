@@ -40,10 +40,10 @@ export function IdeaCollection({
       </motion.ul>
 
       <div className="flex shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-line px-4 py-2">
-        <span className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           {String(ideas.length).padStart(2, "0")} ideas · static sample
         </span>
-        <span className="hidden font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint/80 sm:block">
+        <span className="hidden font-mono text-[10px] uppercase tracking-[0.14em] text-faint/80 sm:block">
           search &amp; filters preview only
         </span>
       </div>

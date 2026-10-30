@@ -87,14 +87,14 @@ export function CreateExperimentDialog({
           <button
             type="button"
             onClick={onClose}
-            className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent hover:text-accent"
+            className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent hover:text-accent"
           >
             {confirmed ? "Close" : "Cancel"}
           </button>
           <button
             form="create-experiment-form"
             type="submit"
-            className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+            className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
           >
             {confirmed ? "Created (local)" : "Create experiment"}
           </button>
@@ -213,7 +213,7 @@ export function CreateExperimentDialog({
           />
         </Field>
 
-        <p className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+        <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           No surveys sent · no participants recruited · no analytics tracked
         </p>
       </form>

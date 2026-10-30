@@ -80,7 +80,7 @@ export function FeatureRequestsWorkspace({
       <section className="min-w-0 bg-panel" aria-label="Feature requests list">
         <header className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3">
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
               Feature Requests
             </p>
             <p className="mt-1 text-[11px] text-muted">
@@ -143,7 +143,7 @@ export function FeatureRequestsWorkspace({
               type="button"
               onClick={() => setFilters(EMPTY_FILTERS)}
               disabled={!filtersActive}
-              className="col-span-2 border border-line px-2 py-1.5 font-mono text-[9px] uppercase tracking-[0.14em] text-faint transition-colors hover:border-accent hover:text-accent disabled:opacity-50 disabled:hover:border-line disabled:hover:text-faint"
+              className="col-span-2 border border-line px-2 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint transition-colors hover:border-accent hover:text-accent disabled:opacity-50 disabled:hover:border-line disabled:hover:text-faint"
             >
               Clear filters
             </button>
@@ -153,7 +153,7 @@ export function FeatureRequestsWorkspace({
         <div className="max-h-[30rem] overflow-y-auto lg:max-h-[38rem]">
           {filtered.length === 0 ? (
             <div className="px-4 py-8 text-center">
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-faint">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-faint">
                 No matching results
               </p>
               <p className="mx-auto mt-2 max-w-[32ch] text-[12px] leading-relaxed text-muted">
@@ -162,7 +162,7 @@ export function FeatureRequestsWorkspace({
               <button
                 type="button"
                 onClick={() => setFilters(EMPTY_FILTERS)}
-                className="mt-3 border border-line px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+                className="mt-3 border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
               >
                 Reset filters
               </button>
@@ -192,7 +192,7 @@ export function FeatureRequestsWorkspace({
                       </p>
                       <div className="mt-2 flex flex-wrap items-center gap-1.5">
                         <FeedbackRequestStatusBadge status={r.status} />
-                        <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                           {r.relatedFeedbackIds.length} linked · {r.productArea}
                         </span>
                       </div>
@@ -217,7 +217,7 @@ export function FeatureRequestsWorkspace({
           >
             <header className="flex flex-wrap items-start justify-between gap-3">
               <div className="min-w-0">
-                <p className="flex items-center gap-2.5 font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+                <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
                   <span aria-hidden className="size-1.5 bg-mint" />
                   Feature request · {selected.id}
                 </p>
@@ -243,7 +243,7 @@ export function FeatureRequestsWorkspace({
               <div className="border border-line bg-mint-tint/20">
                 <div className="flex items-center gap-2 border-b border-line px-3 py-2">
                   <span aria-hidden className="size-1.5 bg-accent" />
-                  <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-accent">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
                     Requested capability
                   </p>
                 </div>
@@ -317,13 +317,13 @@ export function FeatureRequestsWorkspace({
                         onClick={() => onOpenFeedback(f.id)}
                         className="flex w-full items-baseline gap-2 border border-line px-3 py-2 text-left transition-colors hover:border-accent/70 hover:bg-mint-tint/20"
                       >
-                        <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                           {f.id}
                         </span>
                         <span className="min-w-0 flex-1 truncate text-[12px] text-fg">
                           {f.title}
                         </span>
-                        <span className="shrink-0 font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+                        <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                           {f.status}
                         </span>
                       </button>
@@ -333,7 +333,7 @@ export function FeatureRequestsWorkspace({
               )}
             </div>
 
-            <p className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+            <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
               Status and priority are set by hand · no demand scoring or automatic ranking
             </p>
           </motion.div>

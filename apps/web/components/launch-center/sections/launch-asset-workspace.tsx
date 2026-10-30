@@ -32,7 +32,7 @@ export function LaunchAssetWorkspace({
   const channel = selected ? channels.find((c) => c.id === selected.relatedChannelId) : null;
 
   if (assets.length === 0) {
-    return <LaunchCenterEmptyState title="Empty asset library" description="Add launch assets to organize launch content." action={<button type="button" onClick={() => setOpen(true)} className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg">Add Launch Asset</button>} />;
+    return <LaunchCenterEmptyState title="Empty asset library" description="Add launch assets to organize launch content." action={<button type="button" onClick={() => setOpen(true)} className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg">Add Launch Asset</button>} />;
   }
 
   return (
@@ -40,10 +40,10 @@ export function LaunchAssetWorkspace({
       <section className="bg-panel">
         <header className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3">
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">Launch Assets</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">Launch Assets</p>
             <p className="mt-1 text-[11px] text-muted">{filtered.length} shown</p>
           </div>
-          <button type="button" onClick={() => setOpen(true)} className="border border-line px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-fg">Add</button>
+          <button type="button" onClick={() => setOpen(true)} className="border border-line px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-fg">Add</button>
         </header>
         <div className="flex flex-wrap items-center gap-2 border-b border-line px-4 py-2">
           <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search assets" className="h-7 flex-1 border border-line bg-panel px-2 text-[12px] text-fg outline-none focus:border-accent" />
@@ -67,7 +67,7 @@ export function LaunchAssetWorkspace({
                   <LaunchStatusBadge status={a.status} />
                 </div>
                 <p className="mt-1 text-[11px] text-faint">{a.type}</p>
-                <div className="mt-2 font-mono text-[9px] uppercase tracking-[0.14em] text-faint">{a.lastUpdated}</div>
+                <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">{a.lastUpdated}</div>
               </button>
             );
           })}
@@ -78,29 +78,29 @@ export function LaunchAssetWorkspace({
           <div className="space-y-6 px-6 py-5">
             <header className="flex flex-wrap items-start justify-between gap-3">
               <div>
-                <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">Asset Detail</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">Asset Detail</p>
                 <h3 className="mt-2 text-[1.3rem] font-medium tracking-[-0.03em] text-fg">{selected.title}</h3>
               </div>
               <LaunchStatusBadge status={selected.status} />
             </header>
             <div>
-              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">Type</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">Type</p>
               <p className="mt-2 text-[12px] text-fg">{selected.type}</p>
             </div>
             <div>
-              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">Preview</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">Preview</p>
               <p className="mt-2 text-[12px] leading-relaxed text-muted">{selected.preview}</p>
             </div>
             <div>
-              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">Status</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">Status</p>
               <p className="mt-2 text-[12px] text-fg">{selected.status}</p>
             </div>
             <div>
-              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">Last updated</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">Last updated</p>
               <p className="mt-2 text-[12px] text-fg">{selected.lastUpdated}</p>
             </div>
             <div>
-              <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">Related channel</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">Related channel</p>
               <p className="mt-2 text-[12px] text-fg">{channel?.name ?? selected.relatedChannelId ?? "None"}</p>
             </div>
           </div>

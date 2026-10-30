@@ -6,7 +6,6 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
   ANALYTICS_PRODUCTS,
   ANALYTICS_RANGES,
-  ANALYTICS_SECTIONS,
   type AnalyticsSection,
   type Observation,
   type ObservationDraft,
@@ -223,7 +222,7 @@ export default function FounderAnalyticsPage() {
         </motion.div>
       </AnimatePresence>
 
-      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-line pt-3 font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-line pt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
         <span aria-hidden className="size-1.5 bg-accent" />
         Frontend UI only · Static demo data · No tracking, no ingestion, no metric computation
       </p>

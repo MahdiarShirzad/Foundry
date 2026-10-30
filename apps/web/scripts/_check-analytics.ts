@@ -3,7 +3,6 @@ import {
   DEMO_ANALYTICS_DATA,
   DEMO_ANALYTICS_PRODUCTS,
   getKpis,
-  getSeriesSlice,
 } from "../lib/founder-analytics/demo";
 import { METRIC_CATALOG } from "../lib/founder-analytics/demo";
 

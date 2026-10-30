@@ -21,8 +21,14 @@
 
   /* Brand */
   --color-accent: var(--accent);
+  --color-accent-tint: var(--accent-tint);
   --color-mint: var(--mint);
   --color-mint-tint: var(--mint-tint);
+
+  /* Elevation — squared surfaces use restrained, ink-tinted shadows. */
+  --shadow-overlay: var(--elevation-overlay);
+  --shadow-popover: var(--elevation-popover);
+  --shadow-toast: var(--elevation-toast);
 
   /* Semantic status */
   --color-success: var(--success);
@@ -61,14 +67,19 @@
   --fg: #0e1b1d;
   --muted: #3d5450;
   --faint: #5a716c;
-  --disabled-fg: #9aaba7;
+  --disabled-fg: #7f918c;
   --line: rgb(14 27 29 / 0.14);
   --line-2: rgb(14 27 29 / 0.34);
   --grid: rgb(14 27 29 / 0.06);
 
   --accent: #0e7c6c;
+  --accent-tint: rgb(14 124 108 / 0.10);
   --mint: #4fcab5;
   --mint-tint: rgb(80 207 186 / 0.16);
+
+  --elevation-overlay: 0 28px 80px -32px rgb(14 27 29 / 0.55);
+  --elevation-popover: 0 18px 44px -28px rgb(14 27 29 / 0.45);
+  --elevation-toast: 0 18px 44px -24px rgb(14 27 29 / 0.5);
 
   /* Semantic status — distinct hues, each independently AA on --bg */
   --success: #0e7c6c;
@@ -97,8 +108,13 @@
   --grid: rgb(233 245 242 / 0.05);
 
   --accent: #5cd6bf;
+  --accent-tint: rgb(92 214 191 / 0.12);
   --mint: #5cd6bf;
   --mint-tint: rgb(92 214 191 / 0.14);
+
+  --elevation-overlay: 0 28px 80px -32px rgb(0 0 0 / 0.7);
+  --elevation-popover: 0 18px 44px -28px rgb(0 0 0 / 0.6);
+  --elevation-toast: 0 18px 44px -24px rgb(0 0 0 / 0.65);
 
   --success: #5cd6bf;
   --success-tint: rgb(92 214 191 / 0.14);

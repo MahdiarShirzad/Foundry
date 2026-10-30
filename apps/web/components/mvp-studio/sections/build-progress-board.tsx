@@ -34,7 +34,7 @@ export function BuildProgressBoard({
             <button
               type="button"
               onClick={onAddFeature}
-              className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+              className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
             >
               Add Feature
             </button>
@@ -51,12 +51,12 @@ export function BuildProgressBoard({
       title="Build Progress"
       subtitle="Feature implementation status across the workspace"
       footer={
-        <p className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+        <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           Presentational feature tracking · no git, CI, deployment or task synchronization
         </p>
       }
     >
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-b border-line px-4 py-2.5 font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-b border-line px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
         <span>
           <span className="text-fg">{features.length}</span> features
         </span>
@@ -79,10 +79,10 @@ export function BuildProgressBoard({
           return (
             <article key={column.key} className="flex flex-col bg-panel">
               <header className="flex items-baseline justify-between gap-2 border-b border-line px-3 py-2">
-                <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
                   {column.title}
                 </p>
-                <p className="font-mono text-[9px] tabular-nums text-fg">{list.length}</p>
+                <p className="font-mono text-[10px] tabular-nums text-fg">{list.length}</p>
               </header>
 
               <div className="flex-1 space-y-2 p-2">
@@ -110,7 +110,7 @@ export function BuildProgressBoard({
 
                       <div className="mt-2 flex flex-wrap items-center gap-1.5">
                         <FeaturePriorityBadge priority={f.priority} />
-                        <span className="font-mono text-[8.5px] uppercase tracking-[0.12em] text-faint">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
                           {f.area}
                         </span>
                       </div>
@@ -123,7 +123,7 @@ export function BuildProgressBoard({
                             onMoveStatus(f.id, order[Math.max(0, columnIndex - 1)])
                           }
                           aria-label={`Move ${f.name} to ${BUILD_COLUMNS[Math.max(0, columnIndex - 1)].title}`}
-                          className="flex h-6 flex-1 items-center justify-center border border-line font-mono text-[9px] text-faint transition-colors enabled:hover:border-accent enabled:hover:text-accent disabled:opacity-35"
+                          className="flex h-6 flex-1 items-center justify-center border border-line font-mono text-[10px] text-faint transition-colors enabled:hover:border-accent enabled:hover:text-accent disabled:opacity-35"
                         >
                           ←
                         </button>
@@ -137,7 +137,7 @@ export function BuildProgressBoard({
                             )
                           }
                           aria-label={`Move ${f.name} to ${BUILD_COLUMNS[Math.min(BUILD_COLUMNS.length - 1, columnIndex + 1)].title}`}
-                          className="flex h-6 flex-1 items-center justify-center border border-line font-mono text-[9px] text-faint transition-colors enabled:hover:border-accent enabled:hover:text-accent disabled:opacity-35"
+                          className="flex h-6 flex-1 items-center justify-center border border-line font-mono text-[10px] text-faint transition-colors enabled:hover:border-accent enabled:hover:text-accent disabled:opacity-35"
                         >
                           →
                         </button>

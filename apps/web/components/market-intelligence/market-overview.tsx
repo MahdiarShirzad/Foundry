@@ -55,11 +55,11 @@ export function MarketOverview({
       <div className="grid gap-px bg-line lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]">
         <section className="flex flex-col bg-panel px-5 py-6 sm:px-7 sm:py-7">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="flex items-center gap-2.5 font-mono text-[9px] uppercase tracking-[0.2em] text-accent">
+            <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.2em] text-accent">
               <span aria-hidden className="size-1.5 bg-mint" />
               Market brief · {idea.ref}
             </p>
-            <span className="font-mono text-[8px] uppercase tracking-[0.12em] text-faint">
+            <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
               Sample hypothesis
             </span>
           </div>
@@ -92,7 +92,7 @@ export function MarketOverview({
         <section className="bg-panel px-5 py-6 sm:px-6 sm:py-7">
           <div className="flex items-baseline justify-between gap-3">
             <SectionLabel>Evidence mix</SectionLabel>
-            <span className="font-mono text-[8px] uppercase tracking-[0.12em] text-faint">
+            <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
               {totalEvidence} items
             </span>
           </div>
@@ -125,7 +125,7 @@ export function MarketOverview({
                     <span aria-hidden className={`size-1.5 shrink-0 ${meta.bar}`} />
                     <span className="truncate text-[11.5px] text-muted">{meta.label}</span>
                   </span>
-                  <span className="font-mono text-[9px] tabular-nums tracking-[0.08em] text-fg">
+                  <span className="font-mono text-[10px] tabular-nums tracking-[0.08em] text-fg">
                     {String(entry.count).padStart(2, "0")}
                   </span>
                 </li>
@@ -145,7 +145,7 @@ export function MarketOverview({
           <button
             type="button"
             onClick={() => onOpenSection("competitors")}
-            className="font-mono text-[8px] uppercase tracking-[0.14em] text-accent underline-offset-4 hover:underline"
+            className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent underline-offset-4 hover:underline"
           >
             Open competitor workspace →
           </button>
@@ -180,7 +180,7 @@ export function MarketOverview({
             <button
               type="button"
               onClick={() => onOpenSection("notes")}
-              className="font-mono text-[8px] uppercase tracking-[0.14em] text-accent underline-offset-4 hover:underline"
+              className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent underline-offset-4 hover:underline"
             >
               All {idea.notes.length} notes →
             </button>
@@ -196,7 +196,7 @@ export function MarketOverview({
                 >
                   <span className="min-w-0">
                     <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                      <span className="font-mono text-[8px] uppercase tracking-[0.12em] text-faint">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
                         {formatMarketShortDate(note.date)}
                       </span>
                       <EvidenceBadge type={note.evidence} />
@@ -226,7 +226,7 @@ export function MarketOverview({
             <button
               type="button"
               onClick={() => onOpenSection("opportunities")}
-              className="font-mono text-[8px] uppercase tracking-[0.14em] text-accent underline-offset-4 hover:underline"
+              className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent underline-offset-4 hover:underline"
             >
               All {idea.opportunities.length} →
             </button>
@@ -242,7 +242,7 @@ export function MarketOverview({
                     onClick={() => onOpenOpportunity(opportunity.id)}
                     className="group grid w-full grid-cols-[1.5rem_minmax(0,1fr)] gap-2 py-3 text-left"
                   >
-                    <span className="pt-0.5 font-mono text-[8.5px] tracking-[0.1em] text-accent">
+                    <span className="pt-0.5 font-mono text-[10px] tracking-[0.1em] text-accent">
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <span className="min-w-0">
@@ -271,7 +271,7 @@ export function MarketOverview({
           <button
             type="button"
             onClick={onAddResearch}
-            className="font-mono text-[8px] uppercase tracking-[0.14em] text-accent underline-offset-4 hover:underline"
+            className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent underline-offset-4 hover:underline"
           >
             Add a research note →
           </button>
@@ -284,7 +284,7 @@ export function MarketOverview({
                 key={question}
                 className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-2 border-b border-line/70 py-2.5"
               >
-                <span className="font-mono text-[8.5px] tracking-[0.1em] text-accent">
+                <span className="font-mono text-[10px] tracking-[0.1em] text-accent">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <p className="text-[12px] leading-relaxed text-muted">{question}</p>
@@ -297,7 +297,7 @@ export function MarketOverview({
                 key={question}
                 className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-2 border-b border-line/70 py-2.5"
               >
-                <span className="font-mono text-[8.5px] tracking-[0.1em] text-accent">
+                <span className="font-mono text-[10px] tracking-[0.1em] text-accent">
                   {String(index + 1 + Math.ceil(idea.openQuestions.length / 2)).padStart(2, "0")}
                 </span>
                 <p className="text-[12px] leading-relaxed text-muted">{question}</p>
@@ -312,7 +312,7 @@ export function MarketOverview({
           Every claim on this page belongs to the sample set. Treat it as a structure for
           research, not a conclusion.
         </p>
-        <p className="font-mono text-[8px] uppercase tracking-[0.13em] text-faint">
+        <p className="font-mono text-[10px] uppercase tracking-[0.13em] text-faint">
           Updated {formatMarketShortDate(idea.updatedAt)}
         </p>
       </div>

@@ -36,7 +36,7 @@ function Group({
 }) {
   return (
     <div className={`border-l-2 ${tone} pl-3`}>
-      <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">{label}</p>
+      <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">{label}</p>
       {items.length === 0 ? (
         <p className="mt-2 text-[11.5px] italic text-faint">{empty}</p>
       ) : (
@@ -130,14 +130,14 @@ export function ValidationSummary({
     <section className="border border-line bg-panel" aria-label="Validation summary">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
         <div>
-          <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
             Validation Summary
           </p>
           <p className="mt-1 text-[11.5px] text-muted">
             {idea.name} · a written review of the current state, not an automatic verdict
           </p>
         </div>
-        <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
           {hypotheses.length} hypotheses · {findings.length} findings · {experiments.length}{" "}
           experiments
         </p>
@@ -145,7 +145,7 @@ export function ValidationSummary({
 
       <div className="grid gap-px bg-line lg:grid-cols-2">
         <article className="bg-panel px-4 py-4">
-          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
             Hypotheses and current statuses
           </p>
           <div className="mt-3 space-y-2">
@@ -173,7 +173,7 @@ export function ValidationSummary({
         </article>
 
         <article className="bg-panel px-4 py-4">
-          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
             Evidence review by assessment
           </p>
           <div className="mt-3 space-y-4">
@@ -196,12 +196,12 @@ export function ValidationSummary({
         </article>
 
         <article className="bg-panel px-4 py-4">
-          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
             Remaining uncertainties
           </p>
           <div className="mt-3 space-y-3">
             <div>
-              <p className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                 Hypotheses still open
               </p>
               <p className="mt-1 text-[12px] text-muted">
@@ -211,23 +211,23 @@ export function ValidationSummary({
               </p>
             </div>
             <div>
-              <p className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                 Assessments on record
               </p>
               <p className="mt-1 flex flex-wrap gap-2">
-                <span className="border border-mint/70 px-2 py-[3px] font-mono text-[8.5px] uppercase tracking-[0.13em] text-fg">
+                <span className="border border-mint/70 px-2 py-[3px] font-mono text-[10px] uppercase tracking-[0.13em] text-fg">
                   {supported.length} supported
                 </span>
-                <span className="border border-danger/60 px-2 py-[3px] font-mono text-[8.5px] uppercase tracking-[0.13em] text-fg">
+                <span className="border border-danger/60 px-2 py-[3px] font-mono text-[10px] uppercase tracking-[0.13em] text-fg">
                   {rejected.length} rejected
                 </span>
-                <span className="border border-line-2 px-2 py-[3px] font-mono text-[8.5px] uppercase tracking-[0.13em] text-fg">
+                <span className="border border-line-2 px-2 py-[3px] font-mono text-[10px] uppercase tracking-[0.13em] text-fg">
                   {inconclusive.length} inconclusive
                 </span>
               </p>
             </div>
             <div className="border-t border-line pt-3">
-              <p className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                 Manually selected next step
               </p>
               <label htmlFor="vl-next-step" className="sr-only">
@@ -245,7 +245,7 @@ export function ValidationSummary({
                   </option>
                 ))}
               </select>
-              <p className="mt-1.5 font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+              <p className="mt-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                 Chosen by you · never recommended by the interface
               </p>
             </div>
@@ -253,7 +253,7 @@ export function ValidationSummary({
         </article>
 
         <article className="bg-panel px-4 py-4">
-          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
             Questions that still need investigation
           </p>
           <ul className="mt-3 space-y-2">
@@ -267,7 +267,7 @@ export function ValidationSummary({
                   <span aria-hidden className="mt-[7px] size-1 shrink-0 bg-accent" />
                   <span className="min-w-0">
                     <span className="block text-[12.5px] text-fg">{question.title}</span>
-                    <span className="mt-0.5 block font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+                    <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                       {question.meta}
                     </span>
                   </span>
@@ -279,7 +279,7 @@ export function ValidationSummary({
       </div>
 
       <footer className="border-t border-line px-4 py-3">
-        <p className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+        <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           Statuses are labels recorded by the founder · no go/no-go decision, confidence score, or
           viability verdict is generated here
         </p>

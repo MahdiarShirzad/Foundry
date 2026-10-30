@@ -223,12 +223,12 @@ export default function ValidationLabPage() {
 
   const statePreview = (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-3">
-      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
         <span aria-hidden className="size-1.5 bg-accent" />
         Frontend UI only · Static mock data · Local state for presentational interactions
       </p>
       <div className="ml-auto flex flex-wrap items-center gap-1.5">
-        <span className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           UI state preview
         </span>
         {VIEWS.map(({ label, value }) => (
@@ -237,7 +237,7 @@ export default function ValidationLabPage() {
             type="button"
             onClick={() => setView(value)}
             aria-pressed={view === value}
-            className={`border px-2 py-0.5 font-mono text-[8.5px] uppercase tracking-[0.14em] transition-colors ${
+            className={`border px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
               view === value
                 ? "border-accent/60 bg-mint-tint/50 text-accent"
                 : "border-line text-faint hover:border-accent/60 hover:text-accent"
@@ -246,7 +246,7 @@ export default function ValidationLabPage() {
             {label}
           </button>
         ))}
-        <span className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           Empty workspace · select TideMarket
         </span>
       </div>

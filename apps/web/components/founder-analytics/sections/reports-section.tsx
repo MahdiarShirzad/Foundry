@@ -91,7 +91,7 @@ export function ReportsSection({
             <button
               type="button"
               onClick={openCreate}
-              className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+              className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
             >
               New observation
             </button>
@@ -100,6 +100,7 @@ export function ReportsSection({
         <ObservationDialog
           open
           key={editing?.id ?? "create"}
+          onClose={() => setDialogOpen(false)}
           initial={editing}
           onSubmit={(draft) => {
             onCreate(draft);
@@ -141,7 +142,7 @@ export function ReportsSection({
                     type="button"
                     onClick={() => setCategory(entry)}
                     aria-pressed={active}
-                    className={`border px-2 py-1 font-mono text-[9px] uppercase tracking-[0.14em] transition-colors ${
+                    className={`border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
                       active
                         ? "border-accent/60 bg-mint-tint/50 text-accent"
                         : "border-line text-faint hover:text-fg"
@@ -158,7 +159,7 @@ export function ReportsSection({
                   setCategory("all");
                 }}
                 disabled={!filtersActive}
-                className="border border-line px-2 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-faint transition-colors hover:border-accent hover:text-accent disabled:opacity-50 disabled:hover:border-line disabled:hover:text-faint"
+                className="border border-line px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-faint transition-colors hover:border-accent hover:text-accent disabled:opacity-50 disabled:hover:border-line disabled:hover:text-faint"
               >
                 Clear
               </button>
@@ -168,7 +169,7 @@ export function ReportsSection({
           <div className="mt-3 max-h-[26rem] overflow-y-auto border-t border-line">
             {filtered.length === 0 ? (
               <div className="px-2 py-8 text-center">
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-faint">
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-faint">
                   No matching reports
                 </p>
                 <p className="mx-auto mt-2 max-w-[30ch] text-[12px] leading-relaxed text-muted">
@@ -183,7 +184,7 @@ export function ReportsSection({
                       setQuery("");
                       setCategory("all");
                     }}
-                    className="mt-3 border border-line px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+                    className="mt-3 border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
                   >
                     Reset filters
                   </button>
@@ -205,14 +206,14 @@ export function ReportsSection({
                       >
                         <span className="flex items-baseline justify-between gap-2">
                           <span className="text-[12.5px] font-medium text-fg">{report.title}</span>
-                          <span className="shrink-0 font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+                          <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                             {report.category}
                           </span>
                         </span>
                         <span className="mt-1 block text-[11.5px] leading-relaxed text-muted">
                           {report.description}
                         </span>
-                        <span className="mt-1.5 block font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+                        <span className="mt-1.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                           {report.period} · {report.updated}
                         </span>
                       </button>
@@ -235,14 +236,14 @@ export function ReportsSection({
                 <button
                   type="button"
                   onClick={() => onReportChange(null)}
-                  className="border border-line px-2 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-faint transition-colors hover:border-accent hover:text-accent"
+                  className="border border-line px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-faint transition-colors hover:border-accent hover:text-accent"
                 >
                   ← All reports
                 </button>
                 <button
                   type="button"
                   onClick={onExport}
-                  className="border border-line px-2 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-fg transition-colors hover:border-accent hover:text-accent"
+                  className="border border-line px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-fg transition-colors hover:border-accent hover:text-accent"
                 >
                   Export
                 </button>
@@ -264,7 +265,7 @@ export function ReportsSection({
               transition={{ duration: reduce ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="space-y-4"
             >
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
                 <span className="border border-line-2 px-1.5 py-[2px]">{selected.category}</span>
                 <span>{selected.period}</span>
                 <span aria-hidden>·</span>
@@ -280,7 +281,7 @@ export function ReportsSection({
               <div className="grid gap-px border border-line bg-line sm:grid-cols-3">
                 {selected.values.map((entry) => (
                   <div key={entry.label} className="bg-panel px-3 py-3">
-                    <p className="font-mono text-[8.5px] uppercase tracking-[0.16em] text-faint">
+                    <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
                       {entry.label}
                     </p>
                     <p className="mt-1.5 font-mono text-[15px] leading-tight text-fg">
@@ -292,7 +293,7 @@ export function ReportsSection({
 
               {selected.chart ? (
                 <div className="border border-line">
-                  <p className="border-b border-line px-4 py-2.5 font-mono text-[9px] uppercase tracking-[0.18em] text-fg">
+                  <p className="border-b border-line px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.18em] text-fg">
                     {selected.chart.title} · {formatWindow(dataset, range)}
                   </p>
                   <TrendChart
@@ -315,7 +316,7 @@ export function ReportsSection({
 
               {selected.bars ? (
                 <div className="border border-line px-4 py-4">
-                  <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.18em] text-fg">
+                  <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-fg">
                     {selected.bars.label}
                   </p>
                   <DistributionBars
@@ -329,7 +330,7 @@ export function ReportsSection({
                 </div>
               ) : null}
 
-              <p className="border-t border-line pt-2.5 font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint">
+              <p className="border-t border-line pt-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                 Predefined sample report · not generated from production data
               </p>
             </motion.div>
@@ -341,7 +342,7 @@ export function ReportsSection({
       <section className="border border-line bg-panel" aria-label="Founder observations">
         <header className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3">
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
               Founder observations
             </p>
             <p className="mt-1 text-[11.5px] text-muted">
@@ -351,7 +352,7 @@ export function ReportsSection({
           <button
             type="button"
             onClick={openCreate}
-            className="border border-accent/70 bg-mint-tint/60 px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-accent transition-colors hover:bg-mint-tint"
+            className="border border-accent/70 bg-mint-tint/60 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-accent transition-colors hover:bg-mint-tint"
           >
             New observation
           </button>
@@ -367,7 +368,7 @@ export function ReportsSection({
                 <button
                   type="button"
                   onClick={openCreate}
-                  className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+                  className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
                 >
                   New observation
                 </button>
@@ -383,17 +384,17 @@ export function ReportsSection({
                       <div className="min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
                           <span
-                            className={`border px-1.5 py-[2px] font-mono text-[8px] uppercase tracking-[0.13em] ${
+                            className={`border px-1.5 py-[2px] font-mono text-[10px] uppercase tracking-[0.13em] ${
                               TYPE_TONE[entry.type] ?? "border-line-2 text-faint"
                             }`}
                           >
                             {entry.type}
                           </span>
-                          <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+                          <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
                             {metric?.name ?? "Unlinked"}
                           </span>
                           {entry.sample ? (
-                            <span className="border border-line-2 px-1.5 py-[2px] font-mono text-[8px] uppercase tracking-[0.13em] text-faint">
+                            <span className="border border-line-2 px-1.5 py-[2px] font-mono text-[10px] uppercase tracking-[0.13em] text-faint">
                               sample note
                             </span>
                           ) : null}
@@ -415,14 +416,14 @@ export function ReportsSection({
                             setEditing(entry);
                             setDialogOpen(true);
                           }}
-                          className="border border-line px-2 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-faint transition-colors hover:border-accent hover:text-accent"
+                          className="border border-line px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-faint transition-colors hover:border-accent hover:text-accent"
                         >
                           Edit
                         </button>
                         <button
                           type="button"
                           onClick={() => onDelete(entry.id)}
-                          className="border border-line px-2 py-1 font-mono text-[9px] uppercase tracking-[0.14em] text-faint transition-colors hover:border-danger/60 hover:text-danger"
+                          className="border border-line px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-faint transition-colors hover:border-danger/60 hover:text-danger"
                         >
                           Delete
                         </button>

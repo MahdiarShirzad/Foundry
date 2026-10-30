@@ -1,32 +1,31 @@
 "use client";
 
+import { WorkspaceTabs } from "@/components/ui/primitives";
+
 import { LAUNCH_SECTIONS, type LaunchSection } from "@/lib/launch-center/types";
 
 export function LaunchWorkspaceNavigation({
   section,
   onChange,
+  counts,
 }: {
   section: LaunchSection;
   onChange: (section: LaunchSection) => void;
+  counts?: Partial<Record<LaunchSection, number>>;
 }) {
   return (
-    <nav aria-label="Launch workspace sections" className="border border-line bg-panel">
-      <div className="flex flex-wrap items-center gap-1 px-2 py-1.5">
-        {LAUNCH_SECTIONS.map((s) => {
-          const active = section === s;
-          return (
-            <button
-              key={s}
-              type="button"
-              onClick={() => onChange(s)}
-              aria-current={active ? "page" : undefined}
-              className={`px-2.5 py-1 font-mono text-[9.5px] uppercase tracking-[0.16em] transition-colors ${active ? "text-accent" : "text-faint hover:text-fg"}`}
-            >
-              {s}
-            </button>
-          );
-        })}
-      </div>
-    </nav>
+    <WorkspaceTabs
+      label="Launch workspace sections"
+      meta="Launch workspace"
+      note="Readiness · plan · assets · channels"
+      idPrefix="launch"
+      value={section}
+      onChange={(next) => onChange(next as LaunchSection)}
+      items={LAUNCH_SECTIONS.map((value) => ({
+        value,
+        label: value,
+        count: counts?.[value],
+      }))}
+    />
   );
 }

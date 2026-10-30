@@ -153,10 +153,10 @@ function SidebarContent({
           className="inline-flex shrink-0 items-center"
         >
           <Image
-            src={collapsed ? "/icon.png" : "/logo.png"}
+            src={collapsed ? "/icon-white.png" : "/logo-white.png"}
             alt="Foundry"
-            width={932}
-            height={297}
+            width={1300}
+            height={400}
             className={
               collapsed ? "size-7 self-start object-contain" : "h-6 w-auto self-start"
             }

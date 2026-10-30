@@ -2,10 +2,10 @@ export function IdeaLabEmptyCollection({ onNewIdea }: { onNewIdea: () => void })
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="flex shrink-0 items-center justify-between gap-3 border-b border-line px-4 py-2.5">
-        <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
           The collection
         </span>
-        <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           00 ideas
         </span>
       </div>
@@ -24,7 +24,7 @@ export function IdeaLabEmptyCollection({ onNewIdea }: { onNewIdea: () => void })
           <span aria-hidden className="absolute -right-1 -top-1 size-2 bg-mint" />
         </span>
 
-        <p className="mt-5 font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+        <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
           Nothing captured yet
         </p>
         <h2 className="mt-2 max-w-[22ch] text-[18px] font-medium leading-snug tracking-[-0.02em] text-fg">
@@ -58,10 +58,10 @@ export function IdeaLabNoResults({
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="flex shrink-0 items-center justify-between gap-3 border-b border-line px-4 py-2.5">
-        <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
           No matches
         </span>
-        <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
           00 results
         </span>
       </div>
@@ -83,7 +83,7 @@ export function IdeaLabNoResults({
         <button
           type="button"
           onClick={onClear}
-          className="mt-5 h-9 border border-line-2 px-3.5 font-mono text-[9px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+          className="mt-5 h-9 border border-line-2 px-3.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
         >
           Clear search &amp; filters
         </button>
@@ -102,7 +102,7 @@ export function IdeaLabDetailEmpty() {
   return (
     <div className="flex min-h-full items-center justify-center bg-panel px-6 py-14 sm:px-10">
       <div className="w-full max-w-[34rem]">
-        <p className="flex items-center gap-2.5 font-mono text-[9px] uppercase tracking-[0.22em] text-accent">
+        <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
           <span aria-hidden className="size-1.5 bg-mint" />
           Stage 01 · Capture
         </p>
@@ -120,7 +120,7 @@ export function IdeaLabDetailEmpty() {
               key={number}
               className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-3 border-b border-line py-3"
             >
-              <span className="font-mono text-[9px] tracking-[0.14em] text-accent">{number}</span>
+              <span className="font-mono text-[10px] tracking-[0.14em] text-accent">{number}</span>
               <div>
                 <p className="text-[12px] font-medium text-fg">{title}</p>
                 <p className="mt-0.5 text-[11.5px] leading-relaxed text-muted">{description}</p>
