@@ -1,61 +1,103 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence } from "motion/react";
-
 import { DEMO_MVP_PROJECTS } from "@/lib/mvp-studio/demo";
 import type { MVPProject } from "@/lib/mvp-studio/types";
 
-import { AddFeatureDialog } from "./dialogs/add-feature-dialog";
-import { DefineMVPScopeDialog } from "./dialogs/define-mvp-scope-dialog";
-
 export function MVPStudioHeader({
   project,
-  onChangeProject,
   projects = DEMO_MVP_PROJECTS,
+  onChangeProject,
+  counts,
+  onAddFeature,
+  onDefineScope,
 }: {
   project: MVPProject;
-  onChangeProject: (id: string) => void;
   projects?: MVPProject[];
+  onChangeProject: (id: string) => void;
+  counts: { total: number; inMvp: number; inProgress: number; completed: number };
+  onAddFeature: () => void;
+  onDefineScope: () => void;
 }) {
-  const [addOpen, setAddOpen] = useState(false);
-  const [scopeOpen, setScopeOpen] = useState(false);
-
   return (
-    <header className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
+    <header className="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
       <div className="min-w-0">
         <p className="flex items-center gap-2.5 font-mono text-[9.5px] uppercase tracking-[0.24em] text-accent">
-          <span aria-hidden className="size-1.5 bg-mint" />
+          <span aria-hidden className="size-1.5 shrink-0 bg-mint" />
           Stage 04 / Build
+          <span aria-hidden className="hidden h-px w-9 bg-line sm:block" />
+          <span className="hidden font-mono text-[9px] tracking-[0.2em] text-faint sm:inline">
+            Eight-stage cycle
+          </span>
         </p>
-        <h1 className="mt-2 text-[clamp(1.8rem,4vw,2.8rem)] font-medium leading-[0.98] tracking-[-0.04em] text-fg">
+
+        <h1 className="mt-2.5 text-[clamp(1.9rem,4vw,2.8rem)] font-medium leading-[0.98] tracking-[-0.04em] text-fg">
           MVP Studio
         </h1>
-        <p className="mt-2 max-w-[68ch] text-[12.5px] leading-relaxed text-muted">
-          Turn your validated idea into a focused, buildable first version by defining essential features, setting boundaries, and organizing product specifications.
+
+        <p className="mt-2.5 max-w-[68ch] text-[12.5px] leading-relaxed text-muted">
+          Turn your validated idea into a focused, buildable first version by defining essential
+          features, setting boundaries, and organizing product specifications.
         </p>
-        <div className="mt-3 flex flex-wrap items-center gap-2">
-          <label className="flex items-center gap-2 border border-line px-2.5 py-1.5">
-            <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">Product</span>
-            <select value={project.id} onChange={(e) => onChangeProject(e.target.value)} className="bg-transparent text-[12px] text-fg outline-none" aria-label="Select product idea for MVP studio">
-              {projects.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name} · {p.ref}
+
+        <div className="mt-3.5 flex flex-wrap items-center gap-2">
+          <label className="flex h-8 items-center gap-2 border border-line bg-panel px-2.5">
+            <span className="shrink-0 font-mono text-[8.5px] uppercase tracking-[0.16em] text-faint">
+              Idea
+            </span>
+            <span aria-hidden className="h-3 w-px bg-line" />
+            <select
+              value={project.id}
+              onChange={(event) => onChangeProject(event.target.value)}
+              aria-label="Select product idea for MVP Studio"
+              className="min-w-0 bg-transparent font-mono text-[9.5px] uppercase tracking-[0.1em] text-fg outline-none"
+            >
+              {projects.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.name} · {item.ref}
                 </option>
               ))}
             </select>
           </label>
-          <span className="border border-line px-2.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-faint">MVP project · {project.name}</span>
+
+          {/* Compact MVP project status */}
+          <p className="flex h-8 flex-wrap items-center gap-x-2 gap-y-1 border border-line bg-panel px-2.5 font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+            <span className="flex items-center gap-1.5 text-accent">
+              <span aria-hidden className="size-1.5 bg-mint" />
+              {project.status}
+            </span>
+            <span aria-hidden className="size-0.5 bg-line-2" />
+            <span className="text-fg">{project.name}</span>
+            <span aria-hidden className="size-0.5 bg-line-2" />
+            {counts.total} proposed
+            <span aria-hidden className="size-0.5 bg-line-2" />
+            {counts.inMvp} in MVP
+            <span aria-hidden className="size-0.5 bg-line-2" />
+            {counts.inProgress} building
+            <span aria-hidden className="size-0.5 bg-line-2" />
+            {counts.completed} done
+          </p>
         </div>
       </div>
-      <div className="flex flex-wrap items-center gap-2">
-        <button type="button" onClick={() => setAddOpen(true)} className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent">Add Feature</button>
-        <button type="button" onClick={() => setScopeOpen(true)} className="border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent">Define MVP Scope</button>
+
+      <div className="flex shrink-0 flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={onAddFeature}
+          className="inline-flex h-10 items-center justify-center gap-2 bg-mint px-4 text-[13px] font-medium text-ink transition duration-200 hover:brightness-95 active:translate-y-px sm:h-9"
+        >
+          <span aria-hidden className="text-[14px] leading-none">
+            +
+          </span>
+          Add Feature
+        </button>
+        <button
+          type="button"
+          onClick={onDefineScope}
+          className="inline-flex h-10 items-center justify-center gap-2 border border-line-2 bg-panel px-3.5 font-mono text-[9px] uppercase tracking-[0.14em] text-fg transition-colors hover:border-accent hover:text-accent sm:h-9"
+        >
+          Define MVP Scope
+        </button>
       </div>
-      <AnimatePresence>
-        {addOpen ? <AddFeatureDialog onClose={() => setAddOpen(false)} /> : null}
-        {scopeOpen ? <DefineMVPScopeDialog onClose={() => setScopeOpen(false)} /> : null}
-      </AnimatePresence>
     </header>
   );
 }

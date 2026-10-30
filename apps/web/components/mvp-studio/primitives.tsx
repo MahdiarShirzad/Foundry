@@ -3,6 +3,66 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
+/** Shared panel chrome so every workspace section reads as one system. */
+export function SectionPanel({
+  title,
+  subtitle,
+  action,
+  footer,
+  children,
+}: {
+  title: string;
+  subtitle?: string;
+  action?: ReactNode;
+  footer?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <section className="border border-line bg-panel">
+      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
+        <div className="min-w-0">
+          <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-accent">{title}</p>
+          {subtitle ? (
+            <p className="mt-1 text-[11.5px] text-muted">{subtitle}</p>
+          ) : null}
+        </div>
+        {action ? <div className="flex flex-wrap items-center gap-2">{action}</div> : null}
+      </header>
+      {children}
+      {footer ? (
+        <footer className="border-t border-line px-4 py-2.5">{footer}</footer>
+      ) : null}
+    </section>
+  );
+}
+
+/** Shared field label style for dialogs and editable spec fields. */
+export function FieldLabel({
+  htmlFor,
+  children,
+  hint,
+}: {
+  htmlFor?: string;
+  children: ReactNode;
+  hint?: string;
+}) {
+  return (
+    <span className="flex flex-wrap items-baseline justify-between gap-2">
+      <label
+        htmlFor={htmlFor}
+        className="font-mono text-[9px] uppercase tracking-[0.2em] text-faint"
+      >
+        {children}
+      </label>
+      {hint ? (
+        <span className="font-mono text-[8.5px] uppercase tracking-[0.14em] text-faint/80">
+          {hint}
+        </span>
+      ) : null}
+    </span>
+  );
+}
+
 export function PresentationalDialog({
   open,
   onClose,
