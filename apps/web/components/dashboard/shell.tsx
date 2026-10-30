@@ -31,6 +31,7 @@ const PAGE_TITLES: Record<string, string> = {
   "/dashboard/product-roadmap": "Product Roadmap",
   "/dashboard/launch-center": "Launch Center",
   "/dashboard/feedback-hub": "Feedback Hub",
+  "/dashboard/founder-analytics": "Founder Analytics",
   "/dashboard/modules": "Modules",
 };
 
@@ -111,7 +112,9 @@ const GROUPS: NavGroup[] = [
                     ? "/dashboard/launch-center"
                     : stage.id === "07"
                       ? "/dashboard/feedback-hub"
-                      : null;
+                      : stage.id === "08"
+                        ? "/dashboard/founder-analytics"
+                        : null;
       return {
         label: stage.name,
         href: route ?? `/dashboard/modules#${stageSlug(stage.id)}`,
