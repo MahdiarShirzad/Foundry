@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import IdeaLabPage from "@/components/idea-lab/idea-lab-page";
+import { DEFAULT_IDEA_CATEGORIES } from "@/lib/idea-lab/categories";
 
 export const metadata: Metadata = {
   title: "Idea Lab",
@@ -10,5 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <IdeaLabPage />;
+  // Single injection point for category options: swap this list for an API
+  // call when the backend exposes them.
+  return <IdeaLabPage categoryOptions={DEFAULT_IDEA_CATEGORIES} />;
 }

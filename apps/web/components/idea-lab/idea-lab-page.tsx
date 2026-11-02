@@ -25,7 +25,11 @@ const WORKSPACE_HEIGHT =
 const WORKSPACE_COLUMNS =
   "md:grid-cols-[minmax(0,19rem)_minmax(0,1fr)] lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] xl:grid-cols-[minmax(0,25.5rem)_minmax(0,1fr)]";
 
-export default function IdeaLabPage() {
+export default function IdeaLabPage({
+  categoryOptions,
+}: {
+  categoryOptions?: string[];
+}) {
   const reduce = useReducedMotion();
   const workspaceRef = useRef<HTMLDivElement>(null);
 
@@ -143,6 +147,7 @@ export default function IdeaLabPage() {
                     onStatusChange={setStatus}
                     category={category}
                     onCategoryChange={setCategory}
+                    categoryOptions={categoryOptions}
                     sort={sort}
                     onSortChange={setSort}
                     count={visibleCount}
@@ -186,6 +191,7 @@ export default function IdeaLabPage() {
           <IdeaCaptureModal
             key="capture"
             onClose={() => setCaptureOpen(false)}
+            categoryOptions={categoryOptions}
           />
         ) : null}
       </AnimatePresence>

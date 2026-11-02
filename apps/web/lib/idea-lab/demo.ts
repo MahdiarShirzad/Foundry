@@ -1,3 +1,4 @@
+import { DEFAULT_IDEA_CATEGORIES, mergeCategories } from "./categories";
 import type { Idea } from "./types";
 
 /**
@@ -283,9 +284,15 @@ export const DEMO_IDEAS: Idea[] = [
   },
 ];
 
-export const IDEA_CATEGORIES = Array.from(
-  new Set(DEMO_IDEAS.map((idea) => idea.category)),
-).sort((a, b) => a.localeCompare(b));
+/**
+ * Presentation-only category list: default seeds plus whatever the sample
+ * ideas happen to use. The UI reads its options from a caller-supplied list
+ * (see components/idea-lab), not from this demo data.
+ */
+export const IDEA_CATEGORIES = mergeCategories(
+  DEFAULT_IDEA_CATEGORIES,
+  DEMO_IDEAS.map((idea) => idea.category ?? ""),
+);
 
 export const IDEA_CATEGORY_OPTIONS = [
   { value: "all", label: "All categories", shortLabel: "All" },

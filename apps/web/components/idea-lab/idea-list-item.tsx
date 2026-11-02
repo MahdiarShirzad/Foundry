@@ -71,7 +71,7 @@ export function IdeaListItem({
           <IdeaStatus status={idea.status} />
           <span aria-hidden className="size-0.5 bg-line-2" />
           <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-            {idea.category}
+            {idea.category?.trim() || "Uncategorised"}
           </span>
         </span>
       </button>

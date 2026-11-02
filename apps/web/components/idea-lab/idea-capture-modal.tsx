@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
-import { IDEA_CATEGORIES } from "@/lib/idea-lab/demo";
+import { DEFAULT_IDEA_CATEGORIES, mergeCategories } from "@/lib/idea-lab/categories";
 import type { IdeaDraft } from "@/lib/idea-lab/types";
 
 import { IdeaStatus } from "./idea-status";
@@ -40,9 +40,11 @@ function CaptureField({
 export function IdeaCaptureModal({
   onClose,
   onSubmit,
+  categoryOptions,
 }: {
   onClose: () => void;
   onSubmit?: (draft: IdeaDraft) => void;
+  categoryOptions?: string[];
 }) {
   const reduce = useReducedMotion();
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -58,6 +60,22 @@ export function IdeaCaptureModal({
   const [assumption, setAssumption] = useState("");
   const [expanded, setExpanded] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
+  const [typedCategory, setTypedCategory] = useState("");
+  const [addedCategories, setAddedCategories] = useState<string[]>([]);
+
+  const categoryChoices = mergeCategories(
+    categoryOptions ?? DEFAULT_IDEA_CATEGORIES,
+    addedCategories,
+  );
+
+  /** Enter or blur: adopt the typed value as an option and select it. */
+  function commitTypedCategory() {
+    const value = typedCategory.trim();
+    if (!value) return;
+    setAddedCategories((current) => mergeCategories(current, [value]));
+    setCategory(value);
+    setTypedCategory("");
+  }
 
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;
@@ -110,7 +128,7 @@ export function IdeaCaptureModal({
       summary: summary.trim(),
       problem: problem.trim(),
       audience: audience.trim(),
-      category,
+      category: category.trim() || null,
       tags: tags
         .split(",")
         .map((tag) => tag.trim())
@@ -251,7 +269,7 @@ export function IdeaCaptureModal({
                 <fieldset>
                   <legend className={LABEL}>Category</legend>
                   <div className="mt-2 flex flex-wrap gap-1.5">
-                    {IDEA_CATEGORIES.map((option) => {
+                    {categoryChoices.map((option) => {
                       const active = category === option;
                       return (
                         <button
@@ -270,6 +288,22 @@ export function IdeaCaptureModal({
                       );
                     })}
                   </div>
+
+                  <input
+                    id="capture-category-new"
+                    value={typedCategory}
+                    onChange={(event) => setTypedCategory(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        event.preventDefault();
+                        commitTypedCategory();
+                      }
+                    }}
+                    onBlur={commitTypedCategory}
+                    aria-label="Add a new category"
+                    placeholder="Add a category… (Enter)"
+                    className={`${INPUT} h-9 max-w-[20rem]`}
+                  />
                 </fieldset>
 
                 <CaptureField id="capture-tags" label="Tags" hint="Comma separated · optional">

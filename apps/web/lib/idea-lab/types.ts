@@ -23,7 +23,8 @@ export type Idea = {
   problem: string;
   audience: string;
   solution: string;
-  category: string;
+  /** Free text; empty means the idea is shown as "Uncategorised". */
+  category?: string | null;
   tags: string[];
   status: IdeaStatusKey;
   capturedAt: string;
@@ -40,7 +41,8 @@ export type IdeaDraft = {
   summary: string;
   problem: string;
   audience: string;
-  category: string;
+  /** Empty or omitted stays uncategorised. */
+  category?: string | null;
   tags: string[];
   context: string;
   assumption: string;

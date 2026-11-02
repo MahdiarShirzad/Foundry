@@ -3,10 +3,10 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import {
-  IDEA_CATEGORY_OPTIONS,
   IDEA_SORT_OPTIONS,
   IDEA_STATUS_FILTERS,
 } from "@/lib/idea-lab/demo";
+import { DEFAULT_IDEA_CATEGORIES, mergeCategories } from "@/lib/idea-lab/categories";
 import type { IdeaStatusFilter } from "@/lib/idea-lab/types";
 
 import { IdeaSelect } from "./idea-select";
@@ -18,6 +18,7 @@ export function IdeaToolbar({
   onStatusChange,
   category,
   onCategoryChange,
+  categoryOptions,
   sort,
   onSortChange,
   count,
@@ -28,11 +29,19 @@ export function IdeaToolbar({
   onStatusChange: (value: IdeaStatusFilter) => void;
   category: string;
   onCategoryChange: (value: string) => void;
+  categoryOptions?: string[];
   sort: string;
   onSortChange: (value: string) => void;
   count: number;
 }) {
   const reduce = useReducedMotion();
+
+  const categorySelectOptions = [
+    { value: "all", label: "All categories", shortLabel: "All" },
+    ...mergeCategories(categoryOptions ?? DEFAULT_IDEA_CATEGORIES, []).map(
+      (value) => ({ value, label: value }),
+    ),
+  ];
 
   return (
     <div className="shrink-0 border-b border-line bg-panel">
@@ -112,7 +121,7 @@ export function IdeaToolbar({
           <IdeaSelect
             label="Category"
             value={category}
-            options={IDEA_CATEGORY_OPTIONS}
+            options={categorySelectOptions}
             onChange={onCategoryChange}
           />
           <IdeaSelect

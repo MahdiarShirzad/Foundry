@@ -125,7 +125,9 @@ export function IdeaDetailPanel({
               <MetaCell label="Status">
                 <IdeaStatus status={idea.status} className="text-[10px]" />
               </MetaCell>
-              <MetaCell label="Category">{idea.category}</MetaCell>
+              <MetaCell label="Category">
+                {idea.category?.trim() || "Uncategorised"}
+              </MetaCell>
               <MetaCell label="Captured">{formatIdeaDate(idea.capturedAt)}</MetaCell>
               <MetaCell label="Last touched">{formatIdeaDate(idea.updatedAt)}</MetaCell>
             </dl>
