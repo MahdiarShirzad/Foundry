@@ -400,7 +400,8 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Workspace: 'Workspace',
-  WorkspaceMember: 'WorkspaceMember'
+  WorkspaceMember: 'WorkspaceMember',
+  EmailVerificationCode: 'EmailVerificationCode'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -416,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "workspace" | "workspaceMember"
+    modelProps: "user" | "session" | "workspace" | "workspaceMember" | "emailVerificationCode"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -716,6 +717,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    EmailVerificationCode: {
+      payload: Prisma.$EmailVerificationCodePayload<ExtArgs>
+      fields: Prisma.EmailVerificationCodeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EmailVerificationCodeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationCodePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EmailVerificationCodeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationCodePayload>
+        }
+        findFirst: {
+          args: Prisma.EmailVerificationCodeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationCodePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EmailVerificationCodeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationCodePayload>
+        }
+        findMany: {
+          args: Prisma.EmailVerificationCodeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationCodePayload>[]
+        }
+        create: {
+          args: Prisma.EmailVerificationCodeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationCodePayload>
+        }
+        createMany: {
+          args: Prisma.EmailVerificationCodeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EmailVerificationCodeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationCodePayload>[]
+        }
+        delete: {
+          args: Prisma.EmailVerificationCodeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationCodePayload>
+        }
+        update: {
+          args: Prisma.EmailVerificationCodeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationCodePayload>
+        }
+        deleteMany: {
+          args: Prisma.EmailVerificationCodeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EmailVerificationCodeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EmailVerificationCodeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationCodePayload>[]
+        }
+        upsert: {
+          args: Prisma.EmailVerificationCodeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EmailVerificationCodePayload>
+        }
+        aggregate: {
+          args: Prisma.EmailVerificationCodeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmailVerificationCode>
+        }
+        groupBy: {
+          args: Prisma.EmailVerificationCodeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmailVerificationCodeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EmailVerificationCodeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EmailVerificationCodeCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -799,6 +874,18 @@ export const WorkspaceMemberScalarFieldEnum = {
 } as const
 
 export type WorkspaceMemberScalarFieldEnum = (typeof WorkspaceMemberScalarFieldEnum)[keyof typeof WorkspaceMemberScalarFieldEnum]
+
+
+export const EmailVerificationCodeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  codeHash: 'codeHash',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type EmailVerificationCodeScalarFieldEnum = (typeof EmailVerificationCodeScalarFieldEnum)[keyof typeof EmailVerificationCodeScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1027,6 +1114,7 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   workspace?: Prisma.WorkspaceOmit
   workspaceMember?: Prisma.WorkspaceMemberOmit
+  emailVerificationCode?: Prisma.EmailVerificationCodeOmit
 }
 
 /* Types for Logging */

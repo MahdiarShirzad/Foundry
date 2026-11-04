@@ -54,7 +54,8 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Workspace: 'Workspace',
-  WorkspaceMember: 'WorkspaceMember'
+  WorkspaceMember: 'WorkspaceMember',
+  EmailVerificationCode: 'EmailVerificationCode'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -117,6 +118,18 @@ export const WorkspaceMemberScalarFieldEnum = {
 } as const
 
 export type WorkspaceMemberScalarFieldEnum = (typeof WorkspaceMemberScalarFieldEnum)[keyof typeof WorkspaceMemberScalarFieldEnum]
+
+
+export const EmailVerificationCodeScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  codeHash: 'codeHash',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type EmailVerificationCodeScalarFieldEnum = (typeof EmailVerificationCodeScalarFieldEnum)[keyof typeof EmailVerificationCodeScalarFieldEnum]
 
 
 export const SortOrder = {

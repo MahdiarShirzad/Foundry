@@ -23,6 +23,7 @@ model User {
 
   session          Session[]
   workspaceMembers WorkspaceMember[]
+    emailVerificationCodes EmailVerificationCode[]
 }
 
 model Session {
@@ -60,4 +61,17 @@ model WorkspaceMember {
 
   @@unique([userId, workspaceId])
   @@index([workspaceId])
+}
+
+model EmailVerificationCode {
+  id        String   @id @default(uuid())
+  userId    String
+  codeHash  String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
