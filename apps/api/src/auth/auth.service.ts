@@ -14,6 +14,7 @@ import { EmailSenderService } from './email-sender.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { VerifyEmailDto } from './dto/verify-email.dto';
+import { ResendVerificationDto } from './dto/resend-verification.dto';
 
 const DUMMY_HASH =
   '$argon2id$v=19$m=65536,t=3,p=4$c29tZXNhbHRzb21lc2FsdA$8c3n2GdZcV3S1kXqQe6TgK5m0mV2b5k0b8mRzV1vS0M';

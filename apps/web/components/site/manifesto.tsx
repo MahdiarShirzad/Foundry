@@ -42,9 +42,24 @@ export default function Manifesto() {
     <section
       id="problem"
       aria-labelledby="problem-title"
-      className="scroll-mt-16 border-b border-line"
+      className="relative isolate scroll-mt-16 overflow-hidden border-b border-line"
     >
-      <div className="px-6 py-20 sm:px-10 sm:py-28">
+      {/* Field layers: a wash spilling in from the left plus one large outline
+          that crosses the section seam, so this block sits at a different
+          depth from the hero above it. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-40 top-16 size-[34rem] rounded-full bg-[radial-gradient(closest-side,var(--mint-tint),transparent_74%)]" />
+        <div
+          className="absolute -right-16 top-24 hidden size-[26rem] rotate-[8deg] border border-line md:block"
+          style={{
+            maskImage: "radial-gradient(closest-side, #000, transparent 78%)",
+            WebkitMaskImage: "radial-gradient(closest-side, #000, transparent 78%)",
+          }}
+        />
+        <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,var(--line),transparent)]" />
+      </div>
+
+      <div className="relative px-6 py-20 sm:px-10 sm:py-28">
         <Reveal>
           <Eyebrow>Sec. 01 — Fragmentation</Eyebrow>
         </Reveal>
@@ -79,15 +94,25 @@ export default function Manifesto() {
             whileInView="show"
             viewport={{ once: true, margin: "0px 0px -10% 0px" }}
             variants={panelVariants}
-            className="border border-line bg-panel p-5"
+            className="relative overflow-hidden border border-line bg-surface-sunken/40 p-5"
           >
-            <figcaption className="flex items-baseline justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.22em]">
+            {/* The recessed plane: a finer grid sits under this figure, which
+                is why it reads as farther away than its connected twin. */}
+            <div
+              aria-hidden
+              className="blueprint-fine pointer-events-none absolute inset-0 opacity-70"
+              style={{
+                maskImage: "linear-gradient(155deg, #000, transparent 72%)",
+                WebkitMaskImage: "linear-gradient(155deg, #000, transparent 72%)",
+              }}
+            />
+            <figcaption className="relative flex items-baseline justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.22em]">
               <span className="text-faint">Scattered</span>
               <span className="text-faint">Context lost between tools</span>
             </figcaption>
             <svg
               viewBox="0 0 300 170"
-              className="mt-4 h-auto w-full"
+              className="relative mt-4 h-auto w-full"
               role="img"
               aria-label="Eight disconnected tool pairs with no shared context"
             >
@@ -139,9 +164,9 @@ export default function Manifesto() {
             whileInView="show"
             viewport={{ once: true, margin: "0px 0px -10% 0px" }}
             variants={panelVariants}
-            className="border border-line bg-panel p-5"
+            className="relative border border-line bg-panel p-5 shadow-card md:-mt-4"
           >
-            <figcaption className="flex items-baseline justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.22em]">
+            <figcaption className="relative flex items-baseline justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.22em]">
               <span className="text-accent">Connected</span>
               <span className="text-faint">Every stage informs the next</span>
             </figcaption>

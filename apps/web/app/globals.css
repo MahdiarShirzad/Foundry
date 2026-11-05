@@ -30,6 +30,11 @@
   --shadow-popover: var(--elevation-popover);
   --shadow-toast: var(--elevation-toast);
 
+  /* Layered elevation — one restrained shadow per depth plane. */
+  --shadow-lift: var(--elevation-lift);
+  --shadow-card: var(--elevation-card);
+  --shadow-plate: var(--elevation-plate);
+
   /* Semantic status */
   --color-success: var(--success);
   --color-success-tint: var(--success-tint);
@@ -81,6 +86,14 @@
   --elevation-popover: 0 18px 44px -28px rgb(14 27 29 / 0.45);
   --elevation-toast: 0 18px 44px -24px rgb(14 27 29 / 0.5);
 
+  /* Depth planes, not decoration: lift = an element the pointer can reach,
+   * card = a content surface, plate = the large sheet artwork rests on. All
+   * three stay ink-tinted and low-opacity so the paper field reads through. */
+  --elevation-lift: 0 1px 1px rgb(14 27 29 / 0.04), 0 10px 24px -18px rgb(14 27 29 / 0.35);
+  --elevation-card: 0 1px 2px rgb(14 27 29 / 0.03), 0 24px 48px -34px rgb(14 27 29 / 0.32);
+  --elevation-plate: 0 2px 6px rgb(14 27 29 / 0.04), 0 40px 90px -56px rgb(14 27 29 / 0.45),
+    0 90px 140px -110px rgb(14 124 108 / 0.4);
+
   /* Semantic status — distinct hues, each independently AA on --bg */
   --success: #0e7c6c;
   --success-tint: rgb(14 124 108 / 0.10);
@@ -115,6 +128,10 @@
   --elevation-overlay: 0 28px 80px -32px rgb(0 0 0 / 0.7);
   --elevation-popover: 0 18px 44px -28px rgb(0 0 0 / 0.6);
   --elevation-toast: 0 18px 44px -24px rgb(0 0 0 / 0.65);
+
+  --elevation-lift: 0 1px 1px rgb(0 0 0 / 0.5), 0 12px 28px -20px rgb(0 0 0 / 0.7);
+  --elevation-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 26px 52px -38px rgb(0 0 0 / 0.8);
+  --elevation-plate: 0 2px 6px rgb(0 0 0 / 0.45), 0 46px 96px -60px rgb(0 0 0 / 0.9);
 
   --success: #5cd6bf;
   --success-tint: rgb(92 214 191 / 0.14);
@@ -155,6 +172,37 @@ body {
     linear-gradient(to right, var(--grid) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
   background-size: 54px 54px;
+}
+
+/* Second grid frequency. Layered under (or inside) .blueprint it gives a
+ * surface two depths of texture instead of one repeating field. */
+.blueprint-fine {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+/* Backing sheet: the offset plane behind a raised plate. Translucent on
+ * purpose, so the field reads through it and the stack looks like paper
+ * rather than a second card. */
+.sheet {
+  border: 1px solid var(--line);
+  background-image: linear-gradient(
+    155deg,
+    var(--mint-tint),
+    rgb(255 255 255 / 0.45) 52%,
+    transparent 78%
+  );
+}
+
+.on-ink .sheet {
+  background-image: linear-gradient(
+    155deg,
+    var(--mint-tint),
+    rgb(255 255 255 / 0.04) 52%,
+    transparent 78%
+  );
 }
 
 /*

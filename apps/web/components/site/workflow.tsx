@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import Eyebrow from "./eyebrow";
+import Plate from "./plate";
 import { STAGES } from "./data";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -32,9 +33,16 @@ export default function Workflow() {
     <section
       id="workflow"
       aria-labelledby="workflow-title"
-      className="scroll-mt-16 border-b border-line"
+      className="relative isolate scroll-mt-16 overflow-hidden border-b border-line"
     >
-      <div className="px-6 py-20 sm:px-10 sm:py-28">
+      {/* A cool wash pools under the plate so the diagram's surface casts into
+          the field instead of sitting flat on it. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/2 top-[17rem] h-[30rem] w-[62rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,var(--accent-tint),transparent_74%)]" />
+        <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,var(--line),transparent)]" />
+      </div>
+
+      <div className="relative px-6 py-20 sm:px-10 sm:py-28">
         <div className="grid gap-8 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <motion.div
@@ -73,147 +81,150 @@ export default function Workflow() {
           whileInView="show"
           viewport={{ once: true, margin: "0px 0px -10% 0px" }}
           variants={{ hidden: {}, show: {} }}
-          className="mt-14"
+          className="relative mt-14"
         >
-          {/* Desktop diagram */}
-          <svg
-            viewBox="0 0 1000 320"
-            className="hidden h-auto w-full lg:block"
-            role="img"
-            aria-label="The eight-stage workflow drawn as a continuous line, closing with an insights-and-iteration loop back to stage one"
-          >
-            {/* base line */}
-            <motion.path
-              d={MAIN_PATH}
-              fill="none"
-              stroke="var(--line-2)"
-              strokeWidth="1.4"
-              variants={{
-                hidden: { pathLength: 0 },
-                show: { pathLength: 1, transition: { duration: 1.1, ease: EASE } },
-              }}
-            />
-            {/* current moving through the line */}
-            <motion.path
-              d={MAIN_PATH}
-              fill="none"
-              stroke="var(--accent)"
-              strokeWidth="1.8"
-              strokeDasharray="3 7"
-              className="flow"
-              variants={{
-                hidden: { opacity: 0 },
-                show: { opacity: 0.85, transition: { duration: 0.6, delay: 1.05 } },
-              }}
-            />
-            {/* feedback arc: insights return to stage 01 */}
-            <motion.path
-              d={FEEDBACK_PATH}
-              fill="none"
-              stroke="var(--accent)"
-              strokeWidth="1.4"
-              opacity={0.55}
-              variants={{
-                hidden: { pathLength: 0 },
-                show: { pathLength: 1, transition: { duration: 0.8, delay: 1.3, ease: EASE } },
-              }}
-            />
-            <motion.path
-              d={FEEDBACK_PATH}
-              fill="none"
-              stroke="var(--accent)"
-              strokeWidth="1.8"
-              strokeDasharray="3 7"
-              className="flow flow-slow"
-              variants={{
-                hidden: { opacity: 0 },
-                show: { opacity: 0.9, transition: { duration: 0.5, delay: 2.0 } },
-              }}
-            />
-            <motion.polygon
-              points="60,105 55,117 65,117"
-              fill="var(--accent)"
-              variants={{
-                hidden: { opacity: 0 },
-                show: { opacity: 1, transition: { duration: 0.3, delay: 2.05 } },
-              }}
-            />
-            <motion.text
-              x={74}
-              y={158}
-              fill="var(--accent)"
-              fontSize="11"
-              letterSpacing="2.4"
-              fontFamily="var(--font-geist-mono)"
-              variants={{
-                hidden: { opacity: 0 },
-                show: { opacity: 1, transition: { duration: 0.5, delay: 2.2 } },
-              }}
+          {/* Desktop diagram — drawn on a drafting plate that rests on a stack
+              of sheets, so the workflow has a surface of its own. */}
+          <Plate className="hidden lg:block" bodyClassName="p-4 sm:p-7">
+            <svg
+              viewBox="0 0 1000 320"
+              className="h-auto w-full"
+              role="img"
+              aria-label="The eight-stage workflow drawn as a continuous line, closing with an insights-and-iteration loop back to stage one"
             >
-              INSIGHTS & ITERATION
-            </motion.text>
+              {/* base line */}
+              <motion.path
+                d={MAIN_PATH}
+                fill="none"
+                stroke="var(--line-2)"
+                strokeWidth="1.4"
+                variants={{
+                  hidden: { pathLength: 0 },
+                  show: { pathLength: 1, transition: { duration: 1.1, ease: EASE } },
+                }}
+              />
+              {/* current moving through the line */}
+              <motion.path
+                d={MAIN_PATH}
+                fill="none"
+                stroke="var(--accent)"
+                strokeWidth="1.8"
+                strokeDasharray="3 7"
+                className="flow"
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: { opacity: 0.85, transition: { duration: 0.6, delay: 1.05 } },
+                }}
+              />
+              {/* feedback arc: insights return to stage 01 */}
+              <motion.path
+                d={FEEDBACK_PATH}
+                fill="none"
+                stroke="var(--accent)"
+                strokeWidth="1.4"
+                opacity={0.55}
+                variants={{
+                  hidden: { pathLength: 0 },
+                  show: { pathLength: 1, transition: { duration: 0.8, delay: 1.3, ease: EASE } },
+                }}
+              />
+              <motion.path
+                d={FEEDBACK_PATH}
+                fill="none"
+                stroke="var(--accent)"
+                strokeWidth="1.8"
+                strokeDasharray="3 7"
+                className="flow flow-slow"
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: { opacity: 0.9, transition: { duration: 0.5, delay: 2.0 } },
+                }}
+              />
+              <motion.polygon
+                points="60,105 55,117 65,117"
+                fill="var(--accent)"
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: { opacity: 1, transition: { duration: 0.3, delay: 2.05 } },
+                }}
+              />
+              <motion.text
+                x={74}
+                y={158}
+                fill="var(--accent)"
+                fontSize="11"
+                letterSpacing="2.4"
+                fontFamily="var(--font-geist-mono)"
+                variants={{
+                  hidden: { opacity: 0 },
+                  show: { opacity: 1, transition: { duration: 0.5, delay: 2.2 } },
+                }}
+              >
+                INSIGHTS & ITERATION
+              </motion.text>
 
-            {/* stations */}
-            {STATION_LAYOUT.map((station, i) => {
-              const isTop = station.y === TOP_Y;
-              const verbY = isTop ? station.y + 30 : station.y - 21;
-              const nameY = isTop ? station.y + 47 : station.y - 39;
-              return (
-                <motion.a
-                  key={station.id}
-                  href={`#stage-${station.id}`}
-                  aria-label={`Stage ${station.id} — ${station.name}`}
-                  variants={{
-                    hidden: { opacity: 0 },
-                    show: {
-                      opacity: 1,
-                      transition: { duration: 0.4, delay: 0.7 + i * 0.08 },
-                    },
-                  }}
-                >
-                  <circle
-                    cx={station.x}
-                    cy={station.y}
-                    r="13"
-                    fill="var(--panel)"
-                    stroke="var(--line-2)"
-                    strokeWidth="1.2"
-                  />
-                  <text
-                    x={station.x}
-                    y={station.y + 3.8}
-                    textAnchor="middle"
-                    fill="var(--fg)"
-                    fontSize="10.5"
-                    fontFamily="var(--font-geist-mono)"
+              {/* stations */}
+              {STATION_LAYOUT.map((station, i) => {
+                const isTop = station.y === TOP_Y;
+                const verbY = isTop ? station.y + 30 : station.y - 21;
+                const nameY = isTop ? station.y + 47 : station.y - 39;
+                return (
+                  <motion.a
+                    key={station.id}
+                    href={`#stage-${station.id}`}
+                    aria-label={`Stage ${station.id} — ${station.name}`}
+                    variants={{
+                      hidden: { opacity: 0 },
+                      show: {
+                        opacity: 1,
+                        transition: { duration: 0.4, delay: 0.7 + i * 0.08 },
+                      },
+                    }}
                   >
-                    {station.id}
-                  </text>
-                  <text
-                    x={station.x}
-                    y={verbY}
-                    textAnchor="middle"
-                    fill="var(--accent)"
-                    fontSize="11"
-                    letterSpacing="1.6"
-                    fontFamily="var(--font-geist-mono)"
-                  >
-                    {station.verb.toUpperCase()}
-                  </text>
-                  <text
-                    x={station.x}
-                    y={nameY}
-                    textAnchor="middle"
-                    fill="var(--fg)"
-                    fontSize="14"
-                    fontFamily="var(--font-geist-sans)"
-                  >
-                    {station.name}
-                  </text>
-                </motion.a>
-              );
-            })}
-          </svg>
+                    <circle
+                      cx={station.x}
+                      cy={station.y}
+                      r="13"
+                      fill="var(--panel)"
+                      stroke="var(--line-2)"
+                      strokeWidth="1.2"
+                    />
+                    <text
+                      x={station.x}
+                      y={station.y + 3.8}
+                      textAnchor="middle"
+                      fill="var(--fg)"
+                      fontSize="10.5"
+                      fontFamily="var(--font-geist-mono)"
+                    >
+                      {station.id}
+                    </text>
+                    <text
+                      x={station.x}
+                      y={verbY}
+                      textAnchor="middle"
+                      fill="var(--accent)"
+                      fontSize="11"
+                      letterSpacing="1.6"
+                      fontFamily="var(--font-geist-mono)"
+                    >
+                      {station.verb.toUpperCase()}
+                    </text>
+                    <text
+                      x={station.x}
+                      y={nameY}
+                      textAnchor="middle"
+                      fill="var(--fg)"
+                      fontSize="14"
+                      fontFamily="var(--font-geist-sans)"
+                    >
+                      {station.name}
+                    </text>
+                  </motion.a>
+                );
+              })}
+            </svg>
+          </Plate>
 
           {/* Mobile: the same line, unrolled */}
           <ol className="lg:hidden">
@@ -259,12 +270,14 @@ export default function Workflow() {
               </span>
             </motion.li>
           </ol>
-        </motion.div>
 
-        <div className="mt-8 flex flex-wrap items-baseline justify-between gap-4 border-t border-line pt-5 font-mono text-[11px] uppercase tracking-[0.22em]">
-          <span className="text-faint">→ Evidence flows forward</span>
-          <span className="text-accent">↺ Insights flow back</span>
-        </div>
+          {/* Legend: on desktop it rests on the plate's lower edge, which is what
+              makes the diagram read as an object with something on top of it. */}
+          <div className="relative z-10 mt-8 flex flex-wrap items-baseline justify-between gap-4 border-t border-line pt-5 font-mono text-[11px] uppercase tracking-[0.22em] lg:-mt-7 lg:mx-6 lg:border lg:bg-panel lg:px-5 lg:py-4 lg:shadow-lift">
+            <span className="text-faint">→ Evidence flows forward</span>
+            <span className="text-accent">↺ Insights flow back</span>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

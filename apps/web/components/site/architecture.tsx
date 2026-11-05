@@ -1,4 +1,5 @@
 import Eyebrow from "./eyebrow";
+import Plate from "./plate";
 import Reveal from "./reveal";
 
 const STACK: [string, string][] = [
@@ -38,9 +39,17 @@ export default function Architecture() {
     <section
       id="architecture"
       aria-labelledby="architecture-title"
-      className="on-ink scroll-mt-16 border-b border-line bg-bg text-fg"
+      className="on-ink relative isolate scroll-mt-16 overflow-hidden border-b border-line bg-bg text-fg"
     >
-      <div className="px-6 py-20 sm:px-10 sm:py-28">
+      {/* On the dark band the depth comes from light: two glows that recede into
+          the ink, plus a spill from the light section above. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-40 -top-36 size-[36rem] rounded-full bg-[radial-gradient(closest-side,var(--mint-tint),transparent_74%)]" />
+        <div className="absolute -right-32 bottom-0 size-[32rem] rounded-full bg-[radial-gradient(closest-side,var(--accent-tint),transparent_76%)]" />
+        <div className="absolute inset-x-0 top-0 h-24 bg-[linear-gradient(to_bottom,rgb(247_249_248/0.06),transparent)]" />
+      </div>
+
+      <div className="relative px-6 py-20 sm:px-10 sm:py-28">
         <div className="grid gap-8 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <Reveal>
@@ -64,7 +73,7 @@ export default function Architecture() {
         <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-10">
           {/* Schematic */}
           <Reveal className="lg:col-span-7">
-            <div className="blueprint border border-line p-6 sm:p-8">
+            <Plate bodyClassName="p-6 sm:p-8">
               <div className="flex flex-col items-center">
                 <div className="w-44 border border-line bg-panel px-4 py-3 text-center font-mono text-[10.5px] uppercase tracking-[0.18em] text-faint">
                   Founder / user
@@ -129,12 +138,12 @@ export default function Architecture() {
                   </div>
                 </div>
               </div>
-            </div>
+            </Plate>
           </Reveal>
 
           {/* Spec sheet */}
           <Reveal delay={0.12} className="lg:col-span-5">
-            <div className="border-t border-line pt-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10">
+            <div className="relative border-t border-line pt-6 lg:border lg:border-line lg:bg-[linear-gradient(180deg,rgb(255_255_255/0.05),transparent_60%)] lg:p-7">
               <div className="font-mono text-[10.5px] uppercase tracking-[0.25em] text-faint">
                 The stack
               </div>

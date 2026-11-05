@@ -47,9 +47,16 @@ export default function Stages() {
     <section
       id="stages"
       aria-labelledby="stages-title"
-      className="scroll-mt-16 border-b border-line"
+      className="relative isolate scroll-mt-16 overflow-hidden border-b border-line"
     >
-      <div className="px-6 py-20 sm:px-10 sm:py-28">
+      {/* A sunken tray behind the ledger: the section's own background depth,
+          distinct from the hero's field and the workflow's plate below. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-x-0 top-40 bottom-0 bg-[linear-gradient(to_bottom,transparent,var(--surface-sunken)_12%,var(--surface-sunken)_72%,transparent)] opacity-30" />
+        <div className="absolute -right-40 top-24 size-[30rem] rounded-full bg-[radial-gradient(closest-side,var(--mint-tint),transparent_76%)]" />
+      </div>
+
+      <div className="relative px-6 py-20 sm:px-10 sm:py-28">
         <div className="grid gap-8 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <motion.div
@@ -150,7 +157,10 @@ export default function Stages() {
                       transition={{ duration: reduce ? 0 : 0.4, ease: EASE }}
                       className="overflow-hidden"
                     >
-                      <div className="grid gap-7 pb-9 pl-4 pr-1 sm:pl-5 md:grid-cols-[1fr_15rem] md:gap-10">
+                      {/* The open stage lifts off the ledger as a lit surface, so
+                          the list reads as recessed index rather than another
+                          stack of identical panels. */}
+                      <div className="relative mb-4 grid gap-7 border border-l-2 border-line border-l-mint bg-[linear-gradient(160deg,var(--panel),rgb(227_237_233/0.45))] p-5 shadow-card sm:p-6 md:grid-cols-[1fr_15rem] md:gap-10">
                         <div>
                           <p className="max-w-[62ch] text-[15.5px] leading-[1.7] text-muted">
                             {stage.detail}
