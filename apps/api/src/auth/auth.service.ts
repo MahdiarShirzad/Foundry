@@ -2,6 +2,7 @@ import {
   BadRequestException,
   ConflictException,
   GoneException,
+  HttpException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -160,5 +161,37 @@ export class AuthService {
     ]);
 
     return { verified: true };
+  }
+
+  async resendVerification(dto: ResendVerificationDto) {
+    const email = dto.email.trim().toLowerCase();
+    const user = await this.prisma.user.findUnique({ where: { email } });
+
+    if (!user || user.emailVerifiedAt) {
+      return;
+    }
+
+    const last = await this.prisma.emailVerificationCode.findFirst({
+      where: { userId: user.id },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    const COOLDOWN_MS = 30 * 1000;
+
+    if (last) {
+      const elapsed = Date.now() - last.createdAt.getTime();
+      if (elapsed < COOLDOWN_MS) {
+        const retryAfterSeconds = Math.ceil((COOLDOWN_MS - elapsed) / 1000);
+        throw new HttpException(
+          {
+            code: 'TOO_MANY_REQUESTS',
+            message: `please wait ${retryAfterSeconds} seconds before retrying`,
+          },
+          429,
+        );
+      }
+    }
+
+    await this.createVerificationCode(user.id, user.email);
   }
 }
