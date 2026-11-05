@@ -29,7 +29,6 @@ export class AuthService {
     private readonly jwt: JwtService,
     private readonly emailValidator: EmailValidatorService,
     private readonly emailSender: EmailSenderService,
-    private readonly veridyEmailDto: VerifyEmailDto,
   ) {}
 
   async register(dto: RegisterDto) {
