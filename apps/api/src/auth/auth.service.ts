@@ -193,4 +193,15 @@ export class AuthService {
 
     await this.createVerificationCode(user.id, user.email);
   }
+
+  async logout(refreshToken: string | undefined) {
+    if (!refreshToken) return;
+
+    const tokenHash = createHash('sha256').update(refreshToken).digest('hex');
+
+    this.prisma.session.updateMany({
+      where: { tokenHash, revokedAt: null },
+      data: { revokedAt: new Date() },
+    });
+  }
 }

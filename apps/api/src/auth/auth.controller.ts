@@ -69,4 +69,12 @@ export class AuthController {
   session(@Req() req: Request & { user?: { id: string } }) {
     return { user: { id: req.user?.id } };
   }
+
+  @Post('logout')
+  @HttpCode(204)
+  logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    this.authService.logout(req.cookies?.refresh_token);
+    res.clearCookie('access_token', { path: '/' });
+    res.clearCookie('refresh_token', { path: '/auth/refresh' });
+  }
 }
