@@ -55,7 +55,8 @@ export const ModelName = {
   Session: 'Session',
   Workspace: 'Workspace',
   WorkspaceMember: 'WorkspaceMember',
-  EmailVerificationCode: 'EmailVerificationCode'
+  EmailVerificationCode: 'EmailVerificationCode',
+  PasswordResetToken: 'PasswordResetToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -130,6 +131,18 @@ export const EmailVerificationCodeScalarFieldEnum = {
 } as const
 
 export type EmailVerificationCodeScalarFieldEnum = (typeof EmailVerificationCodeScalarFieldEnum)[keyof typeof EmailVerificationCodeScalarFieldEnum]
+
+
+export const PasswordResetTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type PasswordResetTokenScalarFieldEnum = (typeof PasswordResetTokenScalarFieldEnum)[keyof typeof PasswordResetTokenScalarFieldEnum]
 
 
 export const SortOrder = {

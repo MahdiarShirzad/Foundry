@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   ConflictException,
+  ForbiddenException,
   GoneException,
   HttpException,
   Injectable,
@@ -16,6 +17,8 @@ import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { VerifyEmailDto } from './dto/verify-email.dto';
 import { ResendVerificationDto } from './dto/resend-verification.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 const DUMMY_HASH =
   '$argon2id$v=19$m=65536,t=3,p=4$c29tZXNhbHRzb21lc2FsdA$8c3n2GdZcV3S1kXqQe6TgK5m0mV2b5k0b8mRzV1vS0M';
@@ -77,6 +80,13 @@ export class AuthService {
       throw new UnauthorizedException('invalid credentials');
     }
 
+    if (!user.emailVerifiedAt) {
+      throw new ForbiddenException({
+        code: 'EMAIL_NOT_VERIFIED',
+        message: 'email not verified',
+      });
+    }
+
     const tokens = await this.issueTokens(user);
     return { user: { id: user.id, email: user.email }, ...tokens };
   }
@@ -118,13 +128,13 @@ export class AuthService {
   }
 
   async verifyEmail(dto: VerifyEmailDto) {
-    const email = dto.email.trim().toLocaleLowerCase();
+    const email = dto.email.trim().toLowerCase();
     const user = await this.prisma.user.findUnique({ where: { email } });
 
     if (!user || user.emailVerifiedAt) {
-      throw new BadRequestException({
-        code: 'INVALID_CODE',
-        message: 'invalid code',
+      throw new ForbiddenException({
+        code: 'EMAIL_NOT_VERIFIED',
+        message: 'email not verified',
       });
     }
     const codeHash = createHash('sha256').update(dto.code).digest('hex');
@@ -196,12 +206,103 @@ export class AuthService {
 
   async logout(refreshToken: string | undefined) {
     if (!refreshToken) return;
-
     const tokenHash = createHash('sha256').update(refreshToken).digest('hex');
-
-    this.prisma.session.updateMany({
+    await this.prisma.session.updateMany({
       where: { tokenHash, revokedAt: null },
       data: { revokedAt: new Date() },
     });
+  }
+
+  async refresh(refreshToken: string | undefined) {
+    if (!refreshToken) throw new UnauthorizedException('no refresh token');
+
+    const tokenHash = createHash('sha256').update(refreshToken).digest('hex');
+    const session = await this.prisma.session.findUnique({
+      where: { tokenHash },
+    });
+
+    if (!session) throw new UnauthorizedException('invalid refresh token');
+
+    if (session.revokedAt) {
+      await this.prisma.session.updateMany({
+        where: { userId: session.userId, revokedAt: null },
+        data: { revokedAt: new Date() },
+      });
+      throw new UnauthorizedException('refresh token reuse detected');
+    }
+
+    if (session.expiresAt.getTime() <= Date.now()) {
+      throw new UnauthorizedException('refresh token expired');
+    }
+
+    const result = await this.prisma.session.updateMany({
+      where: { id: session.id, revokedAt: null },
+      data: { revokedAt: new Date() },
+    });
+    if (result.count !== 1) {
+      throw new UnauthorizedException('refresh token already used');
+    }
+
+    return this.issueTokens({ id: session.userId });
+  }
+
+  async forgotPassword(dto: ForgotPasswordDto) {
+    const email = dto.email.trim().toLowerCase();
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user) return;
+
+    await this.prisma.passwordResetToken.updateMany({
+      where: { userId: user.id, usedAt: null },
+      data: { usedAt: new Date() },
+    });
+
+    const token = randomBytes(32).toString('base64url');
+    const tokenHash = createHash('sha256').update(token).digest('hex');
+
+    await this.prisma.passwordResetToken.create({
+      data: {
+        userId: user.id,
+        tokenHash,
+        expiresAt: new Date(Date.now() + 30 * 60 * 1000),
+      },
+    });
+
+    const link = `${process.env.WEB_ORIGIN}/reset-password?token=${token}`;
+    await this.emailSender.sendPasswordResetLink(user.email, link);
+  }
+
+  async resetPassword(dto: ResetPasswordDto) {
+    const tokenHash = createHash('sha256').update(dto.token).digest('hex');
+
+    const record = await this.prisma.passwordResetToken.findUnique({
+      where: { tokenHash },
+    });
+
+    if (!record || record.usedAt || record.expiresAt.getTime() <= Date.now()) {
+      throw new BadRequestException({
+        code: 'INVALID_TOKEN',
+        message: 'invalid or expired token',
+      });
+    }
+
+    const passwordHash = await argon2.hash(dto.password);
+
+    await this.prisma.$transaction([
+      this.prisma.user.update({
+        where: { id: record.userId },
+        data: { passwordHash },
+      }),
+      this.prisma.passwordResetToken.update({
+        where: { id: record.id },
+        data: { usedAt: new Date() },
+      }),
+      this.prisma.session.updateMany({
+        where: { userId: record.userId, revokedAt: null },
+        data: { revokedAt: new Date() },
+      }),
+    ]);
   }
 }

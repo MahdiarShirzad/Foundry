@@ -42,3 +42,8 @@ export type WorkspaceMember = Prisma.WorkspaceMemberModel
  * 
  */
 export type EmailVerificationCode = Prisma.EmailVerificationCodeModel
+/**
+ * Model PasswordResetToken
+ * 
+ */
+export type PasswordResetToken = Prisma.PasswordResetTokenModel

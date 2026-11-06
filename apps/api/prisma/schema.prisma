@@ -23,7 +23,8 @@ model User {
 
   session          Session[]
   workspaceMembers WorkspaceMember[]
-    emailVerificationCodes EmailVerificationCode[]
+  emailVerificationCodes EmailVerificationCode[]
+  passwordResetTokens PasswordResetToken[]
 }
 
 model Session {
@@ -73,5 +74,16 @@ model EmailVerificationCode {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@index([userId])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(uuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@index([userId])
 }

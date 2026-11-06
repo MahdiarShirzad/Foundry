@@ -15,6 +15,8 @@ import { ResendVerificationDto } from './dto/resend-verification.dto';
 import type { Request, Response } from 'express';
 import { VerifyEmailDto } from './dto/verify-email.dto';
 import { AuthGuard } from './auth.guard';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -72,9 +74,50 @@ export class AuthController {
 
   @Post('logout')
   @HttpCode(204)
-  logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
-    this.authService.logout(req.cookies?.refresh_token);
+  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    await this.authService.logout(req.cookies?.refresh_token);
     res.clearCookie('access_token', { path: '/' });
     res.clearCookie('refresh_token', { path: '/auth/refresh' });
+  }
+
+  @Post('refresh')
+  @HttpCode(200)
+  async refresh(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const { access, refresh } = await this.authService.refresh(
+      req.cookies?.refresh_token,
+    );
+
+    res.cookie('access_token', access, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      path: '/',
+      maxAge: 15 * 60 * 1000,
+    });
+
+    res.cookie('refresh_token', refresh, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      path: '/auth/refresh',
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+    });
+
+    return { ok: true };
+  }
+
+  @Post('password/forgot')
+  @HttpCode(204)
+  forgotPassword(@Body() dto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(dto);
+  }
+
+  @Post('password/reset')
+  @HttpCode(204)
+  resetPassword(@Body() dto: ResetPasswordDto) {
+    return this.authService.resetPassword(dto);
   }
 }
