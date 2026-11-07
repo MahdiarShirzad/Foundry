@@ -17,16 +17,19 @@ import { VerifyEmailDto } from './dto/verify-email.dto';
 import { AuthGuard } from './auth.guard';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { Public } from './public.decorator';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('register')
   register(@Body() dto: RegisterDto) {
     return this.authService.register(dto);
   }
 
+  @Public()
   @Post('login')
   @HttpCode(200)
   async login(
@@ -54,24 +57,28 @@ export class AuthController {
     return { user };
   }
 
+  @Public()
   @Post('email/verify')
   @HttpCode(200)
   verifyEmail(@Body() dto: VerifyEmailDto) {
     return this.authService.verifyEmail(dto);
   }
 
+  @Public()
   @Post('email/resend')
   @HttpCode(204)
   resendVerification(@Body() dto: ResendVerificationDto) {
     return this.authService.resendVerification(dto);
   }
 
+  @Public()
   @Get('session')
   @UseGuards(AuthGuard)
   session(@Req() req: Request & { user?: { id: string } }) {
     return { user: { id: req.user?.id } };
   }
 
+  @Public()
   @Post('logout')
   @HttpCode(204)
   async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
@@ -80,6 +87,7 @@ export class AuthController {
     res.clearCookie('refresh_token', { path: '/auth/refresh' });
   }
 
+  @Public()
   @Post('refresh')
   @HttpCode(200)
   async refresh(
@@ -109,12 +117,14 @@ export class AuthController {
     return { ok: true };
   }
 
+  @Public()
   @Post('password/forgot')
   @HttpCode(204)
   forgotPassword(@Body() dto: ForgotPasswordDto) {
     return this.authService.forgotPassword(dto);
   }
 
+  @Public()
   @Post('password/reset')
   @HttpCode(204)
   resetPassword(@Body() dto: ResetPasswordDto) {
