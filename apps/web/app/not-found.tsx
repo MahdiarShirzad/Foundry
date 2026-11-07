@@ -1,4 +1,4 @@
-import Footer from "@/components/site/footer";
+import FooterShell from "@/components/site/footer-shell";
 import Nav from "@/components/site/nav";
 import NotFoundView from "@/components/site/not-found-view";
 
@@ -16,7 +16,7 @@ export default function NotFound() {
         <main id="content">
           <NotFoundView />
         </main>
-        <Footer />
+        <FooterShell />
       </div>
     </>
   );

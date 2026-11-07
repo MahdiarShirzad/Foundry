@@ -1,8 +1,5 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 type LinkItem = { label: string; href: string };
 
@@ -54,8 +51,7 @@ function isActive(pathname: string, href: string): boolean {
   return pathname === href;
 }
 
-export default function Footer() {
-  const pathname = usePathname();
+export default function Footer({ pathname }: { pathname: string }) {
 
   return (
     <footer>

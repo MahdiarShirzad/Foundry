@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Nav from "@/components/site/nav";
-import Footer from "@/components/site/footer";
+import FooterShell from "@/components/site/footer-shell";
 
 /** Shared chrome for every Foundry route: sticky header, the hairline page
  *  frame, and the footer — so the landing page, docs, and future pages all
@@ -20,7 +20,7 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
          *  scrollbar without trapping the atmosphere vertically. */}
         <div className="relative mx-auto w-full max-w-[1240px] overflow-x-clip border-x border-line">
           <main>{children}</main>
-          <Footer />
+          <FooterShell />
         </div>
       </div>
     </>

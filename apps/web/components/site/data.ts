@@ -14,6 +14,18 @@ export type Stage = {
   next: string;
 };
 
+export const HEAD_LINES = [
+  { text: "One idea.", accent: false },
+  { text: "Eight stages.", accent: false },
+  { text: "One ecosystem.", accent: true },
+];
+
+export const SPECS: [string, string][] = [
+  ["Stages", "01 → 08"],
+  ["Flow", "Iterative, never linear"],
+  ["Stack", "Next.js · NestJS · PostgreSQL"],
+];
+
 export const STAGES: Stage[] = [
   {
     id: "01",
