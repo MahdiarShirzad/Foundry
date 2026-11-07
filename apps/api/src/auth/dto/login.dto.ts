@@ -15,13 +15,13 @@ export class LoginDto {
   @ApiProperty({
     example: 'Password123',
     minLength: 10,
-    maxLength: 30,
+    maxLength: 128,
     pattern: '^(?=.*[A-Za-z])(?=.*\\d).+$',
     description: 'Password must contain at least one letter and one digit',
   })
   @IsString()
   @MinLength(10)
-  @MaxLength(30)
+  @MaxLength(128)
   @Matches(/^(?=.*[A-Za-z])(?=.*\d).+$/, {
     message: 'password must contain at least one letter and one digit',
   })

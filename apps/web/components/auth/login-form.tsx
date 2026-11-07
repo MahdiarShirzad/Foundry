@@ -7,7 +7,13 @@ import { AnimatePresence } from "motion/react";
 import { AuthError, describeAuthError } from "@/lib/auth/contract";
 import { validateEmail, validatePasswordPresence } from "@/lib/auth/policy";
 
-import { AuthEnter, AuthFoot, AuthHeading, AuthLink, AuthServiceNotice } from "./auth-frame";
+import {
+  AuthEnter,
+  AuthFoot,
+  AuthHeading,
+  AuthLink,
+  AuthServiceNotice,
+} from "./auth-frame";
 import { TextField, PasswordField } from "./fields";
 import { Alert, SubmitButton } from "./feedback";
 
@@ -16,7 +22,10 @@ export default function LoginForm({ next }: { next: string }) {
   const [password, setPassword] = useState("");
   const [attempted, setAttempted] = useState(false);
   const [pending, setPending] = useState(false);
-  const [feedback, setFeedback] = useState<{ tone: "error" | "info"; text: string } | null>(null);
+  const [feedback, setFeedback] = useState<{
+    tone: "error" | "info";
+    text: string;
+  } | null>(null);
 
   const emailError = validateEmail(email);
   const passwordError = validatePasswordPresence(password);
@@ -31,7 +40,6 @@ export default function LoginForm({ next }: { next: string }) {
 
     setPending(true);
     try {
-      // TODO: implement submit logic
     } finally {
       setPending(false);
     }
@@ -45,7 +53,12 @@ export default function LoginForm({ next }: { next: string }) {
         description="Pick the cycle back up — ideas, evidence, roadmap and launch stay in one workspace."
       />
 
-      <form noValidate onSubmit={onSubmit} className="mt-8 space-y-5" aria-describedby="login-status">
+      <form
+        noValidate
+        onSubmit={onSubmit}
+        className="mt-8 space-y-5"
+        aria-describedby="login-status"
+      >
         <TextField
           id="login-email"
           label="Email"
@@ -87,7 +100,9 @@ export default function LoginForm({ next }: { next: string }) {
 
         <div id="login-status">
           <AnimatePresence initial={false}>
-            {feedback ? <Alert tone={feedback.tone}>{feedback.text}</Alert> : null}
+            {feedback ? (
+              <Alert tone={feedback.tone}>{feedback.text}</Alert>
+            ) : null}
           </AnimatePresence>
         </div>
 
@@ -98,7 +113,10 @@ export default function LoginForm({ next }: { next: string }) {
 
       <AuthFoot>
         <span>
-          New to Foundry? <AuthLink href="/register" emphasis>Create an account</AuthLink>
+          New to Foundry?{" "}
+          <AuthLink href="/register" emphasis>
+            Create an account
+          </AuthLink>
         </span>
         <AuthLink href="/verify-email">Verify an email</AuthLink>
       </AuthFoot>

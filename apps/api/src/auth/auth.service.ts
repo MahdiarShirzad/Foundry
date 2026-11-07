@@ -87,12 +87,15 @@ export class AuthService {
       });
     }
 
-    const tokens = await this.issueTokens(user);
+    const tokens = await this.issueTokens({ id: user.id, email: user.email });
     return { user: { id: user.id, email: user.email }, ...tokens };
   }
 
-  private async issueTokens(user: { id: string }) {
-    const access = await this.jwt.signAsync({ sub: user.id });
+  private async issueTokens(user: { id: string; email: string }) {
+    const access = await this.jwt.signAsync({
+      sub: user.id,
+      email: user.email,
+    });
     const refresh = randomBytes(32).toString('base64url');
     const tokenHash = createHash('sha256').update(refresh).digest('hex');
 
@@ -137,6 +140,7 @@ export class AuthService {
         message: 'email not verified',
       });
     }
+
     const codeHash = createHash('sha256').update(dto.code).digest('hex');
 
     const record = await this.prisma.emailVerificationCode.findFirst({
@@ -176,9 +180,7 @@ export class AuthService {
     const email = dto.email.trim().toLowerCase();
     const user = await this.prisma.user.findUnique({ where: { email } });
 
-    if (!user || user.emailVerifiedAt) {
-      return;
-    }
+    if (!user || user.emailVerifiedAt) return;
 
     const last = await this.prisma.emailVerificationCode.findFirst({
       where: { userId: user.id },
@@ -217,8 +219,11 @@ export class AuthService {
     if (!refreshToken) throw new UnauthorizedException('no refresh token');
 
     const tokenHash = createHash('sha256').update(refreshToken).digest('hex');
+
+    // ← تغییر: include user برای گرفتن email
     const session = await this.prisma.session.findUnique({
       where: { tokenHash },
+      include: { user: { select: { id: true, email: true } } },
     });
 
     if (!session) throw new UnauthorizedException('invalid refresh token');
@@ -239,18 +244,18 @@ export class AuthService {
       where: { id: session.id, revokedAt: null },
       data: { revokedAt: new Date() },
     });
+
     if (result.count !== 1) {
       throw new UnauthorizedException('refresh token already used');
     }
 
-    return this.issueTokens({ id: session.userId });
+    // ← تغییر: email رو پاس می‌دیم
+    return this.issueTokens({ id: session.userId, email: session.user.email });
   }
 
   async forgotPassword(dto: ForgotPasswordDto) {
     const email = dto.email.trim().toLowerCase();
-    const user = await this.prisma.user.findUnique({
-      where: { email },
-    });
+    const user = await this.prisma.user.findUnique({ where: { email } });
 
     if (!user) return;
 

@@ -43,8 +43,9 @@ export class AuthController {
   })
   @ApiResponse({ status: 400, description: 'Invalid email domain' })
   @ApiResponse({ status: 409, description: 'Email already registered' })
-  register(@Body() dto: RegisterDto) {
-    return this.authService.register(dto);
+  async register(@Body() dto: RegisterDto) {
+    await this.authService.register(dto);
+    return null;
   }
 
   @Public()
@@ -78,7 +79,7 @@ export class AuthController {
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
-    return { user };
+    return { userId: user.id, email: user.email };
   }
 
   @Public()
@@ -88,7 +89,10 @@ export class AuthController {
   @ApiBody({ type: VerifyEmailDto })
   @ApiResponse({ status: 200, description: 'Email verified' })
   @ApiResponse({ status: 400, description: 'Invalid code' })
-  @ApiResponse({ status: 403, description: 'Email already verified or not verified' })
+  @ApiResponse({
+    status: 403,
+    description: 'Email already verified or not verified',
+  })
   @ApiResponse({ status: 410, description: 'Code expired' })
   verifyEmail(@Body() dto: VerifyEmailDto) {
     return this.authService.verifyEmail(dto);
@@ -97,13 +101,17 @@ export class AuthController {
   @Public()
   @Post('email/resend')
   @Throttle({ default: { limit: 5, ttl: 60000 } })
-  @HttpCode(204)
+  @HttpCode(200)
   @ApiOperation({ summary: 'Resend verification email' })
   @ApiBody({ type: ResendVerificationDto })
-  @ApiResponse({ status: 204, description: 'Verification email resent if applicable' })
+  @ApiResponse({
+    status: 200,
+    description: 'Verification email resent if applicable',
+  })
   @ApiResponse({ status: 429, description: 'Too many requests' })
-  resendVerification(@Body() dto: ResendVerificationDto) {
-    return this.authService.resendVerification(dto);
+  async resendVerification(@Body() dto: ResendVerificationDto) {
+    await this.authService.resendVerification(dto);
+    return {};
   }
 
   @Get('session')
@@ -113,8 +121,8 @@ export class AuthController {
   @ApiOperation({ summary: 'Get current session' })
   @ApiResponse({ status: 200, description: 'Current session info' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  session(@Req() req: Request & { user?: { id: string } }) {
-    return { user: { id: req.user?.id } };
+  session(@Req() req: Request & { user?: { id: string; email: string } }) {
+    return { userId: req.user?.id, email: req.user?.email };
   }
 
   @Public()
@@ -133,7 +141,10 @@ export class AuthController {
   @HttpCode(200)
   @ApiOperation({ summary: 'Refresh access token using refresh token cookie' })
   @ApiResponse({ status: 200, description: 'Tokens refreshed' })
-  @ApiResponse({ status: 401, description: 'Invalid/expired/reused refresh token' })
+  @ApiResponse({
+    status: 401,
+    description: 'Invalid/expired/reused refresh token',
+  })
   async refresh(
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
@@ -167,7 +178,10 @@ export class AuthController {
   @HttpCode(204)
   @ApiOperation({ summary: 'Request password reset' })
   @ApiBody({ type: ForgotPasswordDto })
-  @ApiResponse({ status: 204, description: 'Password reset email sent if user exists' })
+  @ApiResponse({
+    status: 204,
+    description: 'Password reset email sent if user exists',
+  })
   @ApiResponse({ status: 429, description: 'Too many requests' })
   forgotPassword(@Body() dto: ForgotPasswordDto) {
     return this.authService.forgotPassword(dto);
