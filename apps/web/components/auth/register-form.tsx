@@ -1,11 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { AnimatePresence } from "motion/react";
 
-import { authClient } from "@/lib/auth/client";
 import { AuthError, describeAuthError } from "@/lib/auth/contract";
 import {
   validateConfirmation,
@@ -18,7 +16,6 @@ import { CheckboxField, PasswordField, TextField } from "./fields";
 import { Alert, SubmitButton } from "./feedback";
 
 export default function RegisterForm({ initialEmail }: { initialEmail: string }) {
-  const router = useRouter();
   const [email, setEmail] = useState(initialEmail);
   const [password, setPassword] = useState("");
   const [confirmation, setConfirmation] = useState("");
@@ -42,16 +39,7 @@ export default function RegisterForm({ initialEmail }: { initialEmail: string })
 
     setPending(true);
     try {
-      await authClient.signUp({ email: email.trim(), password });
-      // Verification is required before the first sign-in.
-      const target = `/verify-email?email=${encodeURIComponent(email.trim())}`;
-      router.push(target);
-    } catch (error) {
-      const authError = error instanceof AuthError ? error : new AuthError("unknown");
-      setFeedback({
-        tone: authError.code === "not_configured" ? "info" : "error",
-        text: describeAuthError(authError.code, { retryAfter: authError.retryAfter }),
-      });
+      // TODO: implement submit logic
     } finally {
       setPending(false);
     }

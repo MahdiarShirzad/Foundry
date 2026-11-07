@@ -3,8 +3,6 @@
 import { useState, type FormEvent } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
-import { authClient } from "@/lib/auth/client";
-import { AuthError, describeAuthError } from "@/lib/auth/contract";
 import { validateConfirmation, validateNewPassword } from "@/lib/auth/policy";
 
 import { EASE, AuthEnter, AuthFoot, AuthHeading, AuthLink, AuthServiceNotice } from "./auth-frame";
@@ -95,24 +93,8 @@ export default function ResetForm({ token }: { token: string }) {
 
     setPending(true);
     try {
-      await authClient.resetPassword({ token: token.trim(), password });
-      setTerminal({ state: "done" });
-    } catch (error) {
-      const authError = error instanceof AuthError ? error : new AuthError("unknown");
-      if (authError.code === "invalid_token") {
-        setTerminal({
-          state: "invalid",
-          message: describeAuthError(authError.code, { action: "reset" }),
-        });
-        return;
-      }
-      setFeedback({
-        tone: authError.code === "not_configured" ? "info" : "error",
-        text: describeAuthError(authError.code, {
-          retryAfter: authError.retryAfter,
-          action: "reset",
-        }),
-      });
+      // TODO: implement submit logic
+      // TODO
     } finally {
       setPending(false);
     }

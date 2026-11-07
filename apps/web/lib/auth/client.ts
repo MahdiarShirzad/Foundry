@@ -15,7 +15,7 @@ import { AuthError, type AuthErrorCode, type ResendResult, type Session } from "
 
 const BASE_URL = (process.env.NEXT_PUBLIC_API_URL ?? "").replace(/\/+$/, "");
 
-export const isAuthConfigured = BASE_URL.length > 0;
+export const isAuthConfigured = false;
 
 /** Planned endpoints — the roadmap in the repository README (Auth & Users). */
 const ROUTES = {
@@ -101,35 +101,12 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
 export const authClient = {
   isConfigured: isAuthConfigured,
 
-  signIn(input: { email: string; password: string }): Promise<Session> {
-    return request<Session>(ROUTES.signIn, { body: input, action: "sign-in" });
-  },
-
-  signUp(input: { email: string; password: string }): Promise<Session | null> {
-    return request<Session | null>(ROUTES.signUp, { body: input });
-  },
-
-  signOut(): Promise<void> {
-    return request<void>(ROUTES.signOut);
-  },
-
-  currentSession(): Promise<Session | null> {
-    return request<Session | null>(ROUTES.session, { method: "GET" });
-  },
-
-  requestPasswordReset(input: { email: string }): Promise<void> {
-    return request<void>(ROUTES.requestReset, { body: input });
-  },
-
-  resetPassword(input: { token: string; password: string }): Promise<void> {
-    return request<void>(ROUTES.resetPassword, { body: input, action: "reset" });
-  },
-
-  verifyEmail(input: { email: string; code: string }): Promise<Session | null> {
-    return request<Session | null>(ROUTES.verifyEmail, { body: input, action: "verify" });
-  },
-
-  resendVerification(input: { email: string }): Promise<ResendResult> {
-    return request<ResendResult>(ROUTES.resendVerification, { body: input });
-  },
+  signIn: async () => { throw new Error("not implemented"); },
+  signUp: async () => { throw new Error("not implemented"); },
+  signOut: async () => { throw new Error("not implemented"); },
+  currentSession: async () => { throw new Error("not implemented"); },
+  requestPasswordReset: async () => { throw new Error("not implemented"); },
+  resetPassword: async () => { throw new Error("not implemented"); },
+  verifyEmail: async () => { throw new Error("not implemented"); },
+  resendVerification: async () => { throw new Error("not implemented"); },
 };

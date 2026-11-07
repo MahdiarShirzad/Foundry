@@ -3,8 +3,6 @@
 import { useState, type FormEvent } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
-import { authClient } from "@/lib/auth/client";
-import { AuthError, describeAuthError } from "@/lib/auth/contract";
 import { CODE_LENGTH, validateEmail } from "@/lib/auth/policy";
 
 import { EASE, AuthEnter, AuthFoot, AuthHeading, AuthLink, AuthServiceNotice } from "./auth-frame";
@@ -41,18 +39,8 @@ export default function VerifyForm({ initialEmail }: { initialEmail: string }) {
 
     setPending(true);
     try {
-      await authClient.verifyEmail({ email: email.trim(), code });
-      setVerified(true);
-    } catch (error) {
-      const authError = error instanceof AuthError ? error : new AuthError("unknown");
-      setFeedback({
-        tone: authError.code === "not_configured" ? "info" : "error",
-        text: describeAuthError(authError.code, {
-          retryAfter: authError.retryAfter,
-          action: "verify",
-        }),
-      });
-      if (authError.code === "rate_limited" && authError.retryAfter) start(authError.retryAfter);
+      // TODO: implement submit logic
+      // TODO
     } finally {
       setPending(false);
     }
@@ -68,19 +56,8 @@ export default function VerifyForm({ initialEmail }: { initialEmail: string }) {
     }
     setResending(true);
     try {
-      const result = await authClient.resendVerification({ email: email.trim() });
-      start(result?.retryAfterSeconds ?? RESEND_COOLDOWN_SECONDS);
-      setFeedback({
-        tone: "success",
-        text: `A new six-digit code is on its way to ${email.trim()}.`,
-      });
-    } catch (error) {
-      const authError = error instanceof AuthError ? error : new AuthError("unknown");
-      if (authError.code === "rate_limited" && authError.retryAfter) start(authError.retryAfter);
-      setFeedback({
-        tone: authError.code === "not_configured" ? "info" : "error",
-        text: describeAuthError(authError.code, { retryAfter: authError.retryAfter }),
-      });
+      // TODO: implement resend logic
+      // TODO
     } finally {
       setResending(false);
     }

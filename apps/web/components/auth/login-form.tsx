@@ -1,11 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { AnimatePresence } from "motion/react";
 
-import { authClient } from "@/lib/auth/client";
 import { AuthError, describeAuthError } from "@/lib/auth/contract";
 import { validateEmail, validatePasswordPresence } from "@/lib/auth/policy";
 
@@ -14,7 +12,6 @@ import { TextField, PasswordField } from "./fields";
 import { Alert, SubmitButton } from "./feedback";
 
 export default function LoginForm({ next }: { next: string }) {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [attempted, setAttempted] = useState(false);
@@ -34,18 +31,7 @@ export default function LoginForm({ next }: { next: string }) {
 
     setPending(true);
     try {
-      // On success the API sets the session cookie; the client never sees a token.
-      await authClient.signIn({ email: email.trim(), password });
-      router.replace(next);
-    } catch (error) {
-      const authError = error instanceof AuthError ? error : new AuthError("unknown");
-      setFeedback({
-        tone: authError.code === "not_configured" ? "info" : "error",
-        text: describeAuthError(authError.code, {
-          retryAfter: authError.retryAfter,
-          action: "sign-in",
-        }),
-      });
+      // TODO: implement submit logic
     } finally {
       setPending(false);
     }

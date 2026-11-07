@@ -3,8 +3,6 @@
 import { useState, type FormEvent } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
-import { authClient } from "@/lib/auth/client";
-import { AuthError, describeAuthError } from "@/lib/auth/contract";
 import { validateEmail } from "@/lib/auth/policy";
 
 import { EASE, AuthEnter, AuthFoot, AuthHeading, AuthLink, AuthServiceNotice } from "./auth-frame";
@@ -30,19 +28,8 @@ export default function ForgotForm() {
     setPending(true);
     setFeedback(null);
     try {
-      await authClient.requestPasswordReset({ email: target });
-      start(RESEND_COOLDOWN_SECONDS);
-      setSent(true);
-      return true;
-    } catch (error) {
-      const authError = error instanceof AuthError ? error : new AuthError("unknown");
-      // A missing/unknown address must not be distinguishable from a known one.
-      setFeedback({
-        tone: authError.code === "not_configured" ? "info" : "error",
-        text: describeAuthError(authError.code, { retryAfter: authError.retryAfter }),
-      });
-      if (authError.code === "rate_limited" && authError.retryAfter) start(authError.retryAfter);
-      return false;
+      // TODO: implement submit logic
+      // TODO
     } finally {
       setPending(false);
     }
