@@ -3,6 +3,7 @@ packages:
 allowBuilds:
   '@parcel/watcher': false
   '@prisma/engines': true
+  '@scarf/scarf': true
   argon2: true
   esbuild: true
   prisma: true

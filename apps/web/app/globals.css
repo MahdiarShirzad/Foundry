@@ -24,6 +24,7 @@
   --color-accent-tint: var(--accent-tint);
   --color-mint: var(--mint);
   --color-mint-tint: var(--mint-tint);
+  --color-neon: var(--neon);
 
   /* Elevation — squared surfaces use restrained, ink-tinted shadows. */
   --shadow-overlay: var(--elevation-overlay);
@@ -81,6 +82,9 @@
   --accent-tint: rgb(14 124 108 / 0.10);
   --mint: #4fcab5;
   --mint-tint: rgb(80 207 186 / 0.16);
+  /* Neon — the flow lines' scroll-charged state. Decorative only: it is far
+   * too light for text or icons on --bg, so keep it to strokes and glows. */
+  --neon: #00ffc8;
 
   --elevation-overlay: 0 28px 80px -32px rgb(14 27 29 / 0.55);
   --elevation-popover: 0 18px 44px -28px rgb(14 27 29 / 0.45);
@@ -124,6 +128,7 @@
   --accent-tint: rgb(92 214 191 / 0.12);
   --mint: #5cd6bf;
   --mint-tint: rgb(92 214 191 / 0.14);
+  --neon: #52ffd9;
 
   --elevation-overlay: 0 28px 80px -32px rgb(0 0 0 / 0.7);
   --elevation-popover: 0 18px 44px -28px rgb(0 0 0 / 0.6);
