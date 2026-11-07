@@ -18,6 +18,7 @@ import { AuthGuard } from './auth.guard';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 import { Public } from './public.decorator';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('auth')
 export class AuthController {
@@ -31,6 +32,7 @@ export class AuthController {
 
   @Public()
   @Post('login')
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   @HttpCode(200)
   async login(
     @Body() dto: LoginDto,
@@ -66,12 +68,12 @@ export class AuthController {
 
   @Public()
   @Post('email/resend')
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   @HttpCode(204)
   resendVerification(@Body() dto: ResendVerificationDto) {
     return this.authService.resendVerification(dto);
   }
 
-  @Public()
   @Get('session')
   @UseGuards(AuthGuard)
   session(@Req() req: Request & { user?: { id: string } }) {
@@ -119,6 +121,7 @@ export class AuthController {
 
   @Public()
   @Post('password/forgot')
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   @HttpCode(204)
   forgotPassword(@Body() dto: ForgotPasswordDto) {
     return this.authService.forgotPassword(dto);
