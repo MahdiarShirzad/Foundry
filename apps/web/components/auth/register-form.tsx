@@ -4,13 +4,6 @@ import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { AnimatePresence } from "motion/react";
 
-import { AuthError, describeAuthError } from "@/lib/auth/contract";
-import {
-  validateConfirmation,
-  validateEmail,
-  validateNewPassword,
-} from "@/lib/auth/policy";
-
 import { AuthEnter, AuthFoot, AuthHeading, AuthLink, AuthServiceNotice } from "./auth-frame";
 import { CheckboxField, PasswordField, TextField } from "./fields";
 import { Alert, SubmitButton } from "./feedback";
@@ -24,22 +17,17 @@ export default function RegisterForm({ initialEmail }: { initialEmail: string })
   const [pending, setPending] = useState(false);
   const [feedback, setFeedback] = useState<{ tone: "error" | "info"; text: string } | null>(null);
 
-  const emailError = validateEmail(email);
-  const passwordError = validateNewPassword(password);
-  const confirmationError = validateConfirmation(password, confirmation);
+  const emailError = null;
+  const passwordError = null;
+  const confirmationError = null;
   const termsError = accepted ? null : "Accept the terms and privacy policy to continue.";
   const invalid = Boolean(emailError || passwordError || confirmationError || termsError);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (pending) return;
-    setAttempted(true);
-    setFeedback(null);
-    if (invalid) return;
-
     setPending(true);
     try {
-      // TODO: implement submit logic
+      // TODO: implement
     } finally {
       setPending(false);
     }
@@ -64,6 +52,7 @@ export default function RegisterForm({ initialEmail }: { initialEmail: string })
           value={email}
           onChange={(value) => {
             setEmail(value);
+            // TODO
             setFeedback(null);
           }}
           error={attempted ? emailError : null}
@@ -77,6 +66,7 @@ export default function RegisterForm({ initialEmail }: { initialEmail: string })
           value={password}
           onChange={(value) => {
             setPassword(value);
+            // TODO
             setFeedback(null);
           }}
           error={attempted ? passwordError : null}
@@ -91,6 +81,7 @@ export default function RegisterForm({ initialEmail }: { initialEmail: string })
           value={confirmation}
           onChange={(value) => {
             setConfirmation(value);
+            // TODO
             setFeedback(null);
           }}
           error={attempted ? confirmationError : null}
@@ -102,6 +93,7 @@ export default function RegisterForm({ initialEmail }: { initialEmail: string })
           checked={accepted}
           onChange={(value) => {
             setAccepted(value);
+            // TODO
             setFeedback(null);
           }}
           error={attempted ? termsError : null}

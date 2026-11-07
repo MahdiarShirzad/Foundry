@@ -2,7 +2,10 @@
 
 import { useState, type InputHTMLAttributes, type ReactNode } from "react";
 
-import { PASSWORD_RULES, passwordStrength } from "@/lib/auth/policy";
+const PASSWORD_RULES = ["8+ characters", "Upper & lower case", "At least one number"];
+function passwordStrength(_value: string) {
+  return 0;
+}
 
 type BaseProps = {
   id: string;

@@ -3,14 +3,11 @@
 import { useState, type FormEvent } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
-import { CODE_LENGTH, validateEmail } from "@/lib/auth/policy";
-
 import { EASE, AuthEnter, AuthFoot, AuthHeading, AuthLink, AuthServiceNotice } from "./auth-frame";
 import CodeInput from "./code-input";
 import { TextField } from "./fields";
 import { Alert, SubmitButton } from "./feedback";
 import { AuthOutcome } from "./outcome";
-import { RESEND_COOLDOWN_SECONDS, useCooldown } from "./use-cooldown";
 
 type Feedback = { tone: "error" | "info" | "success"; text: string } | null;
 
@@ -24,43 +21,23 @@ export default function VerifyForm({ initialEmail }: { initialEmail: string }) {
   const [resending, setResending] = useState(false);
   const [verified, setVerified] = useState(false);
   const [feedback, setFeedback] = useState<Feedback>(null);
-  const { remaining, start } = useCooldown();
+  const remaining = 0;
 
-  const emailError = validateEmail(email);
-  const codeError =
-    code.length === CODE_LENGTH ? null : `Enter all ${CODE_LENGTH} digits of the code.`;
+  const emailError = null;
+  const codeError = code.length === 6 ? null : `Enter all 6 digits of the code.`;
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (pending) return;
-    setAttempted(true);
-    setFeedback(null);
-    if (emailError || codeError) return;
-
     setPending(true);
     try {
-      // TODO: implement submit logic
-      // TODO
+      // TODO: implement
     } finally {
       setPending(false);
     }
   }
 
   async function resend() {
-    if (resending || remaining > 0) return;
-    setAttempted(true);
-    setFeedback(null);
-    if (emailError) {
-      setEditingEmail(true);
-      return;
-    }
-    setResending(true);
-    try {
-      // TODO: implement resend logic
-      // TODO
-    } finally {
-      setResending(false);
-    }
+    setPending(false);
   }
 
   if (verified) {
@@ -109,6 +86,7 @@ export default function VerifyForm({ initialEmail }: { initialEmail: string }) {
             value={email}
             onChange={(value) => {
               setEmail(value);
+              // TODO
               setFeedback(null);
             }}
             error={attempted ? emailError : null}
@@ -134,11 +112,12 @@ export default function VerifyForm({ initialEmail }: { initialEmail: string }) {
           value={code}
           onChange={(next) => {
             setCode(next);
+            // TODO
             setFeedback(null);
           }}
-          length={CODE_LENGTH}
+          length={6}
           disabled={pending}
-          invalid={attempted && code.length > 0 && code.length < CODE_LENGTH}
+          invalid={attempted && code.length > 0 && code.length < 6}
         />
 
         <div id="verify-status">

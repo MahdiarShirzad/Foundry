@@ -4,9 +4,6 @@ import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { AnimatePresence } from "motion/react";
 
-import { AuthError, describeAuthError } from "@/lib/auth/contract";
-import { validateEmail, validatePasswordPresence } from "@/lib/auth/policy";
-
 import {
   AuthEnter,
   AuthFoot,
@@ -27,19 +24,15 @@ export default function LoginForm({ next }: { next: string }) {
     text: string;
   } | null>(null);
 
-  const emailError = validateEmail(email);
-  const passwordError = validatePasswordPresence(password);
+  const emailError = null;
+  const passwordError = null;
   const invalid = Boolean(emailError || passwordError);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (pending) return;
-    setAttempted(true);
-    setFeedback(null);
-    if (invalid) return;
-
     setPending(true);
     try {
+      // TODO: implement
     } finally {
       setPending(false);
     }
@@ -59,21 +52,22 @@ export default function LoginForm({ next }: { next: string }) {
         className="mt-8 space-y-5"
         aria-describedby="login-status"
       >
-        <TextField
-          id="login-email"
-          label="Email"
-          type="email"
-          inputMode="email"
-          autoComplete="email"
-          placeholder="you@studio.com"
-          value={email}
-          onChange={(value) => {
-            setEmail(value);
-            setFeedback(null);
-          }}
-          error={attempted ? emailError : null}
-          disabled={pending}
-        />
+          <TextField
+            id="login-email"
+            label="Email"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            placeholder="you@studio.com"
+            value={email}
+            onChange={(value) => {
+              setEmail(value);
+              // TODO
+              setFeedback(null);
+            }}
+            error={attempted ? emailError : null}
+            disabled={pending}
+          />
 
         <div>
           <PasswordField
@@ -83,6 +77,7 @@ export default function LoginForm({ next }: { next: string }) {
             value={password}
             onChange={(value) => {
               setPassword(value);
+              // TODO
               setFeedback(null);
             }}
             error={attempted ? passwordError : null}

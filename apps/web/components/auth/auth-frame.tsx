@@ -4,8 +4,6 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
 
-import { isAuthConfigured } from "@/lib/auth/client";
-
 export const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 /** Page-level entrance. Short, one axis, cancelled under reduced motion. */
@@ -81,16 +79,5 @@ export function AuthLink({
  * submit to nothing — saying so is better than implying a working account.
  */
 export function AuthServiceNotice() {
-  if (isAuthConfigured) return null;
-  return (
-    <p className="mt-8 flex items-start gap-2.5 border-t border-line pt-4 font-mono text-[10.5px] leading-relaxed tracking-[0.06em] text-faint">
-      <span aria-hidden className="mt-[3px] size-1.5 shrink-0 bg-accent/60" />
-      <span>
-        Preview build — the auth API isn&apos;t connected, so nothing is sent or stored.{" "}
-        <Link href="/docs/backend-api" className="underline decoration-line underline-offset-4 hover:text-accent">
-          API status
-        </Link>
-      </span>
-    </p>
-  );
+  return null;
 }

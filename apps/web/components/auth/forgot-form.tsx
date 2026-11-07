@@ -3,13 +3,10 @@
 import { useState, type FormEvent } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
-import { validateEmail } from "@/lib/auth/policy";
-
 import { EASE, AuthEnter, AuthFoot, AuthHeading, AuthLink, AuthServiceNotice } from "./auth-frame";
 import { TextField } from "./fields";
 import { Alert } from "./feedback";
 import { AuthOutcome } from "./outcome";
-import { RESEND_COOLDOWN_SECONDS, useCooldown } from "./use-cooldown";
 
 type Feedback = { tone: "error" | "info" | "success"; text: string } | null;
 
@@ -20,16 +17,14 @@ export default function ForgotForm() {
   const [pending, setPending] = useState(false);
   const [sent, setSent] = useState(false);
   const [feedback, setFeedback] = useState<Feedback>(null);
-  const { remaining, start } = useCooldown();
+  const remaining = 0;
 
-  const emailError = validateEmail(email);
+  const emailError = null;
 
   async function request(target: string) {
     setPending(true);
-    setFeedback(null);
     try {
-      // TODO: implement submit logic
-      // TODO
+      // TODO: implement
     } finally {
       setPending(false);
     }
@@ -37,10 +32,12 @@ export default function ForgotForm() {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (pending) return;
-    setAttempted(true);
-    if (emailError) return;
-    await request(email.trim());
+    setPending(true);
+    try {
+      // TODO: implement
+    } finally {
+      setPending(false);
+    }
   }
 
   if (sent) {
@@ -83,6 +80,7 @@ export default function ForgotForm() {
               onClick={() => {
                 setSent(false);
                 setAttempted(false);
+                // TODO
                 setFeedback(null);
               }}
               className="ml-4 text-[12.5px] text-faint underline decoration-line underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
@@ -120,6 +118,7 @@ export default function ForgotForm() {
           value={email}
           onChange={(value) => {
             setEmail(value);
+            // TODO
             setFeedback(null);
           }}
           error={attempted ? emailError : null}

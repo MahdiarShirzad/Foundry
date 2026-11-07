@@ -3,8 +3,6 @@
 import { useState, type FormEvent } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
-import { validateConfirmation, validateNewPassword } from "@/lib/auth/policy";
-
 import { EASE, AuthEnter, AuthFoot, AuthHeading, AuthLink, AuthServiceNotice } from "./auth-frame";
 import { PasswordField } from "./fields";
 import { Alert, SubmitButton } from "./feedback";
@@ -21,8 +19,8 @@ export default function ResetForm({ token }: { token: string }) {
   const [feedback, setFeedback] = useState<{ tone: "error" | "info"; text: string } | null>(null);
   const [terminal, setTerminal] = useState<Terminal>(null);
 
-  const passwordError = validateNewPassword(password);
-  const confirmationError = validateConfirmation(password, confirmation);
+  const passwordError = null;
+  const confirmationError = null;
   const invalid = Boolean(passwordError || confirmationError);
 
   // A link without a token is not a valid reset link — say so instead of
@@ -86,15 +84,9 @@ export default function ResetForm({ token }: { token: string }) {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (pending) return;
-    setAttempted(true);
-    setFeedback(null);
-    if (invalid) return;
-
     setPending(true);
     try {
-      // TODO: implement submit logic
-      // TODO
+      // TODO: implement
     } finally {
       setPending(false);
     }
@@ -116,6 +108,7 @@ export default function ResetForm({ token }: { token: string }) {
           value={password}
           onChange={(value) => {
             setPassword(value);
+            // TODO
             setFeedback(null);
           }}
           error={attempted ? passwordError : null}
@@ -131,6 +124,7 @@ export default function ResetForm({ token }: { token: string }) {
           value={confirmation}
           onChange={(value) => {
             setConfirmation(value);
+            // TODO
             setFeedback(null);
           }}
           error={attempted ? confirmationError : null}
