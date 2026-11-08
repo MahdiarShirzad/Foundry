@@ -1,25 +1,34 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import { EASE, AuthEnter, AuthFoot, AuthHeading, AuthLink, AuthServiceNotice } from "./auth-frame";
 import { TextField } from "./fields";
 import { Alert } from "./feedback";
 import { AuthOutcome } from "./outcome";
+import { forgotSchema } from "@/lib/auth/schemas";
 
 type Feedback = { tone: "error" | "info" | "success"; text: string } | null;
 
 export default function ForgotForm() {
   const reduce = useReducedMotion();
-  const [email, setEmail] = useState("");
-  const [attempted, setAttempted] = useState(false);
+  const form = useForm<z.infer<typeof forgotSchema>>({
+    resolver: zodResolver(forgotSchema),
+    mode: "onTouched",
+  });
+
+  const { register, formState: { errors }, watch, handleSubmit } = form;
+
+  const email = watch("email");
+
   const [pending, setPending] = useState(false);
   const [sent, setSent] = useState(false);
   const [feedback, setFeedback] = useState<Feedback>(null);
   const remaining = 0;
-
-  const emailError = null;
 
   async function request(target: string) {
     setPending(true);
@@ -30,8 +39,7 @@ export default function ForgotForm() {
     }
   }
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function onSubmit() {
     setPending(true);
     try {
       // TODO: implement
@@ -79,7 +87,6 @@ export default function ForgotForm() {
               type="button"
               onClick={() => {
                 setSent(false);
-                setAttempted(false);
                 // TODO
                 setFeedback(null);
               }}
@@ -107,7 +114,7 @@ export default function ForgotForm() {
         description="Enter the address you signed up with. We'll send a single-use link to set a new password."
       />
 
-      <form noValidate onSubmit={onSubmit} className="mt-8 space-y-5" aria-describedby="forgot-status">
+      <form noValidate onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5" aria-describedby="forgot-status">
         <TextField
           id="forgot-email"
           label="Email"
@@ -115,13 +122,8 @@ export default function ForgotForm() {
           inputMode="email"
           autoComplete="email"
           placeholder="you@studio.com"
-          value={email}
-          onChange={(value) => {
-            setEmail(value);
-            // TODO
-            setFeedback(null);
-          }}
-          error={attempted ? emailError : null}
+          {...register("email")}
+          error={errors.email?.message}
           disabled={pending}
           autoFocus
         />

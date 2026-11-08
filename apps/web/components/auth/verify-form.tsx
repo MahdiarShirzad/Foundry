@@ -1,6 +1,9 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import { EASE, AuthEnter, AuthFoot, AuthHeading, AuthLink, AuthServiceNotice } from "./auth-frame";
@@ -8,26 +11,29 @@ import CodeInput from "./code-input";
 import { TextField } from "./fields";
 import { Alert, SubmitButton } from "./feedback";
 import { AuthOutcome } from "./outcome";
+import { verifySchema } from "@/lib/auth/schemas";
 
 type Feedback = { tone: "error" | "info" | "success"; text: string } | null;
 
 export default function VerifyForm({ initialEmail }: { initialEmail: string }) {
   const reduce = useReducedMotion();
-  const [email, setEmail] = useState(initialEmail);
+  const form = useForm<z.infer<typeof verifySchema>>({
+    resolver: zodResolver(verifySchema),
+    mode: "onTouched",
+  });
+
+  const { register, formState: { errors }, watch, control, handleSubmit } = form;
+
+  const email = watch("email");
+
   const [editingEmail, setEditingEmail] = useState(initialEmail.trim().length === 0);
-  const [code, setCode] = useState("");
-  const [attempted, setAttempted] = useState(false);
   const [pending, setPending] = useState(false);
   const [resending, setResending] = useState(false);
   const [verified, setVerified] = useState(false);
   const [feedback, setFeedback] = useState<Feedback>(null);
   const remaining = 0;
 
-  const emailError = null;
-  const codeError = code.length === 6 ? null : `Enter all 6 digits of the code.`;
-
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function onSubmit() {
     setPending(true);
     try {
       // TODO: implement
@@ -74,7 +80,7 @@ export default function VerifyForm({ initialEmail }: { initialEmail: string }) {
         }
       />
 
-      <form noValidate onSubmit={onSubmit} className="mt-8 space-y-5" aria-describedby="verify-status">
+      <form noValidate onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5" aria-describedby="verify-status">
         {editingEmail ? (
           <TextField
             id="verify-email"
@@ -83,13 +89,8 @@ export default function VerifyForm({ initialEmail }: { initialEmail: string }) {
             inputMode="email"
             autoComplete="email"
             placeholder="you@studio.com"
-            value={email}
-            onChange={(value) => {
-              setEmail(value);
-              // TODO
-              setFeedback(null);
-            }}
-            error={attempted ? emailError : null}
+            {...register("email")}
+            error={errors.email?.message}
             hint={initialEmail ? "Change if you used another address" : undefined}
             disabled={pending}
           />
@@ -106,18 +107,20 @@ export default function VerifyForm({ initialEmail }: { initialEmail: string }) {
           </div>
         )}
 
-        <CodeInput
-          id="verify-code"
-          label="Six-digit code"
-          value={code}
-          onChange={(next) => {
-            setCode(next);
-            // TODO
-            setFeedback(null);
-          }}
-          length={6}
-          disabled={pending}
-          invalid={attempted && code.length > 0 && code.length < 6}
+        <Controller
+          name="code"
+          control={control}
+          render={({ field }) => (
+            <CodeInput
+              id="verify-code"
+              label="Six-digit code"
+              value={field.value}
+              onChange={field.onChange}
+              length={6}
+              disabled={pending}
+              invalid={errors.code ? true : undefined}
+            />
+          )}
         />
 
         <div id="verify-status">

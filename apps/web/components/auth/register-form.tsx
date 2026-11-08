@@ -1,30 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { AnimatePresence } from "motion/react";
 
 import { AuthEnter, AuthFoot, AuthHeading, AuthLink, AuthServiceNotice } from "./auth-frame";
 import { CheckboxField, PasswordField, TextField } from "./fields";
 import { Alert, SubmitButton } from "./feedback";
+import { registerSchema } from "@/lib/auth/schemas";
 
 export default function RegisterForm({ initialEmail }: { initialEmail: string }) {
-  const [email, setEmail] = useState(initialEmail);
-  const [password, setPassword] = useState("");
-  const [confirmation, setConfirmation] = useState("");
-  const [accepted, setAccepted] = useState(false);
-  const [attempted, setAttempted] = useState(false);
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
+    mode: "onTouched",
+  });
+
+  const { register, formState: { errors }, handleSubmit, control } = form;
+
   const [pending, setPending] = useState(false);
   const [feedback, setFeedback] = useState<{ tone: "error" | "info"; text: string } | null>(null);
 
-  const emailError = null;
-  const passwordError = null;
-  const confirmationError = null;
-  const termsError = accepted ? null : "Accept the terms and privacy policy to continue.";
-  const invalid = Boolean(emailError || passwordError || confirmationError || termsError);
-
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function onSubmit() {
     setPending(true);
     try {
       // TODO: implement
@@ -41,7 +40,7 @@ export default function RegisterForm({ initialEmail }: { initialEmail: string })
         description="One account keeps every stage connected — from the first captured idea to the analytics that send you back with better evidence."
       />
 
-      <form noValidate onSubmit={onSubmit} className="mt-8 space-y-5" aria-describedby="register-status">
+      <form noValidate onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5" aria-describedby="register-status">
         <TextField
           id="register-email"
           label="Email"
@@ -49,13 +48,8 @@ export default function RegisterForm({ initialEmail }: { initialEmail: string })
           inputMode="email"
           autoComplete="email"
           placeholder="you@studio.com"
-          value={email}
-          onChange={(value) => {
-            setEmail(value);
-            // TODO
-            setFeedback(null);
-          }}
-          error={attempted ? emailError : null}
+          {...register("email")}
+          error={errors.email?.message}
           disabled={pending}
         />
 
@@ -63,13 +57,8 @@ export default function RegisterForm({ initialEmail }: { initialEmail: string })
           id="register-password"
           label="Password"
           autoComplete="new-password"
-          value={password}
-          onChange={(value) => {
-            setPassword(value);
-            // TODO
-            setFeedback(null);
-          }}
-          error={attempted ? passwordError : null}
+          {...register("password")}
+          error={errors.password?.message}
           showRules
           disabled={pending}
         />
@@ -78,36 +67,33 @@ export default function RegisterForm({ initialEmail }: { initialEmail: string })
           id="register-confirm"
           label="Confirm password"
           autoComplete="new-password"
-          value={confirmation}
-          onChange={(value) => {
-            setConfirmation(value);
-            // TODO
-            setFeedback(null);
-          }}
-          error={attempted ? confirmationError : null}
+          {...register("confirmation")}
+          error={errors.confirmation?.message}
           disabled={pending}
         />
 
-        <CheckboxField
-          id="register-terms"
-          checked={accepted}
-          onChange={(value) => {
-            setAccepted(value);
-            // TODO
-            setFeedback(null);
-          }}
-          error={attempted ? termsError : null}
-        >
-          I agree to the{" "}
-          <Link href="/terms" className="text-fg underline decoration-line underline-offset-4 hover:decoration-accent">
-            terms of service
-          </Link>{" "}
-          and{" "}
-          <Link href="/privacy" className="text-fg underline decoration-line underline-offset-4 hover:decoration-accent">
-            privacy policy
-          </Link>
-          .
-        </CheckboxField>
+        <Controller
+          name="accepted"
+          control={control}
+          render={({ field }) => (
+            <CheckboxField
+              id="register-terms"
+              checked={field.value}
+              onChange={field.onChange}
+              error={errors.accepted?.message}
+            >
+              I agree to the{" "}
+              <Link href="/terms" className="text-fg underline decoration-line underline-offset-4 hover:decoration-accent">
+                terms of service
+              </Link>{" "}
+              and{" "}
+              <Link href="/privacy" className="text-fg underline decoration-line underline-offset-4 hover:decoration-accent">
+                privacy policy
+              </Link>
+              .
+            </CheckboxField>
+          )}
+        />
 
         <div id="register-status">
           <AnimatePresence initial={false}>

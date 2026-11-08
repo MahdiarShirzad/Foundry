@@ -2,7 +2,11 @@
 
 import { useState, type InputHTMLAttributes, type ReactNode } from "react";
 
-const PASSWORD_RULES = ["8+ characters", "Upper & lower case", "At least one number"];
+const PASSWORD_RULES = [
+  "8+ characters",
+  "Upper & lower case",
+  "At least one number",
+];
 function passwordStrength(_value: string) {
   return 0;
 }
@@ -10,9 +14,9 @@ function passwordStrength(_value: string) {
 type BaseProps = {
   id: string;
   label: string;
-  value: string;
-  onChange: (value: string) => void;
-  onBlur?: () => void;
+  value?: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement>;
   error?: string | null;
   hint?: string;
   disabled?: boolean;
@@ -48,7 +52,10 @@ function FieldShell({
       </div>
       <div className="relative mt-2">{children}</div>
       {error ? (
-        <p id={`${id}-error`} className="mt-1.5 flex items-start gap-1.5 text-[12.5px] text-danger">
+        <p
+          id={`${id}-error`}
+          className="mt-1.5 flex items-start gap-1.5 text-[12.5px] text-danger"
+        >
           <span aria-hidden className="mt-[2px] font-mono">
             !
           </span>
@@ -61,12 +68,16 @@ function FieldShell({
 
 function inputClasses(error?: string | null, extra = "") {
   return `h-11 w-full border bg-panel px-3 text-[15px] text-fg outline-none transition-colors placeholder:text-faint/70 disabled:cursor-not-allowed disabled:bg-bg disabled:text-muted ${
-    error ? "border-danger" : "border-line hover:border-line-2 focus:border-accent"
+    error
+      ? "border-danger"
+      : "border-line hover:border-line-2 focus:border-accent"
   } ${extra}`;
 }
 
 function describedBy(id: string, error?: string | null, hint?: string) {
-  const ids = [error ? `${id}-error` : null, hint ? `${id}-hint` : null].filter(Boolean);
+  const ids = [error ? `${id}-error` : null, hint ? `${id}-hint` : null].filter(
+    Boolean,
+  );
   return ids.length ? ids.join(" ") : undefined;
 }
 
@@ -98,7 +109,7 @@ export function TextField({
         id={id}
         type={type}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={onChange}
         onBlur={onBlur}
         disabled={disabled}
         autoFocus={autoFocus}
@@ -128,11 +139,10 @@ export function PasswordField({
   autoFocus,
 }: BaseProps & {
   autoComplete?: string;
-  /** Renders the policy list + strength meter under the field. */
   showRules?: boolean;
 }) {
   const [visible, setVisible] = useState(false);
-  const strength = passwordStrength(value);
+  const strength = passwordStrength(value ?? "");
 
   return (
     <div>
@@ -141,7 +151,7 @@ export function PasswordField({
           id={id}
           type={visible ? "text" : "password"}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={onChange}
           onBlur={onBlur}
           disabled={disabled}
           autoFocus={autoFocus}
@@ -185,7 +195,10 @@ export function PasswordField({
           </div>
           <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
             {PASSWORD_RULES.map((rule) => (
-              <li key={rule} className="flex items-center gap-1.5 text-[11.5px] text-faint">
+              <li
+                key={rule}
+                className="flex items-center gap-1.5 text-[11.5px] text-faint"
+              >
                 <span aria-hidden className="size-1 bg-line-2" />
                 {rule}
               </li>
@@ -222,12 +235,18 @@ export function CheckboxField({
           aria-describedby={error ? `${id}-error` : undefined}
           className="mt-[3px] size-4 shrink-0 cursor-pointer border border-line-2 bg-panel accent-[var(--accent)]"
         />
-        <label htmlFor={id} className="text-[12.5px] leading-relaxed text-muted">
+        <label
+          htmlFor={id}
+          className="text-[12.5px] leading-relaxed text-muted"
+        >
           {children}
         </label>
       </div>
       {error ? (
-        <p id={`${id}-error`} className="mt-1.5 flex items-start gap-1.5 text-[12.5px] text-danger">
+        <p
+          id={`${id}-error`}
+          className="mt-1.5 flex items-start gap-1.5 text-[12.5px] text-danger"
+        >
           <span aria-hidden className="mt-[2px] font-mono">
             !
           </span>

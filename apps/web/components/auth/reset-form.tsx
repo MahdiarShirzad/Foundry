@@ -1,27 +1,31 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import { EASE, AuthEnter, AuthFoot, AuthHeading, AuthLink, AuthServiceNotice } from "./auth-frame";
 import { PasswordField } from "./fields";
 import { Alert, SubmitButton } from "./feedback";
 import { AuthOutcome } from "./outcome";
+import { resetSchema } from "@/lib/auth/schemas";
 
 type Terminal = { state: "invalid"; message: string } | { state: "done" } | null;
 
 export default function ResetForm({ token }: { token: string }) {
   const reduce = useReducedMotion();
-  const [password, setPassword] = useState("");
-  const [confirmation, setConfirmation] = useState("");
-  const [attempted, setAttempted] = useState(false);
+  const form = useForm<z.infer<typeof resetSchema>>({
+    resolver: zodResolver(resetSchema),
+    mode: "onTouched",
+  });
+
+  const { register, formState: { errors }, handleSubmit } = form;
+
   const [pending, setPending] = useState(false);
   const [feedback, setFeedback] = useState<{ tone: "error" | "info"; text: string } | null>(null);
   const [terminal, setTerminal] = useState<Terminal>(null);
-
-  const passwordError = null;
-  const confirmationError = null;
-  const invalid = Boolean(passwordError || confirmationError);
 
   // A link without a token is not a valid reset link — say so instead of
   // rendering a form that could never succeed.
@@ -82,8 +86,7 @@ export default function ResetForm({ token }: { token: string }) {
     );
   }
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function onSubmit() {
     setPending(true);
     try {
       // TODO: implement
@@ -100,18 +103,13 @@ export default function ResetForm({ token }: { token: string }) {
         description="Choose something you don't use elsewhere. This link stops working once the password changes."
       />
 
-      <form noValidate onSubmit={onSubmit} className="mt-8 space-y-5" aria-describedby="reset-status">
+      <form noValidate onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5" aria-describedby="reset-status">
         <PasswordField
           id="reset-password"
           label="New password"
           autoComplete="new-password"
-          value={password}
-          onChange={(value) => {
-            setPassword(value);
-            // TODO
-            setFeedback(null);
-          }}
-          error={attempted ? passwordError : null}
+          {...register("password")}
+          error={errors.password?.message}
           showRules
           disabled={pending}
           autoFocus
@@ -121,13 +119,8 @@ export default function ResetForm({ token }: { token: string }) {
           id="reset-confirm"
           label="Confirm password"
           autoComplete="new-password"
-          value={confirmation}
-          onChange={(value) => {
-            setConfirmation(value);
-            // TODO
-            setFeedback(null);
-          }}
-          error={attempted ? confirmationError : null}
+          {...register("confirmation")}
+          error={errors.confirmation?.message}
           disabled={pending}
         />
 

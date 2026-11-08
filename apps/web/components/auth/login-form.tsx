@@ -1,7 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { AnimatePresence } from "motion/react";
 
 import {
@@ -13,23 +16,23 @@ import {
 } from "./auth-frame";
 import { TextField, PasswordField } from "./fields";
 import { Alert, SubmitButton } from "./feedback";
+import { loginSchema } from "@/lib/auth/schemas";
 
 export default function LoginForm({ next }: { next: string }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [attempted, setAttempted] = useState(false);
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
+    mode: "onTouched",
+  });
+
+  const { register, formState: { errors }, handleSubmit } = form;
+
   const [pending, setPending] = useState(false);
   const [feedback, setFeedback] = useState<{
     tone: "error" | "info";
     text: string;
   } | null>(null);
 
-  const emailError = null;
-  const passwordError = null;
-  const invalid = Boolean(emailError || passwordError);
-
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function onSubmit() {
     setPending(true);
     try {
       // TODO: implement
@@ -48,7 +51,7 @@ export default function LoginForm({ next }: { next: string }) {
 
       <form
         noValidate
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="mt-8 space-y-5"
         aria-describedby="login-status"
       >
@@ -59,13 +62,8 @@ export default function LoginForm({ next }: { next: string }) {
             inputMode="email"
             autoComplete="email"
             placeholder="you@studio.com"
-            value={email}
-            onChange={(value) => {
-              setEmail(value);
-              // TODO
-              setFeedback(null);
-            }}
-            error={attempted ? emailError : null}
+            {...register("email")}
+            error={errors.email?.message}
             disabled={pending}
           />
 
@@ -74,13 +72,8 @@ export default function LoginForm({ next }: { next: string }) {
             id="login-password"
             label="Password"
             autoComplete="current-password"
-            value={password}
-            onChange={(value) => {
-              setPassword(value);
-              // TODO
-              setFeedback(null);
-            }}
-            error={attempted ? passwordError : null}
+            {...register("password")}
+            error={errors.password?.message}
             disabled={pending}
           />
           <div className="mt-2 text-right">
