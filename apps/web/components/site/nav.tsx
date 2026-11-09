@@ -11,16 +11,39 @@ import { authClient } from "@/lib/auth/client";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-/** Primary destinations — pages that exist (or are scaffolded) as real routes. */
-const PRIMARY: { label: string; href: string; match: (path: string) => boolean }[] = [
-  { label: "Documentation", href: "/docs", match: (p) => p === "/docs" || p.startsWith("/docs/") },
-  { label: "API Reference", href: "/api-reference", match: (p) => p === "/api-reference" },
+const OUTLINE_BTN =
+  "inline-flex h-9 items-center border border-line-2 px-4 font-mono text-[11px] uppercase tracking-[0.18em] text-fg transition-colors hover:border-accent hover:text-accent";
+const SOLID_BTN =
+  "inline-flex h-9 items-center bg-mint px-4 font-mono text-[11px] uppercase tracking-[0.18em] text-ink transition duration-200 hover:brightness-95";
+
+const PRIMARY: {
+  label: string;
+  href: string;
+  match: (path: string) => boolean;
+}[] = [
+  {
+    label: "Documentation",
+    href: "/docs",
+    match: (p) => p === "/docs" || p.startsWith("/docs/"),
+  },
+  {
+    label: "API Reference",
+    href: "/api-reference",
+    match: (p) => p === "/api-reference",
+  },
   { label: "Changelog", href: "/changelog", match: (p) => p === "/changelog" },
   { label: "About", href: "/about", match: (p) => p === "/about" },
 ];
 
-/** Mobile menu groups: pages plus landing-page section jumps. */
-const MOBILE_GROUPS: { title: string; items: { label: string; href: string }[] }[] = [
+const DASHBOARD_LINKS = [
+  { label: "Overview", href: "/dashboard" },
+  { label: "Idea Lab", href: "/dashboard/idea-lab" },
+  { label: "MVP Studio", href: "/dashboard/mvp-studio" },
+  { label: "Product Roadmap", href: "/dashboard/product-roadmap" },
+  { label: "Analytics", href: "/dashboard/founder-analytics" },
+];
+
+const MOBILE_GROUPS_GUEST = [
   {
     title: "Pages",
     items: [
@@ -30,7 +53,6 @@ const MOBILE_GROUPS: { title: string; items: { label: string; href: string }[] }
       { label: "API Reference", href: "/api-reference" },
       { label: "Changelog", href: "/changelog" },
       { label: "About", href: "/about" },
-      { label: "Landing page", href: "/" },
     ],
   },
   {
@@ -44,6 +66,158 @@ const MOBILE_GROUPS: { title: string; items: { label: string; href: string }[] }
   },
 ];
 
+const MOBILE_GROUPS_AUTH = [
+  {
+    title: "Dashboard",
+    items: DASHBOARD_LINKS,
+  },
+  {
+    title: "Pages",
+    items: [
+      { label: "Documentation", href: "/docs" },
+      { label: "API Reference", href: "/api-reference" },
+      { label: "Changelog", href: "/changelog" },
+      { label: "About", href: "/about" },
+    ],
+  },
+];
+
+function truncateEmail(email: string | undefined, max = 22): string {
+  if (!email) return "Account";
+  if (email.length <= max) return email;
+  return email.slice(0, max) + "…";
+}
+
+// ─── Desktop auth dropdown ────────────────────────────────────────────────────
+
+type DesktopActionsProps = {
+  session: ReturnType<typeof useSession>;
+  pathname: string;
+  onSignOut: () => void;
+};
+
+function DesktopActions({ session, pathname, onSignOut }: DesktopActionsProps) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+
+  useEffect(() => {
+    if (!open) return;
+    function onClick(e: MouseEvent) {
+      if (!ref.current?.contains(e.target as Node)) setOpen(false);
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("mousedown", onClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  if (session.status === "loading") {
+    return (
+      <div
+        aria-hidden
+        className="pointer-events-none flex items-center gap-3 opacity-0"
+      >
+        <span className={OUTLINE_BTN}>The ecosystem</span>
+        <span className={SOLID_BTN}>Sign in</span>
+      </div>
+    );
+  }
+
+  if (session.status === "unauthenticated") {
+    return (
+      <div className="flex items-center gap-3">
+        <Link href="/#stages" className={OUTLINE_BTN}>
+          The ecosystem
+        </Link>
+        <Link href="/login" className={SOLID_BTN}>
+          Sign in
+        </Link>
+      </div>
+    );
+  }
+
+  // authenticated
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-haspopup="true"
+        className={OUTLINE_BTN}
+      >
+        {truncateEmail(session.session.email)}
+        <span
+          aria-hidden
+          className="ml-2 inline-block font-mono text-[9px] text-faint transition-transform duration-150"
+          style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)" }}
+        >
+          ▾
+        </span>
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: reduce ? 0 : 0.15, ease: EASE }}
+            className="absolute right-0 top-full z-50 mt-2 w-52 border border-line bg-bg shadow-lg"
+          >
+            {/* email header */}
+            <div className="border-b border-line px-4 py-2.5">
+              <p className="font-mono text-[9.5px] uppercase tracking-[0.2em] text-faint">
+                Signed in as
+              </p>
+              <p className="mt-0.5 truncate text-[12px] text-fg">
+                {session.session.email}
+              </p>
+            </div>
+
+            {/* links */}
+            <ul className="py-1">
+              {DASHBOARD_LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className={`block px-4 py-2 text-[12.5px] transition-colors hover:bg-accent/10 hover:text-accent ${
+                      pathname === link.href ? "text-accent" : "text-muted"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            {/* sign out */}
+            <div className="border-t border-line py-1">
+              <button
+                onClick={() => {
+                  setOpen(false);
+                  onSignOut();
+                }}
+                className="block w-full px-4 py-2 text-left text-[12.5px] text-danger transition-colors hover:bg-danger/10"
+              >
+                Sign out
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// ─── Nav ─────────────────────────────────────────────────────────────────────
+
 export default function Nav() {
   const pathname = usePathname();
   const router = useRouter();
@@ -51,7 +225,6 @@ export default function Nav() {
   const reduce = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const menuBtnRef = useRef<HTMLButtonElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -67,7 +240,6 @@ export default function Nav() {
     router.push("/login");
   }
 
-  // Drawer focus + scroll lock; Esc closes and returns focus to the trigger.
   useEffect(() => {
     if (!menuOpen) return;
     closeBtnRef.current?.focus();
@@ -85,6 +257,11 @@ export default function Nav() {
     };
   }, [menuOpen]);
 
+  const mobileGroups =
+    session.status === "authenticated"
+      ? MOBILE_GROUPS_AUTH
+      : MOBILE_GROUPS_GUEST;
+
   return (
     <header
       className={`sticky top-0 z-50 border-b bg-bg transition-colors duration-300 ${
@@ -92,7 +269,12 @@ export default function Nav() {
       }`}
     >
       <div className="mx-auto flex h-16 w-full max-w-[1240px] items-center justify-between gap-6 border-x border-line px-6 sm:px-10">
-        <Link href="/" className="flex shrink-0 items-center" aria-label="Foundry — home">
+        {/* Logo */}
+        <Link
+          href="/"
+          className="flex shrink-0 items-center"
+          aria-label="Foundry — home"
+        >
           <Image
             src="/logo.png"
             alt="Foundry"
@@ -103,6 +285,7 @@ export default function Nav() {
           />
         </Link>
 
+        {/* Primary nav */}
         <nav aria-label="Primary" className="hidden items-center gap-7 lg:flex">
           {PRIMARY.map((link) => {
             const active = link.match(pathname);
@@ -123,60 +306,17 @@ export default function Nav() {
           })}
         </nav>
 
+        {/* Right side */}
         <div className="flex items-center gap-3">
-          <div className="relative inline-block">
-            <button
-              onClick={() => setUserMenuOpen(!userMenuOpen)}
-              className="inline-flex h-9 items-center border border-line-2 px-4 font-mono text-[11px] uppercase tracking-[0.18em] text-fg transition-colors hover:border-accent hover:text-accent"
-            >
-              {session.status === "authenticated"
-                ? (session.session as { name?: string; email: string }).name ??
-                  session.session.email
-                : "Explore"}
-              <span className="hidden 2xl:inline">&nbsp;the ecosystem</span>
-            </button>
-            {session.status === "authenticated" && userMenuOpen && (
-              <div className="absolute right-0 mt-2 w-48 border border-line bg-bg p-2 shadow-lg">
-                <Link
-                  href="/dashboard"
-                  className="block border-b border-line px-3 py-2 text-[12px] text-fg hover:bg-accent/50"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  href="/panel"
-                  className="block border-b border-line px-3 py-2 text-[12px] text-fg hover:bg-accent/50"
-                >
-                  Panel
-                </Link>
-                <button
-                  onClick={handleSignOut}
-                  className="block w-full text-left px-3 py-2 text-[12px] text-fg hover:bg-accent/50"
-                >
-                  Sign out
-                </button>
-              </div>
-            )}
+          <div className="hidden lg:flex">
+            <DesktopActions
+              session={session}
+              pathname={pathname}
+              onSignOut={handleSignOut}
+            />
           </div>
 
-          {session.status === "loading" ? (
-            <div aria-hidden className="opacity-0 pointer-events-none flex items-center gap-3">
-              <Link
-                href="/login"
-                className="inline-flex h-9 items-center bg-mint px-4 font-mono text-[11px] uppercase tracking-[0.18em] text-ink transition duration-200 hover:brightness-95"
-              >
-                Sign in
-              </Link>
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              className="inline-flex h-9 items-center bg-mint px-4 font-mono text-[11px] uppercase tracking-[0.18em] text-ink transition duration-200 hover:brightness-95"
-            >
-              Sign in
-            </Link>
-          )}
-
+          {/* Mobile hamburger */}
           <button
             ref={menuBtnRef}
             type="button"
@@ -186,7 +326,13 @@ export default function Nav() {
             aria-label="Open menu"
             className="flex h-9 w-9 items-center justify-center border border-line-2 text-fg transition-colors hover:border-accent hover:text-accent lg:hidden"
           >
-            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden className="stroke-current stroke-[1.5]">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              aria-hidden
+              className="stroke-current stroke-[1.5]"
+            >
               <path d="M2 4.5h12M2 8h12M2 11.5h12" strokeLinecap="round" />
             </svg>
           </button>
@@ -238,7 +384,19 @@ export default function Nav() {
               </div>
 
               <div className="flex flex-col gap-8 px-5 py-7">
-                {MOBILE_GROUPS.map((group) => (
+                {/* email badge when authenticated */}
+                {session.status === "authenticated" && (
+                  <div className="border border-line px-4 py-2.5">
+                    <p className="font-mono text-[9.5px] uppercase tracking-[0.2em] text-faint">
+                      Signed in as
+                    </p>
+                    <p className="mt-0.5 truncate text-[12px] text-fg">
+                      {session.session.email}
+                    </p>
+                  </div>
+                )}
+
+                {mobileGroups.map((group) => (
                   <nav key={group.title} aria-label={group.title}>
                     <h2 className="font-mono text-[10.5px] uppercase tracking-[0.28em] text-faint">
                       {group.title}
@@ -271,13 +429,25 @@ export default function Nav() {
                   </nav>
                 ))}
 
-                <Link
-                  href="/#stages"
-                  onClick={() => setMenuOpen(false)}
-                  className="inline-flex h-12 items-center justify-center bg-mint px-6 text-[15px] font-medium text-ink transition duration-200 hover:brightness-95"
-                >
-                  Explore the eight stages
-                </Link>
+                {session.status === "authenticated" ? (
+                  <button
+                    onClick={async () => {
+                      setMenuOpen(false);
+                      await handleSignOut();
+                    }}
+                    className="inline-flex h-12 items-center justify-center border border-danger px-6 text-[15px] font-medium text-danger transition duration-200 hover:bg-danger/10"
+                  >
+                    Sign out
+                  </button>
+                ) : (
+                  <Link
+                    href="/login"
+                    onClick={() => setMenuOpen(false)}
+                    className="inline-flex h-12 items-center justify-center bg-mint px-6 text-[15px] font-medium text-ink transition duration-200 hover:brightness-95"
+                  >
+                    Sign in
+                  </Link>
+                )}
               </div>
             </motion.aside>
           </>
