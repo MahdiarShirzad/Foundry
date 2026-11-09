@@ -1,4 +1,4 @@
-import { Session } from "inspector/promises";
+import { Session } from "./contract";
 import { api, ApiError } from "../apiClient";
 import {
   AuthError,

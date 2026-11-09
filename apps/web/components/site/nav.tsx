@@ -2,9 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+
+import { useSession } from "@/lib/auth/use-session";
+import { authClient } from "@/lib/auth/client";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -43,9 +46,12 @@ const MOBILE_GROUPS: { title: string; items: { label: string; href: string }[] }
 
 export default function Nav() {
   const pathname = usePathname();
+  const router = useRouter();
+  const session = useSession();
   const reduce = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const menuBtnRef = useRef<HTMLButtonElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -55,6 +61,11 @@ export default function Nav() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  async function handleSignOut() {
+    await authClient.signOut();
+    router.push("/login");
+  }
 
   // Drawer focus + scroll lock; Esc closes and returns focus to the trigger.
   useEffect(() => {
@@ -113,19 +124,58 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link
-            href="/#stages"
-            className="hidden h-9 items-center border border-line-2 px-4 font-mono text-[11px] uppercase tracking-[0.18em] text-fg transition-colors hover:border-accent hover:text-accent xl:inline-flex"
-          >
-            Explore<span className="hidden 2xl:inline">&nbsp;the ecosystem</span>
-          </Link>
+          <div className="relative inline-block">
+            <button
+              onClick={() => setUserMenuOpen(!userMenuOpen)}
+              className="inline-flex h-9 items-center border border-line-2 px-4 font-mono text-[11px] uppercase tracking-[0.18em] text-fg transition-colors hover:border-accent hover:text-accent"
+            >
+              {session.status === "authenticated"
+                ? (session.session as { name?: string; email: string }).name ??
+                  session.session.email
+                : "Explore"}
+              <span className="hidden 2xl:inline">&nbsp;the ecosystem</span>
+            </button>
+            {session.status === "authenticated" && userMenuOpen && (
+              <div className="absolute right-0 mt-2 w-48 border border-line bg-bg p-2 shadow-lg">
+                <Link
+                  href="/dashboard"
+                  className="block border-b border-line px-3 py-2 text-[12px] text-fg hover:bg-accent/50"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  href="/panel"
+                  className="block border-b border-line px-3 py-2 text-[12px] text-fg hover:bg-accent/50"
+                >
+                  Panel
+                </Link>
+                <button
+                  onClick={handleSignOut}
+                  className="block w-full text-left px-3 py-2 text-[12px] text-fg hover:bg-accent/50"
+                >
+                  Sign out
+                </button>
+              </div>
+            )}
+          </div>
 
-          <Link
-            href="/login"
-            className="inline-flex h-9 items-center bg-mint px-4 font-mono text-[11px] uppercase tracking-[0.18em] text-ink transition duration-200 hover:brightness-95"
-          >
-            Sign in
-          </Link>
+          {session.status === "loading" ? (
+            <div aria-hidden className="opacity-0 pointer-events-none flex items-center gap-3">
+              <Link
+                href="/login"
+                className="inline-flex h-9 items-center bg-mint px-4 font-mono text-[11px] uppercase tracking-[0.18em] text-ink transition duration-200 hover:brightness-95"
+              >
+                Sign in
+              </Link>
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              className="inline-flex h-9 items-center bg-mint px-4 font-mono text-[11px] uppercase tracking-[0.18em] text-ink transition duration-200 hover:brightness-95"
+            >
+              Sign in
+            </Link>
+          )}
 
           <button
             ref={menuBtnRef}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { AnimatePresence } from "motion/react";
@@ -16,7 +16,11 @@ import {
 } from "./auth-frame";
 import { TextField, PasswordField } from "./fields";
 import { Alert, SubmitButton } from "./feedback";
-import { loginSchema } from "@/lib/auth/schemas";
+import { LoginFields, loginSchema } from "@/lib/auth/schemas";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth/client";
+import { AuthError, describeAuthError } from "@/lib/auth/contract";
+import { log } from "console";
 
 export default function LoginForm({ next }: { next: string }) {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -24,7 +28,18 @@ export default function LoginForm({ next }: { next: string }) {
     mode: "onTouched",
   });
 
-  const { register, formState: { errors }, handleSubmit } = form;
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<LoginFields>({
+    resolver: zodResolver(loginSchema),
+    mode: "onTouched",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
   const [pending, setPending] = useState(false);
   const [feedback, setFeedback] = useState<{
@@ -32,10 +47,25 @@ export default function LoginForm({ next }: { next: string }) {
     text: string;
   } | null>(null);
 
-  async function onSubmit() {
+  const router = useRouter();
+
+  async function onSubmit(data: LoginFields) {
     setPending(true);
     try {
-      // TODO: implement
+      await authClient.signIn({
+        email: data.email,
+        password: data.password,
+      });
+      router.replace(next);
+    } catch (err) {
+      console.log(err);
+      setFeedback({
+        tone: "error",
+        text:
+          err instanceof AuthError
+            ? describeAuthError(err.code)
+            : describeAuthError("unknown"),
+      });
     } finally {
       setPending(false);
     }
@@ -55,26 +85,42 @@ export default function LoginForm({ next }: { next: string }) {
         className="mt-8 space-y-5"
         aria-describedby="login-status"
       >
-          <TextField
-            id="login-email"
-            label="Email"
-            type="email"
-            inputMode="email"
-            autoComplete="email"
-            placeholder="you@studio.com"
-            {...register("email")}
-            error={errors.email?.message}
-            disabled={pending}
-          />
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              id="login-email"
+              label="Email"
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              placeholder="you@studio.com"
+              value={field.value}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+              error={errors.email?.message}
+              disabled={pending}
+            />
+          )}
+        />
 
         <div>
-          <PasswordField
-            id="login-password"
-            label="Password"
-            autoComplete="current-password"
-            {...register("password")}
-            error={errors.password?.message}
-            disabled={pending}
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <PasswordField
+                id="login-password"
+                label="Password"
+                autoComplete="current-password"
+                value={field.value}
+                onChange={field.onChange}
+                onBlur={field.onBlur}
+                error={errors.password?.message}
+                disabled={pending}
+              />
+            )}
           />
           <div className="mt-2 text-right">
             <Link

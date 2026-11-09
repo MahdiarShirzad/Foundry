@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type InputHTMLAttributes, type ReactNode } from "react";
+import { Ref, useState, type InputHTMLAttributes, type ReactNode } from "react";
 
 const PASSWORD_RULES = [
   "8+ characters",
@@ -21,6 +21,7 @@ type BaseProps = {
   hint?: string;
   disabled?: boolean;
   autoFocus?: boolean;
+  ref?: Ref<HTMLInputElement>;
 };
 
 const LABEL = "font-mono text-[10.5px] uppercase tracking-[0.22em] text-faint";
@@ -96,6 +97,7 @@ export function TextField({
   inputMode,
   placeholder,
   spellCheck,
+  ref,
 }: BaseProps & {
   type?: InputHTMLAttributes<HTMLInputElement>["type"];
   autoComplete?: string;
@@ -108,7 +110,8 @@ export function TextField({
       <input
         id={id}
         type={type}
-        value={value}
+        {...(value !== undefined ? { value } : {})}
+        ref={ref}
         onChange={onChange}
         onBlur={onBlur}
         disabled={disabled}
@@ -137,6 +140,7 @@ export function PasswordField({
   autoComplete,
   showRules = false,
   autoFocus,
+  ref,
 }: BaseProps & {
   autoComplete?: string;
   showRules?: boolean;
@@ -150,7 +154,8 @@ export function PasswordField({
         <input
           id={id}
           type={visible ? "text" : "password"}
-          value={value}
+          ref={ref}
+          {...(value !== undefined ? { value } : {})}
           onChange={onChange}
           onBlur={onBlur}
           disabled={disabled}
