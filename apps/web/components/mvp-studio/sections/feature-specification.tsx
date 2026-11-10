@@ -211,7 +211,7 @@ export function FeatureSpecification({
               </div>
 
               <p className="mt-5 border-t border-line pt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-                Editing is a local UI demonstration · changes are not saved or synced anywhere
+                Editing is local · changes are not saved or synced anywhere
               </p>
             </article>
           ) : (

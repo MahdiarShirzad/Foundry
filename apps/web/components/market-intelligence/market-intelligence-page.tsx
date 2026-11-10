@@ -306,11 +306,7 @@ export default function MarketIntelligencePage() {
         <span aria-hidden className="size-1.5 bg-accent" />
         {MARKET_SECTION_META[section].label} · {idea.ref} {idea.name}
         <span aria-hidden className="size-0.5 bg-line-2" />
-        <span>Static sample workspace</span>
-        <span aria-hidden className="size-0.5 bg-line-2" />
         <span>{MARKET_VIEW_OPTIONS.find((option) => option.value === view)?.label}</span>
-        <span aria-hidden className="size-0.5 bg-line-2" />
-        <span>No API, scraping or AI analysis</span>
       </p>
 
       <AnimatePresence>

@@ -13,13 +13,13 @@ export function MarketIntelligenceErrorState({
       <div className="w-full max-w-[48rem] px-6 py-12 sm:px-10 sm:py-14">
         <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-danger">
           <span aria-hidden className="size-1.5 bg-danger" />
-          Presentation state · error
+          Error
         </p>
         <h2 className="mt-3 text-[clamp(1.6rem,2.8vw,2.1rem)] font-medium leading-[1.06] tracking-[-0.035em] text-fg">
           The research workspace didn&apos;t load.
         </h2>
         <p className="mt-3 max-w-[56ch] text-[13px] leading-relaxed text-muted">
-          The sample market set could not be read. Nothing has been changed, and no research,
+          The market data could not be read. Nothing has been changed, and no research,
           competitor or opportunity has been moved or lost.
         </p>
 

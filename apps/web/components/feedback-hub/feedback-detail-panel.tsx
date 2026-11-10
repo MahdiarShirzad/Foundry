@@ -90,7 +90,7 @@ export function FeedbackDetailPanel({
             {item.title}
           </h3>
           <p className="mt-1.5 text-[11.5px] text-muted">
-            {item.source} · {item.date} · fictional sample record
+            {item.source} · {item.date}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">

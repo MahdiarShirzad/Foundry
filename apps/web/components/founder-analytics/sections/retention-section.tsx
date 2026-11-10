@@ -31,7 +31,7 @@ export function RetentionSection({
     return (
       <section className="border border-line bg-panel">
         <AnalyticsEmptyState
-          title={`No retention samples for ${product.name}`}
+          title={`No retention data for ${product.name}`}
           description="Retention summaries, cohorts and engagement series are published per product. This product has none yet."
         />
       </section>
@@ -50,14 +50,10 @@ export function RetentionSection({
               Retention overview
             </p>
             <p className="mt-1 max-w-[72ch] text-[11.5px] text-muted">
-              Sample figures from the latest sample week — read them as illustration, not as a
-              retention study. A fuller judgement needs a longer observation period and consistent
-              cohort definitions.
+              Figures from the latest week — read them as a signal, not as a retention study. A
+              fuller judgement needs a longer observation period and consistent cohort definitions.
             </p>
           </div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-            demo data
-          </p>
         </header>
         <KpiStrip kpis={dataset.retention} />
       </section>
@@ -66,7 +62,7 @@ export function RetentionSection({
         <Panel
           className="lg:col-span-7"
           title="Cohort retention"
-          description="Share of each sample signup cohort that was still active in later weeks."
+          description="Share of each signup cohort that was still active in later weeks."
           action={
             <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
               last {dataset.cohorts?.length ?? 0} cohorts
@@ -79,7 +75,7 @@ export function RetentionSection({
             <AnalyticsEmptyState
               compact
               title="No cohort dataset for this product"
-              description="Cohort retention is a predefined table that has not been published for this product's demo data. Cohorts are never derived from the weekly samples at runtime."
+              description="Cohort retention is a predefined table that has not been published for this product. Cohorts are never derived from the weekly values at runtime."
             />
           )}
         </Panel>
@@ -87,7 +83,7 @@ export function RetentionSection({
         <Panel
           className="lg:col-span-5"
           title="Interpretation notes"
-          description="Hand-written notes on what the sample patterns do and do not show."
+          description="Hand-written notes on what the patterns do and do not show."
         >
           <ul className="space-y-3">
             {dataset.notes.map((note) => (
@@ -96,7 +92,7 @@ export function RetentionSection({
                 <dl className="mt-2 space-y-1.5">
                   {(
                     [
-                      ["Sample shows", note.shows],
+                      ["Shows", note.shows],
                       ["Might suggest", note.suggests],
                       ["Would need", note.needs],
                     ] as const
@@ -120,7 +116,7 @@ export function RetentionSection({
 
       <Panel
         title="Engagement trend"
-        description={`${meta.description} Explain it in plain language: this chart describes behaviour in the sample, not whether the behaviour is good or bad.`}
+        description={`${meta.description} Explain it in plain language: this chart describes behaviour in the data, not whether the behaviour is good or bad.`}
         action={
           <SegmentedControl
             label="Engagement metric"

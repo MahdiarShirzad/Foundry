@@ -5,7 +5,7 @@ import type { AnalyticsDataset } from "@/lib/founder-analytics/types";
 /** "Sep 28 – Oct 26" for the selected window of sample weeks. */
 export function formatWindow(dataset: AnalyticsDataset, range: number): string {
   const current = dataset.weeks.slice(-range);
-  if (current.length === 0) return "no sample weeks";
+  if (current.length === 0) return "no data";
   const first = formatShortDate(current[0].start);
   const last = formatShortDate(current[current.length - 1].start);
   return current.length === 1 ? first : `${first} – ${last}`;

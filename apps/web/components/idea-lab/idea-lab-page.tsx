@@ -180,11 +180,6 @@ export default function IdeaLabPage({
         )}
       </AnimatePresence>
 
-      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-        <span aria-hidden className="size-1.5 bg-accent" />
-        Static sample workspace ·
-        <span>UI states, search &amp; filters are presentation only</span>
-      </p>
 
       <AnimatePresence>
         {captureOpen ? (

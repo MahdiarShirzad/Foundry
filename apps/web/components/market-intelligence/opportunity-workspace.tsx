@@ -415,7 +415,7 @@ export function OpportunityWorkspace({
                     </button>
                   ) : (
                     <p className="text-[12px] leading-relaxed text-faint">
-                      The linked sample note is not available.
+                      The linked note is not available.
                     </p>
                   )}
                 </DetailSection>
@@ -438,7 +438,7 @@ export function OpportunityWorkspace({
               title="Select an opportunity to separate evidence from assumption."
               description="Each opportunity keeps its supporting note, its current investigation status, and the questions that would change the decision."
               prompts={[
-                ["01", "Evidence", "What did the sample research actually observe?"],
+                ["01", "Evidence", "What did the research actually observe?"],
                 ["02", "Hypothesis", "What are we assuming about the customer or the market?"],
                 ["03", "Next test", "What would make this opportunity more or less credible?"],
               ]}

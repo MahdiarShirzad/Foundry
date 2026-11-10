@@ -89,7 +89,7 @@ export function AnalyticsEmptyState({
 }) {
   return (
     <EmptyState
-      eyebrow="No sample data"
+      eyebrow="No data"
       title={title}
       description={description}
       action={action}

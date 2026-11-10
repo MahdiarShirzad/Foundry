@@ -86,7 +86,7 @@ export function ReportsSection({
       <section className="border border-line bg-panel">
         <AnalyticsEmptyState
           title={`No reports for ${product.name}`}
-          description="Sample reports are authored per product. This product has none yet, and nothing is generated to fill the gap."
+          description="Reports are authored per product. This product has none yet, and nothing is generated to fill the gap."
           action={
             <button
               type="button"
@@ -118,7 +118,7 @@ export function ReportsSection({
         <Panel
           className="lg:col-span-5"
           title="Reports"
-          description={`${reports.length} predefined sample report${reports.length === 1 ? "" : "s"} for ${product.name}.`}
+          description={`${reports.length} predefined report${reports.length === 1 ? "" : "s"} for ${product.name}.`}
         >
           <div className="space-y-2">
             <div>
@@ -174,7 +174,7 @@ export function ReportsSection({
                 </p>
                 <p className="mx-auto mt-2 max-w-[30ch] text-[12px] leading-relaxed text-muted">
                   {reports.length === 0
-                    ? "No sample reports are authored for this product."
+                    ? "No reports are authored for this product."
                     : "No report matches the active search and filters."}
                 </p>
                 {reports.length > 0 ? (
@@ -255,7 +255,7 @@ export function ReportsSection({
             <AnalyticsEmptyState
               compact
               title="Select a report"
-              description="Choose a sample report from the list to read its text, figures and charts."
+              description="Choose a report from the list to read its text, figures and charts."
             />
           ) : (
             <motion.div
@@ -331,7 +331,7 @@ export function ReportsSection({
               ) : null}
 
               <p className="border-t border-line pt-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-                Predefined sample report · not generated from production data
+                Predefined report · not generated from production data
               </p>
             </motion.div>
           )}
@@ -363,7 +363,7 @@ export function ReportsSection({
             <AnalyticsEmptyState
               compact
               title="No observations in this session"
-              description="Nothing has been written down yet. Add a short observation to capture what you noticed while reading these sample metrics."
+              description="Nothing has been written down yet. Add a short observation to capture what you noticed while reading these metrics."
               action={
                 <button
                   type="button"
@@ -395,7 +395,7 @@ export function ReportsSection({
                           </span>
                           {entry.sample ? (
                             <span className="border border-line-2 px-1.5 py-[2px] font-mono text-[10px] uppercase tracking-[0.13em] text-faint">
-                              sample note
+                              note
                             </span>
                           ) : null}
                         </div>

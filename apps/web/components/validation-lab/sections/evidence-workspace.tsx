@@ -346,9 +346,6 @@ export function EvidenceWorkspace({
                   <p className="text-muted">{selected.limitations}</p>
                 </EvidenceStep>
 
-                <p className="border-t border-line pt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-                  Sample evidence · no real participants, sources, or statistical claims
-                </p>
               </div>
             </motion.article>
           </AnimatePresence>

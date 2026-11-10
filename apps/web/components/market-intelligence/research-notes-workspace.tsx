@@ -322,7 +322,7 @@ export function ResearchNotesWorkspace({
               title="Select a note to read what was observed, and what it might mean."
               description="The note keeps observations and interpretation in separate sections so later readers can judge the evidence for themselves."
               prompts={[
-                ["01", "Observation", "What was seen, heard or read in the sample material?"],
+                ["01", "Observation", "What was seen, heard or read in the material?"],
                 ["02", "Interpretation", "What meaning is being assigned, and how confident is it?"],
                 ["03", "Follow-up", "Which question would sharpen or challenge this note?"],
               ]}

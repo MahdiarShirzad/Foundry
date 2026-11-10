@@ -182,7 +182,7 @@ function SidebarContent({
             <span className="min-w-0">
               <span className="block truncate text-[13px] font-medium text-fg">Helio Labs</span>
               <span className="block font-mono text-[9.5px] uppercase tracking-[0.18em] text-faint">
-                demo workspace
+                workspace
               </span>
             </span>
           </div>
@@ -250,19 +250,11 @@ function SidebarContent({
             ↗
           </Link>
         ) : (
-          <div className="flex items-center justify-between gap-2">
-            <div className="min-w-0">
-              <p className="truncate text-[12px] text-fg">Mahdyar</p>
-              <p className="font-mono text-[9.5px] uppercase tracking-[0.18em] text-faint">
-                not signed in
-              </p>
-            </div>
-            <Link
-              href="/login"
-              className="shrink-0 border border-line-2 px-2 py-1 font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent hover:text-accent"
-            >
-              Sign in
-            </Link>
+          <div className="min-w-0">
+            <p className="truncate text-[12px] text-fg">Mahdyar</p>
+            <p className="font-mono text-[9.5px] uppercase tracking-[0.18em] text-faint">
+              signed in
+            </p>
           </div>
         )}
       </div>
@@ -440,11 +432,10 @@ function AccountMenu() {
             <div className="border-b border-line px-3 py-2.5">
               <p className="text-[12.5px] text-fg">Mahdyar</p>
               <p className="font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint">
-                demo workspace
+                signed in
               </p>
             </div>
             {[
-              { label: "Sign in", href: "/login" },
               { label: "Documentation", href: "/docs" },
               { label: "Back to site", href: "/" },
             ].map((item) => (
@@ -563,14 +554,6 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                 </span>
                 <kbd className="border border-line px-1 font-mono text-[9px] text-faint">⌘K</kbd>
               </button>
-
-              <Link
-                href="/docs/backend-api"
-                className="hidden h-8 items-center gap-2 border border-line px-2.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent/60 hover:text-accent sm:flex"
-              >
-                <span aria-hidden className="size-1.5 bg-accent" />
-                Demo data
-              </Link>
 
               <LogoutButton />
 

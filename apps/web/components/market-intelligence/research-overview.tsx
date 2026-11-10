@@ -63,7 +63,7 @@ export function ResearchOverview({ idea }: { idea: MarketIdea }) {
         </p>
         <span aria-hidden className="hidden h-2.5 w-px bg-line sm:block" />
         <p className="text-[10.5px] leading-relaxed text-faint">
-          Counts reflect this sample set. No market size, growth or revenue figures are implied.
+          Counts reflect the research collected here. No market size, growth or revenue figures are implied.
         </p>
       </div>
     </section>

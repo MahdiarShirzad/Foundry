@@ -37,13 +37,7 @@ export function FounderAnalyticsHeader({
       stageLabel="Learn"
       title="Founder Analytics"
       description="Understand product performance, explore user behavior, and turn metrics into better product decisions."
-      meta={[
-        <span key="demo" className="text-accent">
-          Demo data
-        </span>,
-        `Sample window · ${windowLabel}`,
-        product.name,
-      ]}
+      meta={[`Window · ${windowLabel}`, product.name]}
       controls={
         <>
           <HeaderSelect
@@ -62,7 +56,7 @@ export function FounderAnalyticsHeader({
             options={ANALYTICS_RANGES}
             value={range}
             onChange={onChangeRange}
-            label="Sample date range"
+            label="Date range"
           />
         </>
       }

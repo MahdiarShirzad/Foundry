@@ -21,8 +21,8 @@ export default function CohortTable({ rows }: { rows: CohortRow[] }) {
       <div className="overflow-x-auto">
         <table className="w-full min-w-[30rem] border-collapse text-left">
           <caption className="sr-only">
-            Sample retention by signup cohort: starting size and the share returning in weeks one
-            to four. Empty cells are weeks that have not been observed in the sample yet.
+            Retention by signup cohort: starting size and the share returning in weeks one to
+            four. Empty cells are weeks that have not been observed yet.
           </caption>
           <thead>
             <tr>
@@ -66,7 +66,7 @@ export default function CohortTable({ rows }: { rows: CohortRow[] }) {
                     {value === null ? (
                       <span
                         className="inline-flex h-6 min-w-[3.25rem] items-center justify-end border border-dashed border-line px-2 font-mono text-[11px] text-faint"
-                        title="Not observed in the sample window yet"
+                        title="Not observed in this window yet"
                       >
                         —<span className="sr-only"> not yet observed</span>
                       </span>
@@ -90,8 +90,8 @@ export default function CohortTable({ rows }: { rows: CohortRow[] }) {
 
       <div className="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-2.5">
         <p className="max-w-[52ch] text-[11.5px] leading-snug text-faint">
-          Read each row down: the share of one signup cohort that was still active in later sample
-          weeks. Dashed cells have not been observed yet.
+          Read each row down: the share of one signup cohort that wasstill active in later
+            weeks. Dashed cells have not been observed yet.
         </p>
         <span className="flex shrink-0 items-center gap-[3px]" aria-hidden>
           <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">less</span>

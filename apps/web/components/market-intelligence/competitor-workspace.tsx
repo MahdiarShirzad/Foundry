@@ -260,7 +260,6 @@ export function CompetitorWorkspace({
                   <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.11em] text-faint">
                     <span aria-hidden className="size-1 bg-accent" />
                     {selected.website}
-                    <span className="text-faint/65">· sample domain</span>
                   </span>
                   <span className="font-mono text-[10px] uppercase tracking-[0.11em] text-faint">
                     Updated {formatMarketUpdated(selected.updatedAt)}
@@ -318,7 +317,7 @@ export function CompetitorWorkspace({
             <DetailPlaceholder
               eyebrow="Competitor research"
               title="Select a competitor to read the profile."
-              description="Profiles collect what the sample research observed, where the product differs, and what still needs checking."
+              description="Profiles collect what the research observed, where the product differs, and what still needs checking."
               prompts={[
                 ["01", "Positioning", "What does the competitor promise, and to whom?"],
                 ["02", "Gap", "Where could a different product be meaningfully clearer?"],

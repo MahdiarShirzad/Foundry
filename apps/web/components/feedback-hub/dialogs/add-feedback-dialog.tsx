@@ -196,7 +196,7 @@ export function AddFeedbackDialog({
         </div>
 
         <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-          No external ingestion · no email or support-desk parsing · demo record only
+          No external ingestion · no email or support-desk parsing
         </p>
       </form>
     </PresentationalDialog>

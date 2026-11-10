@@ -49,8 +49,8 @@ export function ProductMetricsSection({
     return (
       <section className="border border-line bg-panel">
         <AnalyticsEmptyState
-          title={`No sample metrics are available for ${product.name}`}
-          description="The metric catalog is defined for every product, but the sample datasets behind the values and trends have not been published for this product yet."
+          title={`No metrics are available for ${product.name}`}
+          description="The metric catalog is defined for every product, but the datasets behind the values and trends have not been published for this product yet."
         />
       </section>
     );
@@ -71,7 +71,7 @@ export function ProductMetricsSection({
             Metric catalog
           </p>
           <p className="mt-1 text-[11px] text-muted">
-            {filtered.length} of {METRIC_CATALOG.length} sample metrics
+            {filtered.length} of {METRIC_CATALOG.length} metrics
           </p>
         </header>
 
@@ -178,7 +178,7 @@ export function ProductMetricsSection({
                             ? metric.seriesKey
                               ? "trend + value"
                               : "breakdown only"
-                            : "no sample data"}
+                            : "no data"}
                         </span>
                       </span>
                     </button>
@@ -194,8 +194,8 @@ export function ProductMetricsSection({
       <section className="min-w-0 bg-panel" aria-label="Selected metric detail">
         {!metricDetail ? (
           <AnalyticsEmptyState
-            title={`No sample detail for ${selected.name}`}
-            description={`The ${product.name} demo dataset does not carry a value, comparison or breakdown for this metric. Nothing is generated to fill the gap.`}
+            title={`No detail for ${selected.name}`}
+            description={`The ${product.name} dataset does not carry a value, comparison or breakdown for this metric. Nothing is generated to fill the gap.`}
           />
         ) : (
           <div className="space-y-5 px-5 py-5 sm:px-6">
@@ -214,7 +214,7 @@ export function ProductMetricsSection({
               </div>
               <div className="shrink-0 border border-line px-3 py-2 text-right">
                 <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
-                  Latest sample week
+                  Latest week
                 </p>
                 <p className="mt-1 font-mono text-[22px] leading-none tracking-[-0.02em] text-fg">
                   {metricDetail.value}
@@ -252,7 +252,7 @@ export function ProductMetricsSection({
                     title={
                       canCompare
                         ? "Overlay the previous window of the same length"
-                        : `A ${range}-week comparison needs ${range * 2} sample weeks of history`
+                        : `A ${range}-week comparison needs ${range * 2} weeks of history`
                     }
                     className={`flex h-[24px] items-center gap-2 border px-2 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
                       compare && canCompare
@@ -286,7 +286,7 @@ export function ProductMetricsSection({
                   No trend dataset
                 </p>
                 <p className="mx-auto mt-2 max-w-[44ch] text-[12px] leading-relaxed text-muted">
-                  The sample data for this metric is published as totals and breakdowns only, so
+                  The data for this metric is published as totals and breakdowns only, so
                   no time series is drawn.
                 </p>
               </div>
@@ -340,7 +340,7 @@ export function ProductMetricsSection({
             </div>
 
             <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-              Values and comparisons are predefined sample figures · nothing is computed at runtime
+              Values and comparisons are predefined figures · nothing is computed at runtime
             </p>
           </div>
         )}

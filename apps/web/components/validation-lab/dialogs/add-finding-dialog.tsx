@@ -252,10 +252,6 @@ export function AddFindingDialog({
             placeholder="Sample size, self-selection, context that may not generalise…"
           />
         </Field>
-
-        <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-          Sample evidence only · no real participants, citations, or significance claims
-        </p>
       </form>
     </PresentationalDialog>
   );

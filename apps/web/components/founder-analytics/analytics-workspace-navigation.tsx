@@ -15,7 +15,7 @@ export function AnalyticsWorkspaceNavigation({
     <WorkspaceTabs
       label="Analytics workspace sections"
       meta="Analytics workspace"
-      note="Sample data · fixed window"
+      note="Fixed window"
       idPrefix="analytics"
       value={section}
       onChange={(next) => onChange(next as AnalyticsSection)}

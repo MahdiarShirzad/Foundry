@@ -45,7 +45,7 @@ export function ExportDialog({
           {[
             "No PDF or CSV generation in this prototype",
             "No scheduled or remote report jobs",
-            "All figures remain the static demo dataset",
+            "All figures remain the current dataset",
           ].map((line) => (
             <li key={line} className="flex items-baseline gap-2">
               <span aria-hidden className="mt-[5px] size-1.5 shrink-0 bg-line-2" />

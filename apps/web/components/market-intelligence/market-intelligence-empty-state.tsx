@@ -18,7 +18,7 @@ export function MarketEmptyWorkspace({
       <section className="bg-panel px-6 py-10 sm:px-9 sm:py-12">
         <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
           <span aria-hidden className="size-1.5 bg-mint" />
-          Empty research workspace · sample state
+          Empty research workspace
         </p>
         <h2 className="mt-3 max-w-[24ch] text-[clamp(1.7rem,3vw,2.2rem)] font-medium leading-[1.06] tracking-[-0.04em] text-fg">
           Market understanding starts with a question you can write down.

@@ -29,14 +29,14 @@ import { UserBehaviorSection } from "./sections/user-behavior-section";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-/** Two hand-written notes so the observation list starts with sample content. */
+/** Two hand-written notes so the observation list starts with a few examples. */
 const SEED_OBSERVATIONS: Observation[] = [
   {
     id: "obs-seed-1",
     productId: "helio-notes",
     title: "Check whether shorter sessions are healthy",
     description:
-      "Sample note: average session length in the demo data grows slowly while sessions per user grows faster. That can mean a smoother flow or more repeated work — the demo data cannot tell.",
+      "Average session length grows slowly while sessions per user grows faster. That can mean a smoother flow or more repeated work — the data cannot tell.",
     metricId: "avg-duration",
     type: "Question",
     nextStep: "Pair duration with feature usage before drawing a conclusion.",
@@ -47,7 +47,7 @@ const SEED_OBSERVATIONS: Observation[] = [
     productId: "helio-notes",
     title: "Onboarding interactions deserve a closer look",
     description:
-      "Sample note: Onboarding carries the second-largest interaction count in the demo data, which is expected for a new-account heavy window but worth confirming against real setup completion.",
+      "Onboarding carries the second-largest interaction count, which is expected for a new-account heavy window but worth confirming against real setup completion.",
     metricId: "feature-usage",
     type: "Pattern",
     nextStep: "Compare with the onboarding feedback collected in Feedback Hub.",
@@ -58,7 +58,7 @@ const SEED_OBSERVATIONS: Observation[] = [
     productId: "atlas-scout",
     title: "Sessions per user drifts down while reach grows",
     description:
-      "Sample note: the demo data shows a larger weekly audience completing fewer sessions each. Two opposite explanations fit and the sample cannot separate them.",
+      "A larger weekly audience is completing fewer sessions each. Two opposite explanations fit and the data cannot separate them.",
     metricId: "sessions-per-user",
     type: "Question",
     nextStep: "Look at feature usage by segment before treating this as a problem.",
@@ -85,7 +85,7 @@ export default function FounderAnalyticsPage() {
   const product = getAnalyticsProduct(productId);
   const dataset = getAnalyticsDataset(productId);
   const productObservations = observations.filter((entry) => entry.productId === productId);
-  const windowLabel = dataset ? formatWindow(dataset, range) : "no sample weeks";
+  const windowLabel = dataset ? formatWindow(dataset, range) : "no data";
 
   const notify = useCallback((message: string) => {
     setToast({ key: Date.now(), message });
@@ -103,7 +103,7 @@ export default function FounderAnalyticsPage() {
     setAreaId(null);
     setReportId(null);
     setMetricId("active-users");
-    notify(`Analytics view switched to ${getAnalyticsProduct(id).name} · demo data only`);
+    notify(`Analytics view switched to ${getAnalyticsProduct(id).name}`);
   }
 
   const view: HeaderView = section === "Overview" ? "overview" : "analysis";
@@ -222,10 +222,6 @@ export default function FounderAnalyticsPage() {
         </motion.div>
       </AnimatePresence>
 
-      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-line pt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-        <span aria-hidden className="size-1.5 bg-accent" />
-        Frontend UI only · Static demo data · No tracking, no ingestion, no metric computation
-      </p>
 
       <ExportDialog
         open={exportOpen}

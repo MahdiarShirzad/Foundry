@@ -381,12 +381,12 @@ export function AddResearchDialog({
             />
           </FormField>
 
-          <OptionalField id="mi-research-source" label="Source label" hint="Illustrative only">
+          <OptionalField id="mi-research-source" label="Source label" hint="Optional">
             <input
               id="mi-research-source"
               value={source}
               onChange={(event) => setSource(event.target.value)}
-              placeholder="e.g. Support workflow walkthrough · sample notes"
+              placeholder="e.g. Support workflow walkthrough · meeting notes"
               className={`${INPUT} h-11`}
             />
           </OptionalField>
@@ -410,7 +410,7 @@ export function AddResearchDialog({
             <div>
               <p className={LABEL}>Date</p>
               <p className="mt-1.5 flex h-11 items-center border border-line bg-bg/50 px-3 font-mono text-[10px] uppercase tracking-[0.08em] text-faint">
-                {formatMarketDate(MARKET_TODAY)} · fixed sample date
+                {formatMarketDate(MARKET_TODAY)}
               </p>
             </div>
           </div>
@@ -447,8 +447,8 @@ export function AddResearchDialog({
           </fieldset>
 
           <p className="border-t border-line pt-3 text-[10.5px] leading-relaxed text-faint">
-            No source is fetched and no search is performed. Source labels are stored as sample
-            text only.
+            No source is fetched and no search is performed. Source labels are stored as text
+            only.
           </p>
         </div>
 
@@ -490,7 +490,7 @@ export function AddCompetitorDialog({ onClose }: { onClose: () => void }) {
     <DialogShell
       eyebrow="Competitor research · Stage 02"
       title="Add competitor"
-      description="Record what you already know. The sample form never opens or analyses the website."
+      description="Record what you already know. The form never opens or analyses the website."
       onClose={onClose}
     >
       <form onSubmit={submit} noValidate className="flex min-h-0 flex-1 flex-col">
@@ -511,7 +511,7 @@ export function AddCompetitorDialog({ onClose }: { onClose: () => void }) {
               />
             </FormField>
 
-            <OptionalField id="mi-comp-site" label="Website" hint="Sample only">
+            <OptionalField id="mi-comp-site" label="Website">
               <input
                 id="mi-comp-site"
                 value={website}
@@ -558,7 +558,7 @@ export function AddCompetitorDialog({ onClose }: { onClose: () => void }) {
               id="mi-comp-pricing"
               value={pricing}
               onChange={(event) => setPricing(event.target.value)}
-              placeholder="e.g. $29 / month per workspace · sample pricing"
+              placeholder="e.g. $29 / month per workspace"
               className={`${INPUT} h-11`}
             />
           </OptionalField>
@@ -624,7 +624,7 @@ export function AddSegmentDialog({ onClose }: { onClose: () => void }) {
     <DialogShell
       eyebrow="Segment research · Stage 02"
       title="Add market segment"
-      description="Describe a customer situation you can recognise in your sample research."
+      description="Describe a customer situation you can recognise in your research."
       onClose={onClose}
     >
       <form onSubmit={submit} noValidate className="flex min-h-0 flex-1 flex-col">
@@ -720,8 +720,8 @@ export function AddSegmentDialog({ onClose }: { onClose: () => void }) {
           </OptionalField>
 
           <p className="border-t border-line pt-3 text-[10.5px] leading-relaxed text-faint">
-            The form does not calculate market size or generate personas. Every line is sample
-            text entered by hand.
+            The form does not calculate market size or generate personas. Every line is text
+            entered by hand.
           </p>
         </div>
 

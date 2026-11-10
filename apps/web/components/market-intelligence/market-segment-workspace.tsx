@@ -311,7 +311,7 @@ export function MarketSegmentWorkspace({
                     </ul>
                   ) : (
                     <p className="text-[12px] leading-relaxed text-faint">
-                      No sample opportunity is linked to this segment yet.
+                      No opportunity is linked to this segment yet.
                     </p>
                   )}
                 </DetailSection>
@@ -320,7 +320,7 @@ export function MarketSegmentWorkspace({
               <footer className="flex flex-wrap items-center justify-between gap-2 border-t border-line bg-bg/40 px-5 py-3 sm:px-7">
                 <SampleNotice />
                 <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
-                  No persona generation · sample observations only
+                  No persona generation · observations only
                 </span>
               </footer>
             </motion.article>
@@ -328,7 +328,7 @@ export function MarketSegmentWorkspace({
             <DetailPlaceholder
               eyebrow="Segment research"
               title="Select a segment to read the working profile."
-              description="Segment profiles hold the situation, the alternatives people use today, and the questions the sample research has not answered."
+              description="Segment profiles hold the situation, the alternatives people use today, and the questions the research has not answered."
               prompts={[
                 ["01", "Situation", "What is happening when this group feels the problem?"],
                 ["02", "Workaround", "What do they do instead, and why is it good enough?"],

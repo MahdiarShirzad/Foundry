@@ -21,7 +21,7 @@ export function FeedbackOverview({
           Feedback overview
         </p>
         <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
-          {product.name} · counts read from static sample records
+          {product.name} · counts read from records
         </p>
       </header>
       <StatStrip

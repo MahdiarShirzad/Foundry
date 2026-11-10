@@ -109,11 +109,11 @@ export default function TrendChart({
 
   const peak = Math.max(...values);
   const trough = Math.min(...values);
-  const summary = `${label} across ${values.length} sample weeks, from ${formatShortDate(starts[0])} to ${formatShortDate(
+  const summary = `${label} across ${values.length} weeks, from ${formatShortDate(starts[0])} to ${formatShortDate(
     starts[starts.length - 1],
   )}. Values run from ${formatValue(trough, format)} to ${formatValue(peak, format)}${
     unit ? ` ${unit}` : ""
-  }. Sample data.`;
+  }. Data.`;
 
   function handlePointer(event: React.PointerEvent<SVGSVGElement>) {
     const bounds = event.currentTarget.getBoundingClientRect();

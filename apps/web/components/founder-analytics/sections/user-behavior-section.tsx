@@ -31,8 +31,8 @@ export function UserBehaviorSection({
     return (
       <section className="border border-line bg-panel">
         <AnalyticsEmptyState
-          title={`No behavior samples for ${product.name}`}
-          description="Segment, feature-usage and device samples are published per product. This product has none yet, so the behavior workspace stays empty."
+          title={`No behavior data for ${product.name}`}
+          description="Segment, feature-usage and device data are published per product. This product has none yet, so the behavior workspace stays empty."
         />
       </section>
     );
@@ -123,7 +123,7 @@ export function UserBehaviorSection({
         <Panel
           className="lg:col-span-8"
           title="Sessions over time"
-          description={`Weekly sample sessions for the selected segment across the ${rangeLabelSafe(range)} window.`}
+          description={`Weekly sessions for the selected segment across the ${rangeLabelSafe(range)} window.`}
         >
           {slice ? (
             <TrendChart
@@ -138,7 +138,7 @@ export function UserBehaviorSection({
             <AnalyticsEmptyState
               compact
               title="No segment series"
-              description="This segment has no predefined weekly series in the sample data."
+              description="This segment has no predefined weekly series in the data."
             />
           )}
         </Panel>
@@ -146,7 +146,7 @@ export function UserBehaviorSection({
         <Panel
           className="lg:col-span-4"
           title="Sessions by device"
-          description="Where the sample sessions started."
+          description="Where the sessions started."
         >
           <DistributionBars
             rows={dataset.devices}
@@ -160,11 +160,11 @@ export function UserBehaviorSection({
         <Panel
           className="lg:col-span-7"
           title="Feature usage by product area"
-          description={`Sample interactions for ${segment?.name.toLowerCase() ?? "all users"} · full ${dataset.weeks.length}-week window. Select an area to inspect it.`}
+          description={`Interactions for ${segment?.name.toLowerCase() ?? "all users"} · full ${dataset.weeks.length}-week window. Select an area to inspect it.`}
         >
           <table className="w-full border-collapse text-left">
             <caption className="sr-only">
-              Sample interactions per product area for the selected segment. Select an area to see
+              Interactions per product area for the selected segment. Select an area to see
               its detail.
             </caption>
             <thead>
@@ -224,7 +224,7 @@ export function UserBehaviorSection({
             </tbody>
           </table>
           <p className="mt-3 border-t border-line pt-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
-            Sample interactions · counts are predefined, nothing is aggregated at runtime
+            Interactions · counts are predefined, nothing is aggregated at runtime
           </p>
         </Panel>
 
@@ -237,7 +237,7 @@ export function UserBehaviorSection({
             <AnalyticsEmptyState
               compact
               title="Select a product area"
-              description="Choose an area in the usage table to see its sample value and interpretation note."
+              description="Choose an area in the usage table to see its value and interpretation note."
             />
           ) : (
             <div className="space-y-4">
@@ -261,7 +261,7 @@ export function UserBehaviorSection({
                 </div>
                 <div className="bg-panel px-3 py-3">
                   <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
-                    Sample window
+                    Window
                   </p>
                   <p className="mt-1.5 font-mono text-[12px] leading-tight text-fg">
                     full {dataset.weeks.length} weeks

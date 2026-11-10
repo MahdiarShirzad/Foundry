@@ -60,7 +60,7 @@ export function MarketOverview({
               Market brief · {idea.ref}
             </p>
             <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
-              Sample hypothesis
+              Hypothesis
             </span>
           </div>
 
@@ -134,7 +134,7 @@ export function MarketOverview({
           </ul>
 
           <p className="mt-4 border-t border-line pt-3 text-[10.5px] leading-relaxed text-faint">
-            Labels describe the maturity of this sample work, not external verification.
+            Labels describe the maturity of this research, not external verification.
           </p>
         </section>
       </div>
@@ -309,8 +309,8 @@ export function MarketOverview({
 
       <div className="flex flex-wrap items-center justify-between gap-3 bg-bg/45 px-5 py-3 sm:px-7">
         <p className="text-[10.5px] leading-relaxed text-faint">
-          Every claim on this page belongs to the sample set. Treat it as a structure for
-          research, not a conclusion.
+          Every claim on this page comes from the research collected here. Treat it as a
+          structure for thinking, not a conclusion.
         </p>
         <p className="font-mono text-[10px] uppercase tracking-[0.13em] text-faint">
           Updated {formatMarketShortDate(idea.updatedAt)}

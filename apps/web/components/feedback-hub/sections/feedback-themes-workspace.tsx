@@ -81,7 +81,7 @@ export function FeedbackThemesWorkspace({
           </p>
         </div>
         <p className="border border-line px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-          Sample insights · written by hand · no automated analysis
+          Written by hand · no automated analysis
         </p>
       </header>
 

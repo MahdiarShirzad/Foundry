@@ -181,16 +181,6 @@ export default function DashboardOverview() {
         </Panel>
       </div>
 
-      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
-        <span aria-hidden className="size-1.5 bg-accent" />
-        sample workspace ·
-        <Link
-          href="/docs/backend-api"
-          className="underline decoration-line underline-offset-4 transition-colors hover:text-accent"
-        >
-          no analytics API yet
-        </Link>
-      </p>
     </motion.div>
   );
 }

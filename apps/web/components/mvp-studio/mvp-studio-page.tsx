@@ -195,7 +195,7 @@ export default function MVPStudioPage() {
     <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-3">
       <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
         <span aria-hidden className="size-1.5 bg-accent" />
-        Frontend UI only · Static mock data · Local state for presentational interactions
+        Local state · changes are not persisted
       </p>
       <div className="ml-auto flex items-center gap-1.5">
         <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">

@@ -273,7 +273,7 @@ export function NoResults({
       query={query}
       onClear={onClear}
       noun={noun}
-      description="Try another term, widen the filters, or return to the full sample set."
+      description="Try another term, widen the filters, or return to the full set."
     />
   );
 }
@@ -397,7 +397,7 @@ export function SampleNotice({ className = "" }: { className?: string }) {
       )}
     >
       <span aria-hidden className="size-1.5 shrink-0 bg-accent" />
-      Sample research · illustrative content only
+      Research · written by hand, not externally verified
     </p>
   );
 }

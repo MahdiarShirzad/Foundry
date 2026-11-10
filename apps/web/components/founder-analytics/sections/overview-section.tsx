@@ -37,8 +37,8 @@ export function OverviewSection({
     return (
       <section className="border border-line bg-panel">
         <AnalyticsEmptyState
-          title={`No sample metrics are available for ${product.name}`}
-          description="This product was added to the demo workspace but has no predefined analytics history, so every panel in this module stays empty until sample data is published for it."
+          title={`No metrics are available for ${product.name}`}
+          description="This product has no analytics history yet, so every panel in this module stays empty until data is published for it."
         />
       </section>
     );
@@ -58,7 +58,7 @@ export function OverviewSection({
           <AnalyticsEmptyState
             compact
             title={`No KPI summary for a ${range}-week window`}
-            description={`${product.name} does not have ${range} sample weeks of history, so no metric summary is predefined for this window. Try a shorter range.`}
+            description={`${product.name} does not have ${range} weeks of history, so no metric summary is available for this window. Try a shorter range.`}
           />
         </section>
       )}
@@ -66,8 +66,8 @@ export function OverviewSection({
       <div className="grid gap-4 lg:grid-cols-12">
         <Panel
           className="lg:col-span-8"
-          title={`${metricName} over the sample period`}
-          description={`Weekly sample values for the selected ${rangeLabel(range)} window. Focus the chart and use the arrow keys to step through weeks.`}
+          title={`${metricName} over the selected period`}
+          description={`Weekly values for the selected ${rangeLabel(range)} window. Focus the chart and use the arrow keys to step through weeks.`}
           action={
             <div className="flex flex-wrap items-center justify-end gap-2">
               <SegmentedControl
@@ -88,7 +88,7 @@ export function OverviewSection({
                 title={
                   canCompare
                     ? "Overlay the previous window of the same length"
-                    : `A ${range}-week comparison needs ${range * 2} sample weeks of history`
+                    : `A ${range}-week comparison needs ${range * 2} weeks of history`
                 }
                 className={`flex h-[26px] items-center gap-2 border px-2 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
                   compare && canCompare
@@ -116,25 +116,25 @@ export function OverviewSection({
         <Panel
           className="lg:col-span-4"
           title="Acquisition channels"
-          description="Where the sample accounts came from."
+          description="Where the accounts came from."
         >
           <DistributionBars
             rows={dataset.channels}
             unit="signups"
-            caption={`sample signups · full ${dataset.weeks.length}-week window (${formatFullWindow(dataset)})`}
+            caption={`signups · full ${dataset.weeks.length}-week window (${formatFullWindow(dataset)})`}
           />
         </Panel>
       </div>
 
       <Panel
         title="Recent observations"
-        description="Sample observations authored for this demonstration — not generated from the data."
+        description="Observations authored for this product — not generated from the data."
       >
         {dataset.observations.length === 0 ? (
           <AnalyticsEmptyState
             compact
             title="No authored observations"
-            description="No sample observations were written for this product."
+            description="No observations were written for this product."
           />
         ) : (
           <ul className="divide-y divide-line">
@@ -150,7 +150,7 @@ export function OverviewSection({
           </ul>
         )}
         <p className="mt-3 border-t border-line pt-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
-          Sample observations · written by hand for this demo
+          Observations · written by hand
         </p>
       </Panel>
     </div>

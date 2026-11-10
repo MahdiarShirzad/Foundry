@@ -147,9 +147,6 @@ export default function ModulesPage() {
         })}
       </div>
 
-      <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
-        sample workspace · presentation only
-      </p>
     </div>
   );
 }
