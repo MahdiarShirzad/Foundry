@@ -11,6 +11,8 @@ import { PasswordField } from "./fields";
 import { Alert, SubmitButton } from "./feedback";
 import { AuthOutcome } from "./outcome";
 import { resetSchema } from "@/lib/auth/schemas";
+import { authClient } from "@/lib/auth/client";
+import { AuthError, describeAuthError } from "@/lib/auth/contract";
 
 type Terminal = { state: "invalid"; message: string } | { state: "done" } | null;
 
@@ -19,6 +21,7 @@ export default function ResetForm({ token }: { token: string }) {
   const form = useForm<z.infer<typeof resetSchema>>({
     resolver: zodResolver(resetSchema),
     mode: "onTouched",
+    defaultValues: { password: "", confirmation: "" },
   });
 
   const { register, formState: { errors }, handleSubmit } = form;
@@ -86,10 +89,23 @@ export default function ResetForm({ token }: { token: string }) {
     );
   }
 
-  async function onSubmit() {
+  async function onSubmit(data: z.infer<typeof resetSchema>) {
+    setFeedback(null);
     setPending(true);
     try {
-      // TODO: implement
+      await authClient.resetPassword({ token, password: data.password });
+      setTerminal({ state: "done" });
+    } catch (err) {
+      const code = err instanceof AuthError ? err.code : "unknown";
+
+      if (code === "invalid_token") {
+        // Dead link: no amount of retrying helps, so stop offering the form.
+        setTerminal({ state: "invalid", message: describeAuthError("invalid_token") });
+      } else if (code === "weak_password") {
+        setFeedback({ tone: "error", text: describeAuthError("weak_password") });
+      } else {
+        setFeedback({ tone: "error", text: describeAuthError(code) });
+      }
     } finally {
       setPending(false);
     }

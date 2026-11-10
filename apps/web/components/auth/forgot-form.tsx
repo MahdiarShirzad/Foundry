@@ -11,41 +11,66 @@ import { TextField } from "./fields";
 import { Alert } from "./feedback";
 import { AuthOutcome } from "./outcome";
 import { forgotSchema } from "@/lib/auth/schemas";
+import { authClient } from "@/lib/auth/client";
+import { AuthError, describeAuthError } from "@/lib/auth/contract";
+import { useCooldown } from "@/lib/auth/use-cooldown";
 
 type Feedback = { tone: "error" | "info" | "success"; text: string } | null;
+
+const RESEND_COOLDOWN_SECONDS = 30;
 
 export default function ForgotForm() {
   const reduce = useReducedMotion();
   const form = useForm<z.infer<typeof forgotSchema>>({
     resolver: zodResolver(forgotSchema),
     mode: "onTouched",
+    defaultValues: { email: "" },
   });
 
-  const { register, formState: { errors }, watch, handleSubmit } = form;
+  const { register, formState: { errors }, watch, handleSubmit, getValues } = form;
 
   const email = watch("email");
 
   const [pending, setPending] = useState(false);
   const [sent, setSent] = useState(false);
   const [feedback, setFeedback] = useState<Feedback>(null);
-  const remaining = 0;
+  const cooldown = useCooldown(RESEND_COOLDOWN_SECONDS);
+  const remaining = cooldown.remaining;
 
-  async function request(target: string) {
+  /**
+   * The API answers 204 whether or not the address exists, on purpose, so the
+   * caller never learns which emails have accounts. Any success is therefore
+   * reported as "if that address belongs to an account…".
+   */
+  async function request(target: string, mode: "submit" | "resend") {
     setPending(true);
+    setFeedback(null);
     try {
-      // TODO: implement
+      await authClient.requestPasswordReset({ email: target });
+      if (mode === "submit") {
+        setSent(true);
+      } else {
+        cooldown.start(RESEND_COOLDOWN_SECONDS);
+        setFeedback({
+          tone: "success",
+          text: "Another reset link is on its way. Only the newest link works.",
+        });
+      }
+    } catch (err) {
+      const code = err instanceof AuthError ? err.code : "unknown";
+      if (code === "rate_limited") {
+        cooldown.start(RESEND_COOLDOWN_SECONDS);
+        setFeedback({ tone: "info", text: describeAuthError("rate_limited") });
+      } else {
+        setFeedback({ tone: "error", text: describeAuthError(code) });
+      }
     } finally {
       setPending(false);
     }
   }
 
-  async function onSubmit() {
-    setPending(true);
-    try {
-      // TODO: implement
-    } finally {
-      setPending(false);
-    }
+  async function onSubmit(data: z.infer<typeof forgotSchema>) {
+    await request(data.email.trim().toLowerCase(), "submit");
   }
 
   if (sent) {
@@ -73,7 +98,7 @@ export default function ForgotForm() {
           <div className="mt-5 border-t border-line pt-4">
             <button
               type="button"
-              onClick={() => request(email.trim())}
+              onClick={() => request(getValues("email").trim().toLowerCase(), "resend")}
               disabled={pending || remaining > 0}
               className="inline-flex h-10 items-center border border-line px-4 font-mono text-[10.5px] uppercase tracking-[0.18em] text-fg transition-colors hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:border-line disabled:text-faint disabled:hover:border-line disabled:hover:text-faint"
             >
@@ -87,7 +112,6 @@ export default function ForgotForm() {
               type="button"
               onClick={() => {
                 setSent(false);
-                // TODO
                 setFeedback(null);
               }}
               className="ml-4 text-[12.5px] text-faint underline decoration-line underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"

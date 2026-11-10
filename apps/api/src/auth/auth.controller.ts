@@ -28,6 +28,13 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+// The refresh cookie has to reach the web app's middleware, which is what
+// rotates an expired access token, so it is scoped to the whole host rather
+// than to /auth. Earlier builds scoped it to /auth and left the stale cookie
+// behind; every write clears that path too.
+const REFRESH_COOKIE_PATH = '/';
+const LEGACY_REFRESH_COOKIE_PATH = '/auth';
+
 @ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
@@ -71,11 +78,12 @@ export class AuthController {
       maxAge: 15 * 60 * 1000,
     });
 
+    res.clearCookie('refresh_token', { path: LEGACY_REFRESH_COOKIE_PATH });
     res.cookie('refresh_token', refresh, {
       httpOnly: true,
       sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
-      path: '/auth/refresh',
+      path: REFRESH_COOKIE_PATH,
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
@@ -133,7 +141,8 @@ export class AuthController {
   async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     await this.authService.logout(req.cookies?.refresh_token);
     res.clearCookie('access_token', { path: '/' });
-    res.clearCookie('refresh_token', { path: '/auth/refresh' });
+    res.clearCookie('refresh_token', { path: REFRESH_COOKIE_PATH });
+    res.clearCookie('refresh_token', { path: LEGACY_REFRESH_COOKIE_PATH });
   }
 
   @Public()
@@ -161,11 +170,12 @@ export class AuthController {
       maxAge: 15 * 60 * 1000,
     });
 
+    res.clearCookie('refresh_token', { path: LEGACY_REFRESH_COOKIE_PATH });
     res.cookie('refresh_token', refresh, {
       httpOnly: true,
       sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
-      path: '/auth/refresh',
+      path: REFRESH_COOKIE_PATH,
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 

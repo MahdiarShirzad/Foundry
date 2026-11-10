@@ -2,6 +2,7 @@ import { Session } from "./contract";
 import { api, ApiError } from "../apiClient";
 import {
   AuthError,
+  AuthErrorCode,
   RequestResetInput,
   ResendResult,
   ResetPasswordInput,
@@ -13,8 +14,28 @@ import {
 export const isAuthConfigured =
   (process.env.NEXT_PUBLIC_API_URL ?? "").length > 0;
 
+/**
+ * The API returns both a status and a `code`. Codes are more specific than the
+ * status (several distinct 4xx bodies share one status), so they win when
+ * present and the status is only a fallback.
+ */
+const API_CODE_MAP: Record<string, AuthErrorCode> = {
+  EMAIL_INVALID: "email_invalid",
+  EMAIL_TAKEN: "email_taken",
+  EMAIL_NOT_VERIFIED: "email_not_verified",
+  INVALID_CODE: "invalid_code",
+  CODE_EXPIRED: "code_expired",
+  INVALID_TOKEN: "invalid_token",
+  TOO_MANY_REQUESTS: "rate_limited",
+};
+
 function toAuthError(err: unknown): never {
   if (err instanceof ApiError) {
+    const mapped = err.code ? API_CODE_MAP[err.code] : undefined;
+    if (mapped) {
+      throw new AuthError(mapped);
+    }
+
     switch (err.status) {
       case 401:
         throw new AuthError("invalid_credentials");

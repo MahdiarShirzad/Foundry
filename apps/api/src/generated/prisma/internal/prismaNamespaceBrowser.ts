@@ -93,6 +93,7 @@ export const SessionScalarFieldEnum = {
   tokenHash: 'tokenHash',
   expiresAt: 'expiresAt',
   revokedAt: 'revokedAt',
+  rotatedAt: 'rotatedAt',
   createdAt: 'createdAt'
 } as const
 

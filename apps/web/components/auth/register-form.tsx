@@ -19,7 +19,6 @@ import { Alert, SubmitButton } from "./feedback";
 import { RegisterFields, registerSchema } from "@/lib/auth/schemas";
 import { authClient } from "@/lib/auth/client";
 import { AuthError, describeAuthError } from "@/lib/auth/contract";
-import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/navigation";
 
 export default function RegisterForm({
@@ -30,12 +29,16 @@ export default function RegisterForm({
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     mode: "onTouched",
+    defaultValues: {
+      email: initialEmail,
+      password: "",
+      confirmation: "",
+    },
   });
 
   const router = useRouter();
 
   const {
-    register,
     formState: { errors },
     handleSubmit,
     control,

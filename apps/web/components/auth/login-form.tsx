@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { AnimatePresence } from "motion/react";
 
 import {
@@ -20,14 +19,8 @@ import { LoginFields, loginSchema } from "@/lib/auth/schemas";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth/client";
 import { AuthError, describeAuthError } from "@/lib/auth/contract";
-import { log } from "console";
 
 export default function LoginForm({ next }: { next: string }) {
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
-    mode: "onTouched",
-  });
-
   const {
     control,
     formState: { errors },
@@ -58,7 +51,6 @@ export default function LoginForm({ next }: { next: string }) {
       });
       router.replace(next);
     } catch (err) {
-      console.log(err);
       setFeedback({
         tone: "error",
         text:

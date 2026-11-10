@@ -25,6 +25,13 @@ const DUMMY_HASH =
 
 const VERIFICATION_CODE_TTL_MS = 10 * 60 * 1000;
 
+/**
+ * A refresh rotates the session, so the browser can briefly hold a token that
+ * another request has just burned. Treat a duplicate within this window as
+ * concurrency rather than theft; beyond it, reuse revokes every session.
+ */
+const REFRESH_ROTATION_GRACE_MS = 30 * 1000;
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -229,11 +236,25 @@ export class AuthService {
     if (!session) throw new UnauthorizedException('invalid refresh token');
 
     if (session.revokedAt) {
-      await this.prisma.session.updateMany({
-        where: { userId: session.userId, revokedAt: null },
-        data: { revokedAt: new Date() },
+      // Parallel navigations, prefetches and tabs all refresh from the same
+      // burst of expired requests. Minting a session here keeps the loser of
+      // that race signed in, instead of revoking every device the user owns.
+      const rotatedRecently =
+        session.rotatedAt !== null &&
+        Date.now() - session.rotatedAt.getTime() <= REFRESH_ROTATION_GRACE_MS;
+
+      if (!rotatedRecently) {
+        await this.prisma.session.updateMany({
+          where: { userId: session.userId, revokedAt: null },
+          data: { revokedAt: new Date() },
+        });
+        throw new UnauthorizedException('refresh token reuse detected');
+      }
+
+      return this.issueTokens({
+        id: session.userId,
+        email: session.user.email,
       });
-      throw new UnauthorizedException('refresh token reuse detected');
     }
 
     if (session.expiresAt.getTime() <= Date.now()) {
@@ -242,7 +263,7 @@ export class AuthService {
 
     const result = await this.prisma.session.updateMany({
       where: { id: session.id, revokedAt: null },
-      data: { revokedAt: new Date() },
+      data: { revokedAt: new Date(), rotatedAt: new Date() },
     });
 
     if (result.count !== 1) {

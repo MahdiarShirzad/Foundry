@@ -12,17 +12,31 @@ import { TextField } from "./fields";
 import { Alert, SubmitButton } from "./feedback";
 import { AuthOutcome } from "./outcome";
 import { verifySchema } from "@/lib/auth/schemas";
+import { authClient } from "@/lib/auth/client";
+import { AuthError, describeAuthError } from "@/lib/auth/contract";
+import { useCooldown } from "@/lib/auth/use-cooldown";
 
 type Feedback = { tone: "error" | "info" | "success"; text: string } | null;
+
+const RESEND_COOLDOWN_SECONDS = 30;
 
 export default function VerifyForm({ initialEmail }: { initialEmail: string }) {
   const reduce = useReducedMotion();
   const form = useForm<z.infer<typeof verifySchema>>({
     resolver: zodResolver(verifySchema),
     mode: "onTouched",
+    defaultValues: { email: initialEmail.trim(), code: "" },
   });
 
-  const { register, formState: { errors }, watch, control, handleSubmit } = form;
+  const {
+    register,
+    formState: { errors },
+    watch,
+    control,
+    handleSubmit,
+    getValues,
+    setValue,
+  } = form;
 
   const email = watch("email");
 
@@ -31,19 +45,75 @@ export default function VerifyForm({ initialEmail }: { initialEmail: string }) {
   const [resending, setResending] = useState(false);
   const [verified, setVerified] = useState(false);
   const [feedback, setFeedback] = useState<Feedback>(null);
-  const remaining = 0;
+  const cooldown = useCooldown(RESEND_COOLDOWN_SECONDS);
+  const remaining = cooldown.remaining;
 
-  async function onSubmit() {
+  async function onSubmit(data: z.infer<typeof verifySchema>) {
+    setFeedback(null);
     setPending(true);
     try {
-      // TODO: implement
+      await authClient.verifyEmail({
+        email: data.email.trim().toLowerCase(),
+        code: data.code,
+      });
+      setVerified(true);
+    } catch (err) {
+      const code = err instanceof AuthError ? err.code : "unknown";
+
+      if (code === "invalid_code") {
+        // A wrong code is expected during typing slips — clear it for another try.
+        setValue("code", "");
+        setFeedback({ tone: "error", text: describeAuthError("invalid_code") });
+      } else if (code === "email_not_verified") {
+        // The API uses this for "no such account" and "already verified" alike,
+        // so the wording has to cover both without confirming which it is.
+        setFeedback({
+          tone: "error",
+          text: "This code can't be used for that address. It may already be verified — try signing in.",
+        });
+      } else if (code === "code_expired") {
+        setFeedback({
+          tone: "error",
+          text: describeAuthError("code_expired"),
+        });
+        if (remaining === 0) cooldown.start(RESEND_COOLDOWN_SECONDS);
+      } else {
+        setFeedback({ tone: "error", text: describeAuthError(code) });
+      }
     } finally {
       setPending(false);
     }
   }
 
   async function resend() {
-    setPending(false);
+    const address = getValues("email").trim().toLowerCase();
+
+    if (!address) {
+      setEditingEmail(true);
+      setFeedback({ tone: "error", text: "Enter the address you registered with first." });
+      return;
+    }
+
+    setResending(true);
+    setFeedback(null);
+    try {
+      await authClient.resendVerification({ email: address });
+      cooldown.start(RESEND_COOLDOWN_SECONDS);
+      setFeedback({
+        tone: "success",
+        text: "A new code is on its way. It replaces any earlier code.",
+      });
+    } catch (err) {
+      const code = err instanceof AuthError ? err.code : "unknown";
+      if (code === "rate_limited") {
+        cooldown.start(RESEND_COOLDOWN_SECONDS);
+        setFeedback({ tone: "info", text: describeAuthError("rate_limited") });
+      } else {
+        setFeedback({ tone: "error", text: describeAuthError(code) });
+      }
+    } finally {
+      setResending(false);
+    }
   }
 
   if (verified) {
@@ -138,7 +208,7 @@ export default function VerifyForm({ initialEmail }: { initialEmail: string }) {
         <button
           type="button"
           onClick={resend}
-          disabled={resending || remaining > 0}
+          disabled={resending || pending || remaining > 0}
           className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-fg transition-colors hover:text-accent disabled:cursor-not-allowed disabled:text-faint disabled:hover:text-faint"
         >
           {resending

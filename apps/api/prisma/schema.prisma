@@ -33,6 +33,9 @@ model Session {
   tokenHash   String    @unique
   expiresAt   DateTime
   revokedAt   DateTime?
+  // Set when the token is rotated by a refresh; a duplicate refresh inside the
+  // grace window is a concurrent request from the same browser, not theft.
+  rotatedAt   DateTime?
   createdAt   DateTime  @default(now())
 
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)

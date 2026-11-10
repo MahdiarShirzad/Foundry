@@ -4,10 +4,13 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || DEFAULT_API_BASE_URL;
 
 export class ApiError extends Error {
   status: number;
+  /** Machine-readable code from the API body (`code`), when it sends one. */
+  code?: string;
 
-  constructor(message: string, status: number) {
+  constructor(message: string, status: number, code?: string) {
     super(message);
     this.status = status;
+    this.code = code;
   }
 }
 
@@ -83,15 +86,20 @@ async function apiFetch<T>(
       }
     }
 
-    const message =
-      (typeof data === "object" &&
-      data !== null &&
-      "message" in data &&
-      typeof (data as Record<string, unknown>).message === "string"
-        ? (data as Record<string, unknown>).message
-        : null) || `Request failed with ${res.status}`;
+    const body =
+      typeof data === "object" && data !== null
+        ? (data as Record<string, unknown>)
+        : null;
 
-    throw new ApiError(message as string, res.status);
+    const message =
+      (typeof body?.message === "string" ? body.message : null) ||
+      `Request failed with ${res.status}`;
+
+    throw new ApiError(
+      message,
+      res.status,
+      typeof body?.code === "string" ? body.code : undefined,
+    );
   }
 
   return data as T;
