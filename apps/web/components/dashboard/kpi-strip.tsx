@@ -8,31 +8,34 @@ import type { Kpi } from "@/lib/dashboard/snapshot";
  */
 export default function KpiStrip({ kpis }: { kpis: Kpi[] }) {
   return (
-    <section aria-label="Key metrics" className="border border-line bg-panel">
-      <dl className="grid grid-cols-1 divide-y divide-line sm:grid-cols-2 sm:divide-y-0 xl:grid-cols-4">
+    <section
+      aria-label="Key metrics"
+      className="overflow-hidden border border-line bg-panel shadow-[var(--elevation-lift)]"
+    >
+      <dl className="grid grid-cols-1 gap-px bg-line sm:grid-cols-2 xl:grid-cols-4">
         {kpis.map((kpi, index) => (
           <div
             key={kpi.id}
-            className={`flex min-w-0 flex-col justify-between gap-3 px-4 py-4 sm:px-5 ${
-              index > 0 ? "sm:border-l sm:border-line" : ""
-            } ${index === 2 ? "sm:border-t sm:border-line xl:border-t-0" : ""} ${
-              index === 3 ? "sm:border-t sm:border-line xl:border-t-0" : ""
-            }`}
+            className="group relative flex min-w-0 flex-col justify-between gap-4 bg-panel px-5 py-5 transition-colors hover:bg-mint-tint/10"
           >
-            <dt className="flex items-baseline justify-between gap-2 font-mono text-[9.5px] uppercase tracking-[0.2em] text-faint">
+            <span
+              aria-hidden
+              className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-accent/50 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
+            />
+            <dt className="flex items-baseline justify-between gap-2 font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
               {kpi.label}
-              <span aria-hidden className="font-mono text-[9px] text-faint/70">
+              <span aria-hidden className="font-mono text-[9px] text-faint/60">
                 {String(index + 1).padStart(2, "0")}
               </span>
             </dt>
 
             <dd className="min-w-0">
               <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                <span className="font-mono text-[27px] leading-none tracking-[-0.03em] text-fg">
+                <span className="font-mono text-[2rem] font-medium leading-none tracking-[-0.04em] text-fg tabular-nums">
                   {kpi.value}
                 </span>
                 {kpi.unit ? (
-                  <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
+                  <span className="font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint">
                     {kpi.unit}
                   </span>
                 ) : null}
@@ -45,10 +48,8 @@ export default function KpiStrip({ kpis }: { kpis: Kpi[] }) {
                 ) : null}
               </div>
 
-              <div className="mt-2 flex items-end justify-between gap-3">
-                <p className="max-w-[22ch] text-[11px] leading-snug text-faint">
-                  {kpi.footnote}
-                </p>
+              <div className="mt-3 flex items-end justify-between gap-4 border-t border-line/70 pt-3">
+                <p className="max-w-[24ch] text-[11px] leading-snug text-faint">{kpi.footnote}</p>
                 {kpi.spark ? (
                   <span className="shrink-0">
                     <Sparkline values={kpi.spark} />
@@ -61,7 +62,10 @@ export default function KpiStrip({ kpis }: { kpis: Kpi[] }) {
                         key={slice.label}
                         title={`Stage ${slice.label}: ${slice.count}`}
                         className="block w-[5px] bg-accent"
-                        style={{ height: `${6 + slice.count * 3.2}px`, opacity: slice.count ? 0.85 : 0.18 }}
+                        style={{
+                          height: `${6 + slice.count * 3.2}px`,
+                          opacity: slice.count ? 0.85 : 0.18,
+                        }}
                       />
                     ))}
                   </span>

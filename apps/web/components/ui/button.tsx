@@ -22,11 +22,11 @@ const BASE =
 
 const VARIANT: Record<ButtonVariant, string> = {
   primary:
-    "border-transparent bg-mint font-sans font-medium text-ink hover:brightness-95 active:translate-y-px",
+    "border-mint bg-mint font-sans font-medium text-ink shadow-[0_1px_0_rgb(14_27_29/0.08),0_10px_22px_-16px_rgb(14_124_108/0.8)] hover:bg-[#45c3ae] hover:shadow-[0_1px_0_rgb(14_27_29/0.08),0_14px_26px_-16px_rgb(14_124_108/0.9)] active:translate-y-px",
   secondary:
-    "border-line-2 bg-panel font-mono uppercase text-fg hover:border-accent hover:text-accent active:translate-y-px",
+    "border-line-2 bg-panel font-mono uppercase text-fg hover:border-accent/70 hover:bg-mint-tint/20 hover:text-accent active:translate-y-px",
   ghost:
-    "border-transparent bg-transparent font-mono uppercase text-muted hover:bg-mint-tint/40 hover:text-fg active:translate-y-px",
+    "border-transparent bg-transparent font-mono uppercase text-muted hover:bg-mint-tint/35 hover:text-fg active:translate-y-px",
   danger:
     "border-danger/45 bg-danger-tint/50 font-mono uppercase text-danger hover:bg-danger-tint active:translate-y-px",
 };

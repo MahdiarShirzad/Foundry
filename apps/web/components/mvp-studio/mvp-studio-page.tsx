@@ -192,7 +192,7 @@ export default function MVPStudioPage() {
   );
 
   const statePreview = (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-3">
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border border-line bg-panel px-4 py-3 shadow-[var(--elevation-lift)]">
       <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
         <span aria-hidden className="size-1.5 bg-accent" />
         Local state · changes are not persisted

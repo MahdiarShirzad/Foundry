@@ -147,7 +147,7 @@ function SidebarContent({
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex h-14 items-center gap-2.5 border-b border-line px-4">
+      <div className="flex h-16 items-center gap-2.5 border-b border-line px-5">
         <Link
           href="/"
           aria-label="Foundry — home"
@@ -164,7 +164,7 @@ function SidebarContent({
           />
         </Link>
         {!collapsed ? (
-          <span className="ml-auto font-mono text-[9px] uppercase tracking-[0.2em] text-faint">
+          <span className="ml-auto border border-line px-1.5 py-0.5 font-mono text-[8.5px] uppercase tracking-[0.18em] text-faint">
             app
           </span>
         ) : null}
@@ -172,16 +172,16 @@ function SidebarContent({
 
       {!collapsed ? (
         <div className="border-b border-line px-4 py-4">
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-3 border border-line bg-bg/40 px-3 py-2.5">
             <span
               aria-hidden
-              className="flex size-7 shrink-0 items-center justify-center border border-line-2 font-mono text-[10px] tracking-[0.08em] text-accent"
+              className="flex size-8 shrink-0 items-center justify-center bg-gradient-to-br from-mint to-accent font-mono text-[10px] tracking-[0.08em] text-ink"
             >
               HL
             </span>
             <span className="min-w-0">
-              <span className="block truncate text-[13px] font-medium text-fg">Helio Labs</span>
-              <span className="block font-mono text-[9.5px] uppercase tracking-[0.18em] text-faint">
+              <span className="block truncate text-[12.5px] font-medium text-fg">Helio Labs</span>
+              <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
                 workspace
               </span>
             </span>
@@ -189,17 +189,17 @@ function SidebarContent({
         </div>
       ) : null}
 
-      <nav aria-label="Dashboard" className="flex-1 overflow-y-auto py-4">
+      <nav aria-label="Dashboard" className="dashboard-scroll flex-1 overflow-y-auto py-4">
         {GROUPS.map((group) => (
-          <div key={group.title} className={collapsed ? "mt-3 first:mt-0" : "mt-5 first:mt-0"}>
+          <div key={group.title} className={collapsed ? "mt-4 first:mt-0" : "mt-6 first:mt-0"}>
             {!collapsed ? (
-              <h2 className="px-4 font-mono text-[9.5px] uppercase tracking-[0.24em] text-faint">
+              <h2 className="px-5 font-mono text-[9px] uppercase tracking-[0.22em] text-faint/90">
                 {group.title}
               </h2>
             ) : (
-              <span aria-hidden className="mx-4 mb-2 block h-px bg-line" />
+              <span aria-hidden className="mx-5 mb-3 block h-px bg-line" />
             )}
-            <ul className={collapsed ? "mt-1" : "mt-2"}>
+            <ul className={collapsed ? "mt-1 space-y-1" : "mt-2 space-y-0.5"}>
               {group.items.map((item) => {
                 const active = !item.anchored && pathname === item.href;
                 return (
@@ -209,16 +209,16 @@ function SidebarContent({
                       onClick={onNavigate}
                       aria-current={active ? "page" : undefined}
                       title={collapsed ? item.label : undefined}
-                      className={`group relative flex items-center gap-2.5 py-[7px] text-[12.5px] transition-colors ${
-                        collapsed ? "justify-center px-2" : "px-4"
+                      className={`group relative mx-2 flex items-center gap-2.5 py-2 text-[12.5px] transition-all duration-150 ${
+                        collapsed ? "justify-center px-0" : "px-3"
                       } ${
                         active
-                          ? "text-accent"
-                          : "text-muted hover:bg-mint-tint/40 hover:text-fg"
+                          ? "bg-mint-tint/50 font-medium text-accent"
+                          : "text-muted hover:bg-mint-tint/25 hover:text-fg"
                       }`}
                     >
                       {active ? (
-                        <span aria-hidden className="absolute inset-y-0 left-0 w-px bg-accent" />
+                        <span aria-hidden className="absolute inset-y-1 left-0 w-[2px] bg-accent" />
                       ) : null}
                       {item.glyph}
                       {item.meta ? (
@@ -240,21 +240,26 @@ function SidebarContent({
         ))}
       </nav>
 
-      <div className="border-t border-line px-4 py-3">
+      <div className="border-t border-line p-3">
         {collapsed ? (
           <Link
             href="/"
             aria-label="Back to site"
-            className="mx-auto flex size-7 items-center justify-center border border-line-2 font-mono text-[10px] text-faint transition-colors hover:border-accent hover:text-accent"
+            className="mx-auto flex size-8 items-center justify-center border border-line-2 font-mono text-[10px] text-faint transition-colors hover:border-accent hover:text-accent"
           >
             ↗
           </Link>
         ) : (
-          <div className="min-w-0">
-            <p className="truncate text-[12px] text-fg">Mahdyar</p>
-            <p className="font-mono text-[9.5px] uppercase tracking-[0.18em] text-faint">
-              signed in
-            </p>
+          <div className="flex items-center gap-3 px-2 py-1">
+            <span className="flex size-8 shrink-0 items-center justify-center border border-line-2 bg-mint-tint/40 font-mono text-[10px] tracking-[0.04em] text-accent">
+              MH
+            </span>
+            <div className="min-w-0">
+              <p className="truncate text-[12px] font-medium text-fg">Mahdyar</p>
+              <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+                workspace owner
+              </p>
+            </div>
           </div>
         )}
       </div>
@@ -320,7 +325,7 @@ function CommandDialog({ open, onClose }: { open: boolean; onClose: () => void }
             type="button"
             aria-label="Close search"
             onClick={onClose}
-            className="absolute inset-0 bg-ink/50"
+            className="absolute inset-0 bg-ink/45 backdrop-blur-[2px]"
           />
           <motion.div
             role="dialog"
@@ -330,9 +335,9 @@ function CommandDialog({ open, onClose }: { open: boolean; onClose: () => void }
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6 }}
             transition={{ duration: reduce ? 0 : 0.2, ease: EASE }}
-            className="relative w-full max-w-[560px] border border-line bg-bg shadow-[0_24px_60px_-28px_rgb(14_27_29/0.5)]"
+            className="relative w-full max-w-[600px] border border-line bg-bg shadow-[var(--elevation-overlay)]"
           >
-            <div className="flex items-center gap-3 border-b border-line px-4 py-3">
+            <div className="flex items-center gap-3 border-b border-line px-5 py-3.5">
               <span aria-hidden className="font-mono text-[11px] text-faint">
                 ⌘
               </span>
@@ -363,7 +368,7 @@ function CommandDialog({ open, onClose }: { open: boolean; onClose: () => void }
                   <Link
                     href={item.href}
                     onClick={onClose}
-                    className="flex items-baseline justify-between gap-4 px-4 py-2 text-[13.5px] text-fg transition-colors hover:bg-mint-tint/50"
+                    className="flex items-baseline justify-between gap-4 px-5 py-2.5 text-[13.5px] text-fg transition-colors hover:bg-mint-tint/40"
                   >
                     <span>{item.label}</span>
                     <span className="font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint">
@@ -414,7 +419,7 @@ function AccountMenu() {
         aria-expanded={open}
         aria-haspopup="menu"
         aria-label="Account menu"
-        className="flex size-8 items-center justify-center border border-line-2 font-mono text-[10px] tracking-[0.06em] text-fg transition-colors hover:border-accent hover:text-accent"
+        className="flex size-9 items-center justify-center border border-line bg-panel font-mono text-[10px] tracking-[0.06em] text-fg transition-colors hover:border-accent hover:text-accent"
       >
         MH
       </button>
@@ -427,9 +432,9 @@ function AccountMenu() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -4, scale: 0.98 }}
             transition={{ duration: reduce ? 0 : 0.16, ease: EASE }}
-            className="absolute right-0 top-10 z-40 w-56 border border-line bg-bg py-1"
+            className="absolute right-0 top-11 z-40 w-60 border border-line bg-bg shadow-[var(--elevation-popover)]"
           >
-            <div className="border-b border-line px-3 py-2.5">
+            <div className="border-b border-line px-4 py-3">
               <p className="text-[12.5px] text-fg">Mahdyar</p>
               <p className="font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint">
                 signed in
@@ -444,7 +449,7 @@ function AccountMenu() {
                 href={item.href}
                 role="menuitem"
                 onClick={() => setOpen(false)}
-                className="block px-3 py-2 text-[12.5px] text-muted transition-colors hover:bg-mint-tint/50 hover:text-fg"
+                className="block px-4 py-2.5 text-[12.5px] text-muted transition-colors hover:bg-mint-tint/40 hover:text-fg"
               >
                 {item.label}
               </Link>
@@ -492,8 +497,8 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen bg-bg">
       <aside
-        className={`on-ink sticky top-0 hidden h-screen shrink-0 overflow-hidden border-r border-line bg-bg text-fg transition-[width] duration-200 ease-out lg:block ${
-          collapsed ? "w-[4.5rem]" : "w-[15.5rem]"
+        className={`on-ink sticky top-0 hidden h-screen shrink-0 overflow-hidden border-r border-line bg-bg text-fg transition-[width] duration-300 ease-out lg:block ${
+          collapsed ? "w-[5rem]" : "w-[16.5rem]"
         }`}
       >
         <SidebarContent collapsed={collapsed} />
@@ -502,21 +507,21 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
           onClick={() => setCollapsed((value) => !value)}
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           aria-expanded={!collapsed}
-          className="absolute bottom-16 left-1/2 hidden h-7 w-7 -translate-x-1/2 items-center justify-center border border-line-2 font-mono text-[10px] text-faint transition-colors hover:border-accent hover:text-accent lg:flex"
+          className="absolute bottom-20 left-1/2 hidden h-7 w-7 -translate-x-1/2 items-center justify-center border border-line-2 bg-bg/80 font-mono text-[10px] text-faint transition-colors hover:border-accent hover:text-accent lg:flex"
         >
           {collapsed ? "»" : "«"}
         </button>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 border-b border-line bg-bg">
-          <div className="flex h-14 items-center gap-3 px-4 sm:px-6">
+        <header className="sticky top-0 z-30 border-b border-line/80 bg-bg/90 backdrop-blur-xl">
+          <div className="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8">
             <button
               type="button"
               onClick={() => setDrawer(true)}
               aria-label="Open dashboard navigation"
               aria-expanded={drawer}
-              className="flex size-8 items-center justify-center border border-line-2 text-fg transition-colors hover:border-accent hover:text-accent lg:hidden"
+              className="flex size-9 items-center justify-center border border-line-2 bg-panel text-fg transition-colors hover:border-accent hover:text-accent lg:hidden"
             >
               <span aria-hidden className="font-mono text-[12px] leading-none">
                 ≡
@@ -524,7 +529,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
             </button>
 
             <nav aria-label="Breadcrumb" className="min-w-0">
-              <ol className="flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.18em]">
+              <ol className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.18em]">
                 <li className="hidden text-faint sm:block">Workspace</li>
                 <li aria-hidden className="hidden text-faint/60 sm:block">
                   /
@@ -537,7 +542,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 onClick={() => setCommand(true)}
-                className="hidden h-8 items-center gap-2 border border-line px-2.5 text-left transition-colors hover:border-accent/60 md:flex"
+                className="hidden h-9 min-w-[13.5rem] items-center gap-2.5 border border-line bg-panel px-3 text-left transition-colors hover:border-accent/60 md:flex"
               >
                 <svg
                   width="12"
@@ -550,10 +555,12 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                   <path d="m10.5 10.5 4 4" strokeLinecap="round" />
                 </svg>
                 <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
-                  Jump to
+                  Search workspace
                 </span>
-                <kbd className="border border-line px-1 font-mono text-[9px] text-faint">⌘K</kbd>
+                <kbd className="ml-auto border border-line bg-bg px-1.5 py-0.5 font-mono text-[9px] text-faint">⌘K</kbd>
               </button>
+
+              <span aria-hidden className="mx-1 hidden h-6 w-px bg-line sm:block" />
 
               <LogoutButton />
 
@@ -562,8 +569,10 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
           </div>
         </header>
 
-        <main id="content" className="min-w-0 flex-1 px-4 py-6 sm:px-6 sm:py-7">
-          {children}
+        <main id="content" className="dashboard-canvas min-w-0 flex-1">
+          <div className="mx-auto w-full max-w-[1680px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+            {children}
+          </div>
         </main>
       </div>
 
@@ -581,11 +590,11 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
               type="button"
               aria-label="Close navigation"
               onClick={() => setDrawer(false)}
-              className="absolute inset-0 bg-ink/50"
+              className="absolute inset-0 bg-ink/45 backdrop-blur-[2px]"
             />
             <motion.div
               aria-label="Dashboard navigation"
-              className="on-ink absolute inset-y-0 left-0 w-[16rem] border-r border-line bg-bg text-fg"
+              className="on-ink absolute inset-y-0 left-0 w-[18rem] border-r border-line bg-bg text-fg shadow-[var(--elevation-overlay)]"
               initial={reduce ? false : { x: "-100%" }}
               animate={{ x: 0 }}
               exit={reduce ? { opacity: 0 } : { x: "-100%" }}

@@ -20,17 +20,22 @@ export function Panel({
   bodyClassName?: string;
 }) {
   return (
-    <section className={`flex min-w-0 flex-col bg-panel ${className}`}>
-      <header className="flex items-start justify-between gap-4 border-b border-line px-4 py-3.5 sm:px-5">
+    <section
+      className={`flex min-w-0 flex-col border border-line bg-panel shadow-[var(--elevation-lift)] transition-colors hover:border-line-2 ${className}`}
+    >
+      <header className="flex items-start justify-between gap-4 border-b border-line/80 px-5 py-4">
         <div className="min-w-0">
-          <h2 className="text-[13.5px] font-medium tracking-[-0.01em] text-fg">{title}</h2>
+          <h2 className="flex items-center gap-2 text-[13.5px] font-medium tracking-[-0.015em] text-fg">
+            <span aria-hidden className="size-1.5 bg-mint" />
+            {title}
+          </h2>
           {description ? (
-            <p className="mt-0.5 text-[11.5px] leading-relaxed text-faint">{description}</p>
+            <p className="mt-1 text-[11.5px] leading-relaxed text-faint">{description}</p>
           ) : null}
         </div>
         {action ? <div className="shrink-0">{action}</div> : null}
       </header>
-      <div className={`min-w-0 flex-1 px-4 py-4 sm:px-5 ${bodyClassName}`}>{children}</div>
+      <div className={`min-w-0 flex-1 px-5 py-5 ${bodyClassName}`}>{children}</div>
     </section>
   );
 }
@@ -53,7 +58,7 @@ export function RangeTabs<T extends number>({
     <div
       role="group"
       aria-label={label}
-      className="flex items-center border border-line bg-panel p-px"
+      className="flex items-center border border-line bg-panel p-px shadow-[var(--elevation-lift)]"
     >
       {options.map((option) => {
         const active = option === value;
@@ -63,8 +68,8 @@ export function RangeTabs<T extends number>({
             type="button"
             onClick={() => onChange(option)}
             aria-pressed={active}
-            className={`relative px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
-              active ? "text-accent" : "text-faint hover:text-fg"
+            className={`relative px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
+              active ? "text-accent" : "text-faint hover:bg-mint-tint/25 hover:text-fg"
             }`}
           >
             {active ? (

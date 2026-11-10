@@ -76,8 +76,8 @@ export function LaunchOverview({
       : null;
 
   return (
-    <section className="border border-line bg-panel">
-      <header className="flex flex-wrap items-start justify-between gap-3 border-b border-line px-4 py-3.5">
+    <section className="border border-line bg-panel shadow-[var(--elevation-lift)]">
+      <header className="flex flex-wrap items-start justify-between gap-3 border-b border-line/80 px-5 py-4">
         <div className="min-w-0">
           <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
             Launch readiness
@@ -96,13 +96,13 @@ export function LaunchOverview({
       </header>
 
       <div className="grid gap-px bg-line lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-        <div className="bg-panel px-4 py-4">
+        <div className="bg-panel px-5 py-5">
           <div className="flex items-end justify-between gap-3">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">
                 Checklist completion
               </p>
-              <p className="mt-1.5 text-[2rem] font-medium leading-none tracking-[-0.04em] text-fg tabular-nums">
+              <p className="mt-2 font-mono text-[2.25rem] font-medium leading-none tracking-[-0.04em] text-fg tabular-nums">
                 {readiness}%
               </p>
             </div>
@@ -116,7 +116,7 @@ export function LaunchOverview({
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={readiness}
-            className="mt-3 h-1.5 w-full overflow-hidden bg-surface-sunken"
+            className="mt-4 h-2 w-full overflow-hidden bg-surface-sunken"
           >
             <span
               className={`block h-full transition-[width] duration-300 ${BAR[status.tone]}`}
@@ -168,7 +168,7 @@ export function LaunchOverview({
               small: true,
             },
           ].map((item) => (
-            <article key={item.label} className="min-w-0 bg-panel px-4 py-3.5">
+            <article key={item.label} className="min-w-0 bg-panel px-5 py-4">
               <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">
                 {item.label}
               </p>
@@ -176,7 +176,7 @@ export function LaunchOverview({
                 className={`mt-1.5 min-w-0 text-fg ${
                   item.small
                     ? "text-[13px] font-medium leading-snug tracking-[-0.01em]"
-                    : "text-[1.35rem] font-medium leading-none tracking-[-0.03em] tabular-nums"
+                    : "font-mono text-[1.5rem] font-medium leading-none tracking-[-0.035em] tabular-nums"
                 } ${item.tone ?? ""}`}
               >
                 {item.value}

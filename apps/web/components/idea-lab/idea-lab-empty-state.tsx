@@ -11,7 +11,7 @@ export function IdeaLabEmptyCollection({ onNewIdea }: { onNewIdea: () => void })
       </div>
 
       <div className="flex flex-1 flex-col items-center justify-center px-6 py-12 text-center">
-        <span className="relative flex size-12 items-center justify-center border border-line-2">
+        <span className="relative flex size-14 items-center justify-center border border-line-2 bg-bg/60">
           <svg
             width="17"
             height="17"

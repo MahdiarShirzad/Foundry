@@ -50,13 +50,13 @@ export function PanelHeader({
   action?: ReactNode;
 }) {
   return (
-    <header className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3">
+    <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line/80 px-5 py-4">
       <div className="min-w-0">
-        <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-          <span aria-hidden className="size-1 bg-mint" />
+        <h2 className="flex items-center gap-2 text-[13.5px] font-medium tracking-[-0.01em] text-fg">
+          <span aria-hidden className="size-1.5 bg-mint" />
           {title}
-        </p>
-        {meta ? <p className="mt-1 text-[11.5px] text-muted">{meta}</p> : null}
+        </h2>
+        {meta ? <p className="mt-1 text-[11px] leading-relaxed text-faint">{meta}</p> : null}
       </div>
       {action}
     </header>

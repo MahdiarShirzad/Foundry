@@ -46,53 +46,81 @@ export default function DashboardOverview() {
       transition={{ duration: reduce ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}
       className="space-y-4"
     >
-      <header className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
-        <div className="min-w-0">
-          <p className="flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.24em] text-accent">
-            <span aria-hidden className="size-1.5 bg-mint" />
-            Workspace overview
-          </p>
-          <h1 className="mt-2 text-[26px] font-medium leading-none tracking-[-0.035em] text-fg">
-            Cycle overview
-          </h1>
-          <p className="mt-2 max-w-[52ch] text-[12.5px] leading-relaxed text-muted">
-            {WORKSPACE.name} · {ATTENTION.length} initiatives need a decision across the eight
-            stages. Figures below are the same numbers the panels derive from.
-          </p>
-        </div>
+      <header className="relative overflow-hidden border border-line bg-panel shadow-[var(--elevation-lift)]">
+        <span
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-24 -top-28 size-[20rem] rounded-full bg-mint-tint/70 blur-3xl"
+        />
+        <div className="relative flex flex-wrap items-end justify-between gap-5 px-5 py-5 sm:px-7 sm:py-6">
+          <div className="min-w-0 max-w-[58ch]">
+            <p className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-accent">
+              <span aria-hidden className="size-1.5 bg-mint" />
+              Workspace overview
+            </p>
+            <h1 className="mt-2.5 text-[clamp(1.9rem,3vw,2.45rem)] font-medium leading-[1.02] tracking-[-0.045em] text-fg">
+              Cycle overview
+            </h1>
+            <p className="mt-3 max-w-[56ch] text-[13px] leading-relaxed text-muted">
+              {WORKSPACE.name} · {ATTENTION.length} initiatives need a decision across the eight
+              stages.
+            </p>
+            <div className="mt-4 flex flex-wrap items-center gap-1.5">
+              <span className="border border-line bg-bg/60 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-faint">
+                {ATTENTION.length} need attention
+              </span>
+              <span className="border border-line bg-bg/60 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-faint">
+                as of {formatShortDate(WORKSPACE.asOf)}
+              </span>
+            </div>
+          </div>
 
-        <div className="flex flex-wrap items-center gap-2">
-          <RangeTabs options={RANGES} value={range} onChange={setRange} label="Time range" />
+          <div className="flex flex-wrap items-center gap-2">
+            <RangeTabs options={RANGES} value={range} onChange={setRange} label="Time range" />
 
-          <button
-            type="button"
-            onClick={() => setCompare((value) => !value)}
-            aria-pressed={compare}
-            disabled={!canCompare}
-            title={
-              canCompare
-                ? "Overlay the previous period as dashed lines"
-                : "A 26-week comparison needs 52 weeks of history"
-            }
-            className={`flex h-[26px] items-center gap-2 border px-2 font-mono text-[9.5px] uppercase tracking-[0.14em] transition-colors ${
+            <button
+              type="button"
+              onClick={() => setCompare((value) => !value)}
+              aria-pressed={compare}
+              disabled={!canCompare}
+              title={
+                canCompare
+                  ? "Overlay the previous period as dashed lines"
+                  : "A 26-week comparison needs 52 weeks of history"
+              }
+              className={`flex h-[30px] items-center gap-2 border px-2.5 font-mono text-[9.5px] uppercase tracking-[0.14em] transition-colors ${
+                compare
+                  ? "border-accent/40 bg-mint-tint text-accent"
+                  : "border-line bg-panel text-faint hover:text-fg"
+              } disabled:cursor-not-allowed disabled:border-line disabled:text-faint/60 disabled:hover:text-faint/60`}
+            >
+              <span aria-hidden className="block h-px w-4 border-t border-dashed border-current" />
               compare
-                ? "border-accent/40 bg-mint-tint text-accent"
-                : "border-line text-faint hover:text-fg"
-            } disabled:cursor-not-allowed disabled:border-line disabled:text-faint/60 disabled:hover:text-faint/60`}
-          >
-            <span aria-hidden className="block h-px w-4 border-t border-dashed border-current" />
-            compare
-          </button>
-
-          <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
-            as of {formatShortDate(WORKSPACE.asOf)}
-          </span>
+            </button>
+          </div>
         </div>
       </header>
 
       <KpiStrip kpis={kpis} />
 
-      <div className="grid gap-px border border-line bg-line lg:grid-cols-12">
+      <div className="flex flex-wrap items-end justify-between gap-3 pt-1">
+        <div>
+          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-accent">
+            Cycle performance
+          </p>
+          <p className="mt-1 text-[11.5px] text-faint">
+            Throughput, evidence mix, stage load and decisions for {dataset.label}.
+          </p>
+        </div>
+        <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+          {dataset.label}
+        </span>
+      </div>
+
+      <div className="grid gap-4 lg:grid-cols-12">
         <Panel
           title="Cycle throughput"
           description="Initiatives captured, validated and launched per week"

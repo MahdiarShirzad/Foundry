@@ -13,7 +13,7 @@ import { IdeaStatus } from "./idea-status";
 
 function MetaCell({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="min-w-0 bg-panel px-4 py-3">
+    <div className="min-w-0 bg-panel px-5 py-3.5">
       <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">{label}</dt>
       <dd className="mt-1 min-w-0 text-[11.5px] leading-snug text-fg">{children}</dd>
     </div>
@@ -30,7 +30,7 @@ function DetailSection({
   children: ReactNode;
 }) {
   return (
-    <section className="grid gap-2 border-b border-line px-5 py-5 sm:px-7 sm:py-6 @xl:grid-cols-[8rem_minmax(0,1fr)] @xl:gap-6">
+    <section className="grid gap-2.5 border-b border-line px-5 py-6 sm:px-7 sm:py-7 @xl:grid-cols-[8rem_minmax(0,1fr)] @xl:gap-8">
       <h3 className="flex items-baseline gap-2">
         <span className="font-mono text-[10px] tracking-[0.16em] text-accent">{number}</span>
         <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">{title}</span>
@@ -85,7 +85,7 @@ export function IdeaDetailPanel({
               </span>
             </div>
 
-            <header className="border-b border-line px-5 pb-5 pt-4 sm:px-7 sm:pb-6 sm:pt-5">
+            <header className="border-b border-line bg-[linear-gradient(180deg,var(--accent-tint),transparent_72%)] px-5 pb-6 pt-5 sm:px-7 sm:pb-7 sm:pt-6">
               <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
                 <div className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
                   <span className="text-accent">{idea.ref}</span>
@@ -99,7 +99,7 @@ export function IdeaDetailPanel({
                 </span>
               </div>
 
-              <h2 className="mt-4 text-[clamp(2rem,3.4vw,2.75rem)] font-medium leading-[0.98] tracking-[-0.045em] text-fg">
+              <h2 className="mt-4 text-[clamp(1.9rem,3vw,2.5rem)] font-medium leading-[1] tracking-[-0.045em] text-fg">
                 {idea.name}
               </h2>
               <p className="mt-2 max-w-[54ch] text-[15.5px] font-medium leading-snug tracking-[-0.01em] text-muted sm:text-[17px]">
@@ -189,7 +189,7 @@ export function IdeaDetailPanel({
               </div>
             </DetailSection>
 
-            <div className="mt-auto border-t border-line bg-mint-tint/25 px-5 py-5 sm:px-7">
+            <div className="mt-auto border-t border-line bg-mint-tint/25 px-5 py-6 sm:px-7">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                 <div className="min-w-0">
                   <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-accent">

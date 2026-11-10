@@ -208,11 +208,12 @@ export function PanelHeader({
   action?: ReactNode;
 }) {
   return (
-    <div className="flex items-center justify-between gap-3 border-b border-line bg-panel px-4 py-3">
-      <div className="flex min-w-0 items-baseline gap-2">
-        <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-accent">
+    <div className="flex items-center justify-between gap-3 border-b border-line/80 bg-panel px-5 py-3.5">
+      <div className="flex min-w-0 items-baseline gap-2.5">
+        <h2 className="flex items-center gap-2 text-[13px] font-medium tracking-[-0.005em] text-fg">
+          <span aria-hidden className="size-1.5 bg-mint" />
           {title}
-        </span>
+        </h2>
         {meta ? (
           <span className="truncate font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
             {meta}

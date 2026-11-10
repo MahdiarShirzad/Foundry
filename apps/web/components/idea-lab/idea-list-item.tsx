@@ -32,8 +32,8 @@ export function IdeaListItem({
         type="button"
         onClick={() => onSelect(idea.id)}
         aria-current={selected ? "true" : undefined}
-        className={`group relative block w-full min-w-0 px-4 py-3.5 text-left transition-colors duration-200 focus-visible:outline-offset-[-2px] ${
-          selected ? "bg-mint-tint/35" : "hover:bg-mint-tint/20"
+        className={`group relative block w-full min-w-0 px-4 py-4 text-left transition-colors duration-200 focus-visible:outline-offset-[-2px] ${
+          selected ? "bg-mint-tint/40" : "hover:bg-mint-tint/20"
         }`}
       >
         {selected ? (
@@ -54,7 +54,7 @@ export function IdeaListItem({
 
         <span className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
           <span
-            className={`text-[15px] font-medium leading-tight tracking-[-0.015em] transition-colors ${
+            className={`text-[14.5px] font-medium leading-tight tracking-[-0.015em] transition-colors ${
               selected ? "text-accent" : "text-fg group-hover:text-accent"
             }`}
           >

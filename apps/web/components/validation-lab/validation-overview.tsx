@@ -27,26 +27,41 @@ export function ValidationOverview({
       : `${hypotheses.length} hypotheses tracked, ${awaiting} still awaiting a test, ${testing} under test. ${experiments.length} experiments designed, ${inProgress} ready or running, ${findings.length} findings recorded.`;
 
   return (
-    <section className="border border-line bg-panel">
-      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
+    <section className="border border-line bg-panel shadow-[var(--elevation-lift)]">
+      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line/80 px-5 py-4">
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">Validation Overview</p>
-          <p className="mt-1 text-[11.5px] text-muted">State of validation work for the selected idea</p>
+          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-accent">
+            Validation overview
+          </p>
+          <p className="mt-1.5 text-[12px] leading-relaxed text-muted">
+            State of validation work for the selected idea.
+          </p>
         </div>
-        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
+        <p className="border border-line bg-bg/60 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-faint">
           {testing > 0 ? `Actively testing · ${testing}` : "No test currently running"}
         </p>
       </header>
       <div className="grid gap-px bg-line sm:grid-cols-2 xl:grid-cols-4">
         {items.map((item) => (
-          <article key={item.label} className="bg-panel px-4 py-3.5">
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">{item.label}</p>
-            <p className="mt-2 text-[1.6rem] font-medium tracking-[-0.03em] text-fg">{item.value}</p>
-            <p className="mt-1 text-[11px] text-muted">{item.hint}</p>
+          <article
+            key={item.label}
+            className="group relative bg-panel px-5 py-4 transition-colors hover:bg-mint-tint/15"
+          >
+            <span
+              aria-hidden
+              className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-accent/50 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
+            />
+            <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+              {item.label}
+            </p>
+            <p className="mt-2.5 font-mono text-[1.75rem] font-medium leading-none tracking-[-0.035em] text-fg tabular-nums">
+              {item.value}
+            </p>
+            <p className="mt-1.5 text-[11px] leading-snug text-muted">{item.hint}</p>
           </article>
         ))}
       </div>
-      <p className="border-t border-line px-4 py-2.5 text-[11.5px] leading-relaxed text-muted">
+      <p className="border-t border-line bg-bg/30 px-5 py-3 text-[11.5px] leading-relaxed text-muted">
         {summary}
       </p>
     </section>

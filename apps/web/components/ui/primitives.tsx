@@ -30,23 +30,15 @@ export function StageEyebrow({
   className?: string;
 }) {
   return (
-    <p
-      className={cn(
-        "flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-[10px] uppercase tracking-[0.2em] text-accent",
-        className,
-      )}
-    >
-      <span aria-hidden className="size-1.5 shrink-0 bg-mint" />
-      <span>
+    <p className={cn("flex flex-wrap items-center gap-x-2.5 gap-y-1.5", className)}>
+      <span className="inline-flex items-center gap-2 border border-accent/25 bg-accent-tint px-2 py-1 font-mono text-[9.5px] uppercase tracking-[0.16em] text-accent">
+        <span aria-hidden className="size-1.5 shrink-0 bg-accent" />
         Stage {stage} · {label}
       </span>
       {cycle ? (
-        <>
-          <span aria-hidden className="hidden h-px w-8 bg-line sm:block" />
-          <span className="hidden font-mono text-[9.5px] tracking-[0.16em] text-faint sm:inline">
-            Eight-stage cycle
-          </span>
-        </>
+        <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+          Eight-stage cycle
+        </span>
       ) : null}
     </p>
   );
@@ -87,8 +79,10 @@ export function MetaLine({
       )}
     >
       {items.map((item, index) => (
-        <span key={index} className="inline-flex items-center gap-2.5">
-          {index > 0 ? <span aria-hidden className="size-1 shrink-0 bg-line-2" /> : null}
+        <span
+          key={index}
+          className="inline-flex max-w-full items-start border border-line bg-bg/60 px-2 py-1 text-left leading-relaxed text-faint"
+        >
           <span>{item}</span>
         </span>
       ))}
@@ -114,25 +108,42 @@ export function ModuleHeader({
   controls?: ReactNode;
 }) {
   return (
-    <header className="flex flex-col gap-4 border-b border-line pb-5">
-      <div className="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
-        <div className="min-w-0 max-w-[70ch]">
-          <StageEyebrow stage={stage} label={stageLabel} />
-          <h1 className="mt-2.5 text-[clamp(2rem,3.6vw,2.65rem)] font-medium leading-[1] tracking-[-0.04em] text-fg">
-            {title}
-          </h1>
-          <p className="mt-2.5 max-w-[64ch] text-[13.5px] leading-relaxed text-muted">
-            {description}
-          </p>
-          {meta && meta.length > 0 ? <MetaLine items={meta} className="mt-3" /> : null}
+    <header className="relative overflow-hidden border border-line bg-panel shadow-[var(--elevation-lift)]">
+      <span
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-28 -top-32 size-[22rem] rounded-full bg-mint-tint/70 blur-3xl"
+      />
+      <div className="relative px-5 py-5 sm:px-7 sm:py-6">
+        <div className="flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
+          <div className="min-w-0 max-w-[72ch]">
+            <StageEyebrow stage={stage} label={stageLabel} />
+            <h1 className="mt-3 text-[clamp(1.9rem,3vw,2.45rem)] font-medium leading-[1.02] tracking-[-0.045em] text-fg">
+              {title}
+            </h1>
+            <p className="mt-3 max-w-[64ch] text-[13.5px] leading-relaxed text-muted">
+              {description}
+            </p>
+            {meta && meta.length > 0 ? <MetaLine items={meta} className="mt-4" /> : null}
+          </div>
+          {actions ? (
+            <div className="flex shrink-0 flex-wrap items-center gap-2 xl:max-w-[35rem] xl:justify-end">
+              {actions}
+            </div>
+          ) : null}
         </div>
-        {actions ? (
-          <div className="flex shrink-0 flex-wrap items-center gap-2 xl:justify-end">
-            {actions}
+        {controls ? (
+          <div className="mt-5 flex flex-wrap items-center gap-2 border-t border-line/70 pt-4">
+            <span className="mr-1 hidden font-mono text-[9px] uppercase tracking-[0.18em] text-faint sm:inline">
+              Workspace
+            </span>
+            {controls}
           </div>
         ) : null}
       </div>
-      {controls ? <div className="flex flex-wrap items-center gap-2">{controls}</div> : null}
     </header>
   );
 }
@@ -159,28 +170,33 @@ export function Panel({
   bodyClassName?: string;
 }) {
   return (
-    <section className={cn("border border-line bg-panel", className)}>
+    <section
+      className={cn(
+        "border border-line bg-panel shadow-[var(--elevation-lift)] transition-colors hover:border-line-2",
+        className,
+      )}
+    >
       {title || action ? (
-        <header className="flex flex-wrap items-start justify-between gap-3 border-b border-line px-4 py-3">
+        <header className="flex flex-wrap items-start justify-between gap-3 border-b border-line/80 px-5 py-4">
           <div className="min-w-0">
             {eyebrow ? (
-              <p className="font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint">
+              <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-accent">
                 {eyebrow}
               </p>
             ) : null}
             {title ? (
-              <p
+              <h2
                 className={cn(
-                  "flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-accent",
+                  "flex items-center gap-2 text-[14px] font-medium tracking-[-0.015em] text-fg",
                   eyebrow ? "mt-1" : "",
                 )}
               >
-                <span aria-hidden className="size-1 bg-mint" />
+                <span aria-hidden className="size-1.5 bg-mint" />
                 {title}
-              </p>
+              </h2>
             ) : null}
             {description ? (
-              <p className="mt-1.5 max-w-[64ch] text-[11.5px] leading-relaxed text-muted">
+              <p className="mt-1 max-w-[64ch] text-[11.5px] leading-relaxed text-faint">
                 {description}
               </p>
             ) : null}
@@ -190,7 +206,7 @@ export function Panel({
       ) : null}
       <div className={bodyClassName}>{children}</div>
       {footer ? (
-        <footer className="border-t border-line px-4 py-2.5 text-[11px] leading-relaxed text-faint">
+        <footer className="border-t border-line px-5 py-3 text-[11px] leading-relaxed text-faint">
           {footer}
         </footer>
       ) : null}
@@ -219,16 +235,23 @@ export function StatStrip({
   return (
     <div className={cn("grid gap-px bg-line", columns, className)}>
       {items.map((item) => (
-        <article key={item.label} className="min-w-0 bg-panel px-4 py-3.5">
-          <p className="font-mono text-[9.5px] uppercase tracking-[0.15em] text-faint">
+        <article
+          key={item.label}
+          className="group relative min-w-0 bg-panel px-5 py-4 transition-colors hover:bg-mint-tint/15"
+        >
+          <span
+            aria-hidden
+            className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-accent/50 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
+          />
+          <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
             {item.label}
           </p>
           <div
             className={cn(
-              "mt-2 min-w-0 text-fg",
+              "mt-2.5 min-w-0 text-fg",
               item.kind === "text"
-                ? "text-[13px] font-medium leading-snug tracking-[-0.01em]"
-                : "text-[1.55rem] font-medium leading-none tracking-[-0.03em] tabular-nums",
+                ? "text-[13.5px] font-medium leading-snug tracking-[-0.01em]"
+                : "font-mono text-[1.75rem] font-medium leading-none tracking-[-0.035em] tabular-nums",
             )}
           >
             {item.value}
@@ -286,10 +309,16 @@ export function WorkspaceTabs({
   }
 
   return (
-    <nav aria-label={label} className={cn("border border-line bg-panel", className)}>
+    <nav
+      aria-label={label}
+      className={cn(
+        "overflow-hidden border border-line bg-panel shadow-[var(--elevation-lift)]",
+        className,
+      )}
+    >
       {meta || note ? (
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-3.5 py-2">
-          <p className="font-mono text-[9.5px] uppercase tracking-[0.15em] text-faint">{meta}</p>
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line bg-bg/40 px-4 py-2.5">
+          <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-accent">{meta}</p>
           {note ? (
             <p className="hidden font-mono text-[9px] uppercase tracking-[0.12em] text-faint/80 sm:block">
               {note}
@@ -319,10 +348,10 @@ export function WorkspaceTabs({
               onClick={() => onChange(item.value)}
               onKeyDown={(event) => move(event, index)}
               className={cn(
-                "relative flex min-w-[9.5rem] flex-1 shrink-0 items-center gap-2 border-r border-line px-3 py-2.5 text-left transition-colors last:border-r-0",
+                "relative flex min-w-[10rem] flex-1 shrink-0 items-center gap-2.5 border-r border-line px-4 py-3 text-left transition-colors last:border-r-0",
                 active
-                  ? "bg-mint-tint/35 text-accent"
-                  : "text-faint hover:bg-bg/60 hover:text-fg",
+                  ? "bg-mint-tint/40 text-accent"
+                  : "text-faint hover:bg-bg/70 hover:text-fg",
               )}
             >
               {active ? (
@@ -337,7 +366,7 @@ export function WorkspaceTabs({
               >
                 {item.index ?? String(index + 1).padStart(2, "0")}
               </span>
-              <span className="min-w-0 flex-1 whitespace-nowrap text-[12px] font-medium tracking-[-0.005em]">
+              <span className="min-w-0 flex-1 whitespace-nowrap text-[12.5px] font-medium tracking-[-0.005em]">
                 {item.label}
               </span>
               {typeof item.count === "number" ? (
@@ -386,7 +415,7 @@ export function SearchField({
         height="12"
         viewBox="0 0 14 14"
         aria-hidden
-        className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 fill-none stroke-faint stroke-[1.3]"
+        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 fill-none stroke-faint stroke-[1.4]"
       >
         <circle cx="6" cy="6" r="4" />
         <path d="m9 9 3 3" strokeLinecap="square" />
@@ -397,7 +426,7 @@ export function SearchField({
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        className="h-9 w-full border border-line bg-panel pl-7 pr-2 text-[16px] text-fg outline-none transition-colors placeholder:text-faint/80 hover:border-line-2 focus:border-accent sm:text-[12.5px] [&::-webkit-search-cancel-button]:hidden"
+        className="h-10 w-full border border-line bg-bg/40 pl-9 pr-3 text-[16px] text-fg outline-none transition-all placeholder:text-faint/80 hover:border-line-2 focus:border-accent focus:bg-panel focus:ring-4 focus:ring-accent/10 sm:text-[12.5px] [&::-webkit-search-cancel-button]:hidden"
       />
     </div>
   );
@@ -425,14 +454,19 @@ export function WorkspaceToolbar({
   countLabel?: string;
 }) {
   return (
-    <div className="flex flex-col gap-2 border-b border-line bg-bg/60 px-3 py-2.5 sm:px-4">
-      <SearchField
-        value={query}
-        onChange={onQueryChange}
-        label={searchLabel}
-        placeholder={searchPlaceholder}
-      />
-      {children ? <div className="flex flex-wrap items-center gap-2">{children}</div> : null}
+    <div className="flex flex-col gap-2.5 border-b border-line bg-bg/40 px-4 py-3">
+      <div className="flex flex-col gap-2.5 lg:flex-row lg:items-center">
+        <SearchField
+          value={query}
+          onChange={onQueryChange}
+          label={searchLabel}
+          placeholder={searchPlaceholder}
+          className="lg:max-w-[20rem]"
+        />
+        {children ? (
+          <div className="flex flex-wrap items-center gap-2 lg:ml-auto">{children}</div>
+        ) : null}
+      </div>
       <div className="flex items-center justify-between gap-3">
         <p className="font-mono text-[9.5px] uppercase tracking-[0.12em] text-faint">
           {String(count).padStart(2, "0")} {countLabel}
@@ -469,7 +503,7 @@ export function HeaderSelect({
   return (
     <label
       className={cn(
-        "flex h-9 items-center gap-2 border border-line bg-panel px-2.5 transition-colors focus-within:border-accent",
+        "flex h-10 items-center gap-2 border border-line bg-bg/40 px-3 transition-all focus-within:border-accent focus-within:bg-panel focus-within:ring-4 focus-within:ring-accent/10",
         className,
       )}
     >
@@ -613,10 +647,10 @@ export function EmptyState({
         className,
       )}
     >
-      <span className="relative flex size-12 items-center justify-center border border-line-2">
+      <span className="relative flex size-14 items-center justify-center border border-line-2 bg-bg/60">
         <svg
-          width="17"
-          height="17"
+          width="18"
+          height="18"
           viewBox="0 0 18 18"
           aria-hidden
           className="fill-none stroke-accent stroke-[1.2]"
@@ -627,14 +661,14 @@ export function EmptyState({
       </span>
 
       {eyebrow ? (
-        <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+        <p className="mt-6 font-mono text-[9.5px] uppercase tracking-[0.18em] text-accent">
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="mt-2 max-w-[30ch] text-[18px] font-medium leading-snug tracking-[-0.02em] text-fg">
+      <h2 className="mt-2.5 max-w-[30ch] text-[19px] font-medium leading-snug tracking-[-0.025em] text-fg">
         {title}
       </h2>
-      <p className="mt-2 max-w-[42ch] text-[12.5px] leading-relaxed text-muted">{description}</p>
+      <p className="mt-2 max-w-[42ch] text-[13px] leading-relaxed text-muted">{description}</p>
 
       {primary || secondary ? (
         <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
@@ -676,17 +710,20 @@ export function ErrorState({
   return (
     <section
       role="alert"
-      className={cn("border border-line bg-panel", className)}
+      className={cn(
+        "border border-line bg-panel shadow-[var(--elevation-lift)]",
+        className,
+      )}
     >
-      <header className="flex items-center gap-2 border-b border-danger/25 bg-danger-tint/40 px-4 py-2.5">
+      <header className="flex items-center gap-2 border-b border-danger/25 bg-danger-tint/40 px-5 py-3">
         <span aria-hidden className="size-1.5 bg-danger" />
         <p className="font-mono text-[9.5px] uppercase tracking-[0.16em] text-danger">{eyebrow}</p>
       </header>
       <div className="flex flex-col items-center justify-center px-6 py-12 text-center">
-        <h2 className="max-w-[34ch] text-[18px] font-medium leading-snug tracking-[-0.02em] text-fg">
+        <h2 className="max-w-[34ch] text-[19px] font-medium leading-snug tracking-[-0.025em] text-fg">
           {title}
         </h2>
-        <p className="mt-2 max-w-[46ch] text-[12.5px] leading-relaxed text-muted">{description}</p>
+        <p className="mt-2 max-w-[46ch] text-[13px] leading-relaxed text-muted">{description}</p>
         <Button variant="secondary" size="sm" onClick={onRetry} className="mt-5">
           {retryLabel}
         </Button>
@@ -716,10 +753,10 @@ export function NoResults({
       <span aria-hidden className="font-mono text-[10px] uppercase tracking-[0.18em] text-line-2">
         00 / {noun}
       </span>
-      <h2 className="mt-3 max-w-[30ch] text-[17px] font-medium leading-snug tracking-[-0.02em] text-fg">
+      <h2 className="mt-3 max-w-[30ch] text-[18px] font-medium leading-snug tracking-[-0.025em] text-fg">
         {query ? <>Nothing matches “{query}”.</> : <>Nothing matches these filters.</>}
       </h2>
-      <p className="mt-2 max-w-[38ch] text-[12.5px] leading-relaxed text-muted">
+      <p className="mt-2 max-w-[38ch] text-[13px] leading-relaxed text-muted">
         {description ?? "Try another term, widen the filters, or return to the full set."}
       </p>
       <Button variant="secondary" size="sm" onClick={onClear} className="mt-5">
@@ -743,7 +780,7 @@ export function StatePreview({
   note?: string;
 }) {
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-3">
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border border-line bg-panel px-4 py-3 shadow-[var(--elevation-lift)]">
       <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[9.5px] uppercase tracking-[0.12em] text-faint">
         <span aria-hidden className="size-1.5 bg-accent" />
         {note ?? "Local state only · changes are not persisted"}
@@ -788,7 +825,7 @@ export function ModuleFooter({ children }: { children: ReactNode }) {
 /* ------------------------------------------------------------------ forms --- */
 
 const CONTROL =
-  "w-full border border-line bg-panel px-3 py-2 text-[16px] text-fg outline-none transition-colors placeholder:text-faint/80 hover:border-line-2 focus:border-accent sm:text-[13px]";
+  "w-full border border-line bg-bg/40 px-3 py-2.5 text-[16px] text-fg outline-none transition-all placeholder:text-faint/80 hover:border-line-2 focus:border-accent focus:bg-panel focus:ring-4 focus:ring-accent/10 sm:text-[13px]";
 
 export function FieldLabel({
   htmlFor,
@@ -988,7 +1025,7 @@ export function Dialog({
             type="button"
             onClick={onClose}
             aria-label="Close dialog"
-            className="absolute inset-0 bg-ink/55"
+            className="absolute inset-0 bg-ink/45 backdrop-blur-[2px]"
           />
           <motion.div
             ref={dialogRef}
@@ -1001,7 +1038,7 @@ export function Dialog({
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.995 }}
             transition={{ duration: reduce ? 0 : 0.22, ease: EASE }}
             className={cn(
-              "relative flex h-full w-full flex-col border-line bg-bg shadow-[var(--elevation-overlay)] outline-none sm:h-auto sm:max-h-[92dvh] sm:border",
+              "relative flex h-full w-full flex-col border-line bg-bg shadow-[var(--elevation-overlay)] outline-none sm:h-auto sm:max-h-[90dvh] sm:border",
               maxWidth,
             )}
           >

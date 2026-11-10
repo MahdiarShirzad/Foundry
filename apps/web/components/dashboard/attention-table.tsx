@@ -74,7 +74,7 @@ export default function AttentionTable({
                 <th
                   key={heading}
                   scope="col"
-                  className={`border-b border-line pb-1.5 font-mono text-[9px] font-normal uppercase tracking-[0.18em] text-faint ${
+                  className={`border-b border-line pb-2.5 font-mono text-[9px] font-normal uppercase tracking-[0.16em] text-faint ${
                     index === 2 ? "text-right" : index === 4 ? "text-right" : ""
                   }`}
                 >
@@ -85,8 +85,11 @@ export default function AttentionTable({
           </thead>
           <tbody>
             {visible.map((row) => (
-              <tr key={row.id} className="group border-b border-line/70 last:border-0">
-                <td className="py-2.5 pr-4">
+              <tr
+                key={row.id}
+                className="group border-b border-line/70 transition-colors last:border-0 hover:bg-mint-tint/15"
+              >
+                <td className="py-3 pr-4 pl-2">
                   <Link href={row.href} className="flex items-baseline gap-2">
                     <span className="truncate text-[12.5px] text-fg transition-colors group-hover:text-accent">
                       {row.name}
@@ -96,20 +99,20 @@ export default function AttentionTable({
                     </span>
                   </Link>
                 </td>
-                <td className="py-2.5 pr-4">
+                <td className="py-3 pr-4 pl-2">
                   <span className="font-mono text-[9px] tracking-[0.14em] text-accent">
                     {row.stageId}
                   </span>{" "}
                   <span className="text-[11.5px] text-muted">{row.stageName}</span>
                 </td>
-                <td className="py-2.5 pr-4 text-right font-mono text-[11px] text-fg">
+                <td className="py-3 pr-4 text-right font-mono text-[11px] text-fg">
                   {row.days}
                   <span className="ml-0.5 text-[9px] text-faint">d</span>
                 </td>
-                <td className="py-2.5 pr-4">
+                <td className="py-3 pr-4 pl-2">
                   <Signal signal={row.signal} />
                 </td>
-                <td className="py-2.5 text-right font-mono text-[10.5px] text-muted">
+                <td className="py-3 pr-2 text-right font-mono text-[10.5px] text-muted">
                   {row.nextGate ? formatShortDate(row.nextGate) : "—"}
                 </td>
               </tr>
@@ -124,7 +127,7 @@ export default function AttentionTable({
           <li key={row.id}>
             <Link
               href={row.href}
-              className="block border border-line px-3 py-2.5 transition-colors hover:border-accent/60"
+              className="block border border-line bg-panel px-3.5 py-3 transition-colors hover:border-accent/60 hover:bg-mint-tint/15"
             >
               <div className="flex items-baseline justify-between gap-2">
                 <span className="min-w-0 truncate text-[12.5px] text-fg">{row.name}</span>

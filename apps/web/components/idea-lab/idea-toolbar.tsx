@@ -45,7 +45,7 @@ export function IdeaToolbar({
 
   return (
     <div className="shrink-0 border-b border-line bg-panel">
-      <div className="flex items-center gap-2.5 px-4 py-2.5">
+      <div className="flex items-center gap-3 px-4 py-3">
         <svg
           width="13"
           height="13"
@@ -62,7 +62,7 @@ export function IdeaToolbar({
           onChange={(event) => onQueryChange(event.target.value)}
           aria-label="Search ideas"
           placeholder="Search ideas…"
-          className="min-w-0 flex-1 bg-transparent text-[12.5px] text-fg outline-none placeholder:text-faint/80"
+          className="min-w-0 flex-1 bg-transparent text-[13px] text-fg outline-none placeholder:text-faint/80"
         />
 
         <AnimatePresence initial={false}>
@@ -82,13 +82,17 @@ export function IdeaToolbar({
           ) : null}
         </AnimatePresence>
 
-        <span className="shrink-0 border-l border-line pl-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-          {String(count).padStart(2, "0")}
+        <span className="shrink-0 border border-line bg-bg/60 px-2 py-1 font-mono text-[9.5px] uppercase tracking-[0.12em] text-faint">
+          {String(count).padStart(2, "0")} shown
         </span>
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line/70 px-4 py-2">
-        <div role="group" aria-label="Filter by status" className="flex items-center gap-0.5">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line/70 bg-bg/30 px-4 py-2.5">
+        <div
+          role="group"
+          aria-label="Filter by status"
+          className="flex items-center gap-0.5 border border-line bg-bg/50 p-0.5"
+        >
           {IDEA_STATUS_FILTERS.map((option) => {
             const active = option.value === status;
             return (
@@ -97,8 +101,8 @@ export function IdeaToolbar({
                 type="button"
                 onClick={() => onStatusChange(option.value)}
                 aria-pressed={active}
-                className={`relative px-1.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
-                  active ? "text-accent" : "text-faint hover:text-fg"
+                className={`relative px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
+                  active ? "bg-panel text-accent" : "text-faint hover:text-fg"
                 }`}
               >
                 {option.label}
@@ -106,7 +110,7 @@ export function IdeaToolbar({
                   <motion.span
                     layoutId="idea-status-filter"
                     aria-hidden
-                    className="absolute inset-x-1 -bottom-[3px] h-px bg-accent"
+                    className="absolute inset-x-2 -bottom-[1px] h-px bg-accent"
                     transition={{ duration: reduce ? 0 : 0.18, ease: [0.22, 1, 0.36, 1] }}
                   />
                 ) : null}
