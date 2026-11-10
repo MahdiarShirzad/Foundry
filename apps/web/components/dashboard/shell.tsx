@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
+import LogoutButton from "@/components/auth/logout-button";
 import { STAGES } from "@/components/site/data";
 import { stageSlug } from "@/lib/dashboard/snapshot";
 
@@ -570,6 +571,8 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                 <span aria-hidden className="size-1.5 bg-accent" />
                 Demo data
               </Link>
+
+              <LogoutButton />
 
               <AccountMenu />
             </div>
