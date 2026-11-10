@@ -26,6 +26,10 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }, AppService],
+  providers: [
+    { provide: APP_GUARD, useClass: ThrottlerGuard },
+    { provide: APP_GUARD, useClass: GlobalAuthGuard },
+    AppService,
+  ],
 })
 export class AppModule {}

@@ -6,7 +6,7 @@ import { Resend } from 'resend';
 export class EmailSenderService {
   private readonly logger = new Logger(EmailSenderService.name);
   private readonly resend: Resend | null;
-  private readonly from = 'OpsDesk <onboarding@resend.dev>';
+  private readonly from = 'Foundry <onboarding@resend.dev>';
 
   constructor(private readonly config: ConfigService) {
     const apiKey = this.config.get<string>('RESEND_API_KEY');
@@ -26,7 +26,7 @@ export class EmailSenderService {
     const { error } = await this.resend.emails.send({
       from: this.from,
       to: email,
-      subject: 'Your OpsDesk verification code',
+      subject: 'Your Foundry verification code',
       html: `<p>Your verification code is: <strong>${code}</strong></p><p>Expires in 10 minutes.</p>`,
     });
 
@@ -43,7 +43,7 @@ export class EmailSenderService {
     const { error } = await this.resend.emails.send({
       from: this.from,
       to: email,
-      subject: 'Reset your OpsDesk password',
+      subject: 'Reset your Foundry password',
       html: `<p><a href="${link}">Click here to reset your password</a></p><p>Expires in 30 minutes.</p>`,
     });
 
