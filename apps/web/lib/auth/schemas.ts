@@ -36,7 +36,11 @@ export const registerSchema = z
     email: emailField,
     password: newPasswordField,
     confirmation: z.string().min(1, "Please confirm your password."),
-    accepted: z.literal(true, { message: "You must accept the terms." }),
+    // boolean (not z.literal(true)) so the form can start it at `false`
+    // instead of `undefined`, which React would treat as uncontrolled.
+    accepted: z
+      .boolean()
+      .refine((value) => value, "You must accept the terms."),
   })
   .refine((d) => d.password === d.confirmation, {
     message: "Passwords do not match.",

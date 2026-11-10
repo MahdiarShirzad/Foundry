@@ -33,6 +33,7 @@ export default function RegisterForm({
       email: initialEmail,
       password: "",
       confirmation: "",
+      accepted: false,
     },
   });
 
