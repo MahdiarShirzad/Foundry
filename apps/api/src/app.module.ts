@@ -9,6 +9,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { APP_GUARD } from '@nestjs/core';
 import { GlobalAuthGuard } from './auth/global-auth.guard';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { WorkspaceModule } from './workspace/workspace.module';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -24,6 +25,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     HealthModule,
     PrismaModule,
     AuthModule,
+    WorkspaceModule,
   ],
   controllers: [AppController],
   providers: [
