@@ -10,6 +10,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { GlobalAuthGuard } from './auth/global-auth.guard';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { WorkspaceModule } from './workspace/workspace.module';
+import { ProductModule } from './product/product.module';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -26,6 +27,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     PrismaModule,
     AuthModule,
     WorkspaceModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [
