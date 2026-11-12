@@ -8,7 +8,9 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import LogoutButton from "@/components/auth/logout-button";
 import { STAGES } from "@/components/site/data";
+import { useSession } from "@/lib/auth/use-session";
 import { stageSlug } from "@/lib/dashboard/snapshot";
+import { useWorkspace } from "@/lib/workspace/use-workspace";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -136,6 +138,16 @@ const GROUPS: NavGroup[] = [
 
 /* ------------------------------------------------------------------ sidebar */
 
+/** First letters of up to two words, e.g. "Acme Inc" → "AI". */
+function initialsFor(name: string): string {
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  if (words.length === 0) return "—";
+  const [first, second] = words;
+  return second
+    ? `${first[0]}${second[0]}`.toUpperCase()
+    : first.slice(0, 2).toUpperCase();
+}
+
 function SidebarContent({
   collapsed,
   onNavigate,
@@ -144,6 +156,15 @@ function SidebarContent({
   onNavigate?: () => void;
 }) {
   const pathname = usePathname();
+  const { data: workspace, isPending } = useWorkspace();
+  const workspaceName = workspace?.name ?? null;
+  const session = useSession();
+  const sessionEmail = session.status === "authenticated" ? session.session.email : null;
+  // Session has no name field — fall back to the email address.
+  const sessionName = sessionEmail ?? null;
+  const sessionInitials = sessionEmail ? sessionEmail.slice(0, 2).toUpperCase() : null;
+  // Workspace API exposes no member role yet — hardcode the owner role for now.
+  const sessionRole = "WORKSPACE OWNER";
 
   return (
     <div className="flex h-full flex-col">
@@ -177,10 +198,16 @@ function SidebarContent({
               aria-hidden
               className="flex size-8 shrink-0 items-center justify-center bg-gradient-to-br from-mint to-accent font-mono text-[10px] tracking-[0.08em] text-ink"
             >
-              HL
+              {isPending ? "…" : workspaceName ? initialsFor(workspaceName) : "—"}
             </span>
             <span className="min-w-0">
-              <span className="block truncate text-[12.5px] font-medium text-fg">Helio Labs</span>
+              <span className="block truncate text-[12.5px] font-medium text-fg">
+                {isPending ? (
+                  <span aria-hidden className="inline-block h-3 w-24 animate-pulse bg-line" />
+                ) : (
+                  workspaceName ?? "No workspace"
+                )}
+              </span>
               <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
                 workspace
               </span>
@@ -252,12 +279,18 @@ function SidebarContent({
         ) : (
           <div className="flex items-center gap-3 px-2 py-1">
             <span className="flex size-8 shrink-0 items-center justify-center border border-line-2 bg-mint-tint/40 font-mono text-[10px] tracking-[0.04em] text-accent">
-              MH
+              {session.status === "loading" ? "" : (sessionInitials ?? "—")}
             </span>
             <div className="min-w-0">
-              <p className="truncate text-[12px] font-medium text-fg">Mahdyar</p>
+              <p className="truncate text-[12px] font-medium text-fg">
+                {session.status === "loading" ? (
+                  <span aria-hidden className="inline-block h-3 w-28 animate-pulse bg-line" />
+                ) : (
+                  (sessionName ?? "")
+                )}
+              </p>
               <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
-                workspace owner
+                {session.status === "loading" ? "" : sessionName ? sessionRole : ""}
               </p>
             </div>
           </div>
@@ -390,6 +423,10 @@ function AccountMenu() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const session = useSession();
+  const sessionEmail = session.status === "authenticated" ? session.session.email : null;
+  // Session has no name field — fall back to the email address.
+  const sessionInitials = sessionEmail ? sessionEmail.slice(0, 2).toUpperCase() : null;
 
   useEffect(() => {
     if (!open) return;
@@ -421,7 +458,7 @@ function AccountMenu() {
         aria-label="Account menu"
         className="flex size-9 items-center justify-center border border-line bg-panel font-mono text-[10px] tracking-[0.06em] text-fg transition-colors hover:border-accent hover:text-accent"
       >
-        MH
+        {session.status === "loading" ? "" : (sessionInitials ?? "—")}
       </button>
       <AnimatePresence>
         {open ? (
@@ -435,9 +472,19 @@ function AccountMenu() {
             className="absolute right-0 top-11 z-40 w-60 border border-line bg-bg shadow-[var(--elevation-popover)]"
           >
             <div className="border-b border-line px-4 py-3">
-              <p className="text-[12.5px] text-fg">Mahdyar</p>
+              <p className="text-[12.5px] text-fg">
+                {session.status === "loading" ? (
+                  <span aria-hidden className="inline-block h-3 w-32 animate-pulse bg-line" />
+                ) : (
+                  (sessionEmail ?? "")
+                )}
+              </p>
               <p className="font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint">
-                signed in
+                {session.status === "loading"
+                  ? ""
+                  : session.status === "authenticated"
+                    ? "signed in"
+                    : "not signed in"}
               </p>
             </div>
             {[

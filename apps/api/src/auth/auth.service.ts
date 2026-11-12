@@ -70,6 +70,29 @@ export class AuthService {
       throw error;
     }
 
+    // The account already exists at this point, so a workspace failure must
+    // not undo registration — log it and move on.
+    try {
+      const localPart = email.split('@')[0]?.toLowerCase() ?? '';
+      const slugBase =
+        localPart.replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') ||
+        'workspace';
+      const suffix = Array.from(
+        { length: 4 },
+        () => 'abcdefghijklmnopqrstuvwxyz0123456789'[randomInt(36)],
+      ).join('');
+
+      await this.prisma.workspace.create({
+        data: {
+          name: 'My Workspace',
+          slug: `${slugBase}-${suffix}`,
+          members: { create: { userId: user.id, role: 'owner' } },
+        },
+      });
+    } catch (error) {
+      console.error('failed to create workspace for new user', error);
+    }
+
     await this.createVerificationCode(user.id, user.email);
     return user;
   }

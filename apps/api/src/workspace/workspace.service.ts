@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class WorkspaceService {
   async update(newName: string, userId: string) {
     const workspace = await this.findByUserId(userId);
     if (!workspace) {
-      throw new Error('Workspace not found for the user');
+      throw new NotFoundException('Workspace not found for the user');
     }
 
     return this.prisma.workspace.update({
