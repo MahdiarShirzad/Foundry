@@ -97,7 +97,7 @@ function respond(
   return res;
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const cookie = request.headers.get("cookie") ?? "";
 

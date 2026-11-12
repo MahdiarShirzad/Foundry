@@ -10,6 +10,7 @@ import LogoutButton from "@/components/auth/logout-button";
 import { STAGES } from "@/components/site/data";
 import { useSession } from "@/lib/auth/use-session";
 import { stageSlug } from "@/lib/dashboard/snapshot";
+import { useHydrated } from "@/lib/use-hydrated";
 import { useWorkspace } from "@/lib/workspace/use-workspace";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -157,6 +158,10 @@ function SidebarContent({
 }) {
   const pathname = usePathname();
   const { data: workspace, isPending } = useWorkspace();
+  const hydrated = useHydrated();
+  // Until hydration finishes the server rendered the pending state, so keep
+  // showing it even if the client cache already holds a workspace.
+  const pending = !hydrated || isPending;
   const workspaceName = workspace?.name ?? null;
   const session = useSession();
   const sessionEmail = session.status === "authenticated" ? session.session.email : null;
@@ -198,11 +203,11 @@ function SidebarContent({
               aria-hidden
               className="flex size-8 shrink-0 items-center justify-center bg-gradient-to-br from-mint to-accent font-mono text-[10px] tracking-[0.08em] text-ink"
             >
-              {isPending ? "…" : workspaceName ? initialsFor(workspaceName) : "—"}
+              {pending ? "…" : workspaceName ? initialsFor(workspaceName) : "—"}
             </span>
             <span className="min-w-0">
               <span className="block truncate text-[12.5px] font-medium text-fg">
-                {isPending ? (
+                {pending ? (
                   <span aria-hidden className="inline-block h-3 w-24 animate-pulse bg-line" />
                 ) : (
                   workspaceName ?? "No workspace"

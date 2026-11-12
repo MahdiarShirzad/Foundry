@@ -17,6 +17,7 @@ import {
   type RangeKey,
 } from "@/lib/dashboard/snapshot";
 import { formatShortDate } from "@/lib/dashboard/types";
+import { useHydrated } from "@/lib/use-hydrated";
 import { useWorkspace } from "@/lib/workspace/use-workspace";
 
 import ActivityHeatmap from "./activity-heatmap";
@@ -34,6 +35,7 @@ export default function DashboardOverview() {
   const [compare, setCompare] = useState(false);
   const [stage, setStage] = useState<string | null>(null);
   const { data: workspace } = useWorkspace();
+  const hydrated = useHydrated();
 
   const dataset = RANGE_DATA[range];
   const kpis = KPI_BY_RANGE[range];
@@ -67,8 +69,8 @@ export default function DashboardOverview() {
               Cycle overview
             </h1>
             <p className="mt-3 max-w-[56ch] text-[13px] leading-relaxed text-muted">
-              {workspace?.name ?? "Your workspace"} · {ATTENTION.length} initiatives need a
-              decision across the eight stages.
+              {hydrated && workspace ? workspace.name : "Your workspace"} · {ATTENTION.length}{" "}
+              initiatives need a decision across the eight stages.
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-1.5">
               <span className="border border-line bg-bg/60 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-faint">

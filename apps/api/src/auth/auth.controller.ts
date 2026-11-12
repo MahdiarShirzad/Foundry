@@ -28,7 +28,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-// The refresh cookie has to reach the web app's middleware, which is what
+// The refresh cookie has to reach the web app's proxy, which is what
 // rotates an expired access token, so it is scoped to the whole host rather
 // than to /auth. Earlier builds scoped it to /auth and left the stale cookie
 // behind; every write clears that path too.
