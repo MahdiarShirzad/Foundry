@@ -129,8 +129,8 @@ export class AuthController {
   @ApiOperation({ summary: 'Get current session' })
   @ApiResponse({ status: 200, description: 'Current session info' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
-  session(@Req() req: Request & { user?: { id: string; email: string } }) {
-    return { userId: req.user?.id, email: req.user?.email };
+  session(@Req() req: Request) {
+    return { userId: req.user?.userId, email: req.user?.email };
   }
 
   @Public()
