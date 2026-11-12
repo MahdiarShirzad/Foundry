@@ -47,3 +47,8 @@ export type EmailVerificationCode = Prisma.EmailVerificationCodeModel
  * 
  */
 export type PasswordResetToken = Prisma.PasswordResetTokenModel
+/**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel

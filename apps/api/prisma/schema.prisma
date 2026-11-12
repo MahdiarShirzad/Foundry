@@ -51,6 +51,7 @@ model Workspace {
   updatedAt DateTime          @updatedAt
 
   members   WorkspaceMember[]
+  product Product[]
 }
 
 model WorkspaceMember {
@@ -89,4 +90,18 @@ model PasswordResetToken {
   createdAt DateTime  @default(now())
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@index([userId])
+}
+
+model Product{
+  id String @id @default(uuid())
+  workspaceId String 
+  name String
+  slug String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references:[id], onDelete:Cascade)
+
+  @@unique([workspaceId, slug])
+  @@index([workspaceId])
 }
