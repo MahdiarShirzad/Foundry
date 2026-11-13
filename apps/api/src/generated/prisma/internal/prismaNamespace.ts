@@ -403,7 +403,9 @@ export const ModelName = {
   WorkspaceMember: 'WorkspaceMember',
   EmailVerificationCode: 'EmailVerificationCode',
   PasswordResetToken: 'PasswordResetToken',
-  Product: 'Product'
+  Product: 'Product',
+  Idea: 'Idea',
+  IdeaNote: 'IdeaNote'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -419,7 +421,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "workspace" | "workspaceMember" | "emailVerificationCode" | "passwordResetToken" | "product"
+    modelProps: "user" | "session" | "workspace" | "workspaceMember" | "emailVerificationCode" | "passwordResetToken" | "product" | "idea" | "ideaNote"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -941,6 +943,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Idea: {
+      payload: Prisma.$IdeaPayload<ExtArgs>
+      fields: Prisma.IdeaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.IdeaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.IdeaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaPayload>
+        }
+        findFirst: {
+          args: Prisma.IdeaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.IdeaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaPayload>
+        }
+        findMany: {
+          args: Prisma.IdeaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaPayload>[]
+        }
+        create: {
+          args: Prisma.IdeaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaPayload>
+        }
+        createMany: {
+          args: Prisma.IdeaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.IdeaCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaPayload>[]
+        }
+        delete: {
+          args: Prisma.IdeaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaPayload>
+        }
+        update: {
+          args: Prisma.IdeaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaPayload>
+        }
+        deleteMany: {
+          args: Prisma.IdeaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.IdeaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.IdeaUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaPayload>[]
+        }
+        upsert: {
+          args: Prisma.IdeaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaPayload>
+        }
+        aggregate: {
+          args: Prisma.IdeaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateIdea>
+        }
+        groupBy: {
+          args: Prisma.IdeaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IdeaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.IdeaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IdeaCountAggregateOutputType> | number
+        }
+      }
+    }
+    IdeaNote: {
+      payload: Prisma.$IdeaNotePayload<ExtArgs>
+      fields: Prisma.IdeaNoteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.IdeaNoteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaNotePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.IdeaNoteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaNotePayload>
+        }
+        findFirst: {
+          args: Prisma.IdeaNoteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaNotePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.IdeaNoteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaNotePayload>
+        }
+        findMany: {
+          args: Prisma.IdeaNoteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaNotePayload>[]
+        }
+        create: {
+          args: Prisma.IdeaNoteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaNotePayload>
+        }
+        createMany: {
+          args: Prisma.IdeaNoteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.IdeaNoteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaNotePayload>[]
+        }
+        delete: {
+          args: Prisma.IdeaNoteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaNotePayload>
+        }
+        update: {
+          args: Prisma.IdeaNoteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaNotePayload>
+        }
+        deleteMany: {
+          args: Prisma.IdeaNoteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.IdeaNoteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.IdeaNoteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaNotePayload>[]
+        }
+        upsert: {
+          args: Prisma.IdeaNoteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdeaNotePayload>
+        }
+        aggregate: {
+          args: Prisma.IdeaNoteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateIdeaNote>
+        }
+        groupBy: {
+          args: Prisma.IdeaNoteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IdeaNoteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.IdeaNoteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IdeaNoteCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1063,6 +1213,41 @@ export const ProductScalarFieldEnum = {
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
 
 
+export const IdeaScalarFieldEnum = {
+  id: 'id',
+  workspaceId: 'workspaceId',
+  productId: 'productId',
+  ref: 'ref',
+  name: 'name',
+  headline: 'headline',
+  summary: 'summary',
+  problem: 'problem',
+  audience: 'audience',
+  category: 'category',
+  tags: 'tags',
+  status: 'status',
+  source: 'source',
+  context: 'context',
+  openQuestions: 'openQuestions',
+  capturedAt: 'capturedAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IdeaScalarFieldEnum = (typeof IdeaScalarFieldEnum)[keyof typeof IdeaScalarFieldEnum]
+
+
+export const IdeaNoteScalarFieldEnum = {
+  id: 'id',
+  ideaId: 'ideaId',
+  author: 'author',
+  initials: 'initials',
+  date: 'date',
+  body: 'body'
+} as const
+
+export type IdeaNoteScalarFieldEnum = (typeof IdeaNoteScalarFieldEnum)[keyof typeof IdeaNoteScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1118,6 +1303,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'IdeaStatus'
+ */
+export type EnumIdeaStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IdeaStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'IdeaStatus[]'
+ */
+export type ListEnumIdeaStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IdeaStatus[]'>
     
 
 
@@ -1292,6 +1491,8 @@ export type GlobalOmitConfig = {
   emailVerificationCode?: Prisma.EmailVerificationCodeOmit
   passwordResetToken?: Prisma.PasswordResetTokenOmit
   product?: Prisma.ProductOmit
+  idea?: Prisma.IdeaOmit
+  ideaNote?: Prisma.IdeaNoteOmit
 }
 
 /* Types for Logging */

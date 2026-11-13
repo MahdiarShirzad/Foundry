@@ -57,7 +57,9 @@ export const ModelName = {
   WorkspaceMember: 'WorkspaceMember',
   EmailVerificationCode: 'EmailVerificationCode',
   PasswordResetToken: 'PasswordResetToken',
-  Product: 'Product'
+  Product: 'Product',
+  Idea: 'Idea',
+  IdeaNote: 'IdeaNote'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -157,6 +159,41 @@ export const ProductScalarFieldEnum = {
 } as const
 
 export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const IdeaScalarFieldEnum = {
+  id: 'id',
+  workspaceId: 'workspaceId',
+  productId: 'productId',
+  ref: 'ref',
+  name: 'name',
+  headline: 'headline',
+  summary: 'summary',
+  problem: 'problem',
+  audience: 'audience',
+  category: 'category',
+  tags: 'tags',
+  status: 'status',
+  source: 'source',
+  context: 'context',
+  openQuestions: 'openQuestions',
+  capturedAt: 'capturedAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IdeaScalarFieldEnum = (typeof IdeaScalarFieldEnum)[keyof typeof IdeaScalarFieldEnum]
+
+
+export const IdeaNoteScalarFieldEnum = {
+  id: 'id',
+  ideaId: 'ideaId',
+  author: 'author',
+  initials: 'initials',
+  date: 'date',
+  body: 'body'
+} as const
+
+export type IdeaNoteScalarFieldEnum = (typeof IdeaNoteScalarFieldEnum)[keyof typeof IdeaNoteScalarFieldEnum]
 
 
 export const SortOrder = {

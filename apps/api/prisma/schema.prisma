@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -51,7 +46,8 @@ model Workspace {
   updatedAt DateTime          @updatedAt
 
   members   WorkspaceMember[]
-  product Product[]
+  product   Product[]
+  ideas     Idea[]
 }
 
 model WorkspaceMember {
@@ -101,7 +97,48 @@ model Product{
   updatedAt DateTime @updatedAt
 
   workspace Workspace @relation(fields: [workspaceId], references:[id], onDelete:Cascade)
+  ideas     Idea[]
 
   @@unique([workspaceId, slug])
   @@index([workspaceId])
+}
+
+model Idea{
+  id String @id @default(cuid())
+  workspaceId String
+  productId String
+  ref String
+  name String
+  headline String?
+  summary String?
+  problem String?
+  audience String?
+  category String?
+  tags String[]
+  status IdeaStatus @default(INBOX)
+  source String?
+  context String?
+  openQuestions String[]
+  capturedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  notes IdeaNote[]
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+  product   Product   @relation(fields: [productId], references: [id])
+}
+
+model IdeaNote {
+  id String @id @default(cuid())
+  ideaId String
+  author String
+  initials String
+  date DateTime @default(now())
+  body String
+  idea Idea @relation(fields:[ideaId],references:[id])
+}
+
+enum IdeaStatus{
+  INBOX
+  EXPLORING
+  SHORTLISTED
 }

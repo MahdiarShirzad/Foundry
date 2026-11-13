@@ -52,3 +52,13 @@ export type PasswordResetToken = Prisma.PasswordResetTokenModel
  * 
  */
 export type Product = Prisma.ProductModel
+/**
+ * Model Idea
+ * 
+ */
+export type Idea = Prisma.IdeaModel
+/**
+ * Model IdeaNote
+ * 
+ */
+export type IdeaNote = Prisma.IdeaNoteModel

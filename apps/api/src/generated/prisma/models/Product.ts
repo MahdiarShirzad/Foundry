@@ -191,6 +191,7 @@ export type ProductWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   workspace?: Prisma.XOR<Prisma.WorkspaceScalarRelationFilter, Prisma.WorkspaceWhereInput>
+  ideas?: Prisma.IdeaListRelationFilter
 }
 
 export type ProductOrderByWithRelationInput = {
@@ -201,6 +202,7 @@ export type ProductOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   workspace?: Prisma.WorkspaceOrderByWithRelationInput
+  ideas?: Prisma.IdeaOrderByRelationAggregateInput
 }
 
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -215,6 +217,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   workspace?: Prisma.XOR<Prisma.WorkspaceScalarRelationFilter, Prisma.WorkspaceWhereInput>
+  ideas?: Prisma.IdeaListRelationFilter
 }, "id" | "workspaceId_slug">
 
 export type ProductOrderByWithAggregationInput = {
@@ -248,6 +251,7 @@ export type ProductCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   workspace: Prisma.WorkspaceCreateNestedOneWithoutProductInput
+  ideas?: Prisma.IdeaCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateInput = {
@@ -257,6 +261,7 @@ export type ProductUncheckedCreateInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  ideas?: Prisma.IdeaUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductUpdateInput = {
@@ -266,6 +271,7 @@ export type ProductUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutProductNestedInput
+  ideas?: Prisma.IdeaUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateInput = {
@@ -275,6 +281,7 @@ export type ProductUncheckedUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ideas?: Prisma.IdeaUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyInput = {
@@ -345,6 +352,11 @@ export type ProductMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type ProductScalarRelationFilter = {
+  is?: Prisma.ProductWhereInput
+  isNot?: Prisma.ProductWhereInput
+}
+
 export type ProductCreateNestedManyWithoutWorkspaceInput = {
   create?: Prisma.XOR<Prisma.ProductCreateWithoutWorkspaceInput, Prisma.ProductUncheckedCreateWithoutWorkspaceInput> | Prisma.ProductCreateWithoutWorkspaceInput[] | Prisma.ProductUncheckedCreateWithoutWorkspaceInput[]
   connectOrCreate?: Prisma.ProductCreateOrConnectWithoutWorkspaceInput | Prisma.ProductCreateOrConnectWithoutWorkspaceInput[]
@@ -387,12 +399,27 @@ export type ProductUncheckedUpdateManyWithoutWorkspaceNestedInput = {
   deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
 }
 
+export type ProductCreateNestedOneWithoutIdeasInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutIdeasInput, Prisma.ProductUncheckedCreateWithoutIdeasInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutIdeasInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutIdeasNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutIdeasInput, Prisma.ProductUncheckedCreateWithoutIdeasInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutIdeasInput
+  upsert?: Prisma.ProductUpsertWithoutIdeasInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutIdeasInput, Prisma.ProductUpdateWithoutIdeasInput>, Prisma.ProductUncheckedUpdateWithoutIdeasInput>
+}
+
 export type ProductCreateWithoutWorkspaceInput = {
   id?: string
   name: string
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  ideas?: Prisma.IdeaCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutWorkspaceInput = {
@@ -401,6 +428,7 @@ export type ProductUncheckedCreateWithoutWorkspaceInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  ideas?: Prisma.IdeaUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutWorkspaceInput = {
@@ -441,6 +469,58 @@ export type ProductScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
 }
 
+export type ProductCreateWithoutIdeasInput = {
+  id?: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  workspace: Prisma.WorkspaceCreateNestedOneWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutIdeasInput = {
+  id?: string
+  workspaceId: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ProductCreateOrConnectWithoutIdeasInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutIdeasInput, Prisma.ProductUncheckedCreateWithoutIdeasInput>
+}
+
+export type ProductUpsertWithoutIdeasInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutIdeasInput, Prisma.ProductUncheckedUpdateWithoutIdeasInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutIdeasInput, Prisma.ProductUncheckedCreateWithoutIdeasInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutIdeasInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutIdeasInput, Prisma.ProductUncheckedUpdateWithoutIdeasInput>
+}
+
+export type ProductUpdateWithoutIdeasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutIdeasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workspaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type ProductCreateManyWorkspaceInput = {
   id?: string
   name: string
@@ -455,6 +535,7 @@ export type ProductUpdateWithoutWorkspaceInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ideas?: Prisma.IdeaUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutWorkspaceInput = {
@@ -463,6 +544,7 @@ export type ProductUncheckedUpdateWithoutWorkspaceInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ideas?: Prisma.IdeaUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutWorkspaceInput = {
@@ -474,6 +556,35 @@ export type ProductUncheckedUpdateManyWithoutWorkspaceInput = {
 }
 
 
+/**
+ * Count Type ProductCountOutputType
+ */
+
+export type ProductCountOutputType = {
+  ideas: number
+}
+
+export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  ideas?: boolean | ProductCountOutputTypeCountIdeasArgs
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductCountOutputType
+   */
+  select?: Prisma.ProductCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountIdeasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.IdeaWhereInput
+}
+
 
 export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -483,6 +594,8 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   updatedAt?: boolean
   workspace?: boolean | Prisma.WorkspaceDefaultArgs<ExtArgs>
+  ideas?: boolean | Prisma.Product$ideasArgs<ExtArgs>
+  _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -517,6 +630,8 @@ export type ProductSelectScalar = {
 export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "workspaceId" | "name" | "slug" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   workspace?: boolean | Prisma.WorkspaceDefaultArgs<ExtArgs>
+  ideas?: boolean | Prisma.Product$ideasArgs<ExtArgs>
+  _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   workspace?: boolean | Prisma.WorkspaceDefaultArgs<ExtArgs>
@@ -529,6 +644,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Product"
   objects: {
     workspace: Prisma.$WorkspacePayload<ExtArgs>
+    ideas: Prisma.$IdeaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -932,6 +1048,7 @@ readonly fields: ProductFieldRefs;
 export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   workspace<T extends Prisma.WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WorkspaceDefaultArgs<ExtArgs>>): Prisma.Prisma__WorkspaceClient<runtime.Types.Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  ideas<T extends Prisma.Product$ideasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$ideasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IdeaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1365,6 +1482,30 @@ export type ProductDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Products to delete.
    */
   limit?: number
+}
+
+/**
+ * Product.ideas
+ */
+export type Product$ideasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Idea
+   */
+  select?: Prisma.IdeaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Idea
+   */
+  omit?: Prisma.IdeaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.IdeaInclude<ExtArgs> | null
+  where?: Prisma.IdeaWhereInput
+  orderBy?: Prisma.IdeaOrderByWithRelationInput | Prisma.IdeaOrderByWithRelationInput[]
+  cursor?: Prisma.IdeaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.IdeaScalarFieldEnum | Prisma.IdeaScalarFieldEnum[]
 }
 
 /**
