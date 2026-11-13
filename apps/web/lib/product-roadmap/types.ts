@@ -17,7 +17,18 @@ export const ROADMAP_PRODUCTS = [
   },
 ] as const;
 
-export type RoadmapProduct = (typeof ROADMAP_PRODUCTS)[number];
+/**
+ * A product selected in the roadmap workspace. Products come from the products
+ * API, which stores a name only, so planning metadata is carried by the
+ * workspace and shown as unset when there is none.
+ */
+export type RoadmapProduct = {
+  id: string;
+  name: string;
+  ref: string;
+  direction: string;
+  horizon: string;
+};
 
 export const PLANNING_PERIODS = ["Now", "Next", "Later"] as const;
 export type PlanningPeriod = (typeof PLANNING_PERIODS)[number];

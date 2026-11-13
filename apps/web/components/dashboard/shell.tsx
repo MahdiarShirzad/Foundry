@@ -2,14 +2,24 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type FormEvent,
+  type ReactNode,
+} from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import LogoutButton from "@/components/auth/logout-button";
 import { STAGES } from "@/components/site/data";
+import { Button } from "@/components/ui/button";
 import { useSession } from "@/lib/auth/use-session";
 import { stageSlug } from "@/lib/dashboard/snapshot";
+import { useCreateProduct, useProducts } from "@/lib/product/use-products";
 import { useHydrated } from "@/lib/use-hydrated";
 import { useWorkspace } from "@/lib/workspace/use-workspace";
 
@@ -149,6 +159,180 @@ function initialsFor(name: string): string {
     : first.slice(0, 2).toUpperCase();
 }
 
+/** Shape returned by `GET /products`. */
+type Product = {
+  id: string;
+  name: string;
+  slug?: string;
+};
+
+/* --------------------------------------------------------- product switcher */
+
+function ProductSwitcherFallback() {
+  return (
+    <div className="border-b border-line px-4 py-4" aria-hidden>
+      <span className="block h-2 w-16 animate-pulse bg-line" />
+      <div className="mt-3 space-y-1.5">
+        {[0, 1, 2].map((row) => (
+          <span key={row} className="block h-7 w-full animate-pulse bg-line/80" />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ProductSwitcher({ onNavigate }: { onNavigate?: () => void }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const activeId = searchParams.get("product");
+
+  const { data, isPending, isError } = useProducts();
+  const createProduct = useCreateProduct();
+
+  const [creating, setCreating] = useState(false);
+  const [name, setName] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  // `getAllProducts` is untyped at the client wrapper, so narrow here.
+  const products = (data as Product[] | undefined) ?? [];
+
+  function selectProduct(productId: string) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("product", productId);
+    router.push(`${pathname}?${params.toString()}`);
+    onNavigate?.();
+  }
+
+  function closeCreate() {
+    setCreating(false);
+    setName("");
+    setError(null);
+  }
+
+  function handleCreate(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const trimmed = name.trim();
+    if (!trimmed || createProduct.isPending) return;
+
+    setError(null);
+    createProduct.mutate(trimmed, {
+      onSuccess: (product) => {
+        closeCreate();
+        const created = product as Product | undefined;
+        if (created?.id) selectProduct(created.id);
+      },
+      onError: (mutationError) => {
+        setError(
+          mutationError instanceof Error
+            ? mutationError.message
+            : "Could not create product",
+        );
+      },
+    });
+  }
+
+  return (
+    <div className="border-b border-line px-4 py-4">
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="font-mono text-[9px] uppercase tracking-[0.22em] text-faint/90">
+          Product
+        </h2>
+        {!creating ? (
+          <button
+            type="button"
+            onClick={() => setCreating(true)}
+            className="font-mono text-[9px] uppercase tracking-[0.14em] text-accent transition-colors hover:text-fg"
+          >
+            + New product
+          </button>
+        ) : null}
+      </div>
+
+      {creating ? (
+        <form onSubmit={handleCreate} className="mt-2.5 space-y-2">
+          <input
+            autoFocus
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Escape") closeCreate();
+            }}
+            placeholder="Product name"
+            aria-label="New product name"
+            disabled={createProduct.isPending}
+            className="h-8 w-full border border-line bg-bg/40 px-2.5 text-[12px] text-fg outline-none transition-colors placeholder:text-faint/80 focus:border-accent disabled:opacity-60"
+          />
+          {error ? (
+            <p className="text-[10.5px] leading-snug text-danger">{error}</p>
+          ) : null}
+          <div className="flex items-center gap-1.5">
+            <Button
+              type="submit"
+              variant="primary"
+              size="xs"
+              disabled={!name.trim() || createProduct.isPending}
+            >
+              {createProduct.isPending ? "Adding…" : "Add"}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="xs"
+              onClick={closeCreate}
+              disabled={createProduct.isPending}
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      ) : isPending ? (
+        <div aria-hidden className="mt-3 space-y-1.5">
+          {[0, 1, 2].map((row) => (
+            <span key={row} className="block h-7 w-full animate-pulse bg-line/80" />
+          ))}
+        </div>
+      ) : isError ? (
+        <p className="mt-3 border border-line px-2.5 py-2 text-[11px] leading-snug text-faint">
+          Could not load products.
+        </p>
+      ) : products.length === 0 ? (
+        <p className="mt-3 border border-dashed border-line px-2.5 py-2 text-[11px] leading-snug text-faint">
+          No products yet — create one to get started
+        </p>
+      ) : (
+        <ul className="mt-2 space-y-0.5">
+          {products.map((product) => {
+            const active = product.id === activeId;
+            return (
+              <li key={product.id}>
+                <button
+                  type="button"
+                  onClick={() => selectProduct(product.id)}
+                  aria-current={active ? "true" : undefined}
+                  className={`group relative flex w-full items-center gap-2 py-1.5 pl-3 pr-2 text-left text-[12px] transition-colors ${
+                    active
+                      ? "bg-mint-tint/50 font-medium text-accent"
+                      : "text-muted hover:bg-mint-tint/25 hover:text-fg"
+                  }`}
+                >
+                  {active ? (
+                    <span
+                      aria-hidden
+                      className="absolute inset-y-1 left-0 w-[2px] bg-accent"
+                    />
+                  ) : null}
+                  <span className="truncate">{product.name}</span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 function SidebarContent({
   collapsed,
   onNavigate,
@@ -219,6 +403,12 @@ function SidebarContent({
             </span>
           </div>
         </div>
+      ) : null}
+
+      {!collapsed ? (
+        <Suspense fallback={<ProductSwitcherFallback />}>
+          <ProductSwitcher onNavigate={onNavigate} />
+        </Suspense>
       ) : null}
 
       <nav aria-label="Dashboard" className="dashboard-scroll flex-1 overflow-y-auto py-4">

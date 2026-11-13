@@ -22,7 +22,10 @@ import type {
 } from "./types";
 import { ANALYTICS_PRODUCTS } from "./types";
 
-export const DEMO_ANALYTICS_PRODUCTS: AnalyticsProduct[] = [...ANALYTICS_PRODUCTS];
+/** The sample catalogue, keyed by the ids that carry predefined datasets. */
+export const DEMO_ANALYTICS_PRODUCTS: (typeof ANALYTICS_PRODUCTS)[number][] = [
+  ...ANALYTICS_PRODUCTS,
+];
 
 /* ------------------------------------------------------------------ series */
 

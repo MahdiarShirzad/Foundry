@@ -19,7 +19,20 @@ export const LAUNCH_PRODUCTS = [
   },
 ] as const;
 
-export type LaunchProduct = (typeof LAUNCH_PRODUCTS)[number];
+/**
+ * A product selected in the Launch Center. Only `id` and `name` come from the
+ * products API; launch metadata is carried by the workspace.
+ */
+export type LaunchProduct = {
+  id: string;
+  name: string;
+  ref: string;
+  summary: string;
+  /** ISO date of the planned launch, or null while none is scheduled. */
+  launchDate: string | null;
+  /** Launch phase, or "Not set" while the products API carries no phase. */
+  phase: string;
+};
 
 export const LAUNCH_PHASES = ["Preparation", "Pre-launch", "Launch Day", "Post-launch"] as const;
 export type LaunchPhase = (typeof LAUNCH_PHASES)[number];

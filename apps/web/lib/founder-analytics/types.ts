@@ -26,8 +26,19 @@ export const ANALYTICS_PRODUCTS = [
   },
 ] as const;
 
-export type AnalyticsProduct = (typeof ANALYTICS_PRODUCTS)[number];
-export type AnalyticsProductId = AnalyticsProduct["id"];
+/**
+ * A product selected in Founder Analytics. Only `id` and `name` come from the
+ * products API; the rest of the profile is workspace copy.
+ */
+export type AnalyticsProduct = {
+  id: string;
+  name: string;
+  ref: string;
+  summary: string;
+};
+
+/** Products that ship a predefined sample dataset. */
+export type AnalyticsProductId = (typeof ANALYTICS_PRODUCTS)[number]["id"];
 
 /** Sample windows, expressed in weeks of predefined history. */
 export const ANALYTICS_RANGES = [4, 12, 26] as const;

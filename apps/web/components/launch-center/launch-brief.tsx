@@ -62,7 +62,7 @@ export function LaunchBrief({
             <div className="flex flex-wrap items-center gap-2">
               <LaunchPhaseBadge phase={product.phase} />
               <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-fg">
-                {product.launchDate}
+                {product.launchDate ?? "Not scheduled"}
               </span>
               <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
                 {channels.length} channel{channels.length === 1 ? "" : "s"}

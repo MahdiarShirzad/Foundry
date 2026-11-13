@@ -24,7 +24,16 @@ export const FEEDBACK_PRODUCTS = [
   },
 ] as const;
 
-export type FeedbackProduct = (typeof FEEDBACK_PRODUCTS)[number];
+/**
+ * A product selected in the Feedback Hub. Only `id` and `name` come from the
+ * products API; the rest of the profile is workspace copy.
+ */
+export type FeedbackProduct = {
+  id: string;
+  name: string;
+  ref: string;
+  summary: string;
+};
 
 export const FEEDBACK_CATEGORIES = [
   "Bug Report",

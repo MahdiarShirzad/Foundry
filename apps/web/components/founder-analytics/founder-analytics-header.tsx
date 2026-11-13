@@ -6,7 +6,6 @@ import { RangeTabs } from "@/components/dashboard/panel";
 
 import { ANALYTICS_RANGES, type RangeKey } from "@/lib/founder-analytics/types";
 import type { AnalyticsProduct } from "@/lib/founder-analytics/types";
-import { DEMO_ANALYTICS_PRODUCTS } from "@/lib/founder-analytics/demo";
 
 import { SegmentedControl } from "./primitives";
 
@@ -14,6 +13,7 @@ export type HeaderView = "overview" | "analysis";
 
 export function FounderAnalyticsHeader({
   product,
+  products,
   onChangeProduct,
   range,
   onChangeRange,
@@ -23,6 +23,7 @@ export function FounderAnalyticsHeader({
   onExport,
 }: {
   product: AnalyticsProduct;
+  products: AnalyticsProduct[];
   onChangeProduct: (id: string) => void;
   range: RangeKey;
   onChangeRange: (range: RangeKey) => void;
@@ -46,7 +47,7 @@ export function FounderAnalyticsHeader({
             onChange={onChangeProduct}
             ariaLabel="Select product for analytics"
           >
-            {DEMO_ANALYTICS_PRODUCTS.map((entry) => (
+            {products.map((entry) => (
               <option key={entry.id} value={entry.id}>
                 {entry.name} · {entry.ref}
               </option>

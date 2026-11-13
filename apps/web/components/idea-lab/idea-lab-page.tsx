@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
@@ -27,8 +28,10 @@ const WORKSPACE_COLUMNS =
 
 export default function IdeaLabPage({
   categoryOptions,
+  productId,
 }: {
   categoryOptions?: string[];
+  productId?: string;
 }) {
   const reduce = useReducedMotion();
   const workspaceRef = useRef<HTMLDivElement>(null);
@@ -88,6 +91,7 @@ export default function IdeaLabPage({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: reduce ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}
       className="flex flex-col gap-4"
+      data-product-id={productId}
     >
       <IdeaLabHeader
         total={DEMO_IDEAS.length}
@@ -192,4 +196,14 @@ export default function IdeaLabPage({
       </AnimatePresence>
     </motion.div>
   );
+}
+
+/**
+ * Route entry for the Idea Lab. Reads the active product from the URL
+ * (`?product=<id>`) and threads it into the page. `useSearchParams` suspends
+ * during prerendering, so the route renders this behind a Suspense boundary.
+ */
+export function IdeaLabRoute({ categoryOptions }: { categoryOptions?: string[] }) {
+  const productId = useSearchParams().get("product") ?? undefined;
+  return <IdeaLabPage categoryOptions={categoryOptions} productId={productId} />;
 }

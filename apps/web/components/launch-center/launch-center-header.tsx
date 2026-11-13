@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Button, PlusIcon } from "@/components/ui/button";
 import { HeaderSelect, ModuleHeader } from "@/components/ui/primitives";
 
-import { DEMO_LAUNCH_PRODUCTS } from "@/lib/launch-center/demo";
 import type { LaunchProduct } from "@/lib/launch-center/types";
 
 import { AddCampaignDialog } from "./dialogs/add-campaign-dialog";
@@ -15,11 +14,11 @@ import { AddLaunchTaskDialog } from "./dialogs/add-launch-task-dialog";
 export function LaunchCenterHeader({
   product,
   onChangeProduct,
-  products = DEMO_LAUNCH_PRODUCTS,
+  products,
 }: {
   product: LaunchProduct;
   onChangeProduct: (id: string) => void;
-  products?: LaunchProduct[];
+  products: LaunchProduct[];
 }) {
   const [taskOpen, setTaskOpen] = useState(false);
   const [assetOpen, setAssetOpen] = useState(false);
@@ -37,7 +36,7 @@ export function LaunchCenterHeader({
             {product.phase}
           </span>,
           <span key="date" className="text-fg">
-            {product.launchDate}
+            {product.launchDate ?? "Not scheduled"}
           </span>,
           product.summary,
         ]}

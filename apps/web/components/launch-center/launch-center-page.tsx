@@ -5,16 +5,15 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import { StatePreview } from "@/components/ui/primitives";
 
+import { useProducts } from "@/lib/product/use-products";
 import {
   DEMO_CHECKLIST_ITEMS,
-  DEMO_LAUNCH_PRODUCTS,
   getChannelsForProduct,
   getChecklistItemsForProduct,
   getLaunchAssetsForProduct,
-  getLaunchProduct,
   getLaunchTasksForProduct,
 } from "@/lib/launch-center/demo";
-import type { LaunchSection } from "@/lib/launch-center/types";
+import type { LaunchProduct, LaunchSection } from "@/lib/launch-center/types";
 import { LaunchCenterHeader } from "./launch-center-header";
 import { LaunchBrief } from "./launch-brief";
 import { LaunchOverview } from "./launch-overview";
@@ -33,20 +32,59 @@ const STATE_OPTIONS = [
   { value: "error", label: "Error" },
 ] as const;
 
+/** Shape returned by `GET /products`. */
+type Product = {
+  id: string;
+  name: string;
+  slug?: string;
+};
+
+/**
+ * The products API stores a name only, so the launch plan metadata starts
+ * unset instead of borrowed from the demo catalogue.
+ */
+function toLaunchProduct(product: Product): LaunchProduct {
+  return {
+    id: product.id,
+    name: product.name,
+    ref: product.slug ?? product.id.slice(0, 8),
+    summary: "No launch summary yet.",
+    launchDate: null,
+    phase: "Not set",
+  };
+}
+
+function NoProducts() {
+  return (
+    <div className="border border-dashed border-line bg-panel px-5 py-10 text-center">
+      <p className="text-[13px] leading-relaxed text-muted">
+        No products yet — create one to get started
+      </p>
+    </div>
+  );
+}
+
 export default function LaunchCenterPage() {
   const reduce = useReducedMotion();
-  const [productId, setProductId] = useState<string>(DEMO_LAUNCH_PRODUCTS[0].id);
+  const { data, isPending } = useProducts();
+  const [productId, setProductId] = useState<string | null>(null);
   const [section, setSection] = useState<LaunchSection>("Overview");
   const [view, setView] = useState<"populated" | "loading" | "error">("populated");
   const [completedIds, setCompletedIds] = useState<Set<string>>(
     () => new Set(DEMO_CHECKLIST_ITEMS.filter((item) => item.completed).map((item) => item.id)),
   );
 
-  const product = getLaunchProduct(productId);
-  const tasks = useMemo(() => getLaunchTasksForProduct(productId), [productId]);
-  const assets = useMemo(() => getLaunchAssetsForProduct(productId), [productId]);
-  const channels = useMemo(() => getChannelsForProduct(productId), [productId]);
-  const checklist = useMemo(() => getChecklistItemsForProduct(productId), [productId]);
+  // `getAllProducts` is untyped at the client wrapper, so narrow here.
+  const products = useMemo(() => (data as Product[] | undefined) ?? [], [data]);
+  const productOptions = useMemo(() => products.map(toLaunchProduct), [products]);
+  const selected = products.find((entry) => entry.id === productId) ?? products[0] ?? null;
+  const product = selected ? toLaunchProduct(selected) : null;
+  const activeId = selected?.id ?? "";
+
+  const tasks = useMemo(() => getLaunchTasksForProduct(activeId), [activeId]);
+  const assets = useMemo(() => getLaunchAssetsForProduct(activeId), [activeId]);
+  const channels = useMemo(() => getChannelsForProduct(activeId), [activeId]);
+  const checklist = useMemo(() => getChecklistItemsForProduct(activeId), [activeId]);
   const checklistCompleted = checklist.filter((item) => completedIds.has(item.id)).length;
 
   function toggleChecklistItem(id: string) {
@@ -58,6 +96,30 @@ export default function LaunchCenterPage() {
     });
   }
 
+  if (isPending) {
+    return (
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col gap-4"
+      >
+        <LaunchCenterSkeleton />
+      </motion.div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col gap-4"
+      >
+        <NoProducts />
+      </motion.div>
+    );
+  }
+
   if (view === "loading") {
     return (
       <motion.div
@@ -65,7 +127,11 @@ export default function LaunchCenterPage() {
         animate={{ opacity: 1, y: 0 }}
         className="flex flex-col gap-4"
       >
-        <LaunchCenterHeader product={product} onChangeProduct={setProductId} />
+        <LaunchCenterHeader
+          product={product}
+          products={productOptions}
+          onChangeProduct={setProductId}
+        />
         <LaunchCenterSkeleton />
       </motion.div>
     );
@@ -78,7 +144,11 @@ export default function LaunchCenterPage() {
         animate={{ opacity: 1, y: 0 }}
         className="flex flex-col gap-4"
       >
-        <LaunchCenterHeader product={product} onChangeProduct={setProductId} />
+        <LaunchCenterHeader
+          product={product}
+          products={productOptions}
+          onChangeProduct={setProductId}
+        />
         <LaunchCenterErrorState onRetry={() => setView("populated")} />
         <StatePreview
           value={view}
@@ -96,7 +166,11 @@ export default function LaunchCenterPage() {
       transition={{ duration: reduce ? 0 : 0.28, ease: EASE }}
       className="flex flex-col gap-4"
     >
-      <LaunchCenterHeader product={product} onChangeProduct={setProductId} />
+      <LaunchCenterHeader
+        product={product}
+        products={productOptions}
+        onChangeProduct={setProductId}
+      />
 
       <LaunchOverview
         product={product}

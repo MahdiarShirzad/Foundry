@@ -8,6 +8,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import { useSession } from "@/lib/auth/use-session";
 import { authClient } from "@/lib/auth/client";
+import type { Session } from "@/lib/auth/contract";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -218,10 +219,14 @@ function DesktopActions({ session, pathname, onSignOut }: DesktopActionsProps) {
 
 // ─── Nav ─────────────────────────────────────────────────────────────────────
 
-export default function Nav() {
+export default function Nav({
+  initialSession,
+}: {
+  initialSession?: Session | null;
+} = {}) {
   const pathname = usePathname();
   const router = useRouter();
-  const session = useSession();
+  const session = useSession(initialSession);
   const reduce = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);

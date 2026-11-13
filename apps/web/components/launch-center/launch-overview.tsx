@@ -66,7 +66,7 @@ export function LaunchOverview({
             ? { label: "Early preparation", tone: "warning" }
             : { label: "Not started", tone: "muted" };
 
-  const days = daysUntil(product.launchDate);
+  const days = product.launchDate ? daysUntil(product.launchDate) : null;
   const nextChecklist = checklist.find((item) => !item.completed);
   const nextTask = tasks.find((task) => task.status !== "Completed");
   const nextAction = nextChecklist
@@ -90,7 +90,11 @@ export function LaunchOverview({
         <div className="flex flex-wrap items-center gap-2">
           <StatusBadge status={status.label} tone={status.tone} size="xs" />
           <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
-            {days >= 0 ? `T−${days} days` : `${Math.abs(days)} days past target`}
+            {days === null
+              ? "No date scheduled"
+              : days >= 0
+                ? `T−${days} days`
+                : `${Math.abs(days)} days past target`}
           </span>
         </div>
       </header>
@@ -164,7 +168,7 @@ export function LaunchOverview({
             {
               label: "Phase",
               value: product.phase,
-              hint: product.launchDate,
+              hint: product.launchDate ?? "Not scheduled",
               small: true,
             },
           ].map((item) => (

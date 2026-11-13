@@ -5,27 +5,26 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import {
   DEMO_FEEDBACK,
-  DEMO_FEEDBACK_PRODUCTS,
   DEMO_FEEDBACK_THEMES,
   DEMO_FEATURE_REQUESTS,
   feedbackStats,
   getFeedbackForProduct,
-  getFeedbackProduct,
   getProductAreasForProduct,
   getThemesForProduct,
   getFeatureRequestsForProduct,
 } from "@/lib/feedback-hub/demo";
+import { useProducts } from "@/lib/product/use-products";
 import type {
   FeedbackDraft,
   FeedbackItem,
   FeedbackPriority,
+  FeedbackProduct,
   FeedbackSection,
   FeedbackStatus,
   FeatureRequest,
   FeatureRequestStatus,
   Theme,
   ThemeImportance,
-  FeedbackProductId,
 } from "@/lib/feedback-hub/types";
 
 import { FeedbackHubHeader } from "./feedback-hub-header";
@@ -62,11 +61,39 @@ const EMPTY_SELECTION: Selection = {
 
 type View = "populated" | "loading" | "error";
 
+/** Shape returned by `GET /products`. */
+type Product = {
+  id: string;
+  name: string;
+  slug?: string;
+};
+
+/** The products API stores a name only; the rest of the hub profile is unset. */
+function toFeedbackProduct(product: Product): FeedbackProduct {
+  return {
+    id: product.id,
+    name: product.name,
+    ref: product.slug ?? product.id.slice(0, 8),
+    summary: "No product summary yet.",
+  };
+}
+
+function NoProducts() {
+  return (
+    <div className="border border-dashed border-line bg-panel px-5 py-10 text-center">
+      <p className="text-[13px] leading-relaxed text-muted">
+        No products yet — create one to get started
+      </p>
+    </div>
+  );
+}
+
 export default function FeedbackHubPage() {
   const reduce = useReducedMotion();
   const nextId = useRef(1);
+  const { data, isPending } = useProducts();
 
-  const [productId, setProductId] = useState<FeedbackProductId>(DEMO_FEEDBACK_PRODUCTS[0].id);
+  const [productId, setProductId] = useState<string | null>(null);
   const [section, setSection] = useState<FeedbackSection>("Inbox");
   const [view, setView] = useState<View>("populated");
   const [selection, setSelection] = useState<Selection>(EMPTY_SELECTION);
@@ -76,16 +103,22 @@ export default function FeedbackHubPage() {
   const [themes, setThemes] = useState<Theme[]>(DEMO_FEEDBACK_THEMES);
   const [requests, setRequests] = useState<FeatureRequest[]>(DEMO_FEATURE_REQUESTS);
 
-  const product = getFeedbackProduct(productId);
-  const feedback = useMemo(() => getFeedbackForProduct(items, productId), [items, productId]);
-  const productThemes = useMemo(() => getThemesForProduct(themes, productId), [themes, productId]);
+  // `getAllProducts` is untyped at the client wrapper, so narrow here.
+  const products = useMemo(() => (data as Product[] | undefined) ?? [], [data]);
+  const productOptions = useMemo(() => products.map(toFeedbackProduct), [products]);
+  const selected = products.find((entry) => entry.id === productId) ?? products[0] ?? null;
+  const product = selected ? toFeedbackProduct(selected) : null;
+  const activeId = selected?.id ?? "";
+
+  const feedback = useMemo(() => getFeedbackForProduct(items, activeId), [items, activeId]);
+  const productThemes = useMemo(() => getThemesForProduct(themes, activeId), [themes, activeId]);
   const productRequests = useMemo(
-    () => getFeatureRequestsForProduct(requests, productId),
-    [requests, productId],
+    () => getFeatureRequestsForProduct(requests, activeId),
+    [requests, activeId],
   );
   const areas = useMemo(
-    () => getProductAreasForProduct(productId, items, requests),
-    [productId, items, requests],
+    () => getProductAreasForProduct(activeId, items, requests),
+    [activeId, items, requests],
   );
 
   const stats = feedbackStats(feedback);
@@ -105,9 +138,10 @@ export default function FeedbackHubPage() {
   }
 
   function changeProduct(id: string) {
-    setProductId(id as FeedbackProductId);
+    setProductId(id);
     setSelection(EMPTY_SELECTION);
-    notify(`Switched feedback workspace · ${getFeedbackProduct(id).name} (local view)`);
+    const next = products.find((entry) => entry.id === id);
+    notify(`Switched feedback workspace · ${next?.name ?? "product"} (local view)`);
   }
 
   /* ---------------------------------------------------- record mutations --- */
@@ -140,7 +174,7 @@ export default function FeedbackHubPage() {
     const id = `fb-local-${nextId.current++}`;
     const record: FeedbackItem = {
       id,
-      productId,
+      productId: activeId,
       title: draft.title,
       excerpt:
         draft.description.length > 140
@@ -191,6 +225,30 @@ export default function FeedbackHubPage() {
     select("request", id);
   }
 
+  if (isPending) {
+    return (
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col gap-4"
+      >
+        <FeedbackHubSkeleton />
+      </motion.div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col gap-4"
+      >
+        <NoProducts />
+      </motion.div>
+    );
+  }
+
   const counts: Record<FeedbackSection, number> = {
     Inbox: feedback.length,
     "Feedback Board": feedback.length,
@@ -202,6 +260,7 @@ export default function FeedbackHubPage() {
   const header = (
     <FeedbackHubHeader
       product={product}
+      products={productOptions}
       onChangeProduct={changeProduct}
       areaNames={areas.map((a) => a.name)}
       total={stats.total}

@@ -1,21 +1,19 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import {
-  ANALYTICS_PRODUCTS,
   ANALYTICS_RANGES,
+  type AnalyticsProduct,
   type AnalyticsSection,
   type Observation,
   type ObservationDraft,
   type RangeKey,
   type SeriesKey,
 } from "@/lib/founder-analytics/types";
-import {
-  getAnalyticsDataset,
-  getAnalyticsProduct,
-} from "@/lib/founder-analytics/demo";
+import { getAnalyticsDataset } from "@/lib/founder-analytics/demo";
+import { useProducts } from "@/lib/product/use-products";
 
 import { AnalyticsWorkspaceNavigation } from "./analytics-workspace-navigation";
 import { ExportDialog } from "./dialogs/export-dialog";
@@ -66,11 +64,39 @@ const SEED_OBSERVATIONS: Observation[] = [
   },
 ];
 
+/** Shape returned by `GET /products`. */
+type Product = {
+  id: string;
+  name: string;
+  slug?: string;
+};
+
+/** The products API stores a name only; the rest of the profile is unset. */
+function toAnalyticsProduct(product: Product): AnalyticsProduct {
+  return {
+    id: product.id,
+    name: product.name,
+    ref: product.slug ?? product.id.slice(0, 8),
+    summary: "No product summary yet.",
+  };
+}
+
+function NoProducts() {
+  return (
+    <div className="border border-dashed border-line bg-panel px-5 py-10 text-center">
+      <p className="text-[13px] leading-relaxed text-muted">
+        No products yet — create one to get started
+      </p>
+    </div>
+  );
+}
+
 export default function FounderAnalyticsPage() {
   const reduce = useReducedMotion();
   const nextId = useRef(1);
+  const { data, isPending } = useProducts();
 
-  const [productId, setProductId] = useState<string>(ANALYTICS_PRODUCTS[0].id);
+  const [productId, setProductId] = useState<string | null>(null);
   const [range, setRange] = useState<RangeKey>(ANALYTICS_RANGES[1]);
   const [section, setSection] = useState<AnalyticsSection>("Overview");
   const [metricId, setMetricId] = useState("active-users");
@@ -82,9 +108,14 @@ export default function FounderAnalyticsPage() {
   const [exportOpen, setExportOpen] = useState(false);
   const [toast, setToast] = useState<{ key: number; message: string } | null>(null);
 
-  const product = getAnalyticsProduct(productId);
-  const dataset = getAnalyticsDataset(productId);
-  const productObservations = observations.filter((entry) => entry.productId === productId);
+  // `getAllProducts` is untyped at the client wrapper, so narrow here.
+  const products = useMemo(() => (data as Product[] | undefined) ?? [], [data]);
+  const productOptions = useMemo(() => products.map(toAnalyticsProduct), [products]);
+  const selected = products.find((entry) => entry.id === productId) ?? products[0] ?? null;
+  const product = selected ? toAnalyticsProduct(selected) : null;
+  const activeId = selected?.id ?? "";
+  const dataset = getAnalyticsDataset(activeId);
+  const productObservations = observations.filter((entry) => entry.productId === activeId);
   const windowLabel = dataset ? formatWindow(dataset, range) : "no data";
 
   const notify = useCallback((message: string) => {
@@ -103,7 +134,35 @@ export default function FounderAnalyticsPage() {
     setAreaId(null);
     setReportId(null);
     setMetricId("active-users");
-    notify(`Analytics view switched to ${getAnalyticsProduct(id).name}`);
+    const next = products.find((entry) => entry.id === id);
+    notify(`Analytics view switched to ${next?.name ?? "product"}`);
+  }
+
+  if (isPending) {
+    return (
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        aria-busy="true"
+        className="flex flex-col gap-4"
+      >
+        <div className="h-[7rem] animate-pulse border border-line bg-panel" />
+        <div className="h-12 animate-pulse border border-line bg-panel" />
+        <div className="h-72 animate-pulse border border-line bg-panel" />
+      </motion.div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col gap-4"
+      >
+        <NoProducts />
+      </motion.div>
+    );
   }
 
   const view: HeaderView = section === "Overview" ? "overview" : "analysis";
@@ -115,7 +174,7 @@ export default function FounderAnalyticsPage() {
     const id = `obs-${nextId.current++}`;
     setObservations((current) => [
       ...current,
-      { id, productId, ...draft },
+      { id, productId: activeId, ...draft },
     ]);
     notify("Observation added to this session · not saved anywhere");
   }
@@ -196,6 +255,7 @@ export default function FounderAnalyticsPage() {
     >
       <FounderAnalyticsHeader
         product={product}
+        products={productOptions}
         onChangeProduct={changeProduct}
         range={range}
         onChangeRange={setRange}

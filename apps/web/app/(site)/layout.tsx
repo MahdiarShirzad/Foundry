@@ -1,6 +1,17 @@
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import Nav from "@/components/site/nav";
 import FooterShell from "@/components/site/footer-shell";
+import { getServerSession } from "@/lib/auth/server-session";
+
+/**
+ * Session reads are request-time data, so keep them in their own boundary: the
+ * rest of the page shell still prerenders, while the nav streams in with the
+ * user's auth state already resolved.
+ */
+async function SiteNav() {
+  const session = await getServerSession();
+  return <Nav key={session?.userId ?? "guest"} initialSession={session} />;
+}
 
 /** Shared chrome for every Foundry route: sticky header, the hairline page
  *  frame, and the footer — so the landing page, docs, and future pages all
@@ -8,10 +19,12 @@ import FooterShell from "@/components/site/footer-shell";
 export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      <Nav />
+      <Suspense fallback={<Nav />}>
+        <SiteNav />
+      </Suspense>
       <div className="relative flex-1">
         {/* Page field: one atmosphere behind the framed content, so consecutive
-         *  sections open onto the same light instead of each painting its own. */}
+         * sections open onto the same light instead of each painting its own. */}
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute inset-x-0 top-0 h-[880px] bg-[radial-gradient(115%_85%_at_50%_-18%,var(--mint-tint),transparent_66%)]" />
           <div className="absolute inset-x-0 bottom-0 h-[680px] bg-[radial-gradient(85%_80%_at_12%_112%,var(--accent-tint),transparent_72%)]" />

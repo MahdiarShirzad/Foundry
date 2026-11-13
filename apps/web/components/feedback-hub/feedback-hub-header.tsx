@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Button, PlusIcon } from "@/components/ui/button";
 import { HeaderSelect, ModuleHeader } from "@/components/ui/primitives";
 
-import { DEMO_FEEDBACK_PRODUCTS } from "@/lib/feedback-hub/demo";
 import type { FeedbackDraft, FeedbackProduct } from "@/lib/feedback-hub/types";
 
 import { AddFeedbackDialog } from "./dialogs/add-feedback-dialog";
@@ -13,7 +12,7 @@ import { AddFeedbackDialog } from "./dialogs/add-feedback-dialog";
 export function FeedbackHubHeader({
   product,
   onChangeProduct,
-  products = DEMO_FEEDBACK_PRODUCTS,
+  products,
   areaNames,
   total,
   awaiting,
@@ -23,7 +22,7 @@ export function FeedbackHubHeader({
 }: {
   product: FeedbackProduct;
   onChangeProduct: (id: string) => void;
-  products?: FeedbackProduct[];
+  products: FeedbackProduct[];
   areaNames: string[];
   total: number;
   awaiting: number;
