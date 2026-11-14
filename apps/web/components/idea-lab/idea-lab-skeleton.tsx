@@ -18,8 +18,8 @@ export function IdeaLabSkeleton() {
           <Skeleton className="ml-auto h-2.5 w-6" />
         </div>
         <div className="flex items-center gap-1.5 px-4 py-2.5">
-          {[40, 40, 62, 66].map((width) => (
-            <Skeleton key={width} className="h-6 rounded-[6px]" />
+          {["w-10", "w-12", "w-16", "w-16"].map((width, index) => (
+            <Skeleton key={index} className={`h-6 ${width} rounded-[6px]`} />
           ))}
           <Skeleton className="ml-auto h-6 w-24" />
         </div>
@@ -52,8 +52,8 @@ export function IdeaLabSkeleton() {
           <Skeleton className="mt-3 h-2.5 w-full max-w-[36rem]" />
           <Skeleton className="mt-1.5 h-2.5 w-3/4 max-w-[28rem]" />
           <div className="mt-4 flex gap-1.5">
-            {[52, 60, 46].map((width) => (
-              <Skeleton key={width} className="h-5 rounded-pill" />
+            {["w-12", "w-14", "w-10"].map((width, index) => (
+              <Skeleton key={index} className={`h-5 ${width} rounded-pill`} />
             ))}
           </div>
         </div>
