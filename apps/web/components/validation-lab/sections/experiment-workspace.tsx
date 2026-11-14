@@ -56,7 +56,7 @@ function LifecycleRail({ status }: { status: Experiment["status"] }) {
                   }`}
                 />
                 <span
-                  className={`font-mono text-[10px] uppercase tracking-[0.14em] ${
+                  className={`text-[12px] ${
                     current ? "text-accent" : reached ? "text-fg" : "text-faint"
                   }`}
                 >
@@ -67,7 +67,7 @@ function LifecycleRail({ status }: { status: Experiment["status"] }) {
           );
         })}
       </div>
-      <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+      <p className="mt-2 text-[12px] text-faint">
         {archived
           ? "Archived · kept for reference, not part of the active lifecycle"
           : `Position set manually · “${status}”`}
@@ -154,7 +154,7 @@ export function ExperimentWorkspace({
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+                className="rounded-control border border-line px-3 py-1.5 text-[12px] text-fg transition-colors hover:border-accent hover:text-accent"
               >
                 Create Experiment
               </button>
@@ -233,7 +233,7 @@ export function ExperimentWorkspace({
                       <span className="mt-1 block text-[11.5px] leading-relaxed text-muted">
                         {e.objective}
                       </span>
-                      <span className="mt-2 flex flex-wrap items-center gap-2 font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
+                      <span className="mt-2 flex flex-wrap items-center gap-2 text-[12px] text-faint">
                         <span>{e.method}</span>
                         <span aria-hidden className="size-0.5 bg-line-2" />
                         <span>
@@ -270,7 +270,7 @@ export function ExperimentWorkspace({
               <header className="border-b border-line px-5 py-4 sm:px-6">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
+                    <p className="text-[12px] text-accent">
                       Experiment detail
                     </p>
                     <h3 className="mt-2 text-[1.35rem] font-medium leading-tight tracking-[-0.03em] text-fg">
@@ -290,7 +290,7 @@ export function ExperimentWorkspace({
               <div className="space-y-6 px-5 py-5 sm:px-6">
                 <DetailSection label="Investigates">
                   {linkedHypothesis ? (
-                    <div className="border border-line px-3 py-2.5">
+                    <div className="rounded-control border border-line px-3 py-2.5">
                       <p className="text-[12.5px] font-medium text-fg">{linkedHypothesis.title}</p>
                       <p className="mt-1 text-[11.5px] leading-relaxed text-muted">
                         {linkedHypothesis.statement}
@@ -355,7 +355,7 @@ export function ExperimentWorkspace({
                   </p>
                 </DetailSection>
 
-                <p className="border-t border-line pt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+                <p className="border-t border-line pt-3 text-[12px] text-faint">
                   Designed, not run · creating this experiment contacted no one and collected no data
                 </p>
               </div>

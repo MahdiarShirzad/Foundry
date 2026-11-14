@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
+import { DevToolsPopover, StatePreview } from "@/components/ui/primitives";
+
 import {
   DEMO_EVIDENCE,
   DEMO_EXPERIMENTS,
@@ -167,7 +169,11 @@ export default function ValidationLabPage() {
           findings={ideaFindings}
         />
         <ValidationWorkspaceNavigation section={section} onChange={setSection} />
-        <ValidationWorkflow />
+        <ValidationWorkflow
+          hypotheses={ideaHypotheses.length}
+          experiments={ideaExperiments.length}
+          findings={ideaFindings.length}
+        />
 
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
@@ -222,34 +228,14 @@ export default function ValidationLabPage() {
   }
 
   const statePreview = (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border border-line bg-panel px-4 py-3 shadow-[var(--elevation-lift)]">
-      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-        <span aria-hidden className="size-1.5 bg-accent" />
-        Local state · changes are not persisted
-      </p>
-      <div className="ml-auto flex flex-wrap items-center gap-1.5">
-        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-          UI state preview
-        </span>
-        {VIEWS.map(({ label, value }) => (
-          <button
-            key={value}
-            type="button"
-            onClick={() => setView(value)}
-            aria-pressed={view === value}
-            className={`border px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
-              view === value
-                ? "border-accent/60 bg-mint-tint/50 text-accent"
-                : "border-line text-faint hover:border-accent/60 hover:text-accent"
-            }`}
-          >
-            {label}
-          </button>
-        ))}
-        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+    <div className="flex flex-wrap items-center justify-between gap-3">
+      <p className="text-[12px] text-faint">Local state · changes are not persisted</p>
+      <DevToolsPopover>
+        <StatePreview value={view} options={VIEWS} onChange={setView} />
+        <p className="mt-3 border-t border-line pt-3 text-[12px] text-faint">
           Empty workspace · select TideMarket
-        </span>
-      </div>
+        </p>
+      </DevToolsPopover>
     </div>
   );
 
@@ -284,7 +270,7 @@ export default function ValidationLabPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
             transition={{ duration: reduce ? 0 : 0.2, ease: EASE }}
-            className="fixed bottom-4 left-1/2 z-50 w-[min(92vw,26rem)] -translate-x-1/2 border border-accent/60 bg-bg px-4 py-3 text-center shadow-[0_18px_44px_-24px_rgb(14_27_29/0.5)] sm:left-auto sm:right-6 sm:w-auto sm:max-w-[26rem] sm:translate-x-0 sm:text-left"
+            className="fixed bottom-4 left-1/2 z-50 w-[min(92vw,26rem)] -translate-x-1/2 rounded-card border border-accent/40 bg-panel px-4 py-3 text-center shadow-[var(--elevation-toast)] sm:left-auto sm:right-6 sm:w-auto sm:max-w-[26rem] sm:translate-x-0 sm:text-left"
           >
             <p className="text-[12px] leading-snug text-fg">{toast.message}</p>
           </motion.div>

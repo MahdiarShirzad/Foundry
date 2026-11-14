@@ -27,17 +27,17 @@ export function ValidationOverview({
       : `${hypotheses.length} hypotheses tracked, ${awaiting} still awaiting a test, ${testing} under test. ${experiments.length} experiments designed, ${inProgress} ready or running, ${findings.length} findings recorded.`;
 
   return (
-    <section className="border border-line bg-panel shadow-[var(--elevation-lift)]">
+    <section className="rounded-card border border-line bg-panel shadow-card">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line/80 px-5 py-4">
         <div>
-          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-accent">
+          <p className="text-[12px] text-accent">
             Validation overview
           </p>
           <p className="mt-1.5 text-[12px] leading-relaxed text-muted">
             State of validation work for the selected idea.
           </p>
         </div>
-        <p className="border border-line bg-bg/60 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-faint">
+        <p className="border border-line bg-bg/60 px-2 py-1 text-[12px] text-faint">
           {testing > 0 ? `Actively testing · ${testing}` : "No test currently running"}
         </p>
       </header>
@@ -51,7 +51,7 @@ export function ValidationOverview({
               aria-hidden
               className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-accent/50 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
             />
-            <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+            <p className="text-[12px] text-faint">
               {item.label}
             </p>
             <p className="mt-2.5 font-mono text-[1.75rem] font-medium leading-none tracking-[-0.035em] text-fg tabular-nums">
