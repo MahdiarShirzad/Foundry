@@ -87,16 +87,16 @@ const RELEASES: Release[] = [
 
 function StatusBadge({ status }: { status: Release["status"] }) {
   return (
-    <span className="inline-flex items-center rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em]">
+    <span className="inline-flex items-center rounded-pill border border-line bg-panel px-2.5 py-1 text-[12px] font-medium">
       {status === "current"
         ? (
           <>
-            <span className="mr-1.5 size-1.5 rounded-full bg-mint" aria-hidden />
+            <span className="mr-1.5 size-1.5 rounded-full bg-accent" aria-hidden />
             <span className="text-accent">Current</span>
           </>
         ) : (
           <>
-            <span className="mr-1.5 size-1.5 rounded-full border border-line bg-panel" aria-hidden />
+            <span className="mr-1.5 size-1.5 rounded-full bg-line-2" aria-hidden />
             <span className="text-faint">Planned</span>
           </>
         )}
@@ -105,15 +105,15 @@ function StatusBadge({ status }: { status: Release["status"] }) {
 }
 
 function ChangeTag({ type }: { type: Release["changes"][number]["type"] }) {
-  const map: Record<string, { label: string; color: string }> = {
-    added: { label: "Added", color: "text-accent" },
-    changed: { label: "Changed", color: "text-fg" },
-    fixed: { label: "Fixed", color: "text-fg" },
-    removed: { label: "Removed", color: "text-faint" },
+  const map: Record<string, { label: string; tone: string }> = {
+    added: { label: "Added", tone: "bg-success-tint text-success" },
+    changed: { label: "Changed", tone: "bg-info-tint text-info" },
+    fixed: { label: "Fixed", tone: "bg-neutral-tint text-muted" },
+    removed: { label: "Removed", tone: "bg-danger-tint text-danger" },
   };
   const m = map[type];
   return (
-    <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.18em] ${m.color}`}>
+    <span className={`inline-flex h-5 shrink-0 items-center rounded-pill px-2 text-[11.5px] font-medium ${m.tone}`}>
       {m.label}
     </span>
   );
@@ -122,7 +122,7 @@ function ChangeTag({ type }: { type: Release["changes"][number]["type"] }) {
 export default function ChangelogPage() {
   return (
     <>
-      <section className="relative overflow-hidden px-6 pb-28 pt-40 sm:px-10 lg:pt-44">
+      <section className="relative overflow-hidden px-6 pb-20 pt-36 sm:px-10 lg:pt-40">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,var(--line),transparent)]"
@@ -160,8 +160,8 @@ export default function ChangelogPage() {
         </div>
       </section>
 
-      <section className="border-t border-line px-6 py-20 sm:px-10">
-        <div className="mx-auto max-w-4xl">
+      <section className="border-t border-line px-6 py-16 sm:px-10">
+        <div className="mx-auto max-w-3xl">
           {RELEASES.map((release) => (
             <article
               key={release.version}
@@ -171,7 +171,7 @@ export default function ChangelogPage() {
                 <div>
                   <h2
                     id={`v${release.version.replace(/\./g, "-")}`}
-                    className="text-[clamp(1.5rem,3vw,2rem)] font-medium tracking-tight text-fg"
+                    className="text-[clamp(1.5rem,3vw,1.85rem)] font-semibold tracking-[-0.025em] text-fg"
                   >
                     v{release.version}
                   </h2>
@@ -179,17 +179,17 @@ export default function ChangelogPage() {
                 </div>
                 <time
                   dateTime={release.date}
-                  className="font-mono text-[11px] uppercase tracking-[0.2em] text-faint"
+                  className="font-mono text-[12px] text-faint"
                 >
                   {release.date}
                 </time>
               </div>
 
-              <h3 className="mt-2 text-lg font-medium tracking-tight text-accent">
+              <h3 className="mt-3 text-[17px] font-semibold tracking-[-0.015em] text-fg">
                 {release.title}
               </h3>
 
-              <p className="mt-4 text-[14.5px] leading-relaxed text-muted">
+              <p className="mt-3 text-[15.5px] leading-relaxed text-muted">
                 {release.summary}
               </p>
 
@@ -205,11 +205,9 @@ export default function ChangelogPage() {
               </div>
 
               {release.note && (
-                <div className="mt-8 rounded-xl border border-line bg-ink p-6 text-[#e9f5f2]">
-                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7f9a94] mb-2">
-                    Note
-                  </p>
-                  <p className="font-mono text-[13px] leading-relaxed">{release.note}</p>
+                <div className="on-ink mt-8 rounded-card border border-line bg-bg p-5 text-fg">
+                  <p className="mb-2 text-[12px] font-medium text-faint">Note</p>
+                  <p className="text-[13.5px] leading-relaxed">{release.note}</p>
                 </div>
               )}
             </article>

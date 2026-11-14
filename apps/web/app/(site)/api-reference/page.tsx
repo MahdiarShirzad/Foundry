@@ -39,15 +39,15 @@ const ROADMAP = [
 
 function Table({ head, rows }: { head: string[]; rows: Row[] }) {
   return (
-    <div className="mt-6 overflow-x-auto border border-line">
+    <div className="mt-6 overflow-x-auto rounded-card border border-line">
       <table className="w-full min-w-[520px] border-collapse text-left">
         <thead>
-          <tr className="bg-panel">
+          <tr className="bg-surface-sunken/40">
             {head.map((cell) => (
               <th
                 key={cell}
                 scope="col"
-                className="border-b border-line px-4 py-2.5 font-mono text-[10.5px] font-normal uppercase tracking-[0.18em] text-faint"
+                className="border-b border-line px-4 py-2.5 text-left text-[12.5px] font-medium text-muted"
               >
                 {cell}
               </th>
@@ -78,7 +78,7 @@ function Table({ head, rows }: { head: string[]; rows: Row[] }) {
 export default function ApiReferencePage() {
   return (
     <>
-      <section className="relative overflow-hidden px-6 pb-16 pt-40 sm:px-10 lg:pt-44">
+      <section className="relative overflow-hidden px-6 pb-14 pt-36 sm:px-10 lg:pt-40">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,var(--line),transparent)]"
@@ -92,7 +92,7 @@ export default function ApiReferencePage() {
           </h1>
 
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
-            A NestJS application in <code className="bg-mint-tint px-1.5 py-0.5 font-mono text-[0.85em] text-accent">apps/api</code>.
+            A NestJS application in <code className="rounded-[5px] bg-surface-sunken/60 px-1.5 py-0.5 font-mono text-[0.86em] text-fg">apps/api</code>.
             This page documents the surface exactly as it is implemented today — one health-style
             root endpoint and the environment it reads. Endpoints are added here only once the code
             behind them exists.
@@ -118,23 +118,21 @@ export default function ApiReferencePage() {
 
       <section className="border-t border-line px-6 py-16 sm:px-10">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-mono text-[11px] uppercase tracking-[0.28em] text-accent">
-            Base URL
-          </h2>
+          <h2 className="text-[22px] font-semibold tracking-[-0.02em] text-fg">Base URL</h2>
           <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-muted">
-            The server binds to <code className="bg-mint-tint px-1.5 py-0.5 font-mono text-[0.85em] text-accent">process.env.PORT</code>,
-            defaulting to <code className="bg-mint-tint px-1.5 py-0.5 font-mono text-[0.85em] text-accent">3000</code>.
+            The server binds to <code className="rounded-[5px] bg-surface-sunken/60 px-1.5 py-0.5 font-mono text-[0.86em] text-fg">process.env.PORT</code>,
+            defaulting to <code className="rounded-[5px] bg-surface-sunken/60 px-1.5 py-0.5 font-mono text-[0.86em] text-fg">3000</code>.
             Routes are mounted at the root — no global prefix is configured — and both apps default
             to port 3000, so run the API somewhere else while the web app is up.
           </p>
 
-          <pre className="mt-6 overflow-x-auto border border-line bg-ink px-5 py-4 font-mono text-[13px] leading-relaxed text-[#e9f5f2]">
+          <pre className="on-ink mt-6 overflow-x-auto rounded-card border border-line bg-bg px-5 py-4 font-mono text-[13px] leading-relaxed text-fg">
             <code>
-              <span className="text-[#7f9a94]"># apps/api — watch mode on port 3001</span>
+              <span className="text-faint"># apps/api — watch mode on port 3001</span>
               {"\n"}
               PORT=3001 pnpm start:dev
               {"\n\n"}
-              <span className="text-[#7f9a94]"># base URL</span>
+              <span className="text-faint"># base URL</span>
               {"\n"}
               http://localhost:3001
             </code>
@@ -144,43 +142,35 @@ export default function ApiReferencePage() {
 
       <section className="border-t border-line px-6 py-16 sm:px-10">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-mono text-[11px] uppercase tracking-[0.28em] text-accent">
-            Endpoints
-          </h2>
+          <h2 className="text-[22px] font-semibold tracking-[-0.02em] text-fg">Endpoints</h2>
           <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-muted">
             Every endpoint currently implemented, generated from{" "}
-            <code className="bg-mint-tint px-1.5 py-0.5 font-mono text-[0.85em] text-accent">AppController</code> in{" "}
-            <code className="bg-mint-tint px-1.5 py-0.5 font-mono text-[0.85em] text-accent">apps/api/src</code>.
+            <code className="rounded-[5px] bg-surface-sunken/60 px-1.5 py-0.5 font-mono text-[0.86em] text-fg">AppController</code> in{" "}
+            <code className="rounded-[5px] bg-surface-sunken/60 px-1.5 py-0.5 font-mono text-[0.86em] text-fg">apps/api/src</code>.
           </p>
 
           <Table head={["Method", "Path", "Returns"]} rows={ENDPOINTS} />
 
-          <div className="mt-8 grid gap-px overflow-hidden border border-line bg-line lg:grid-cols-2">
-            <div className="bg-ink p-5">
-              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#7f9a94]">
-                Request
-              </p>
-              <pre className="mt-3 overflow-x-auto font-mono text-[12.5px] leading-relaxed text-[#e9f5f2]">
+          <div className="mt-8 grid gap-px overflow-hidden rounded-card border border-line bg-line lg:grid-cols-2">
+            <div className="on-ink bg-bg p-5">
+              <p className="text-[12px] font-medium text-faint">Request</p>
+              <pre className="mt-2 overflow-x-auto font-mono text-[13px] leading-relaxed text-fg">
                 <code>curl http://localhost:3001/</code>
               </pre>
             </div>
             <div className="bg-panel p-5">
-              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-faint">
-                Response · 200
-              </p>
-              <pre className="mt-3 overflow-x-auto font-mono text-[12.5px] leading-relaxed text-fg">
+              <p className="text-[12px] font-medium text-muted">Response · 200</p>
+              <pre className="mt-2 overflow-x-auto font-mono text-[13px] leading-relaxed text-fg">
                 <code>Hello World!</code>
               </pre>
-              <p className="mt-3 font-mono text-[11px] text-faint">
+              <p className="mt-3 font-mono text-[11.5px] text-faint">
                 content-type: text/html; charset=utf-8
               </p>
             </div>
           </div>
 
-          <p className="mt-6 max-w-2xl border-l-2 border-accent bg-mint-tint px-5 py-4 text-[14px] leading-relaxed text-muted">
-            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-accent">
-              No auth yet ·{" "}
-            </span>
+          <p className="mt-6 max-w-2xl rounded-r-control border-l-2 border-accent bg-mint-tint px-5 py-4 text-[14.5px] leading-relaxed text-muted">
+            <span className="font-medium text-accent">No auth yet · </span>
             no guards, CORS policy, validation pipe or throttling are configured in the bootstrap, so
             every request is anonymous. Treat this API as local-only until the auth module lands.
           </p>
@@ -189,9 +179,7 @@ export default function ApiReferencePage() {
 
       <section className="border-t border-line px-6 py-16 sm:px-10">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-mono text-[11px] uppercase tracking-[0.28em] text-accent">
-            Configuration
-          </h2>
+          <h2 className="text-[22px] font-semibold tracking-[-0.02em] text-fg">Configuration</h2>
           <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-muted">
             Read directly from the environment at boot. The Observe keys carry placeholder defaults —
             replace them or telemetry reports under the scaffold credentials.
@@ -202,9 +190,9 @@ export default function ApiReferencePage() {
 
       <section className="border-t border-line px-6 py-16 sm:px-10">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-mono text-[11px] uppercase tracking-[0.28em] text-accent">Scripts</h2>
+          <h2 className="text-[22px] font-semibold tracking-[-0.02em] text-fg">Scripts</h2>
           <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-muted">
-            Run from <code className="bg-mint-tint px-1.5 py-0.5 font-mono text-[0.85em] text-accent">apps/api</code>.
+            Run from <code className="rounded-[5px] bg-surface-sunken/60 px-1.5 py-0.5 font-mono text-[0.86em] text-fg">apps/api</code>.
           </p>
           <Table head={["Command", "Runs", "Purpose"]} rows={SCRIPTS} />
         </div>
@@ -212,7 +200,7 @@ export default function ApiReferencePage() {
 
       <section className="border-t border-line px-6 py-16 sm:px-10">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-mono text-[11px] uppercase tracking-[0.28em] text-accent">
+          <h2 className="text-[22px] font-semibold tracking-[-0.02em] text-fg">
             What will land here
           </h2>
           <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-muted">

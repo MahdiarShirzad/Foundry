@@ -34,12 +34,12 @@ export default function DocView({ slug }: { slug: string }) {
       category={doc.category}
       title={doc.title}
     >
-      <article className="min-w-0 px-6 py-10 sm:px-10 lg:py-14">
+      <article className="mx-auto min-w-0 max-w-[45rem] px-6 py-10 sm:px-8 lg:py-14">
         <header className="border-b border-line pb-8">
-          <h1 className="text-[clamp(2rem,4vw,2.75rem)] font-medium leading-[1.1] tracking-[-0.03em] text-fg">
+          <h1 className="text-[clamp(1.9rem,3.4vw,2.25rem)] font-semibold leading-[1.12] tracking-[-0.03em] text-fg">
             {doc.title}
           </h1>
-          <p className="mt-3 max-w-[64ch] text-[17px] leading-[1.7] text-muted">
+          <p className="mt-3 max-w-[62ch] text-[16.5px] leading-[1.7] text-muted">
             {doc.description}
           </p>
         </header>

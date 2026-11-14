@@ -17,7 +17,7 @@ function renderInline(text: string): ReactNode[] {
         return (
           <code
             key={i}
-            className="bg-mint-tint px-1.5 py-0.5 font-mono text-[0.85em] text-accent"
+            className="rounded-[5px] bg-surface-sunken/60 px-1.5 py-0.5 font-mono text-[0.86em] text-fg"
           >
             {part.slice(1, -1)}
           </code>
@@ -54,7 +54,7 @@ function renderInline(text: string): ReactNode[] {
     });
 }
 
-const TEXT = "max-w-[68ch] text-[15.5px] leading-[1.8] text-muted";
+const TEXT = "max-w-[68ch] text-[16px] leading-[1.75] text-muted";
 
 /** Renders a page's content blocks. Server component — code blocks are
  *  highlighted here and handed to the client copy control as HTML. */
@@ -75,7 +75,7 @@ export default async function DocRenderer({ blocks }: { blocks: Block[] }) {
               <h2
                 key={i}
                 id={slugify(block.text)}
-                className="mt-14 scroll-mt-28 border-t border-line pt-8 text-[1.5rem] font-medium tracking-[-0.02em] text-fg"
+                className="mt-12 scroll-mt-28 border-t border-line pt-8 text-[1.55rem] font-semibold tracking-[-0.025em] text-fg"
               >
                 {block.text}
               </h2>
@@ -86,7 +86,7 @@ export default async function DocRenderer({ blocks }: { blocks: Block[] }) {
               <h3
                 key={i}
                 id={slugify(block.text)}
-                className="mt-9 scroll-mt-28 text-[1.1rem] font-medium tracking-[-0.01em] text-fg"
+                className="mt-8 scroll-mt-28 text-[1.15rem] font-semibold tracking-[-0.015em] text-fg"
               >
                 {block.text}
               </h3>
@@ -99,7 +99,7 @@ export default async function DocRenderer({ blocks }: { blocks: Block[] }) {
                   <li key={j} className="flex gap-3">
                     <span
                       aria-hidden
-                      className="mt-[0.7em] size-1.5 shrink-0 bg-mint"
+                      className="mt-[0.65em] size-1.5 shrink-0 rounded-full bg-accent/60"
                     />
                     <span>{renderInline(item)}</span>
                   </li>
