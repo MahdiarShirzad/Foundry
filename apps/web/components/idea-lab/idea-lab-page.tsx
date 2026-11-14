@@ -1,14 +1,19 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import { useProducts } from "@/lib/product/use-products";
 import { useCreateIdea, useIdeas } from "@/lib/idea-lab/use-idea";
+import {
+  DEFAULT_IDEA_CATEGORIES,
+  mergeCategories,
+} from "@/lib/idea-lab/categories";
 import { useHydrated } from "@/lib/use-hydrated";
 import { useWorkspace } from "@/lib/workspace/use-workspace";
 import {
+  IDEA_STATUSES,
   LAB_TODAY,
   formatIdeaShortDate,
   type IdeaDraft,
@@ -19,7 +24,11 @@ import {
 import { IdeaCaptureModal } from "./idea-capture-modal";
 import { IdeaCollection } from "./idea-collection";
 import { IdeaDetailPanel } from "./idea-detail-panel";
-import { IdeaLabDetailEmpty, IdeaLabEmptyCollection } from "./idea-lab-empty-state";
+import {
+  IdeaLabDetailEmpty,
+  IdeaLabEmptyCollection,
+  IdeaLabNoResults,
+} from "./idea-lab-empty-state";
 import { IdeaLabErrorState } from "./idea-lab-error-state";
 import { IdeaLabHeader } from "./idea-lab-header";
 import { IdeaLabSkeleton } from "./idea-lab-skeleton";
@@ -77,8 +86,73 @@ export default function IdeaLabPage({
   const { data: workspace } = useWorkspace();
   const { create: createIdea } = useCreateIdea();
 
+  const filteredIdeas = useMemo(() => {
+    const needle = query.trim().toLowerCase();
+    const categoryKey = category.trim().toLowerCase();
+
+    const matching = ideas.filter((idea) => {
+      if (status !== "all" && idea.status !== status) return false;
+
+      if (
+        category !== "all" &&
+        (idea.category ?? "").trim().toLowerCase() !== categoryKey
+      ) {
+        return false;
+      }
+
+      if (!needle) return true;
+
+      const haystack = [
+        idea.ref,
+        idea.name,
+        idea.headline,
+        idea.summary,
+        idea.problem,
+        idea.audience,
+        idea.solution,
+        idea.context,
+        idea.source,
+        idea.category ?? "",
+        ...idea.tags,
+        ...idea.openQuestions,
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      return haystack.includes(needle);
+    });
+
+    return matching.sort((a, b) => {
+      switch (sort) {
+        case "alpha":
+          return (
+            a.name.localeCompare(b.name) ||
+            b.updatedAt.localeCompare(a.updatedAt)
+          );
+        case "captured":
+          return (
+            b.capturedAt.localeCompare(a.capturedAt) ||
+            b.updatedAt.localeCompare(a.updatedAt)
+          );
+        case "status": {
+          const byStatus =
+            IDEA_STATUSES.indexOf(a.status) - IDEA_STATUSES.indexOf(b.status);
+          return byStatus || b.updatedAt.localeCompare(a.updatedAt);
+        }
+        case "updated":
+        default:
+          return (
+            b.updatedAt.localeCompare(a.updatedAt) ||
+            a.name.localeCompare(b.name)
+          );
+      }
+    });
+  }, [ideas, query, status, category, sort]);
+
   const selectedIdea =
-    ideas.find((idea) => idea.id === selectedId) ?? ideas[0] ?? null;
+    filteredIdeas.find((idea) => idea.id === selectedId) ??
+    filteredIdeas[0] ??
+    null;
   const lastUpdated = ideas.reduce(
     (latest, idea) => (idea.updatedAt > latest ? idea.updatedAt : latest),
     ideas[0]?.updatedAt ?? LAB_TODAY,
@@ -95,9 +169,20 @@ export default function IdeaLabPage({
       ? "error"
       : ideas.length === 0
         ? "empty"
-        : "collection";
+        : filteredIdeas.length === 0
+          ? "no-results"
+          : "collection";
 
-  const visibleCount = ideas.length;
+  const visibleCount = filteredIdeas.length;
+
+  const availableCategories = useMemo(
+    () =>
+      mergeCategories(
+        categoryOptions ?? DEFAULT_IDEA_CATEGORIES,
+        ideas.map((idea) => idea.category ?? ""),
+      ),
+    [categoryOptions, ideas],
+  );
 
   function selectIdea(id: string) {
     setSelectedId(id);
@@ -119,6 +204,13 @@ export default function IdeaLabPage({
   function retry() {
     setMobileDetail(false);
     void refetch();
+  }
+
+  function clearSearchAndFilters() {
+    setQuery("");
+    setStatus("all");
+    setCategory("all");
+    setMobileDetail(false);
   }
 
   async function captureIdea(draft: IdeaDraft) {
@@ -220,17 +312,24 @@ export default function IdeaLabPage({
                     onStatusChange={setStatus}
                     category={category}
                     onCategoryChange={setCategory}
-                    categoryOptions={categoryOptions}
+                    categoryOptions={availableCategories}
                     sort={sort}
                     onSortChange={setSort}
                     count={visibleCount}
                   />
 
-                  <IdeaCollection
-                    ideas={ideas}
-                    selectedId={selectedIdea?.id ?? ""}
-                    onSelect={selectIdea}
-                  />
+                  {renderedView === "no-results" ? (
+                    <IdeaLabNoResults
+                      query={query}
+                      onClear={clearSearchAndFilters}
+                    />
+                  ) : (
+                    <IdeaCollection
+                      ideas={filteredIdeas}
+                      selectedId={selectedIdea?.id ?? ""}
+                      onSelect={selectIdea}
+                    />
+                  )}
                 </>
               )}
             </section>
@@ -258,7 +357,7 @@ export default function IdeaLabPage({
             key="capture"
             onClose={() => setCaptureOpen(false)}
             onSubmit={captureIdea}
-            categoryOptions={categoryOptions}
+            categoryOptions={availableCategories}
           />
         ) : null}
       </AnimatePresence>

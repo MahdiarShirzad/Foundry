@@ -118,7 +118,13 @@ export type IdeaDraft = {
 };
 
 /** States the Idea Lab workspace can render while loading real data. */
-export const LAB_VIEWS = ["collection", "empty", "loading", "error"] as const;
+export const LAB_VIEWS = [
+  "collection",
+  "empty",
+  "no-results",
+  "loading",
+  "error",
+] as const;
 
 export type LabView = (typeof LAB_VIEWS)[number];
 
