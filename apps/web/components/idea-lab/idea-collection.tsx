@@ -25,7 +25,7 @@ export function IdeaCollection({
         animate="show"
         variants={{
           hidden: {},
-          show: { transition: { staggerChildren: reduce ? 0 : 0.025 } },
+          show: { transition: { staggerChildren: reduce ? 0 : 0.02 } },
         }}
         className="min-h-0 flex-1 overflow-y-auto [scrollbar-color:var(--line-2)_transparent] [scrollbar-width:thin] md:overscroll-contain"
       >
@@ -40,8 +40,8 @@ export function IdeaCollection({
       </motion.ul>
 
       <div className="flex shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-line px-4 py-2">
-        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-          {String(ideas.length).padStart(2, "0")} ideas
+        <span className="text-[12px] text-faint">
+          {ideas.length} {ideas.length === 1 ? "idea" : "ideas"}
         </span>
       </div>
     </div>

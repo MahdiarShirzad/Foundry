@@ -113,15 +113,13 @@ export function IdeaSelect({
         aria-expanded={open}
         aria-controls={open ? listboxId : undefined}
         onClick={toggle}
-        className={`flex h-9 w-full min-w-0 max-w-full items-center gap-2 border bg-panel px-2.5 transition-colors ${
+        className={`flex h-8 w-full min-w-0 max-w-full items-center gap-1.5 rounded-control border bg-panel px-2.5 transition-colors ${
           open ? "border-accent text-accent" : "border-line hover:border-line-2"
         }`}
       >
-        <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
-          {label}
-        </span>
+        <span className="shrink-0 text-[12px] text-faint">{label}</span>
         <span aria-hidden className="h-3 w-px shrink-0 bg-line" />
-        <span className="min-w-0 truncate font-mono text-[11px] uppercase tracking-[0.1em] text-fg">
+        <span className="min-w-0 truncate text-[12.5px] font-medium text-fg">
           {selected?.shortLabel ?? selected?.label}
         </span>
         <svg
@@ -149,7 +147,7 @@ export function IdeaSelect({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -3, scale: 0.99 }}
             transition={{ duration: reduce ? 0 : 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className={`absolute top-[calc(100%+4px)] z-30 w-max min-w-full max-w-[17rem] border border-line bg-bg py-1 shadow-[0_18px_44px_-28px_rgb(14_27_29/0.45)] ${
+            className={`absolute top-[calc(100%+4px)] z-30 w-max min-w-full max-w-[17rem] overflow-hidden rounded-card border border-line bg-panel py-1 shadow-[var(--elevation-popover)] ${
               align === "right" ? "right-0" : "left-0"
             }`}
           >
@@ -170,7 +168,7 @@ export function IdeaSelect({
                   } ${index === activeIndex ? "bg-mint-tint/45" : ""}`}
                 >
                   <span className="truncate">{option.label}</span>
-                  {active ? <span aria-hidden className="size-1.5 shrink-0 bg-accent" /> : null}
+                  {active ? <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-accent" /> : null}
                 </button>
               );
             })}

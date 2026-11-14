@@ -4,39 +4,26 @@ import Link from "next/link";
 import { useEffect, useRef, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
-import {
-  formatIdeaDate,
-  type Idea,
-} from "@/lib/idea-lab/types";
+import { DetailSection } from "@/components/ui/primitives";
+import { formatIdeaDate, type Idea } from "@/lib/idea-lab/types";
 
 import { IdeaStatus } from "./idea-status";
 
 function MetaCell({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="min-w-0 bg-panel px-5 py-3.5">
-      <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">{label}</dt>
-      <dd className="mt-1 min-w-0 text-[11.5px] leading-snug text-fg">{children}</dd>
+    <div className="min-w-0">
+      <dt className="text-[12px] text-faint">{label}</dt>
+      <dd className="mt-1 min-w-0 text-[13px] font-medium leading-snug text-fg">{children}</dd>
     </div>
   );
 }
 
-function DetailSection({
-  number,
-  title,
-  children,
-}: {
-  number: string;
-  title: string;
-  children: ReactNode;
-}) {
+/** Compact inline prompt for a section that has no content yet. */
+function InlineEmpty({ children }: { children: ReactNode }) {
   return (
-    <section className="grid gap-2.5 border-b border-line px-5 py-6 sm:px-7 sm:py-7 @xl:grid-cols-[8rem_minmax(0,1fr)] @xl:gap-8">
-      <h3 className="flex items-baseline gap-2">
-        <span className="font-mono text-[10px] tracking-[0.16em] text-accent">{number}</span>
-        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">{title}</span>
-      </h3>
-      <div className="min-w-0 max-w-[68ch]">{children}</div>
-    </section>
+    <p className="rounded-control border border-dashed border-line px-3.5 py-3 text-[13px] leading-relaxed text-faint">
+      {children}
+    </p>
   );
 }
 
@@ -54,6 +41,10 @@ export function IdeaDetailPanel({
     scrollRef.current?.scrollTo({ top: 0 });
   }, [idea.id]);
 
+  const hasSolution = Boolean(idea.solution?.trim());
+  const hasAudience = Boolean(idea.audience?.trim());
+  const hasContext = Boolean(idea.context?.trim());
+
   return (
     <article className="flex min-h-0 w-full min-w-0 flex-col bg-panel md:h-full">
       <div
@@ -69,137 +60,147 @@ export function IdeaDetailPanel({
             transition={{ duration: reduce ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="flex min-h-full flex-col"
           >
-            <div className="sticky top-14 z-20 flex items-center justify-between gap-3 border-b border-line bg-panel px-4 py-2.5 md:hidden">
+            <div className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b border-line bg-panel/95 px-4 py-2.5 backdrop-blur md:hidden">
               <button
                 type="button"
                 onClick={onBack}
-                className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-faint transition-colors hover:text-accent"
+                className="flex items-center gap-1.5 text-[13px] font-medium text-muted transition-colors hover:text-accent"
               >
-                <span aria-hidden className="text-[12px] leading-none">
-                  ←
-                </span>
+                <span aria-hidden>←</span>
                 All ideas
               </button>
-              <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
-                {idea.ref}
-              </span>
+              <span className="font-mono text-[11px] tracking-[0.04em] text-faint">{idea.ref}</span>
             </div>
 
-            <header className="border-b border-line bg-[linear-gradient(180deg,var(--accent-tint),transparent_72%)] px-5 pb-6 pt-5 sm:px-7 sm:pb-7 sm:pt-6">
+            <header className="border-b border-line px-5 pb-5 pt-5 sm:px-7 sm:pb-6 sm:pt-6">
               <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-                <div className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
-                  <span className="text-accent">{idea.ref}</span>
-                  <span aria-hidden className="text-line-2">
-                    /
+                <div className="flex items-center gap-2.5">
+                  <span className="font-mono text-[11.5px] tracking-[0.04em] text-muted">
+                    {idea.ref}
                   </span>
                   <IdeaStatus status={idea.status} />
                 </div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+                <span className="text-[12px] text-faint">
                   Updated {formatIdeaDate(idea.updatedAt)}
                 </span>
               </div>
 
-              <h2 className="mt-4 text-[clamp(1.9rem,3vw,2.5rem)] font-medium leading-[1] tracking-[-0.045em] text-fg">
+              <h2 className="mt-3 text-[clamp(1.5rem,2.4vw,1.85rem)] font-semibold leading-[1.12] tracking-[-0.03em] text-fg">
                 {idea.name}
               </h2>
-              <p className="mt-2 max-w-[54ch] text-[15.5px] font-medium leading-snug tracking-[-0.01em] text-muted sm:text-[17px]">
-                {idea.headline}
-              </p>
-              <p className="mt-3.5 max-w-[68ch] text-[13px] leading-[1.72] text-muted">
-                {idea.summary}
-              </p>
+              {idea.headline ? (
+                <p className="mt-1.5 max-w-[54ch] text-[15px] leading-snug text-muted">
+                  {idea.headline}
+                </p>
+              ) : null}
+              {idea.summary ? (
+                <p className="mt-3 max-w-[66ch] text-[13.5px] leading-relaxed text-muted">
+                  {idea.summary}
+                </p>
+              ) : null}
 
-              <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1.5">
-                {idea.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint"
-                  >
-                    #{tag.replace(/\s+/g, "-")}
-                  </span>
-                ))}
-              </div>
+              {idea.tags.length > 0 ? (
+                <div className="mt-4 flex flex-wrap items-center gap-1.5">
+                  {idea.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-pill bg-surface-sunken/50 px-2 py-0.5 text-[11.5px] font-medium text-muted"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
             </header>
 
-            <dl className="grid grid-cols-2 gap-px border-b border-line bg-line @lg:grid-cols-4">
+            <dl className="grid grid-cols-2 gap-x-6 gap-y-4 border-b border-line px-5 py-4 sm:px-7 @lg:grid-cols-4">
               <MetaCell label="Status">
-                <IdeaStatus status={idea.status} className="text-[10px]" />
+                <IdeaStatus status={idea.status} />
               </MetaCell>
-              <MetaCell label="Category">
-                {idea.category?.trim() || "Uncategorised"}
-              </MetaCell>
+              <MetaCell label="Category">{idea.category?.trim() || "Uncategorised"}</MetaCell>
               <MetaCell label="Captured">{formatIdeaDate(idea.capturedAt)}</MetaCell>
               <MetaCell label="Last touched">{formatIdeaDate(idea.updatedAt)}</MetaCell>
             </dl>
 
-            <DetailSection number="01" title="The problem">
-              <p className="text-[14.5px] leading-[1.8] text-fg sm:text-[15px]">{idea.problem}</p>
-            </DetailSection>
+            <div className="px-5 py-2 sm:px-7">
+              <DetailSection label="Problem">
+                {idea.problem?.trim() ? (
+                  <p className="max-w-[68ch] text-[14px] leading-[1.75] text-fg">{idea.problem}</p>
+                ) : (
+                  <InlineEmpty>No problem statement captured yet.</InlineEmpty>
+                )}
+              </DetailSection>
 
-            <DetailSection number="02" title="Proposed solution">
-              <p className="text-[13.5px] leading-[1.8] text-muted">{idea.solution}</p>
-            </DetailSection>
+              <DetailSection label="Proposed solution">
+                {hasSolution ? (
+                  <p className="max-w-[68ch]">{idea.solution}</p>
+                ) : (
+                  <InlineEmpty>No proposed solution captured yet.</InlineEmpty>
+                )}
+              </DetailSection>
 
-            <DetailSection number="03" title="Intended audience">
-              <p className="text-[13.5px] leading-[1.8] text-muted">{idea.audience}</p>
-            </DetailSection>
+              <DetailSection label="Intended audience">
+                {hasAudience ? (
+                  <p className="max-w-[68ch]">{idea.audience}</p>
+                ) : (
+                  <InlineEmpty>No audience defined yet.</InlineEmpty>
+                )}
+              </DetailSection>
 
-            <DetailSection number="04" title="Open questions">
-              <ol>
-                {idea.openQuestions.map((question, index) => (
-                  <li
-                    key={question}
-                    className="flex gap-3 border-t border-line/60 py-2.5 first:border-t-0 first:pt-0 last:pb-0"
-                  >
-                    <span className="mt-[2px] shrink-0 font-mono text-[10px] tracking-[0.1em] text-faint">
-                      Q{index + 1}
-                    </span>
-                    <span className="text-[12.5px] leading-relaxed text-fg">{question}</span>
-                  </li>
-                ))}
-              </ol>
-            </DetailSection>
-
-            <DetailSection number="05" title="Notes & context">
-              <p className="text-[13px] leading-[1.75] text-muted">{idea.context}</p>
-              <p className="mt-2 font-mono text-[10px] uppercase leading-relaxed tracking-[0.12em] text-faint">
-                Source · {idea.source}
-              </p>
-
-              <div className="mt-4 border-t border-line">
-                {idea.notes.map((note) => (
-                  <div
-                    key={note.id}
-                    className="grid grid-cols-[2rem_minmax(0,1fr)] gap-3 border-b border-line/60 py-3 last:border-b-0 last:pb-0"
-                  >
-                    <span className="flex size-7 items-center justify-center border border-line-2 font-mono text-[10px] tracking-[0.04em] text-fg">
-                      {note.initials}
-                    </span>
-                    <div className="min-w-0">
-                      <p className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                        <span className="text-[11.5px] font-medium text-fg">{note.author}</span>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-                          {formatIdeaDate(note.date)}
+              <DetailSection label="Open questions">
+                {idea.openQuestions.length > 0 ? (
+                  <ol className="space-y-2">
+                    {idea.openQuestions.map((question, index) => (
+                      <li key={question} className="flex gap-2.5 text-[13.5px] leading-relaxed">
+                        <span className="mt-0.5 shrink-0 font-mono text-[11px] text-faint">
+                          {String(index + 1).padStart(2, "0")}
                         </span>
-                      </p>
-                      <p className="mt-1 text-[12px] leading-relaxed text-muted">{note.body}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </DetailSection>
+                        <span className="text-fg">{question}</span>
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <InlineEmpty>No open questions recorded yet.</InlineEmpty>
+                )}
+              </DetailSection>
 
-            <div className="mt-auto border-t border-line bg-mint-tint/25 px-5 py-6 sm:px-7">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <DetailSection label="Notes & context">
+                {hasContext ? <p className="max-w-[68ch]">{idea.context}</p> : null}
+                <p className="mt-3 text-[12.5px] text-faint">Source · {idea.source}</p>
+
+                {idea.notes.length > 0 ? (
+                  <ul className="mt-5 space-y-4">
+                    {idea.notes.map((note) => (
+                      <li key={note.id} className="flex gap-3">
+                        <span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full bg-surface-sunken/70 text-[10.5px] font-semibold text-muted">
+                          {note.initials}
+                        </span>
+                        <div className="min-w-0">
+                          <p className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                            <span className="text-[13px] font-medium text-fg">{note.author}</span>
+                            <span className="text-[12px] text-faint">
+                              {formatIdeaDate(note.date)}
+                            </span>
+                          </p>
+                          <p className="mt-1 text-[13px] leading-relaxed text-muted">
+                            {note.body}
+                          </p>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </DetailSection>
+            </div>
+
+            <div className="mt-auto border-t border-line px-5 py-5 sm:px-7">
+              <div className="flex flex-col gap-4 rounded-card border border-line bg-mint-tint/30 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="min-w-0">
-                  <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-accent">
-                    <span aria-hidden className="size-1.5 bg-mint" />
-                    Next in the cycle
+                  <p className="text-[12px] font-medium text-accent">Next in the cycle</p>
+                  <p className="mt-1 text-[15px] font-semibold tracking-[-0.01em] text-fg">
+                    Market Intelligence
                   </p>
-                  <p className="mt-1.5 text-[15px] font-medium tracking-[-0.01em] text-fg">
-                    02 · Market Intelligence
-                  </p>
-                  <p className="mt-1 max-w-[52ch] text-[11.5px] leading-relaxed text-muted">
+                  <p className="mt-1 max-w-[52ch] text-[13px] leading-relaxed text-muted">
                     Take the opportunity to the market before committing to the shape of the
                     product.
                   </p>
@@ -207,14 +208,14 @@ export function IdeaDetailPanel({
 
                 <Link
                   href="/dashboard/market-intelligence"
-                  className="group inline-flex h-9 shrink-0 items-center gap-2 border border-line-2 bg-panel px-3 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+                  className="group inline-flex h-9 shrink-0 items-center gap-2 self-start rounded-control border border-line bg-panel px-3.5 text-[13px] font-medium text-fg transition-colors hover:border-accent hover:text-accent sm:self-auto"
                 >
                   Explore market
                   <span
                     aria-hidden
                     className="transition-transform duration-200 group-hover:translate-x-0.5"
                   >
-                    ↗
+                    →
                   </span>
                 </Link>
               </div>

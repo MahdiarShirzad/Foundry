@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
+import { SplitPane } from "@/components/ui/primitives";
 import { useProducts } from "@/lib/product/use-products";
 import { useCreateIdea, useIdeas } from "@/lib/idea-lab/use-idea";
 import {
@@ -34,10 +35,7 @@ import { IdeaLabHeader } from "./idea-lab-header";
 import { IdeaLabSkeleton } from "./idea-lab-skeleton";
 import { IdeaToolbar } from "./idea-toolbar";
 
-const WORKSPACE_HEIGHT = "md:h-[calc(100dvh-14.75rem)] md:min-h-[32rem]";
-
-const WORKSPACE_COLUMNS =
-  "md:grid-cols-[minmax(0,19rem)_minmax(0,1fr)] lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] xl:grid-cols-[minmax(0,25.5rem)_minmax(0,1fr)]";
+const WORKSPACE_HEIGHT = "md:h-[calc(100dvh-16rem)] md:min-h-[32rem]";
 
 /** Shape returned by `GET /products`. */
 type Product = {
@@ -291,8 +289,11 @@ export default function IdeaLabPage({
               duration: reduce ? 0 : 0.18,
               ease: [0.22, 1, 0.36, 1],
             }}
-            className={`grid scroll-mt-14 gap-px border border-line bg-line ${WORKSPACE_HEIGHT} ${WORKSPACE_COLUMNS} md:overflow-hidden`}
+            className="scroll-mt-16"
           >
+            <SplitPane
+              className={`${WORKSPACE_HEIGHT} md:overflow-hidden`}
+              list={
             <section
               aria-label="Idea collection"
               className={`min-h-0 flex-col bg-panel ${
@@ -333,7 +334,8 @@ export default function IdeaLabPage({
                 </>
               )}
             </section>
-
+              }
+              detail={
             <section
               aria-label="Selected idea"
               className={`min-h-0 bg-panel ${mobileDetail ? "flex" : "hidden md:flex"}`}
@@ -347,6 +349,8 @@ export default function IdeaLabPage({
                 />
               )}
             </section>
+              }
+            />
           </motion.div>
         )}
       </AnimatePresence>

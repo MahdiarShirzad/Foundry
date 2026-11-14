@@ -44,11 +44,11 @@ export function IdeaToolbar({
   ];
 
   return (
-    <div className="shrink-0 border-b border-line bg-panel">
-      <div className="flex items-center gap-3 px-4 py-3">
+    <div className="sticky top-0 z-10 shrink-0 border-b border-line bg-panel/95 backdrop-blur">
+      <div className="flex items-center gap-2.5 px-4 py-2.5">
         <svg
-          width="13"
-          height="13"
+          width="14"
+          height="14"
           viewBox="0 0 16 16"
           aria-hidden
           className="shrink-0 fill-none stroke-faint stroke-[1.5]"
@@ -62,7 +62,7 @@ export function IdeaToolbar({
           onChange={(event) => onQueryChange(event.target.value)}
           aria-label="Search ideas"
           placeholder="Search ideas…"
-          className="min-w-0 flex-1 bg-transparent text-[13px] text-fg outline-none placeholder:text-faint/80"
+          className="min-w-0 flex-1 bg-transparent py-1 text-[13.5px] text-fg outline-none placeholder:text-faint"
         />
 
         <AnimatePresence initial={false}>
@@ -75,23 +75,21 @@ export function IdeaToolbar({
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: reduce ? 0 : 0.12 }}
               aria-label="Clear search"
-              className="flex size-5 shrink-0 items-center justify-center border border-line font-mono text-[10px] leading-none text-faint transition-colors hover:border-accent hover:text-accent"
+              className="flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-sunken/70 text-[12px] leading-none text-muted transition-colors hover:bg-surface-sunken hover:text-fg"
             >
               ×
             </motion.button>
           ) : null}
         </AnimatePresence>
 
-        <span className="shrink-0 border border-line bg-bg/60 px-2 py-1 font-mono text-[9.5px] uppercase tracking-[0.12em] text-faint">
-          {String(count).padStart(2, "0")} shown
-        </span>
+        <span className="shrink-0 text-[12px] tabular-nums text-faint">{count}</span>
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line/70 bg-bg/30 px-4 py-2.5">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-2 px-4 pb-2.5">
         <div
           role="group"
           aria-label="Filter by status"
-          className="flex items-center gap-0.5 border border-line bg-bg/50 p-0.5"
+          className="inline-flex items-center gap-0.5 rounded-control border border-line bg-surface-sunken/40 p-0.5"
         >
           {IDEA_STATUS_FILTERS.map((option) => {
             const active = option.value === status;
@@ -101,27 +99,19 @@ export function IdeaToolbar({
                 type="button"
                 onClick={() => onStatusChange(option.value)}
                 aria-pressed={active}
-                className={`relative px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
-                  active ? "bg-panel text-accent" : "text-faint hover:text-fg"
+                className={`rounded-[6px] px-2 py-1 text-[12px] font-medium transition-colors duration-150 ${
+                  active
+                    ? "bg-panel text-fg shadow-[var(--elevation-lift)]"
+                    : "text-muted hover:text-fg"
                 }`}
               >
                 {option.label}
-                {active ? (
-                  <motion.span
-                    layoutId="idea-status-filter"
-                    aria-hidden
-                    className="absolute inset-x-2 -bottom-[1px] h-px bg-accent"
-                    transition={{ duration: reduce ? 0 : 0.18, ease: [0.22, 1, 0.36, 1] }}
-                  />
-                ) : null}
               </button>
             );
           })}
         </div>
 
-        <span aria-hidden className="hidden h-3 w-px bg-line sm:block" />
-
-        <div className="ml-auto grid w-full grid-cols-2 gap-2 sm:w-auto sm:min-w-[16rem] sm:flex-1 xl:flex xl:flex-none">
+        <div className="ml-auto grid w-full grid-cols-2 gap-2 sm:w-auto sm:min-w-[15rem] sm:flex-1 lg:flex lg:flex-none">
           <IdeaSelect
             label="Category"
             value={category}

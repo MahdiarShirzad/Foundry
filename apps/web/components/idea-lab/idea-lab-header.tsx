@@ -21,17 +21,17 @@ export function IdeaLabHeader({
       title="Idea Lab"
       description="Capture ideas, discover opportunities, and start building."
       meta={[
-        <>
-          <span className="text-fg">{String(total).padStart(2, "0")}</span> ideas
-        </>,
+        <span key="total" className="font-medium text-fg">
+          {total} {total === 1 ? "idea" : "ideas"}
+        </span>,
         `${exploring} exploring`,
         `${shortlisted} shortlisted`,
-        `updated ${lastUpdated}`,
+        `Updated ${lastUpdated}`,
       ]}
       actions={
         <Button variant="primary" size="md" onClick={onNewIdea}>
           <PlusIcon />
-          New Idea
+          New idea
         </Button>
       }
     />
