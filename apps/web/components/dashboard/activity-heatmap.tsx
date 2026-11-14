@@ -83,7 +83,7 @@ export default function ActivityHeatmap({ data }: { data: Heatmap }) {
                 top: -34,
               }}
             >
-              <p className="whitespace-nowrap font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
+              <p className="whitespace-nowrap text-[12px] text-faint">
                 {WEEKDAYS[active.day]} {formatShortDate(active.date)}
               </p>
               <p className="font-mono text-[11px] text-fg">{active.count} entries</p>

@@ -20,7 +20,7 @@ export default function GateLog({ rows }: { rows: GateDecision[] }) {
               index === rows.length - 1 ? "pb-0" : "border-b border-line/70"
             }`}
           >
-            <span className="w-11 shrink-0 pt-[3px] font-mono text-[9px] uppercase tracking-[0.1em] text-faint">
+            <span className="w-11 shrink-0 pt-[3px] text-[12px] text-faint">
               {formatShortDate(row.date)}
             </span>
             <div className="min-w-0 flex-1">
@@ -32,7 +32,7 @@ export default function GateLog({ rows }: { rows: GateDecision[] }) {
                   {outcome.label}
                 </span>
               </div>
-              <p className="mt-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-faint">
+              <p className="mt-0.5 text-[12px] text-faint">
                 {row.gate}
               </p>
               {row.note ? (

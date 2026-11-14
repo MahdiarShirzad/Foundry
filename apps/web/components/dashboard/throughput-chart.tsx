@@ -131,7 +131,7 @@ export default function ThroughputChart({
                   type="button"
                   onClick={() => toggleSeries(series.key)}
                   aria-pressed={!isHidden}
-                  className={`group flex items-baseline gap-2 font-mono text-[10px] uppercase tracking-[0.14em] transition-opacity ${
+                  className={`group flex items-baseline gap-2 text-[12px] transition-opacity ${
                     isHidden ? "opacity-40" : "opacity-100"
                   }`}
                 >
@@ -148,12 +148,12 @@ export default function ThroughputChart({
           })}
         </ul>
         {compare && dataset.previous ? (
-          <span className="flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.14em] text-faint">
+          <span className="flex items-center gap-2 text-[12px] text-faint">
             <span aria-hidden className="block h-px w-4 border-t border-dashed border-faint" />
             previous {dataset.label}
           </span>
         ) : null}
-        <span className="ml-auto font-mono text-[9.5px] uppercase tracking-[0.14em] text-faint">
+        <span className="ml-auto text-[12px] text-faint">
           per week
         </span>
       </div>
@@ -306,7 +306,7 @@ export default function ThroughputChart({
               left: Math.min(Math.max(x(active) - 68, 0), Math.max(chartWidth - 150, 0)),
             }}
           >
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
+            <p className="text-[12px] text-faint">
               Week of {dataset.labels[active]}
             </p>
             <ul className="mt-1 space-y-0.5">

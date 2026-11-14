@@ -233,24 +233,22 @@ function ProductSwitcher({ onNavigate }: { onNavigate?: () => void }) {
   }
 
   return (
-    <div className="border-b border-line px-4 py-4">
-      <div className="flex items-center justify-between gap-2">
-        <h2 className="font-mono text-[9px] uppercase tracking-[0.22em] text-faint/90">
-          Product
-        </h2>
+    <div className="px-3 pb-3 pt-4">
+      <div className="flex items-center justify-between gap-2 px-2 pb-2">
+        <h2 className="text-[12px] font-medium text-faint">Products</h2>
         {!creating ? (
           <button
             type="button"
             onClick={() => setCreating(true)}
-            className="font-mono text-[9px] uppercase tracking-[0.14em] text-accent transition-colors hover:text-fg"
+            className="rounded-[6px] px-1.5 py-0.5 text-[12px] font-medium text-accent transition-colors hover:bg-mint-tint/25 hover:text-fg"
           >
-            + New product
+            + New
           </button>
         ) : null}
       </div>
 
       {creating ? (
-        <form onSubmit={handleCreate} className="mt-2.5 space-y-2">
+        <form onSubmit={handleCreate} className="mt-1 space-y-2 px-1">
           <input
             autoFocus
             value={name}
@@ -261,10 +259,10 @@ function ProductSwitcher({ onNavigate }: { onNavigate?: () => void }) {
             placeholder="Product name"
             aria-label="New product name"
             disabled={createProduct.isPending}
-            className="h-8 w-full border border-line bg-bg/40 px-2.5 text-[12px] text-fg outline-none transition-colors placeholder:text-faint/80 focus:border-accent disabled:opacity-60"
+            className="h-9 w-full rounded-control border border-line bg-bg/40 px-2.5 text-[13px] text-fg outline-none transition-colors placeholder:text-faint/80 focus:border-accent disabled:opacity-60"
           />
           {error ? (
-            <p className="text-[10.5px] leading-snug text-danger">{error}</p>
+            <p className="text-[12px] leading-snug text-danger">{error}</p>
           ) : null}
           <div className="flex items-center gap-1.5">
             <Button
@@ -287,21 +285,21 @@ function ProductSwitcher({ onNavigate }: { onNavigate?: () => void }) {
           </div>
         </form>
       ) : isPending ? (
-        <div aria-hidden className="mt-3 space-y-1.5">
+        <div aria-hidden className="mt-1 space-y-1 px-1">
           {[0, 1, 2].map((row) => (
-            <span key={row} className="block h-7 w-full animate-pulse bg-line/80" />
+            <span key={row} className="block h-9 w-full animate-pulse rounded-control bg-line/50" />
           ))}
         </div>
       ) : isError ? (
-        <p className="mt-3 border border-line px-2.5 py-2 text-[11px] leading-snug text-faint">
+        <p className="mx-1 mt-1 rounded-control border border-line px-2.5 py-2 text-[12px] leading-snug text-faint">
           Could not load products.
         </p>
       ) : products.length === 0 ? (
-        <p className="mt-3 border border-dashed border-line px-2.5 py-2 text-[11px] leading-snug text-faint">
+        <p className="mx-1 mt-1 rounded-control border border-dashed border-line px-2.5 py-2.5 text-[12px] leading-relaxed text-faint">
           No products yet — create one to get started
         </p>
       ) : (
-        <ul className="mt-2 space-y-0.5">
+        <ul className="mt-1 space-y-0.5">
           {products.map((product) => {
             const active = product.id === activeId;
             return (
@@ -310,18 +308,26 @@ function ProductSwitcher({ onNavigate }: { onNavigate?: () => void }) {
                   type="button"
                   onClick={() => selectProduct(product.id)}
                   aria-current={active ? "true" : undefined}
-                  className={`group relative flex w-full items-center gap-2 py-1.5 pl-3 pr-2 text-left text-[12px] transition-colors ${
+                  className={`group relative flex w-full items-center gap-2.5 rounded-control py-2 pl-2.5 pr-2 text-left text-[13.5px] transition-colors duration-150 ${
                     active
-                      ? "bg-mint-tint/50 font-medium text-accent"
-                      : "text-muted hover:bg-mint-tint/25 hover:text-fg"
+                      ? "bg-white/[0.07] font-medium text-fg"
+                      : "text-muted hover:bg-white/[0.04] hover:text-fg"
                   }`}
                 >
                   {active ? (
                     <span
                       aria-hidden
-                      className="absolute inset-y-1 left-0 w-[2px] bg-accent"
+                      className="absolute inset-y-1.5 left-0 w-[2px] rounded-pill bg-mint"
                     />
                   ) : null}
+                  <span
+                    aria-hidden
+                    className={`flex size-6 shrink-0 items-center justify-center rounded-[6px] text-[10px] font-semibold uppercase tracking-[0.02em] ${
+                      active ? "bg-mint text-ink" : "bg-white/[0.06] text-faint group-hover:text-muted"
+                    }`}
+                  >
+                    {initialsFor(product.name)}
+                  </span>
                   <span className="truncate">{product.name}</span>
                 </button>
               </li>
@@ -353,11 +359,11 @@ function SidebarContent({
   const sessionName = sessionEmail ?? null;
   const sessionInitials = sessionEmail ? sessionEmail.slice(0, 2).toUpperCase() : null;
   // Workspace API exposes no member role yet — hardcode the owner role for now.
-  const sessionRole = "WORKSPACE OWNER";
+  const sessionRole = "Workspace owner";
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex h-16 items-center gap-2.5 border-b border-line px-5">
+      <div className="flex h-16 items-center gap-2.5 px-4">
         <Link
           href="/"
           aria-label="Foundry — home"
@@ -374,32 +380,30 @@ function SidebarContent({
           />
         </Link>
         {!collapsed ? (
-          <span className="ml-auto border border-line px-1.5 py-0.5 font-mono text-[8.5px] uppercase tracking-[0.18em] text-faint">
-            app
+          <span className="ml-auto rounded-pill border border-line px-2 py-0.5 text-[11px] font-medium text-faint">
+            App
           </span>
         ) : null}
       </div>
 
       {!collapsed ? (
-        <div className="border-b border-line px-4 py-4">
-          <div className="flex items-center gap-3 border border-line bg-bg/40 px-3 py-2.5">
+        <div className="px-3 pb-1">
+          <div className="flex items-center gap-2.5 rounded-control bg-white/[0.04] px-2.5 py-2">
             <span
               aria-hidden
-              className="flex size-8 shrink-0 items-center justify-center bg-gradient-to-br from-mint to-accent font-mono text-[10px] tracking-[0.08em] text-ink"
+              className="flex size-8 shrink-0 items-center justify-center rounded-[7px] bg-gradient-to-br from-mint to-accent text-[11px] font-semibold text-ink"
             >
               {pending ? "…" : workspaceName ? initialsFor(workspaceName) : "—"}
             </span>
             <span className="min-w-0">
-              <span className="block truncate text-[12.5px] font-medium text-fg">
+              <span className="block truncate text-[13.5px] font-medium text-fg">
                 {pending ? (
-                  <span aria-hidden className="inline-block h-3 w-24 animate-pulse bg-line" />
+                  <span aria-hidden className="inline-block h-3 w-24 animate-pulse rounded bg-line" />
                 ) : (
                   workspaceName ?? "No workspace"
                 )}
               </span>
-              <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-faint">
-                workspace
-              </span>
+              <span className="block text-[12px] leading-tight text-faint">Workspace</span>
             </span>
           </div>
         </div>
@@ -411,17 +415,17 @@ function SidebarContent({
         </Suspense>
       ) : null}
 
-      <nav aria-label="Dashboard" className="dashboard-scroll flex-1 overflow-y-auto py-4">
+      <nav aria-label="Dashboard" className="dashboard-scroll flex-1 overflow-y-auto px-3 pb-4 pt-2">
         {GROUPS.map((group) => (
-          <div key={group.title} className={collapsed ? "mt-4 first:mt-0" : "mt-6 first:mt-0"}>
+          <div key={group.title} className={collapsed ? "mt-5 first:mt-0" : "mt-5 first:mt-1"}>
             {!collapsed ? (
-              <h2 className="px-5 font-mono text-[9px] uppercase tracking-[0.22em] text-faint/90">
+              <h2 className="px-2.5 pb-1.5 text-[12px] font-medium text-faint">
                 {group.title}
               </h2>
             ) : (
-              <span aria-hidden className="mx-5 mb-3 block h-px bg-line" />
+              <span aria-hidden className="mx-2 mb-3 block h-px bg-line" />
             )}
-            <ul className={collapsed ? "mt-1 space-y-1" : "mt-2 space-y-0.5"}>
+            <ul className={collapsed ? "space-y-1" : "space-y-0.5"}>
               {group.items.map((item) => {
                 const active = !item.anchored && pathname === item.href;
                 return (
@@ -431,22 +435,22 @@ function SidebarContent({
                       onClick={onNavigate}
                       aria-current={active ? "page" : undefined}
                       title={collapsed ? item.label : undefined}
-                      className={`group relative mx-2 flex items-center gap-2.5 py-2 text-[12.5px] transition-all duration-150 ${
-                        collapsed ? "justify-center px-0" : "px-3"
+                      className={`group relative flex h-10 items-center gap-2.5 rounded-control text-[14px] transition-colors duration-150 ${
+                        collapsed ? "justify-center px-0" : "px-2.5"
                       } ${
                         active
-                          ? "bg-mint-tint/50 font-medium text-accent"
-                          : "text-muted hover:bg-mint-tint/25 hover:text-fg"
+                          ? "bg-white/[0.07] font-medium text-fg"
+                          : "text-muted hover:bg-white/[0.04] hover:text-fg"
                       }`}
                     >
                       {active ? (
-                        <span aria-hidden className="absolute inset-y-1 left-0 w-[2px] bg-accent" />
+                        <span aria-hidden className="absolute inset-y-2 left-0 w-[2px] rounded-pill bg-mint" />
                       ) : null}
                       {item.glyph}
                       {item.meta ? (
                         <span
-                          className={`font-mono text-[9.5px] tracking-[0.16em] ${
-                            active ? "text-accent" : "text-faint"
+                          className={`font-mono text-[10.5px] tracking-[0.02em] ${
+                            active ? "text-mint" : "text-faint/70"
                           }`}
                         >
                           {item.meta}
@@ -467,24 +471,24 @@ function SidebarContent({
           <Link
             href="/"
             aria-label="Back to site"
-            className="mx-auto flex size-8 items-center justify-center border border-line-2 font-mono text-[10px] text-faint transition-colors hover:border-accent hover:text-accent"
+            className="mx-auto flex size-8 items-center justify-center rounded-control border border-line-2 text-[13px] text-faint transition-colors hover:border-accent hover:text-accent"
           >
             ↗
           </Link>
         ) : (
-          <div className="flex items-center gap-3 px-2 py-1">
-            <span className="flex size-8 shrink-0 items-center justify-center border border-line-2 bg-mint-tint/40 font-mono text-[10px] tracking-[0.04em] text-accent">
+          <div className="flex items-center gap-2.5 rounded-control px-1 py-1">
+            <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-mint-tint text-[11px] font-semibold uppercase text-accent">
               {session.status === "loading" ? "" : (sessionInitials ?? "—")}
             </span>
             <div className="min-w-0">
-              <p className="truncate text-[12px] font-medium text-fg">
+              <p className="truncate text-[13px] font-medium text-fg">
                 {session.status === "loading" ? (
-                  <span aria-hidden className="inline-block h-3 w-28 animate-pulse bg-line" />
+                  <span aria-hidden className="inline-block h-3 w-28 animate-pulse rounded bg-line" />
                 ) : (
                   (sessionName ?? "")
                 )}
               </p>
-              <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+              <p className="truncate text-[11.5px] capitalize leading-tight text-faint">
                 {session.status === "loading" ? "" : sessionName ? sessionRole : ""}
               </p>
             </div>
@@ -563,12 +567,19 @@ function CommandDialog({ open, onClose }: { open: boolean; onClose: () => void }
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6 }}
             transition={{ duration: reduce ? 0 : 0.2, ease: EASE }}
-            className="relative w-full max-w-[600px] border border-line bg-bg shadow-[var(--elevation-overlay)]"
+            className="relative w-full max-w-[600px] overflow-hidden rounded-card border border-line bg-panel shadow-[var(--elevation-overlay)]"
           >
             <div className="flex items-center gap-3 border-b border-line px-5 py-3.5">
-              <span aria-hidden className="font-mono text-[11px] text-faint">
-                ⌘
-              </span>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 16 16"
+                aria-hidden
+                className="shrink-0 fill-none stroke-faint stroke-[1.6]"
+              >
+                <circle cx="7" cy="7" r="4.5" />
+                <path d="m10.5 10.5 4 4" strokeLinecap="round" />
+              </svg>
               <input
                 ref={inputRef}
                 value={query}
@@ -580,7 +591,7 @@ function CommandDialog({ open, onClose }: { open: boolean; onClose: () => void }
               <button
                 type="button"
                 onClick={onClose}
-                className="shrink-0 border border-line px-2 py-0.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent hover:text-accent"
+                className="shrink-0 rounded-[5px] border border-line px-1.5 py-0.5 font-mono text-[10.5px] text-faint transition-colors hover:border-accent hover:text-accent"
               >
                 esc
               </button>
@@ -596,10 +607,10 @@ function CommandDialog({ open, onClose }: { open: boolean; onClose: () => void }
                   <Link
                     href={item.href}
                     onClick={onClose}
-                    className="flex items-baseline justify-between gap-4 px-5 py-2.5 text-[13.5px] text-fg transition-colors hover:bg-mint-tint/40"
+                    className="flex items-baseline justify-between gap-4 px-5 py-2.5 text-[13.5px] text-fg transition-colors hover:bg-mint-tint/30"
                   >
                     <span>{item.label}</span>
-                    <span className="font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint">
+                    <span className="text-[12px] text-faint">
                       {item.hint}
                     </span>
                   </Link>
@@ -651,7 +662,7 @@ function AccountMenu() {
         aria-expanded={open}
         aria-haspopup="menu"
         aria-label="Account menu"
-        className="flex size-9 items-center justify-center border border-line bg-panel font-mono text-[10px] tracking-[0.06em] text-fg transition-colors hover:border-accent hover:text-accent"
+        className="flex size-9 items-center justify-center rounded-pill border border-line bg-panel text-[11px] font-semibold uppercase text-fg transition-colors hover:border-accent hover:text-accent"
       >
         {session.status === "loading" ? "" : (sessionInitials ?? "—")}
       </button>
@@ -664,7 +675,7 @@ function AccountMenu() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -4, scale: 0.98 }}
             transition={{ duration: reduce ? 0 : 0.16, ease: EASE }}
-            className="absolute right-0 top-11 z-40 w-60 border border-line bg-bg shadow-[var(--elevation-popover)]"
+            className="absolute right-0 top-11 z-40 w-60 overflow-hidden rounded-card border border-line bg-panel shadow-[var(--elevation-popover)]"
           >
             <div className="border-b border-line px-4 py-3">
               <p className="text-[12.5px] text-fg">
@@ -674,12 +685,12 @@ function AccountMenu() {
                   (sessionEmail ?? "")
                 )}
               </p>
-              <p className="font-mono text-[9.5px] uppercase tracking-[0.16em] text-faint">
+              <p className="mt-0.5 text-[12px] text-faint">
                 {session.status === "loading"
                   ? ""
                   : session.status === "authenticated"
-                    ? "signed in"
-                    : "not signed in"}
+                    ? "Signed in"
+                    : "Not signed in"}
               </p>
             </div>
             {[
@@ -749,7 +760,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
           onClick={() => setCollapsed((value) => !value)}
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           aria-expanded={!collapsed}
-          className="absolute bottom-20 left-1/2 hidden h-7 w-7 -translate-x-1/2 items-center justify-center border border-line-2 bg-bg/80 font-mono text-[10px] text-faint transition-colors hover:border-accent hover:text-accent lg:flex"
+          className="absolute bottom-20 left-1/2 hidden size-7 -translate-x-1/2 items-center justify-center rounded-control border border-line bg-bg/80 text-[11px] text-faint transition-colors hover:border-accent hover:text-accent lg:flex"
         >
           {collapsed ? "»" : "«"}
         </button>
@@ -771,12 +782,12 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
             </button>
 
             <nav aria-label="Breadcrumb" className="min-w-0">
-              <ol className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.18em]">
+              <ol className="flex items-center gap-1.5 text-[13px]">
                 <li className="hidden text-faint sm:block">Workspace</li>
                 <li aria-hidden className="hidden text-faint/60 sm:block">
-                  /
+                  ›
                 </li>
-                <li className="truncate text-fg">{title}</li>
+                <li className="truncate font-medium text-fg">{title}</li>
               </ol>
             </nav>
 
@@ -784,11 +795,11 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 onClick={() => setCommand(true)}
-                className="hidden h-9 min-w-[13.5rem] items-center gap-2.5 border border-line bg-panel px-3 text-left transition-colors hover:border-accent/60 md:flex"
+                className="hidden h-9 min-w-[13.5rem] items-center gap-2.5 rounded-control border border-line bg-panel px-3 text-left transition-colors hover:border-line-2 md:flex"
               >
                 <svg
-                  width="12"
-                  height="12"
+                  width="13"
+                  height="13"
                   viewBox="0 0 16 16"
                   aria-hidden
                   className="fill-none stroke-faint stroke-[1.5]"
@@ -796,13 +807,13 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
                   <circle cx="7" cy="7" r="4.5" />
                   <path d="m10.5 10.5 4 4" strokeLinecap="round" />
                 </svg>
-                <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
+                <span className="text-[13px] text-faint">
                   Search workspace
                 </span>
-                <kbd className="ml-auto border border-line bg-bg px-1.5 py-0.5 font-mono text-[9px] text-faint">⌘K</kbd>
+                <kbd className="ml-auto rounded-[5px] border border-line bg-surface-sunken/60 px-1.5 py-0.5 font-mono text-[10.5px] text-faint">⌘K</kbd>
               </button>
 
-              <span aria-hidden className="mx-1 hidden h-6 w-px bg-line sm:block" />
+              <span aria-hidden className="mx-0.5 hidden h-6 w-px bg-line sm:block" />
 
               <LogoutButton />
 
@@ -812,7 +823,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
         </header>
 
         <main id="content" className="dashboard-canvas min-w-0 flex-1">
-          <div className="mx-auto w-full max-w-[1680px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+          <div className="mx-auto w-full max-w-[1280px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
             {children}
           </div>
         </main>

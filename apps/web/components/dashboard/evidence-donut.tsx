@@ -111,7 +111,7 @@ export default function EvidenceDonut({ slices }: { slices: EvidenceSlice[] }) {
         </ul>
       </div>
 
-      <p className="mt-3 border-t border-line pt-2.5 font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+      <p className="mt-3 border-t border-line pt-2.5 text-[12px] text-faint">
         interviews dominate · surveys are the thinnest signal
       </p>
     </div>

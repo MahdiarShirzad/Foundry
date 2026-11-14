@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 
-/** Shared frame for a dashboard panel: hairline header, mono eyebrow, action. */
+/** Shared frame for a dashboard panel: one container, quiet header, action. */
 export function Panel({
   title,
   description,
@@ -21,21 +21,20 @@ export function Panel({
 }) {
   return (
     <section
-      className={`flex min-w-0 flex-col border border-line bg-panel shadow-[var(--elevation-lift)] transition-colors hover:border-line-2 ${className}`}
+      className={`flex min-w-0 flex-col rounded-card border border-line bg-panel shadow-card ${className}`}
     >
-      <header className="flex items-start justify-between gap-4 border-b border-line/80 px-5 py-4">
+      <header className="flex items-start justify-between gap-4 px-5 pb-3 pt-5">
         <div className="min-w-0">
-          <h2 className="flex items-center gap-2 text-[13.5px] font-medium tracking-[-0.015em] text-fg">
-            <span aria-hidden className="size-1.5 bg-mint" />
+          <h2 className="text-[15px] font-semibold leading-snug tracking-[-0.015em] text-fg">
             {title}
           </h2>
           {description ? (
-            <p className="mt-1 text-[11.5px] leading-relaxed text-faint">{description}</p>
+            <p className="mt-1 text-[12.5px] leading-relaxed text-muted">{description}</p>
           ) : null}
         </div>
         {action ? <div className="shrink-0">{action}</div> : null}
       </header>
-      <div className={`min-w-0 flex-1 px-5 py-5 ${bodyClassName}`}>{children}</div>
+      <div className={`min-w-0 flex-1 px-5 pb-5 ${bodyClassName}`}>{children}</div>
     </section>
   );
 }
@@ -58,7 +57,7 @@ export function RangeTabs<T extends number>({
     <div
       role="group"
       aria-label={label}
-      className="flex items-center border border-line bg-panel p-px shadow-[var(--elevation-lift)]"
+      className="flex items-center gap-0.5 rounded-control border border-line bg-surface-sunken/40 p-0.5"
     >
       {options.map((option) => {
         const active = option === value;
@@ -68,19 +67,19 @@ export function RangeTabs<T extends number>({
             type="button"
             onClick={() => onChange(option)}
             aria-pressed={active}
-            className={`relative px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
-              active ? "text-accent" : "text-faint hover:bg-mint-tint/25 hover:text-fg"
+            className={`relative rounded-[6px] px-2.5 py-1.5 text-[12.5px] font-medium transition-colors duration-150 ${
+              active ? "text-fg" : "text-muted hover:text-fg"
             }`}
           >
             {active ? (
               <motion.span
                 layoutId="range-indicator"
                 aria-hidden
-                className="absolute inset-0 border border-accent/40 bg-mint-tint"
+                className="absolute inset-0 rounded-[6px] bg-panel shadow-[var(--elevation-lift)]"
                 transition={{ duration: reduce ? 0 : 0.18, ease: [0.22, 1, 0.36, 1] }}
               />
             ) : null}
-            <span className="relative">{option}w</span>
+            <span className="relative tabular-nums">{option}w</span>
           </button>
         );
       })}
@@ -88,10 +87,10 @@ export function RangeTabs<T extends number>({
   );
 }
 
-/** Small trend line for KPI cells. Decorative: the value is in the text. */
+/** Small trend line for KPI cards. Decorative: the value is in the text. */
 export function Sparkline({
   values,
-  width = 92,
+  width = 88,
   height = 26,
 }: {
   values: number[];
@@ -124,7 +123,7 @@ export function Sparkline({
       <polyline
         points={points.join(" ")}
         className="fill-none stroke-accent"
-        strokeWidth="1.25"
+        strokeWidth="1.5"
         strokeLinejoin="round"
         strokeLinecap="round"
       />
@@ -149,8 +148,8 @@ export function DeltaTag({
 }) {
   return (
     <span
-      className={`inline-flex items-center gap-1 font-mono text-[10px] tracking-[0.04em] ${
-        good ? "text-accent" : "text-danger"
+      className={`inline-flex shrink-0 items-center gap-1 rounded-pill px-2 py-0.5 text-[11.5px] font-medium tabular-nums ${
+        good ? "bg-success-tint text-success" : "bg-danger-tint text-danger"
       }`}
     >
       <span aria-hidden>{direction === "up" ? "▲" : "▼"}</span>

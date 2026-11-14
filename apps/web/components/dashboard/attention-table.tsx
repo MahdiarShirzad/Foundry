@@ -16,7 +16,7 @@ function Signal({ signal }: { signal: AttentionRow["signal"] }) {
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 border px-1.5 py-[2px] font-mono text-[9px] uppercase tracking-[0.12em] ${tone}`}
+      className={`inline-flex items-center gap-1.5 border px-1.5 py-[2px] text-[12px] ${tone}`}
     >
       <span aria-hidden className={`size-1.5 ${mark}`} />
       {signal.label}
@@ -40,7 +40,7 @@ export default function AttentionTable({
   if (visible.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center border border-dashed border-line-2 px-6 py-10 text-center">
-        <p className="font-mono text-[9.5px] uppercase tracking-[0.22em] text-accent">clear</p>
+        <p className="text-[12px] text-accent">clear</p>
         <p className="mt-2 text-[13px] text-fg">
           Nothing needs attention{stageName ? ` in ${stageName}` : ""}.
         </p>
@@ -51,7 +51,7 @@ export default function AttentionTable({
           <button
             type="button"
             onClick={onClear}
-            className="mt-4 border border-line px-3 py-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+            className="mt-4 border border-line px-3 py-1.5 text-[12px] text-fg transition-colors hover:border-accent hover:text-accent"
           >
             Clear filter
           </button>

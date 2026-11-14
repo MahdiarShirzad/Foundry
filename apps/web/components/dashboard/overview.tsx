@@ -48,41 +48,33 @@ export default function DashboardOverview() {
       initial={reduce ? false : { opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: reduce ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}
-      className="space-y-4"
+      className="space-y-6"
     >
-      <header className="relative overflow-hidden border border-line bg-panel shadow-[var(--elevation-lift)]">
+      <header className="relative isolate">
         <span
           aria-hidden
-          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent"
+          className="blueprint pointer-events-none absolute -inset-x-4 -top-5 -z-10 h-40 opacity-40 [mask-image:linear-gradient(to_bottom,black,transparent_85%)] sm:-inset-x-6"
         />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-24 -top-28 size-[20rem] rounded-full bg-mint-tint/70 blur-3xl"
-        />
-        <div className="relative flex flex-wrap items-end justify-between gap-5 px-5 py-5 sm:px-7 sm:py-6">
-          <div className="min-w-0 max-w-[58ch]">
-            <p className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-[0.2em] text-accent">
-              <span aria-hidden className="size-1.5 bg-mint" />
+        <div className="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between xl:gap-10">
+          <div className="min-w-0 max-w-[74ch]">
+            <p className="text-[12px] text-faint">
               Workspace overview
             </p>
-            <h1 className="mt-2.5 text-[clamp(1.9rem,3vw,2.45rem)] font-medium leading-[1.02] tracking-[-0.045em] text-fg">
+            <h1 className="mt-3 text-[clamp(1.75rem,2.6vw,2rem)] font-semibold leading-[1.08] tracking-[-0.035em] text-fg">
               Cycle overview
             </h1>
-            <p className="mt-3 max-w-[56ch] text-[13px] leading-relaxed text-muted">
-              {hydrated && workspace ? workspace.name : "Your workspace"} · {ATTENTION.length}{" "}
-              initiatives need a decision across the eight stages.
+            <p className="mt-2.5 max-w-[68ch] text-[14px] leading-relaxed text-muted">
+              {hydrated && workspace ? workspace.name : "Your workspace"} ·{" "}
+              {ATTENTION.length} initiatives need a decision across the eight stages.
             </p>
-            <div className="mt-4 flex flex-wrap items-center gap-1.5">
-              <span className="border border-line bg-bg/60 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-faint">
-                {ATTENTION.length} need attention
-              </span>
-              <span className="border border-line bg-bg/60 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-faint">
-                as of {formatShortDate(WORKSPACE.asOf)}
-              </span>
-            </div>
+            <p className="mt-3 flex flex-wrap items-center gap-x-3 text-[13px] text-muted">
+              <span>{ATTENTION.length} need attention</span>
+              <span aria-hidden className="size-1 rounded-full bg-line-2" />
+              <span>As of {formatShortDate(WORKSPACE.asOf)}</span>
+            </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 xl:pt-1">
             <RangeTabs options={RANGES} value={range} onChange={setRange} label="Time range" />
 
             <button
@@ -95,33 +87,47 @@ export default function DashboardOverview() {
                   ? "Overlay the previous period as dashed lines"
                   : "A 26-week comparison needs 52 weeks of history"
               }
-              className={`flex h-[30px] items-center gap-2 border px-2.5 font-mono text-[9.5px] uppercase tracking-[0.14em] transition-colors ${
+              className={`flex h-9 items-center gap-2 rounded-control border px-3 text-[12.5px] font-medium transition-colors duration-150 ${
                 compare
-                  ? "border-accent/40 bg-mint-tint text-accent"
-                  : "border-line bg-panel text-faint hover:text-fg"
+                  ? "border-accent/50 bg-mint-tint/60 text-accent"
+                  : "border-line bg-panel text-muted hover:text-fg"
               } disabled:cursor-not-allowed disabled:border-line disabled:text-faint/60 disabled:hover:text-faint/60`}
             >
               <span aria-hidden className="block h-px w-4 border-t border-dashed border-current" />
-              compare
+              Compare
             </button>
           </div>
         </div>
       </header>
 
+      {ATTENTION.length > 0 ? (
+        <a
+          href="#needs-attention"
+          className="flex flex-wrap items-center gap-x-3 gap-y-1.5 rounded-card border border-warning/25 bg-warning-tint/40 px-5 py-3.5 transition-colors hover:border-warning/40"
+        >
+          <span aria-hidden className="size-1.5 rounded-full bg-warning" />
+          <span className="text-[13.5px] font-medium text-fg">
+            {ATTENTION.length} initiatives need a decision
+          </span>
+          <span className="text-[13px] text-muted">
+            Blocked, unresolved feedback, or past the stage window.
+          </span>
+          <span className="ml-auto text-[13px] font-medium text-warning">Review below ↓</span>
+        </a>
+      ) : null}
+
       <KpiStrip kpis={kpis} />
 
-      <div className="flex flex-wrap items-end justify-between gap-3 pt-1">
+      <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-accent">
+          <h2 className="text-[16px] font-semibold tracking-[-0.015em] text-fg">
             Cycle performance
-          </p>
-          <p className="mt-1 text-[11.5px] text-faint">
+          </h2>
+          <p className="mt-1 text-[13px] text-muted">
             Throughput, evidence mix, stage load and decisions for {dataset.label}.
           </p>
         </div>
-        <span className="font-mono text-[9px] uppercase tracking-[0.14em] text-faint">
-          {dataset.label}
-        </span>
+        <span className="font-mono text-[12px] text-faint">{dataset.label}</span>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-12">
@@ -133,9 +139,9 @@ export default function DashboardOverview() {
           action={
             <Link
               href="/docs/workflow"
-              className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint underline decoration-line underline-offset-4 transition-colors hover:text-accent"
+              className="text-[12.5px] font-medium text-muted underline-offset-4 transition-colors hover:text-accent hover:underline"
             >
-              workflow ↗
+              Workflow
             </Link>
           }
         >
@@ -157,9 +163,9 @@ export default function DashboardOverview() {
           action={
             <Link
               href="/dashboard/modules"
-              className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint underline decoration-line underline-offset-4 transition-colors hover:text-accent"
+              className="text-[12.5px] font-medium text-muted underline-offset-4 transition-colors hover:text-accent hover:underline"
             >
-              all modules ↗
+              All modules
             </Link>
           }
         >
@@ -187,7 +193,7 @@ export default function DashboardOverview() {
               <button
                 type="button"
                 onClick={() => setStage(null)}
-                className="flex items-center gap-1.5 border border-accent/40 bg-mint-tint px-1.5 py-[2px] font-mono text-[9px] uppercase tracking-[0.12em] text-accent"
+                className="flex items-center gap-1.5 rounded-pill border border-accent/40 bg-mint-tint px-2.5 py-1 text-[12px] font-medium text-accent"
               >
                 {stage}
                 <span aria-hidden>×</span>
@@ -196,12 +202,14 @@ export default function DashboardOverview() {
             ) : null
           }
         >
-          <AttentionTable
-            rows={ATTENTION}
-            stageFilter={stage}
-            stageName={stageName}
-            onClear={() => setStage(null)}
-          />
+          <div id="needs-attention" className="scroll-mt-24">
+            <AttentionTable
+              rows={ATTENTION}
+              stageFilter={stage}
+              stageName={stageName}
+              onClear={() => setStage(null)}
+            />
+          </div>
         </Panel>
 
         <Panel
@@ -212,7 +220,6 @@ export default function DashboardOverview() {
           <GateLog rows={DECISIONS} />
         </Panel>
       </div>
-
     </motion.div>
   );
 }

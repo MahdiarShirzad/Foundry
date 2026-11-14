@@ -65,14 +65,14 @@ export default function StageBars({
       </ul>
 
       <div className="mt-3 flex items-center justify-between gap-3 border-t border-line pt-2.5">
-        <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-faint">
+        <p className="text-[12px] text-faint">
           {selected ? "filtering attention list" : "select a stage to filter"}
         </p>
         {selected ? (
           <button
             type="button"
             onClick={() => onSelect(null)}
-            className="font-mono text-[9px] uppercase tracking-[0.16em] text-accent underline decoration-line underline-offset-4 hover:decoration-accent"
+            className="text-[12px] text-accent underline decoration-line underline-offset-4 hover:decoration-accent"
           >
             clear
           </button>
