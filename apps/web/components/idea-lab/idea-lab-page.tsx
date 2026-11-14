@@ -5,11 +5,13 @@ import { useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import { useProducts } from "@/lib/product/use-products";
-import { useIdeas } from "@/lib/idea-lab/use-idea";
+import { useCreateIdea, useIdeas } from "@/lib/idea-lab/use-idea";
 import { useHydrated } from "@/lib/use-hydrated";
+import { useWorkspace } from "@/lib/workspace/use-workspace";
 import {
   LAB_TODAY,
   formatIdeaShortDate,
+  type IdeaDraft,
   type IdeaStatusFilter,
   type LabView,
 } from "@/lib/idea-lab/types";
@@ -72,6 +74,9 @@ export default function IdeaLabPage({
   const [captureOpen, setCaptureOpen] = useState(false);
   const [mobileDetail, setMobileDetail] = useState(false);
 
+  const { data: workspace } = useWorkspace();
+  const { create: createIdea } = useCreateIdea();
+
   const selectedIdea =
     ideas.find((idea) => idea.id === selectedId) ?? ideas[0] ?? null;
   const lastUpdated = ideas.reduce(
@@ -114,6 +119,36 @@ export default function IdeaLabPage({
   function retry() {
     setMobileDetail(false);
     void refetch();
+  }
+
+  async function captureIdea(draft: IdeaDraft) {
+    if (!activeProductId) {
+      throw new Error("Select a product before capturing an idea.");
+    }
+
+    if (!workspace?.id) {
+      throw new Error(
+        "Your workspace is still loading. Try capturing the idea again in a moment.",
+      );
+    }
+
+    const idea = await createIdea({
+      workspaceId: workspace.id,
+      productId: activeProductId,
+      name: draft.title || "Untitled idea",
+      summary: draft.summary,
+      problem: draft.problem,
+      audience: draft.audience,
+      category: draft.category,
+      tags: draft.tags,
+      context: draft.context,
+      openQuestions: draft.assumption ? [draft.assumption] : [],
+      status: "INBOX",
+    });
+
+    setSelectedId(idea.id);
+    setMobileDetail(true);
+    setCaptureOpen(false);
   }
 
   return (
@@ -222,6 +257,7 @@ export default function IdeaLabPage({
           <IdeaCaptureModal
             key="capture"
             onClose={() => setCaptureOpen(false)}
+            onSubmit={captureIdea}
             categoryOptions={categoryOptions}
           />
         ) : null}

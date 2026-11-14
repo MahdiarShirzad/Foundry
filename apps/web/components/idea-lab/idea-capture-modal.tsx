@@ -43,7 +43,7 @@ export function IdeaCaptureModal({
   categoryOptions,
 }: {
   onClose: () => void;
-  onSubmit?: (draft: IdeaDraft) => void;
+  onSubmit?: (draft: IdeaDraft) => void | Promise<void>;
   categoryOptions?: string[];
 }) {
   const reduce = useReducedMotion();
@@ -60,6 +60,8 @@ export function IdeaCaptureModal({
   const [assumption, setAssumption] = useState("");
   const [expanded, setExpanded] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
+  const [noticeError, setNoticeError] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [typedCategory, setTypedCategory] = useState("");
   const [addedCategories, setAddedCategories] = useState<string[]>([]);
 
@@ -121,8 +123,10 @@ export function IdeaCaptureModal({
     };
   }, [onClose]);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submitting) return;
+
     const draft: IdeaDraft = {
       title: title.trim(),
       summary: summary.trim(),
@@ -137,12 +141,28 @@ export function IdeaCaptureModal({
       assumption: assumption.trim(),
     };
 
-    if (onSubmit) {
-      onSubmit(draft);
+    if (!onSubmit) {
+      setNoticeError(false);
+      setNotice("Preview only — nothing was saved. Connect a capture handler to keep this idea.");
       return;
     }
 
-    setNotice("Preview only — nothing was saved. Connect a capture handler to keep this idea.");
+    setNotice(null);
+    setNoticeError(false);
+    setSubmitting(true);
+
+    try {
+      await onSubmit(draft);
+    } catch (error) {
+      setNoticeError(true);
+      setNotice(
+        error instanceof Error && error.message
+          ? error.message
+          : "Could not save this idea. Try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   const previewTags = tags
@@ -430,7 +450,11 @@ export function IdeaCaptureModal({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: reduce ? 0 : 0.18 }}
-                  className="mb-3 border-l-2 border-accent bg-mint-tint px-3 py-2 text-[11.5px] leading-relaxed text-fg"
+                  className={`mb-3 border-l-2 px-3 py-2 text-[11.5px] leading-relaxed text-fg ${
+                    noticeError
+                      ? "border-danger bg-danger/10"
+                      : "border-accent bg-mint-tint"
+                  }`}
                 >
                   {notice}
                 </motion.p>
@@ -439,22 +463,24 @@ export function IdeaCaptureModal({
 
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <p className="order-2 font-mono text-[10px] uppercase tracking-[0.14em] text-faint sm:order-1">
-                Preview form · nothing is stored
+                {onSubmit ? "Saves to your idea lab" : "Preview form · nothing is stored"}
               </p>
 
               <div className="order-1 grid grid-cols-2 gap-2 sm:order-2 sm:flex sm:items-center">
                 <button
                   type="button"
                   onClick={onClose}
-                  className="h-10 border border-line px-4 font-mono text-[10px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-line-2 hover:text-fg sm:h-9"
+                  disabled={submitting}
+                  className="h-10 border border-line px-4 font-mono text-[10px] uppercase tracking-[0.16em] text-muted transition-colors hover:border-line-2 hover:text-fg disabled:opacity-60 sm:h-9"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="group inline-flex h-10 items-center justify-center gap-2 bg-mint px-4 text-[12.5px] font-medium text-ink transition duration-200 hover:brightness-95 active:translate-y-px sm:h-9"
+                  disabled={submitting}
+                  className="group inline-flex h-10 items-center justify-center gap-2 bg-mint px-4 text-[12.5px] font-medium text-ink transition duration-200 hover:brightness-95 active:translate-y-px disabled:opacity-60 sm:h-9"
                 >
-                  Capture idea
+                  {submitting ? "Saving…" : "Capture idea"}
                   <span
                     aria-hidden
                     className="transition-transform duration-200 group-hover:translate-x-0.5"
