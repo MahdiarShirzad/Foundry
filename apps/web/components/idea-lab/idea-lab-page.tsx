@@ -4,8 +4,11 @@ import { useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
-import { DEMO_IDEAS } from "@/lib/idea-lab/demo";
+import { useProducts } from "@/lib/product/use-products";
+import { useIdeas } from "@/lib/idea-lab/use-idea";
+import { useHydrated } from "@/lib/use-hydrated";
 import {
+  LAB_TODAY,
   formatIdeaShortDate,
   type IdeaStatusFilter,
   type LabView,
@@ -14,17 +17,23 @@ import {
 import { IdeaCaptureModal } from "./idea-capture-modal";
 import { IdeaCollection } from "./idea-collection";
 import { IdeaDetailPanel } from "./idea-detail-panel";
-import { IdeaLabDetailEmpty, IdeaLabEmptyCollection, IdeaLabNoResults } from "./idea-lab-empty-state";
+import { IdeaLabDetailEmpty, IdeaLabEmptyCollection } from "./idea-lab-empty-state";
 import { IdeaLabErrorState } from "./idea-lab-error-state";
 import { IdeaLabHeader } from "./idea-lab-header";
 import { IdeaLabSkeleton } from "./idea-lab-skeleton";
 import { IdeaToolbar } from "./idea-toolbar";
 
-const WORKSPACE_HEIGHT =
-  "md:h-[calc(100dvh-14.75rem)] md:min-h-[32rem]";
+const WORKSPACE_HEIGHT = "md:h-[calc(100dvh-14.75rem)] md:min-h-[32rem]";
 
 const WORKSPACE_COLUMNS =
   "md:grid-cols-[minmax(0,19rem)_minmax(0,1fr)] lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] xl:grid-cols-[minmax(0,25.5rem)_minmax(0,1fr)]";
+
+/** Shape returned by `GET /products`. */
+type Product = {
+  id: string;
+  name: string;
+  slug?: string;
+};
 
 export default function IdeaLabPage({
   categoryOptions,
@@ -35,25 +44,55 @@ export default function IdeaLabPage({
 }) {
   const reduce = useReducedMotion();
   const workspaceRef = useRef<HTMLDivElement>(null);
+  const hydrated = useHydrated();
 
-  const [selectedId, setSelectedId] = useState(DEMO_IDEAS[0].id);
+  const { data: productsData, isPending: productsPending } = useProducts();
+  const products = (productsData as Product[] | undefined) ?? [];
+
+  // The dashboard stores the active product in `?product=`; fall back to the
+  // first product the same way the other module workspaces do. The fallback is
+  // only applied after hydration so the server HTML and the first client
+  // render agree on `data-product-id`.
+  const activeProductId =
+    productId ?? (hydrated ? products[0]?.id : undefined);
+
+  const {
+    ideas,
+    loading: ideasLoading,
+    error,
+    refetch,
+  } = useIdeas(activeProductId);
+  const loading = productId ? ideasLoading : ideasLoading || productsPending;
+
+  const [selectedId, setSelectedId] = useState("");
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<IdeaStatusFilter>("all");
   const [category, setCategory] = useState("all");
   const [sort, setSort] = useState("updated");
-  const [view, setView] = useState<LabView>("collection");
   const [captureOpen, setCaptureOpen] = useState(false);
   const [mobileDetail, setMobileDetail] = useState(false);
 
-  const selectedIdea = DEMO_IDEAS.find((idea) => idea.id === selectedId) ?? DEMO_IDEAS[0];
-  const lastUpdated = DEMO_IDEAS.reduce(
+  const selectedIdea =
+    ideas.find((idea) => idea.id === selectedId) ?? ideas[0] ?? null;
+  const lastUpdated = ideas.reduce(
     (latest, idea) => (idea.updatedAt > latest ? idea.updatedAt : latest),
-    DEMO_IDEAS[0].updatedAt,
+    ideas[0]?.updatedAt ?? LAB_TODAY,
   );
 
-  const exploring = DEMO_IDEAS.filter((idea) => idea.status === "exploring").length;
-  const shortlisted = DEMO_IDEAS.filter((idea) => idea.status === "shortlisted").length;
-  const visibleCount = view === "no-results" ? 0 : DEMO_IDEAS.length;
+  const exploring = ideas.filter((idea) => idea.status === "exploring").length;
+  const shortlisted = ideas.filter(
+    (idea) => idea.status === "shortlisted",
+  ).length;
+
+  const renderedView: LabView = loading
+    ? "loading"
+    : error
+      ? "error"
+      : ideas.length === 0
+        ? "empty"
+        : "collection";
+
+  const visibleCount = ideas.length;
 
   function selectIdea(id: string) {
     setSelectedId(id);
@@ -72,17 +111,9 @@ export default function IdeaLabPage({
     }
   }
 
-  function changeView(next: LabView) {
-    setView(next);
+  function retry() {
     setMobileDetail(false);
-  }
-
-  function clearSearchAndFilters() {
-    setQuery("");
-    setStatus("all");
-    setCategory("all");
-    setView("collection");
-    setMobileDetail(false);
+    void refetch();
   }
 
   return (
@@ -91,20 +122,18 @@ export default function IdeaLabPage({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: reduce ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}
       className="flex flex-col gap-4"
-      data-product-id={productId}
+      data-product-id={activeProductId}
     >
       <IdeaLabHeader
-        total={DEMO_IDEAS.length}
+        total={ideas.length}
         exploring={exploring}
         shortlisted={shortlisted}
         lastUpdated={formatIdeaShortDate(lastUpdated)}
-        view={view}
-        onViewChange={changeView}
         onNewIdea={() => setCaptureOpen(true)}
       />
 
       <AnimatePresence mode="wait" initial={false}>
-        {view === "loading" ? (
+        {renderedView === "loading" ? (
           <motion.div
             key="loading"
             initial={reduce ? false : { opacity: 0 }}
@@ -114,7 +143,7 @@ export default function IdeaLabPage({
           >
             <IdeaLabSkeleton />
           </motion.div>
-        ) : view === "error" ? (
+        ) : renderedView === "error" ? (
           <motion.div
             key="error"
             initial={reduce ? false : { opacity: 0, y: 4 }}
@@ -122,16 +151,19 @@ export default function IdeaLabPage({
             exit={{ opacity: 0 }}
             transition={{ duration: reduce ? 0 : 0.18 }}
           >
-            <IdeaLabErrorState onReset={() => changeView("collection")} />
+            <IdeaLabErrorState onReset={retry} />
           </motion.div>
         ) : (
           <motion.div
-            key={view}
+            key={renderedView}
             ref={workspaceRef}
             initial={reduce ? false : { opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: reduce ? 0 : 0.18, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: reduce ? 0 : 0.18,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className={`grid scroll-mt-14 gap-px border border-line bg-line ${WORKSPACE_HEIGHT} ${WORKSPACE_COLUMNS} md:overflow-hidden`}
           >
             <section
@@ -140,8 +172,10 @@ export default function IdeaLabPage({
                 mobileDetail ? "hidden md:flex" : "flex"
               }`}
             >
-              {view === "empty" ? (
-                <IdeaLabEmptyCollection onNewIdea={() => setCaptureOpen(true)} />
+              {renderedView === "empty" ? (
+                <IdeaLabEmptyCollection
+                  onNewIdea={() => setCaptureOpen(true)}
+                />
               ) : (
                 <>
                   <IdeaToolbar
@@ -157,15 +191,11 @@ export default function IdeaLabPage({
                     count={visibleCount}
                   />
 
-                  {view === "no-results" ? (
-                    <IdeaLabNoResults query={query} onClear={clearSearchAndFilters} />
-                  ) : (
-                    <IdeaCollection
-                      ideas={DEMO_IDEAS}
-                      selectedId={selectedId}
-                      onSelect={selectIdea}
-                    />
-                  )}
+                  <IdeaCollection
+                    ideas={ideas}
+                    selectedId={selectedIdea?.id ?? ""}
+                    onSelect={selectIdea}
+                  />
                 </>
               )}
             </section>
@@ -174,16 +204,18 @@ export default function IdeaLabPage({
               aria-label="Selected idea"
               className={`min-h-0 bg-panel ${mobileDetail ? "flex" : "hidden md:flex"}`}
             >
-              {view === "empty" ? (
+              {renderedView === "empty" || !selectedIdea ? (
                 <IdeaLabDetailEmpty />
               ) : (
-                <IdeaDetailPanel idea={selectedIdea} onBack={() => setMobileDetail(false)} />
+                <IdeaDetailPanel
+                  idea={selectedIdea}
+                  onBack={() => setMobileDetail(false)}
+                />
               )}
             </section>
           </motion.div>
         )}
       </AnimatePresence>
-
 
       <AnimatePresence>
         {captureOpen ? (
@@ -203,7 +235,13 @@ export default function IdeaLabPage({
  * (`?product=<id>`) and threads it into the page. `useSearchParams` suspends
  * during prerendering, so the route renders this behind a Suspense boundary.
  */
-export function IdeaLabRoute({ categoryOptions }: { categoryOptions?: string[] }) {
+export function IdeaLabRoute({
+  categoryOptions,
+}: {
+  categoryOptions?: string[];
+}) {
   const productId = useSearchParams().get("product") ?? undefined;
-  return <IdeaLabPage categoryOptions={categoryOptions} productId={productId} />;
+  return (
+    <IdeaLabPage categoryOptions={categoryOptions} productId={productId} />
+  );
 }

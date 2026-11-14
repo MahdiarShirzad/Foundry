@@ -35,6 +35,75 @@ export type Idea = {
   notes: IdeaNote[];
 };
 
+/* ------------------------------------------------------------ backend types */
+
+/** Status values the API stores and returns (see the Prisma `IdeaStatus`). */
+export const IDEA_API_STATUSES = ["INBOX", "EXPLORING", "SHORTLISTED"] as const;
+
+export type IdeaApiStatus = (typeof IDEA_API_STATUSES)[number];
+
+/** Idea note as returned by the API. */
+export type ApiIdeaNote = {
+  id: string;
+  ideaId: string;
+  author: string;
+  initials: string;
+  /** Full ISO timestamp. */
+  date: string;
+  body: string;
+};
+
+/** Idea entity returned by `GET /ideas` and `GET /ideas/:id`. */
+export type ApiIdea = {
+  id: string;
+  workspaceId: string;
+  productId: string;
+  ref: string;
+  name: string;
+  headline: string | null;
+  summary: string | null;
+  problem: string | null;
+  audience: string | null;
+  category: string | null;
+  tags: string[];
+  status: IdeaApiStatus;
+  source: string | null;
+  context: string | null;
+  openQuestions: string[];
+  /** Full ISO timestamps. */
+  capturedAt: string;
+  updatedAt: string;
+  notes?: ApiIdeaNote[];
+};
+
+/** Body accepted by `POST /ideas` (mirrors the API `CreateIdeaDto`). */
+export type CreateIdeaInput = {
+  workspaceId: string;
+  productId: string;
+  name: string;
+  headline?: string;
+  summary?: string;
+  problem?: string;
+  audience?: string;
+  solution?: string;
+  category?: string | null;
+  tags?: string[];
+  status?: IdeaApiStatus;
+  source?: string;
+  context?: string;
+  openQuestions?: string[];
+};
+
+/** Body accepted by `PATCH /ideas/:id` (mirrors the API `UpdateIdeaDto`). */
+export type UpdateIdeaInput = Partial<CreateIdeaInput>;
+
+/** Body accepted by `POST /ideas/:id/notes`. */
+export type CreateIdeaNoteInput = {
+  author: string;
+  initials: string;
+  body: string;
+};
+
 /** The draft shape a future capture handler can accept. */
 export type IdeaDraft = {
   title: string;
@@ -48,20 +117,28 @@ export type IdeaDraft = {
   assumption: string;
 };
 
-/**
- * Presentation-only preview states. These let the visual states be reviewed
- * without pretending that asynchronous work, filtering or errors are real.
- */
-export const LAB_VIEWS = ["collection", "empty", "no-results", "loading", "error"] as const;
+/** States the Idea Lab workspace can render while loading real data. */
+export const LAB_VIEWS = ["collection", "empty", "loading", "error"] as const;
 
 export type LabView = (typeof LAB_VIEWS)[number];
 
-export const LAB_VIEW_OPTIONS: { value: LabView; label: string }[] = [
-  { value: "collection", label: "Collection" },
-  { value: "empty", label: "Empty lab" },
-  { value: "no-results", label: "No matches" },
-  { value: "loading", label: "Loading" },
-  { value: "error", label: "Error" },
+/** Sorting options used by the collection toolbar. */
+export const IDEA_SORT_OPTIONS = [
+  { value: "updated", label: "Last updated", shortLabel: "Updated" },
+  { value: "captured", label: "Newest first", shortLabel: "Newest" },
+  { value: "alpha", label: "A–Z" },
+  { value: "status", label: "Status" },
+];
+
+/** Status filter options used by the collection toolbar. */
+export const IDEA_STATUS_FILTERS: {
+  value: IdeaStatusFilter;
+  label: string;
+}[] = [
+  { value: "all", label: "All" },
+  { value: "inbox", label: "Inbox" },
+  { value: "exploring", label: "Exploring" },
+  { value: "shortlisted", label: "Shortlisted" },
 ];
 
 export const IDEA_STATUS_META: Record<

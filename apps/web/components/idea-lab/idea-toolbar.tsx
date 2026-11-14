@@ -2,12 +2,12 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
+import { DEFAULT_IDEA_CATEGORIES, mergeCategories } from "@/lib/idea-lab/categories";
 import {
   IDEA_SORT_OPTIONS,
   IDEA_STATUS_FILTERS,
-} from "@/lib/idea-lab/demo";
-import { DEFAULT_IDEA_CATEGORIES, mergeCategories } from "@/lib/idea-lab/categories";
-import type { IdeaStatusFilter } from "@/lib/idea-lab/types";
+  type IdeaStatusFilter,
+} from "@/lib/idea-lab/types";
 
 import { IdeaSelect } from "./idea-select";
 
