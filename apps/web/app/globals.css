@@ -50,6 +50,11 @@
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Geometry scale — one place to tune the whole dashboard. */
+  --radius-card: var(--radius);
+  --radius-control: var(--radius-sm);
+  --radius-pill: 999px;
 }
 
 /*
@@ -108,6 +113,10 @@
   --info: #1d6fa5;
   --info-tint: rgb(29 111 165 / 0.09);
   --neutral-tint: rgb(14 27 29 / 0.06);
+
+  /* Shape + rhythm. Cards use --radius, controls --radius-sm, pills 999px. */
+  --radius: 10px;
+  --radius-sm: 8px;
 }
 
 .on-ink {

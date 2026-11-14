@@ -2,11 +2,10 @@ import { cn } from "./cn";
 import { TONE_STYLES, toneForStatus, type BadgeVariant, type Tone } from "./status";
 
 /**
- * The only status badge used across Foundry workspaces.
+ * The only status pill used across Foundry workspaces.
  *
- * A square marker carries the tone alongside the label so meaning never
- * depends on colour alone. Sizes stay close to the type scale so badges read
- * as labels, not decoration.
+ * A leading dot carries the tone alongside the label, so meaning never depends
+ * on colour alone. Sentence case, 11.5–12px: a label, not a stamp.
  */
 export function StatusBadge({
   status,
@@ -35,20 +34,26 @@ export function StatusBadge({
   return (
     <span
       className={cn(
-        "inline-flex shrink-0 items-center gap-1.5 border font-mono uppercase leading-none",
-        size === "xs"
-          ? "px-1.5 py-[3px] text-[9.5px] tracking-[0.12em]"
-          : "px-2 py-1 text-[10px] tracking-[0.12em]",
+        "inline-flex shrink-0 items-center gap-1.5 rounded-pill border font-sans font-medium leading-none",
+        size === "xs" ? "px-2 py-px text-[11px]" : "px-2.5 py-1 text-[11.5px]",
         surface,
         text,
         className,
       )}
     >
-      {dot ? <span aria-hidden className={cn("size-1 shrink-0", variant === "solid" ? "bg-current" : style.dot)} /> : null}
+      {dot ? (
+        <span
+          aria-hidden
+          className={cn("size-1.5 shrink-0 rounded-full", variant === "solid" ? "bg-current" : style.dot)}
+        />
+      ) : null}
       {status}
     </span>
   );
 }
+
+/** StatusPill alias — the shared vocabulary name for the same component. */
+export const StatusPill = StatusBadge;
 
 /** Small standalone tone marker for lists and legends. */
 export function StatusDot({
@@ -61,7 +66,7 @@ export function StatusDot({
   return (
     <span
       aria-hidden
-      className={cn("inline-block size-1.5 shrink-0", TONE_STYLES[tone].dot, className)}
+      className={cn("inline-block size-1.5 shrink-0 rounded-full", TONE_STYLES[tone].dot, className)}
     />
   );
 }
