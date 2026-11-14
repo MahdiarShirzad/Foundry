@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
+import { DevToolsPopover, StatePreview } from "@/components/ui/primitives";
 import {
   DEMO_FEATURES,
   DEMO_MVP_PROJECTS,
@@ -192,31 +193,11 @@ export default function MVPStudioPage() {
   );
 
   const statePreview = (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border border-line bg-panel px-4 py-3 shadow-[var(--elevation-lift)]">
-      <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-        <span aria-hidden className="size-1.5 bg-accent" />
-        Local state · changes are not persisted
-      </p>
-      <div className="ml-auto flex items-center gap-1.5">
-        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
-          UI state preview
-        </span>
-        {MVP_VIEWS.map((option) => (
-          <button
-            key={option.value}
-            type="button"
-            onClick={() => setView(option.value)}
-            aria-pressed={view === option.value}
-            className={`border px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] transition-colors ${
-              view === option.value
-                ? "border-accent/60 bg-mint-tint/50 text-accent"
-                : "border-line text-faint hover:border-accent/60 hover:text-accent"
-            }`}
-          >
-            {option.label}
-          </button>
-        ))}
-      </div>
+    <div className="flex flex-wrap items-center justify-between gap-3">
+      <p className="text-[12px] text-faint">Local state · changes are not persisted</p>
+      <DevToolsPopover>
+        <StatePreview value={view} options={MVP_VIEWS} onChange={setView} label="State" />
+      </DevToolsPopover>
     </div>
   );
 
@@ -314,7 +295,7 @@ export default function MVPStudioPage() {
         </motion.div>
       </AnimatePresence>
 
-      <div className="flex flex-col gap-3">{statePreview}</div>
+      {statePreview}
 
       <AnimatePresence>
         {addOpen ? (

@@ -128,7 +128,7 @@ export default function TrendChart({
   return (
     <div className="flex h-full flex-col">
       <div className="flex flex-wrap items-center gap-x-5 gap-y-1.5 px-4 pt-3.5 sm:px-5">
-        <span className="flex items-baseline gap-2 font-mono text-[10px] uppercase tracking-[0.14em] text-fg">
+        <span className="flex items-baseline gap-2 text-[12px] text-fg">
           <span
             aria-hidden
             className="mt-[2px] block h-[2px] w-4 shrink-0"
@@ -138,13 +138,13 @@ export default function TrendChart({
           {unit ? <span className="text-faint">{unit}</span> : null}
         </span>
         {previous ? (
-          <span className="flex items-baseline gap-2 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+          <span className="flex items-baseline gap-2 text-[12px] text-faint">
             <span aria-hidden className="block h-px w-4 border-t border-dashed border-faint" />
             previous window
           </span>
         ) : null}
         {caption ? (
-          <span className="ml-auto font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+          <span className="ml-auto text-[12px] text-faint">
             {caption}
           </span>
         ) : null}
@@ -287,7 +287,7 @@ export default function TrendChart({
             className="pointer-events-none absolute top-1 z-10 min-w-[9.5rem] border border-line bg-bg px-2.5 py-2 shadow-[0_10px_24px_-16px_rgb(14_27_29/0.55)]"
             style={{ left: Math.min(Math.max(x(active) - 72, 0), Math.max(chartWidth - 170, 0)) }}
           >
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
+            <p className="text-[12px] text-faint">
               Week of {formatShortDate(starts[active])}
             </p>
             <p className="mt-1 flex items-baseline justify-between gap-4">

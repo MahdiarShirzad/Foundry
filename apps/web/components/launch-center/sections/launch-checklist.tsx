@@ -37,28 +37,44 @@ export function LaunchChecklist({
   }
 
   return (
-    <section className="border border-line bg-panel">
-      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
-        <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">Checklist</p>
-          <p className="mt-1 text-[11.5px] text-muted">
-            {completed} of {total} complete · drives the readiness score
+    <section className="overflow-hidden rounded-card border border-line bg-panel shadow-card">
+      <header className="px-5 pb-4 pt-5">
+        <div className="flex flex-wrap items-baseline justify-between gap-3">
+          <div>
+            <h2 className="text-[16px] font-semibold tracking-[-0.015em] text-fg">Checklist</h2>
+            <p className="mt-1 text-[12.5px] text-muted">
+              {completed} of {total} complete · drives the readiness score
+            </p>
+          </div>
+          <p className="font-mono text-[13px] font-medium text-fg tabular-nums">
+            {Math.round((completed / total) * 100)}%
           </p>
         </div>
-        <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint tabular-nums">
-          {Math.round((completed / total) * 100)}%
-        </p>
+        <div
+          role="progressbar"
+          aria-label="Launch readiness"
+          aria-valuemin={0}
+          aria-valuemax={total}
+          aria-valuenow={completed}
+          className="mt-3 h-1.5 overflow-hidden rounded-pill bg-surface-sunken/70"
+        >
+          <span
+            aria-hidden
+            className="block h-full rounded-pill bg-accent transition-[width] duration-200 ease-out"
+            style={{ width: `${Math.round((completed / total) * 100)}%` }}
+          />
+        </div>
       </header>
-      <div className="grid gap-px bg-line md:grid-cols-2">
+      <div className="grid gap-px border-t border-line bg-line md:grid-cols-2">
         {categories.map(([category, categoryItems]) => {
           const categoryCompleted = categoryItems.filter((item) => completedIds.has(item.id)).length;
           return (
-            <article key={category} className="bg-panel px-4 py-4">
+            <article key={category} className="bg-panel px-5 py-4">
               <div className="flex items-center justify-between gap-2">
-                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-fg">
+                <p className="text-[13px] font-medium text-fg">
                   {category}
                 </p>
-                <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-faint tabular-nums">
+                <p className="text-[12px] text-faint tabular-nums">
                   {categoryCompleted}/{categoryItems.length}
                 </p>
               </div>
@@ -68,14 +84,14 @@ export function LaunchChecklist({
                   return (
                     <label
                       key={item.id}
-                      className="flex cursor-pointer items-start gap-2.5 border border-line px-3 py-2 transition-colors hover:border-line-2 has-[:focus-visible]:border-accent"
+                      className="flex cursor-pointer items-start gap-2.5 rounded-control border border-line px-3 py-2 transition-colors hover:border-line-2 has-[:focus-visible]:border-accent"
                     >
                       <input
                         type="checkbox"
                         checked={checked}
                         onChange={() => onToggle(item.id)}
                         aria-label={`Mark "${item.item}" complete`}
-                        className="mt-0.5 size-4 shrink-0 cursor-pointer appearance-none border border-line-2 bg-panel transition-colors checked:border-accent checked:bg-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                        className="mt-0.5 size-4 shrink-0 cursor-pointer appearance-none rounded-[4px] border border-line-2 bg-panel transition-colors checked:border-accent checked:bg-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                       />
                       <span
                         className={`text-[12.5px] leading-relaxed ${

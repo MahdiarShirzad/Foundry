@@ -55,11 +55,11 @@ export function MarketOverview({
       <div className="grid gap-px bg-line lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)]">
         <section className="flex flex-col bg-panel px-5 py-6 sm:px-7 sm:py-7">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.2em] text-accent">
+            <p className="flex items-center gap-2.5 text-[12px] text-accent">
               <span aria-hidden className="size-1.5 bg-mint" />
               Market brief · {idea.ref}
             </p>
-            <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
+            <span className="text-[12px] text-faint">
               Hypothesis
             </span>
           </div>
@@ -92,7 +92,7 @@ export function MarketOverview({
         <section className="bg-panel px-5 py-6 sm:px-6 sm:py-7">
           <div className="flex items-baseline justify-between gap-3">
             <SectionLabel>Evidence mix</SectionLabel>
-            <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
+            <span className="text-[12px] text-faint">
               {totalEvidence} items
             </span>
           </div>
@@ -145,7 +145,7 @@ export function MarketOverview({
           <button
             type="button"
             onClick={() => onOpenSection("competitors")}
-            className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent underline-offset-4 hover:underline"
+            className="text-[12px] text-accent underline-offset-4 hover:underline"
           >
             Open competitor workspace →
           </button>
@@ -180,7 +180,7 @@ export function MarketOverview({
             <button
               type="button"
               onClick={() => onOpenSection("notes")}
-              className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent underline-offset-4 hover:underline"
+              className="text-[12px] text-accent underline-offset-4 hover:underline"
             >
               All {idea.notes.length} notes →
             </button>
@@ -196,7 +196,7 @@ export function MarketOverview({
                 >
                   <span className="min-w-0">
                     <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                      <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
+                      <span className="text-[12px] text-faint">
                         {formatMarketShortDate(note.date)}
                       </span>
                       <EvidenceBadge type={note.evidence} />
@@ -226,7 +226,7 @@ export function MarketOverview({
             <button
               type="button"
               onClick={() => onOpenSection("opportunities")}
-              className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent underline-offset-4 hover:underline"
+              className="text-[12px] text-accent underline-offset-4 hover:underline"
             >
               All {idea.opportunities.length} →
             </button>
@@ -271,7 +271,7 @@ export function MarketOverview({
           <button
             type="button"
             onClick={onAddResearch}
-            className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent underline-offset-4 hover:underline"
+            className="text-[12px] text-accent underline-offset-4 hover:underline"
           >
             Add a research note →
           </button>
@@ -312,7 +312,7 @@ export function MarketOverview({
           Every claim on this page comes from the research collected here. Treat it as a
           structure for thinking, not a conclusion.
         </p>
-        <p className="font-mono text-[10px] uppercase tracking-[0.13em] text-faint">
+        <p className="text-[12px] text-faint">
           Updated {formatMarketShortDate(idea.updatedAt)}
         </p>
       </div>

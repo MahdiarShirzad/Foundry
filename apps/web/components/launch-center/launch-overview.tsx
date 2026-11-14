@@ -76,10 +76,10 @@ export function LaunchOverview({
       : null;
 
   return (
-    <section className="border border-line bg-panel shadow-[var(--elevation-lift)]">
+    <section className="rounded-card border border-line bg-panel shadow-card">
       <header className="flex flex-wrap items-start justify-between gap-3 border-b border-line/80 px-5 py-4">
         <div className="min-w-0">
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+          <p className="text-[12px] text-accent">
             Launch readiness
           </p>
           <p className="mt-1 text-[11.5px] leading-relaxed text-muted">
@@ -89,7 +89,7 @@ export function LaunchOverview({
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <StatusBadge status={status.label} tone={status.tone} size="xs" />
-          <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
+          <span className="text-[12px] text-faint">
             {days === null
               ? "No date scheduled"
               : days >= 0
@@ -103,14 +103,14 @@ export function LaunchOverview({
         <div className="bg-panel px-5 py-5">
           <div className="flex items-end justify-between gap-3">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">
+              <p className="text-[12px] text-faint">
                 Checklist completion
               </p>
               <p className="mt-2 font-mono text-[2.25rem] font-medium leading-none tracking-[-0.04em] text-fg tabular-nums">
                 {readiness}%
               </p>
             </div>
-            <p className="pb-1 font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
+            <p className="pb-1 text-[12px] text-faint">
               {checklistCompleted} / {total} items
             </p>
           </div>
@@ -173,7 +173,7 @@ export function LaunchOverview({
             },
           ].map((item) => (
             <article key={item.label} className="min-w-0 bg-panel px-5 py-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">
+              <p className="text-[12px] text-faint">
                 {item.label}
               </p>
               <p

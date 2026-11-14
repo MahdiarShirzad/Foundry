@@ -55,7 +55,7 @@ export function MVPOverview({
           <button
             type="button"
             onClick={() => onJump("MVP Scope")}
-            className="border border-line px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+            className="rounded-control border border-line px-2.5 py-1 text-[12px] text-fg transition-colors hover:border-accent hover:text-accent"
           >
             Review scope
           </button>
@@ -69,7 +69,7 @@ export function MVPOverview({
                   key={row.term}
                   className="border-b border-line px-4 py-3.5 last:border-b-0"
                 >
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
+                  <dt className="text-[12px] text-faint">
                     {row.term}
                   </dt>
                   <dd
@@ -90,13 +90,13 @@ export function MVPOverview({
             {/* Critical features */}
             <article className="bg-panel px-4 py-4">
               <div className="flex items-baseline justify-between gap-3">
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
+                <p className="text-[12px] text-faint">
                   Critical features
                 </p>
                 <button
                   type="button"
                   onClick={() => onJump("Feature Backlog")}
-                  className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent transition-colors hover:text-fg"
+                  className="text-[12px] text-accent transition-colors hover:text-fg"
                 >
                   Backlog →
                 </button>
@@ -126,10 +126,10 @@ export function MVPOverview({
             {/* Open decisions */}
             <article className="bg-panel px-4 py-4">
               <div className="flex items-baseline justify-between gap-3">
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
+                <p className="text-[12px] text-faint">
                   Unresolved product decisions
                 </p>
-                <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-danger">
+                <p className="text-[12px] text-danger">
                   {project.openDecisions.length} open
                 </p>
               </div>
@@ -148,13 +148,13 @@ export function MVPOverview({
             {/* Compact build progress */}
             <article className="bg-panel px-4 py-4">
               <div className="flex items-baseline justify-between gap-3">
-                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
+                <p className="text-[12px] text-faint">
                   Current build progress
                 </p>
                 <button
                   type="button"
                   onClick={() => onJump("Build Progress")}
-                  className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent transition-colors hover:text-fg"
+                  className="text-[12px] text-accent transition-colors hover:text-fg"
                 >
                   Board →
                 </button>
@@ -185,7 +185,7 @@ export function MVPOverview({
                     {statusCounts.map((row) => (
                       <li
                         key={row.status}
-                        className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.12em] text-faint"
+                        className="flex items-center gap-2 text-[12px] text-faint"
                       >
                         <span
                           aria-hidden
@@ -199,7 +199,7 @@ export function MVPOverview({
                 </>
               )}
 
-              <p className="mt-3 border-t border-line pt-3 font-mono text-[10px] uppercase leading-relaxed tracking-[0.14em] text-faint">
+              <p className="mt-3 border-t border-line pt-3 text-[12px] leading-relaxed tracking-[0.14em] text-faint">
                 {total === 0
                   ? "Empty backlog"
                   : `${features.filter((f) => f.status === "Completed").length} of ${total} complete · local preview counts`}

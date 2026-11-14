@@ -52,13 +52,13 @@ export function MVPScopeWorkspace({
         <button
           type="button"
           onClick={onOpenDefinition}
-          className="border border-accent/70 bg-mint-tint/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-accent transition-colors hover:bg-mint-tint"
+          className="rounded-control border border-accent/70 bg-mint-tint/60 px-2.5 py-1 text-[12px] text-accent transition-colors hover:bg-mint-tint"
         >
           Define MVP Scope
         </button>
       }
       footer={
-        <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+        <p className="text-[12px] text-faint">
           Moving an item changes this preview only · no scope rule or validation runs against it
         </p>
       }
@@ -67,7 +67,7 @@ export function MVPScopeWorkspace({
       <div className="grid gap-px border-b border-line bg-line sm:grid-cols-2 xl:grid-cols-4">
         {definition.map((block) => (
           <article key={block.term} className="bg-panel px-4 py-3.5">
-            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
+            <p className="text-[12px] text-faint">
               {block.term}
             </p>
             {block.detail ? (
@@ -86,7 +86,7 @@ export function MVPScopeWorkspace({
           </article>
         ))}
         <article className="bg-panel px-4 py-3.5">
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-danger">
+          <p className="text-[12px] text-danger">
             Explicit exclusions
           </p>
           <ul className="mt-1.5 space-y-1">
@@ -109,7 +109,7 @@ export function MVPScopeWorkspace({
             <button
               type="button"
               onClick={onOpenDefinition}
-              className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+              className="rounded-control border border-line px-3 py-1.5 text-[12px] text-fg transition-colors hover:border-accent hover:text-accent"
             >
               Define MVP Scope
             </button>
@@ -121,7 +121,7 @@ export function MVPScopeWorkspace({
             <article key={column.value} className="bg-panel px-4 py-4">
               <header className="flex items-baseline justify-between gap-3">
                 <p
-                  className={`font-mono text-[10px] uppercase tracking-[0.18em] ${
+                  className={`text-[12px] ${
                     column.value === "included" ? "text-fg" : "text-faint"
                   }`}
                 >
@@ -139,13 +139,13 @@ export function MVPScopeWorkspace({
               ) : (
                 <ul className="mt-3 space-y-2">
                   {column.list.map((item) => (
-                    <li key={item.id} className="border border-line px-3 py-2.5">
+                    <li key={item.id} className="rounded-control border border-line px-3 py-2.5">
                       <div className="flex items-start justify-between gap-2">
                         <p className="min-w-0 text-[12.5px] font-medium text-fg">{item.name}</p>
                         {item.featureId ? (
                           <span
                             title="Backlog feature"
-                            className="shrink-0 border border-line px-1.5 py-[2px] font-mono text-[10px] uppercase tracking-[0.12em] text-faint"
+                            className="shrink-0 border border-line px-1.5 py-[2px] text-[12px] text-faint"
                           >
                             feature
                           </span>
@@ -156,7 +156,7 @@ export function MVPScopeWorkspace({
                       </p>
 
                       <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2">
-                        <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+                        <span className="flex items-center gap-1.5 text-[12px] text-faint">
                           <span
                             aria-hidden
                             className={`size-1.5 ${
@@ -183,7 +183,7 @@ export function MVPScopeWorkspace({
                             onChange={(event) =>
                               onMove(item, event.target.value as ScopeCategory)
                             }
-                            className="h-7 min-w-0 border border-line bg-panel px-1.5 font-mono text-[10px] uppercase tracking-[0.1em] text-faint outline-none transition-colors hover:border-accent hover:text-accent focus:border-accent"
+                            className="h-7 min-w-0 border border-line bg-panel px-1.5 text-[12px] text-faint outline-none transition-colors hover:border-accent hover:text-accent focus:border-accent"
                           >
                             {SCOPE_CATEGORIES.map((option) => (
                               <option key={option.value} value={option.value}>

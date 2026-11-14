@@ -34,7 +34,7 @@ export function BuildProgressBoard({
             <button
               type="button"
               onClick={onAddFeature}
-              className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg transition-colors hover:border-accent hover:text-accent"
+              className="rounded-control border border-line px-3 py-1.5 text-[12px] text-fg transition-colors hover:border-accent hover:text-accent"
             >
               Add Feature
             </button>
@@ -51,12 +51,12 @@ export function BuildProgressBoard({
       title="Build Progress"
       subtitle="Feature implementation status across the workspace"
       footer={
-        <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+        <p className="text-[12px] text-faint">
           Presentational feature tracking · no git, CI, deployment or task synchronization
         </p>
       }
     >
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-b border-line px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-b border-line px-4 py-2.5 text-[12px] text-faint">
         <span>
           <span className="text-fg">{features.length}</span> features
         </span>
@@ -79,7 +79,7 @@ export function BuildProgressBoard({
           return (
             <article key={column.key} className="flex flex-col bg-panel">
               <header className="flex items-baseline justify-between gap-2 border-b border-line px-3 py-2">
-                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">
+                <p className="text-[12px] text-faint">
                   {column.title}
                 </p>
                 <p className="font-mono text-[10px] tabular-nums text-fg">{list.length}</p>
@@ -101,7 +101,7 @@ export function BuildProgressBoard({
                       layoutId={reduce ? undefined : f.id}
                       layout={reduce ? false : "position"}
                       transition={{ duration: reduce ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
-                      className="border border-line px-3 py-2.5"
+                      className="rounded-control border border-line px-3 py-2.5"
                     >
                       <p className="text-[12.5px] font-medium leading-snug text-fg">{f.name}</p>
                       <p className="mt-1 line-clamp-2 text-[11px] leading-snug text-muted">
@@ -110,7 +110,7 @@ export function BuildProgressBoard({
 
                       <div className="mt-2 flex flex-wrap items-center gap-1.5">
                         <FeaturePriorityBadge priority={f.priority} />
-                        <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
+                        <span className="text-[12px] text-faint">
                           {f.area}
                         </span>
                       </div>

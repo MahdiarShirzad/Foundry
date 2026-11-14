@@ -16,7 +16,7 @@ export function MarketEmptyWorkspace({
   return (
     <div className="grid gap-px bg-line lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
       <section className="bg-panel px-6 py-10 sm:px-9 sm:py-12">
-        <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
+        <p className="flex items-center gap-2.5 text-[12px] text-accent">
           <span aria-hidden className="size-1.5 bg-mint" />
           Empty research workspace
         </p>
@@ -40,20 +40,20 @@ export function MarketEmptyWorkspace({
           <button
             type="button"
             onClick={onAddCompetitor}
-            className="inline-flex h-10 items-center gap-2 border border-line-2 px-3.5 font-mono text-[10px] uppercase tracking-[0.14em] text-fg transition-colors hover:border-accent hover:text-accent"
+            className="inline-flex h-10 items-center gap-2 border border-line-2 px-3.5 text-[12px] text-fg transition-colors hover:border-accent hover:text-accent"
           >
             <span aria-hidden className="text-[12px] leading-none">+</span>
             Add Competitor
           </button>
         </div>
 
-        <p className="mt-6 border-t border-line pt-3 font-mono text-[10px] uppercase leading-relaxed tracking-[0.13em] text-faint">
+        <p className="mt-6 border-t border-line pt-3 text-[12px] leading-relaxed tracking-[0.13em] text-faint">
           Preview state · no data is missing or lost
         </p>
       </section>
 
       <section className="bg-panel px-6 py-10 sm:px-8 sm:py-12">
-        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
+        <p className="text-[12px] text-faint">
           How this workspace fills up
         </p>
         <ol className="mt-3 border-t border-line">

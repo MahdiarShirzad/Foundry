@@ -19,17 +19,17 @@ export function RoadmapOverview({
   const upcomingRelease = releases[0]?.name ?? "None planned";
 
   return (
-    <section className="border border-line bg-panel shadow-[var(--elevation-lift)]">
+    <section className="rounded-card border border-line bg-panel shadow-card">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-line/80 px-5 py-4">
         <div>
-          <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-accent">
+          <p className="text-[12px] text-accent">
             Roadmap overview
           </p>
           <p className="mt-1.5 text-[12px] leading-relaxed text-muted">
             Direction and shape of the current planning cycle.
           </p>
         </div>
-        <span className="border border-line bg-bg/60 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-faint">
+        <span className="border border-line bg-bg/60 px-2 py-1 text-[12px] text-faint">
           {product.horizon}
         </span>
       </header>

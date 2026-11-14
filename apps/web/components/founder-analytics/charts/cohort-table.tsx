@@ -94,7 +94,7 @@ export default function CohortTable({ rows }: { rows: CohortRow[] }) {
             weeks. Dashed cells have not been observed yet.
         </p>
         <span className="flex shrink-0 items-center gap-[3px]" aria-hidden>
-          <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">less</span>
+          <span className="text-[12px] text-faint">less</span>
           {swatches.map((value) => (
             <span
               key={value}
@@ -102,7 +102,7 @@ export default function CohortTable({ rows }: { rows: CohortRow[] }) {
               style={{ backgroundColor: "var(--accent)", opacity: value }}
             />
           ))}
-          <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">more</span>
+          <span className="text-[12px] text-faint">more</span>
         </span>
       </div>
     </div>

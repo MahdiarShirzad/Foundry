@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
-import { StatePreview } from "@/components/ui/primitives";
+import { DevToolsPopover, StatePreview } from "@/components/ui/primitives";
 
 import { useProducts } from "@/lib/product/use-products";
 import {
@@ -150,11 +150,15 @@ export default function LaunchCenterPage() {
           onChangeProduct={setProductId}
         />
         <LaunchCenterErrorState onRetry={() => setView("populated")} />
-        <StatePreview
-          value={view}
-          options={STATE_OPTIONS}
-          onChange={(next) => setView(next as typeof view)}
-        />
+        <div className="flex justify-end">
+          <DevToolsPopover>
+            <StatePreview
+              value={view}
+              options={STATE_OPTIONS}
+              onChange={(next) => setView(next as typeof view)}
+            />
+          </DevToolsPopover>
+        </div>
       </motion.div>
     );
   }
@@ -227,11 +231,15 @@ export default function LaunchCenterPage() {
         </motion.div>
       </AnimatePresence>
 
-      <StatePreview
-        value={view}
-        options={STATE_OPTIONS}
-        onChange={(next) => setView(next as typeof view)}
-      />
+      <div className="flex justify-end">
+        <DevToolsPopover>
+          <StatePreview
+            value={view}
+            options={STATE_OPTIONS}
+            onChange={(next) => setView(next as typeof view)}
+          />
+        </DevToolsPopover>
+      </div>
     </motion.div>
   );
 }

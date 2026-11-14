@@ -184,12 +184,12 @@ export function DetailBackBar({
       <button
         type="button"
         onClick={onBack}
-        className="inline-flex h-8 shrink-0 items-center gap-1.5 border border-line px-2 font-mono text-[10px] uppercase tracking-[0.12em] text-fg transition-colors hover:border-accent hover:text-accent"
+        className="inline-flex h-8 shrink-0 items-center gap-1.5 border border-line px-2 text-[12px] text-fg transition-colors hover:border-accent hover:text-accent"
       >
         <span aria-hidden>←</span>
         Back
       </button>
-      <span className="min-w-0 truncate font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
+      <span className="min-w-0 truncate text-[12px] text-faint">
         {context}
       </span>
     </div>
@@ -215,14 +215,14 @@ export function PanelHeader({
           {title}
         </h2>
         {meta ? (
-          <span className="truncate font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
+          <span className="truncate text-[12px] text-faint">
             {meta}
           </span>
         ) : null}
       </div>
       {action ?? (
         eyebrow ? (
-          <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">
+          <span className="text-[12px] text-faint">
             {eyebrow}
           </span>
         ) : null
@@ -293,7 +293,7 @@ export function DetailPlaceholder({
   return (
     <div className="flex min-h-[24rem] items-center justify-center bg-panel px-6 py-12 sm:px-9">
       <div className="w-full max-w-[32rem]">
-        <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+        <p className="flex items-center gap-2.5 text-[12px] text-accent">
           <span aria-hidden className="size-1.5 bg-mint" />
           {eyebrow}
         </p>
@@ -393,7 +393,7 @@ export function SampleNotice({ className = "" }: { className?: string }) {
   return (
     <p
       className={cn(
-        "flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] uppercase tracking-[0.1em] text-faint",
+        "flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] text-faint",
         className,
       )}
     >

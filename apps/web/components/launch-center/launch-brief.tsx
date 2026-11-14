@@ -32,7 +32,7 @@ export function LaunchBrief({
     <div className="grid gap-4 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
       <section className="border border-line bg-panel">
         <header className="border-b border-line px-4 py-3">
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+          <p className="text-[12px] text-accent">
             Launch brief
           </p>
           <p className="mt-1 text-[11.5px] leading-relaxed text-muted">
@@ -41,13 +41,13 @@ export function LaunchBrief({
         </header>
         <div className="divide-y divide-line">
           <div className="px-4 py-4">
-            <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">
+            <p className="text-[12px] text-faint">
               Product positioning
             </p>
             <p className="mt-2 text-[13px] leading-relaxed text-fg">{product.summary}</p>
           </div>
           <div className="px-4 py-4">
-            <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">
+            <p className="text-[12px] text-faint">
               Launch objective
             </p>
             <p className="mt-2 text-[12.5px] leading-relaxed text-muted">
@@ -56,15 +56,15 @@ export function LaunchBrief({
             </p>
           </div>
           <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
-            <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-faint">
+            <p className="text-[12px] text-faint">
               Launch shape
             </p>
             <div className="flex flex-wrap items-center gap-2">
               <LaunchPhaseBadge phase={product.phase} />
-              <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-fg">
+              <span className="text-[12px] text-fg">
                 {product.launchDate ?? "Not scheduled"}
               </span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
+              <span className="text-[12px] text-faint">
                 {channels.length} channel{channels.length === 1 ? "" : "s"}
               </span>
             </div>
@@ -76,7 +76,7 @@ export function LaunchBrief({
         <section className="border border-line bg-panel">
           <header className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+              <p className="text-[12px] text-accent">
                 What happens next
               </p>
               <p className="mt-1 text-[11.5px] text-muted">Open work, earliest first</p>
@@ -104,7 +104,7 @@ export function LaunchBrief({
                       </span>
                       <span className="mt-1 flex flex-wrap items-center gap-2">
                         <LaunchPhaseBadge phase={task.phase} />
-                        <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
+                        <span className="text-[12px] text-faint">
                           {task.date}
                         </span>
                       </span>
@@ -120,7 +120,7 @@ export function LaunchBrief({
         <section className="border border-line bg-panel">
           <header className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3">
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+              <p className="text-[12px] text-accent">
                 Where we launch
               </p>
               <p className="mt-1 text-[11.5px] text-muted">Planned channels and campaigns</p>
@@ -152,7 +152,7 @@ export function LaunchBrief({
                 >
                   <span className="flex min-w-0 items-center gap-2">
                     <span className="text-[12.5px] font-medium text-fg">{channel.name}</span>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-faint">
+                    <span className="text-[12px] text-faint">
                       {channel.date}
                     </span>
                   </span>
