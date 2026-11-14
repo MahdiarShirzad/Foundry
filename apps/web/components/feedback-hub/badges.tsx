@@ -79,22 +79,22 @@ export function FeedbackHubEmptyState({
 export function FeedbackHubSkeleton() {
   return (
     <div className="space-y-4" aria-busy="true" aria-label="Loading feedback">
-      <div className="grid gap-px border border-line bg-line sm:grid-cols-3 lg:grid-cols-5">
+      <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
         {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="space-y-3 bg-panel px-4 py-4">
-            <div className="h-2 w-24 animate-pulse bg-line" />
-            <div className="h-6 w-12 animate-pulse bg-line" />
-            <div className="h-2 w-28 animate-pulse bg-line/70" />
+          <div key={i} className="space-y-3 rounded-card border border-line bg-panel px-5 py-4">
+            <div className="h-2 w-24 animate-pulse rounded bg-line" />
+            <div className="h-6 w-12 animate-pulse rounded bg-line" />
+            <div className="h-2 w-28 animate-pulse rounded bg-line/70" />
           </div>
         ))}
       </div>
-      <div className="grid gap-px border border-line bg-line lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]">
+      <div className="grid gap-px overflow-hidden rounded-card border border-line bg-line shadow-card lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)]">
         <div className="space-y-3 bg-panel p-4">
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="space-y-2 animate-pulse">
-              <div className="h-3 w-3/4 bg-line" />
-              <div className="h-2 w-full bg-line/70" />
-              <div className="h-2 w-2/5 bg-line/60" />
+              <div className="h-3 w-3/4 rounded bg-line" />
+              <div className="h-2 w-full rounded bg-line/70" />
+              <div className="h-2 w-2/5 rounded bg-line/60" />
             </div>
           ))}
         </div>

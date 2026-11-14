@@ -82,7 +82,7 @@ export function FeedbackDetailPanel({
     >
       <header className="flex flex-wrap items-start justify-between gap-3 border-b border-line px-5 py-4 sm:px-6">
         <div className="min-w-0">
-          <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
+          <p className="flex items-center gap-2.5 text-[12px] text-accent">
             <span aria-hidden className="size-1.5 bg-mint" />
             Feedback record · {item.id}
           </p>
@@ -101,7 +101,7 @@ export function FeedbackDetailPanel({
             <button
               type="button"
               onClick={onBack}
-              className="border border-line px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-faint transition-colors hover:border-accent hover:text-accent lg:hidden"
+              className="rounded-control border border-line px-2.5 py-1 text-[12px] text-faint transition-colors hover:border-accent hover:text-accent lg:hidden"
             >
               ← Inbox
             </button>
@@ -151,14 +151,14 @@ export function FeedbackDetailPanel({
               <button
                 type="button"
                 onClick={() => onOpenArea(item.productArea!)}
-                className="border border-line px-2.5 py-1 text-[12px] text-fg transition-colors hover:border-accent hover:text-accent"
+                className="rounded-control border border-line px-2.5 py-1 text-[12px] text-fg transition-colors hover:border-accent hover:text-accent"
               >
                 {item.productArea} →
               </button>
             ) : (
               <span className="text-[12px] text-muted">None assigned</span>
             )}
-            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+            <span className="text-[12px] text-faint">
               {areaNames.length} areas tracked
             </span>
           </div>
@@ -197,16 +197,16 @@ export function FeedbackDetailPanel({
               type="button"
               onClick={saveNotes}
               disabled={!dirty}
-              className="border border-accent/60 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-accent transition-colors hover:border-accent disabled:border-line disabled:text-faint"
+              className="border border-accent/60 px-3 py-1.5 text-[12px] text-accent transition-colors hover:border-accent disabled:border-line disabled:text-faint"
             >
               Save note
             </button>
             {saved ? (
-              <span role="status" className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent">
+              <span role="status" className="text-[12px] text-accent">
                 Saved to this preview
               </span>
             ) : (
-              <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+              <span className="text-[12px] text-faint">
                 Local state only · not persisted
               </span>
             )}
@@ -226,11 +226,11 @@ export function FeedbackDetailPanel({
                     onClick={() => onOpenFeedback(r.id)}
                     className="flex w-full items-baseline gap-2 border border-line px-3 py-2 text-left transition-colors hover:border-accent/70 hover:bg-mint-tint/20"
                   >
-                    <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+                    <span className="text-[12px] text-faint">
                       {r.id}
                     </span>
                     <span className="min-w-0 flex-1 truncate text-[12px] text-fg">{r.title}</span>
-                    <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+                    <span className="shrink-0 text-[12px] text-faint">
                       {r.status}
                     </span>
                   </button>
@@ -250,7 +250,7 @@ export function FeedbackDetailPanel({
             >
               <span className="min-w-0">
                 <span className="block text-[12.5px] text-fg">{linkedRequest.title}</span>
-                <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-faint">
+                <span className="mt-0.5 block text-[12px] text-faint">
                   {linkedRequest.roadmapReference ?? "No roadmap reference"}
                 </span>
               </span>
