@@ -11,6 +11,7 @@ import { GlobalAuthGuard } from './auth/global-auth.guard';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { WorkspaceModule } from './workspace/workspace.module';
 import { ProductModule } from './product/product.module';
+import { IdeaModule } from './ideas/ideas.module';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -28,6 +29,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     AuthModule,
     WorkspaceModule,
     ProductModule,
+    IdeaModule,
   ],
   controllers: [AppController],
   providers: [
