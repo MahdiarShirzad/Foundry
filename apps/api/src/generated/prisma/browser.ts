@@ -28,16 +28,6 @@ export type User = Prisma.UserModel
  */
 export type Session = Prisma.SessionModel
 /**
- * Model Workspace
- * 
- */
-export type Workspace = Prisma.WorkspaceModel
-/**
- * Model WorkspaceMember
- * 
- */
-export type WorkspaceMember = Prisma.WorkspaceMemberModel
-/**
  * Model EmailVerificationCode
  * 
  */
@@ -47,6 +37,16 @@ export type EmailVerificationCode = Prisma.EmailVerificationCodeModel
  * 
  */
 export type PasswordResetToken = Prisma.PasswordResetTokenModel
+/**
+ * Model Workspace
+ * 
+ */
+export type Workspace = Prisma.WorkspaceModel
+/**
+ * Model WorkspaceMember
+ * 
+ */
+export type WorkspaceMember = Prisma.WorkspaceMemberModel
 /**
  * Model Product
  * 
@@ -62,3 +62,28 @@ export type Idea = Prisma.IdeaModel
  * 
  */
 export type IdeaNote = Prisma.IdeaNoteModel
+/**
+ * Model MarketIdea
+ * 
+ */
+export type MarketIdea = Prisma.MarketIdeaModel
+/**
+ * Model Competitor
+ * 
+ */
+export type Competitor = Prisma.CompetitorModel
+/**
+ * Model Segment
+ * 
+ */
+export type Segment = Prisma.SegmentModel
+/**
+ * Model Opportunity
+ * 
+ */
+export type Opportunity = Prisma.OpportunityModel
+/**
+ * Model ResearchNote
+ * 
+ */
+export type ResearchNote = Prisma.ResearchNoteModel

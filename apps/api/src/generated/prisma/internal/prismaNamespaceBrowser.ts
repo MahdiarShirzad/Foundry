@@ -53,13 +53,18 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Session: 'Session',
-  Workspace: 'Workspace',
-  WorkspaceMember: 'WorkspaceMember',
   EmailVerificationCode: 'EmailVerificationCode',
   PasswordResetToken: 'PasswordResetToken',
+  Workspace: 'Workspace',
+  WorkspaceMember: 'WorkspaceMember',
   Product: 'Product',
   Idea: 'Idea',
-  IdeaNote: 'IdeaNote'
+  IdeaNote: 'IdeaNote',
+  MarketIdea: 'MarketIdea',
+  Competitor: 'Competitor',
+  Segment: 'Segment',
+  Opportunity: 'Opportunity',
+  ResearchNote: 'ResearchNote'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -103,28 +108,6 @@ export const SessionScalarFieldEnum = {
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
 
 
-export const WorkspaceScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  slug: 'slug',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type WorkspaceScalarFieldEnum = (typeof WorkspaceScalarFieldEnum)[keyof typeof WorkspaceScalarFieldEnum]
-
-
-export const WorkspaceMemberScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  workspaceId: 'workspaceId',
-  role: 'role',
-  createdAt: 'createdAt'
-} as const
-
-export type WorkspaceMemberScalarFieldEnum = (typeof WorkspaceMemberScalarFieldEnum)[keyof typeof WorkspaceMemberScalarFieldEnum]
-
-
 export const EmailVerificationCodeScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -147,6 +130,28 @@ export const PasswordResetTokenScalarFieldEnum = {
 } as const
 
 export type PasswordResetTokenScalarFieldEnum = (typeof PasswordResetTokenScalarFieldEnum)[keyof typeof PasswordResetTokenScalarFieldEnum]
+
+
+export const WorkspaceScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WorkspaceScalarFieldEnum = (typeof WorkspaceScalarFieldEnum)[keyof typeof WorkspaceScalarFieldEnum]
+
+
+export const WorkspaceMemberScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  workspaceId: 'workspaceId',
+  role: 'role',
+  createdAt: 'createdAt'
+} as const
+
+export type WorkspaceMemberScalarFieldEnum = (typeof WorkspaceMemberScalarFieldEnum)[keyof typeof WorkspaceMemberScalarFieldEnum]
 
 
 export const ProductScalarFieldEnum = {
@@ -194,6 +199,76 @@ export const IdeaNoteScalarFieldEnum = {
 } as const
 
 export type IdeaNoteScalarFieldEnum = (typeof IdeaNoteScalarFieldEnum)[keyof typeof IdeaNoteScalarFieldEnum]
+
+
+export const MarketIdeaScalarFieldEnum = {
+  id: 'id',
+  ideaId: 'ideaId',
+  workspaceId: 'workspaceId',
+  summary: 'summary',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MarketIdeaScalarFieldEnum = (typeof MarketIdeaScalarFieldEnum)[keyof typeof MarketIdeaScalarFieldEnum]
+
+
+export const CompetitorScalarFieldEnum = {
+  id: 'id',
+  marketIdeaId: 'marketIdeaId',
+  name: 'name',
+  website: 'website',
+  description: 'description',
+  strengths: 'strengths',
+  weaknesses: 'weaknesses',
+  pricing: 'pricing',
+  targetAudience: 'targetAudience',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CompetitorScalarFieldEnum = (typeof CompetitorScalarFieldEnum)[keyof typeof CompetitorScalarFieldEnum]
+
+
+export const SegmentScalarFieldEnum = {
+  id: 'id',
+  marketIdeaId: 'marketIdeaId',
+  name: 'name',
+  description: 'description',
+  size: 'size',
+  painPoints: 'painPoints',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SegmentScalarFieldEnum = (typeof SegmentScalarFieldEnum)[keyof typeof SegmentScalarFieldEnum]
+
+
+export const OpportunityScalarFieldEnum = {
+  id: 'id',
+  marketIdeaId: 'marketIdeaId',
+  segmentId: 'segmentId',
+  title: 'title',
+  description: 'description',
+  significance: 'significance',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OpportunityScalarFieldEnum = (typeof OpportunityScalarFieldEnum)[keyof typeof OpportunityScalarFieldEnum]
+
+
+export const ResearchNoteScalarFieldEnum = {
+  id: 'id',
+  marketIdeaId: 'marketIdeaId',
+  relatedType: 'relatedType',
+  relatedId: 'relatedId',
+  body: 'body',
+  author: 'author',
+  createdAt: 'createdAt'
+} as const
+
+export type ResearchNoteScalarFieldEnum = (typeof ResearchNoteScalarFieldEnum)[keyof typeof ResearchNoteScalarFieldEnum]
 
 
 export const SortOrder = {

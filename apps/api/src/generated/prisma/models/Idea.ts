@@ -270,9 +270,10 @@ export type IdeaWhereInput = {
   openQuestions?: Prisma.StringNullableListFilter<"Idea">
   capturedAt?: Prisma.DateTimeFilter<"Idea"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Idea"> | Date | string
-  notes?: Prisma.IdeaNoteListRelationFilter
   workspace?: Prisma.XOR<Prisma.WorkspaceScalarRelationFilter, Prisma.WorkspaceWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
+  notes?: Prisma.IdeaNoteListRelationFilter
+  marketIdea?: Prisma.XOR<Prisma.MarketIdeaNullableScalarRelationFilter, Prisma.MarketIdeaWhereInput> | null
 }
 
 export type IdeaOrderByWithRelationInput = {
@@ -293,9 +294,10 @@ export type IdeaOrderByWithRelationInput = {
   openQuestions?: Prisma.SortOrder
   capturedAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  notes?: Prisma.IdeaNoteOrderByRelationAggregateInput
   workspace?: Prisma.WorkspaceOrderByWithRelationInput
   product?: Prisma.ProductOrderByWithRelationInput
+  notes?: Prisma.IdeaNoteOrderByRelationAggregateInput
+  marketIdea?: Prisma.MarketIdeaOrderByWithRelationInput
 }
 
 export type IdeaWhereUniqueInput = Prisma.AtLeast<{
@@ -319,9 +321,10 @@ export type IdeaWhereUniqueInput = Prisma.AtLeast<{
   openQuestions?: Prisma.StringNullableListFilter<"Idea">
   capturedAt?: Prisma.DateTimeFilter<"Idea"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Idea"> | Date | string
-  notes?: Prisma.IdeaNoteListRelationFilter
   workspace?: Prisma.XOR<Prisma.WorkspaceScalarRelationFilter, Prisma.WorkspaceWhereInput>
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
+  notes?: Prisma.IdeaNoteListRelationFilter
+  marketIdea?: Prisma.XOR<Prisma.MarketIdeaNullableScalarRelationFilter, Prisma.MarketIdeaWhereInput> | null
 }, "id">
 
 export type IdeaOrderByWithAggregationInput = {
@@ -386,9 +389,10 @@ export type IdeaCreateInput = {
   openQuestions?: Prisma.IdeaCreateopenQuestionsInput | string[]
   capturedAt?: Date | string
   updatedAt?: Date | string
-  notes?: Prisma.IdeaNoteCreateNestedManyWithoutIdeaInput
   workspace: Prisma.WorkspaceCreateNestedOneWithoutIdeasInput
   product: Prisma.ProductCreateNestedOneWithoutIdeasInput
+  notes?: Prisma.IdeaNoteCreateNestedManyWithoutIdeaInput
+  marketIdea?: Prisma.MarketIdeaCreateNestedOneWithoutIdeaInput
 }
 
 export type IdeaUncheckedCreateInput = {
@@ -410,6 +414,7 @@ export type IdeaUncheckedCreateInput = {
   capturedAt?: Date | string
   updatedAt?: Date | string
   notes?: Prisma.IdeaNoteUncheckedCreateNestedManyWithoutIdeaInput
+  marketIdea?: Prisma.MarketIdeaUncheckedCreateNestedOneWithoutIdeaInput
 }
 
 export type IdeaUpdateInput = {
@@ -428,9 +433,10 @@ export type IdeaUpdateInput = {
   openQuestions?: Prisma.IdeaUpdateopenQuestionsInput | string[]
   capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  notes?: Prisma.IdeaNoteUpdateManyWithoutIdeaNestedInput
   workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutIdeasNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutIdeasNestedInput
+  notes?: Prisma.IdeaNoteUpdateManyWithoutIdeaNestedInput
+  marketIdea?: Prisma.MarketIdeaUpdateOneWithoutIdeaNestedInput
 }
 
 export type IdeaUncheckedUpdateInput = {
@@ -452,6 +458,7 @@ export type IdeaUncheckedUpdateInput = {
   capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.IdeaNoteUncheckedUpdateManyWithoutIdeaNestedInput
+  marketIdea?: Prisma.MarketIdeaUncheckedUpdateOneWithoutIdeaNestedInput
 }
 
 export type IdeaCreateManyInput = {
@@ -715,6 +722,20 @@ export type IdeaUpdateOneRequiredWithoutNotesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.IdeaUpdateToOneWithWhereWithoutNotesInput, Prisma.IdeaUpdateWithoutNotesInput>, Prisma.IdeaUncheckedUpdateWithoutNotesInput>
 }
 
+export type IdeaCreateNestedOneWithoutMarketIdeaInput = {
+  create?: Prisma.XOR<Prisma.IdeaCreateWithoutMarketIdeaInput, Prisma.IdeaUncheckedCreateWithoutMarketIdeaInput>
+  connectOrCreate?: Prisma.IdeaCreateOrConnectWithoutMarketIdeaInput
+  connect?: Prisma.IdeaWhereUniqueInput
+}
+
+export type IdeaUpdateOneRequiredWithoutMarketIdeaNestedInput = {
+  create?: Prisma.XOR<Prisma.IdeaCreateWithoutMarketIdeaInput, Prisma.IdeaUncheckedCreateWithoutMarketIdeaInput>
+  connectOrCreate?: Prisma.IdeaCreateOrConnectWithoutMarketIdeaInput
+  upsert?: Prisma.IdeaUpsertWithoutMarketIdeaInput
+  connect?: Prisma.IdeaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.IdeaUpdateToOneWithWhereWithoutMarketIdeaInput, Prisma.IdeaUpdateWithoutMarketIdeaInput>, Prisma.IdeaUncheckedUpdateWithoutMarketIdeaInput>
+}
+
 export type IdeaCreateWithoutWorkspaceInput = {
   id?: string
   ref: string
@@ -731,8 +752,9 @@ export type IdeaCreateWithoutWorkspaceInput = {
   openQuestions?: Prisma.IdeaCreateopenQuestionsInput | string[]
   capturedAt?: Date | string
   updatedAt?: Date | string
-  notes?: Prisma.IdeaNoteCreateNestedManyWithoutIdeaInput
   product: Prisma.ProductCreateNestedOneWithoutIdeasInput
+  notes?: Prisma.IdeaNoteCreateNestedManyWithoutIdeaInput
+  marketIdea?: Prisma.MarketIdeaCreateNestedOneWithoutIdeaInput
 }
 
 export type IdeaUncheckedCreateWithoutWorkspaceInput = {
@@ -753,6 +775,7 @@ export type IdeaUncheckedCreateWithoutWorkspaceInput = {
   capturedAt?: Date | string
   updatedAt?: Date | string
   notes?: Prisma.IdeaNoteUncheckedCreateNestedManyWithoutIdeaInput
+  marketIdea?: Prisma.MarketIdeaUncheckedCreateNestedOneWithoutIdeaInput
 }
 
 export type IdeaCreateOrConnectWithoutWorkspaceInput = {
@@ -820,8 +843,9 @@ export type IdeaCreateWithoutProductInput = {
   openQuestions?: Prisma.IdeaCreateopenQuestionsInput | string[]
   capturedAt?: Date | string
   updatedAt?: Date | string
-  notes?: Prisma.IdeaNoteCreateNestedManyWithoutIdeaInput
   workspace: Prisma.WorkspaceCreateNestedOneWithoutIdeasInput
+  notes?: Prisma.IdeaNoteCreateNestedManyWithoutIdeaInput
+  marketIdea?: Prisma.MarketIdeaCreateNestedOneWithoutIdeaInput
 }
 
 export type IdeaUncheckedCreateWithoutProductInput = {
@@ -842,6 +866,7 @@ export type IdeaUncheckedCreateWithoutProductInput = {
   capturedAt?: Date | string
   updatedAt?: Date | string
   notes?: Prisma.IdeaNoteUncheckedCreateNestedManyWithoutIdeaInput
+  marketIdea?: Prisma.MarketIdeaUncheckedCreateNestedOneWithoutIdeaInput
 }
 
 export type IdeaCreateOrConnectWithoutProductInput = {
@@ -888,6 +913,7 @@ export type IdeaCreateWithoutNotesInput = {
   updatedAt?: Date | string
   workspace: Prisma.WorkspaceCreateNestedOneWithoutIdeasInput
   product: Prisma.ProductCreateNestedOneWithoutIdeasInput
+  marketIdea?: Prisma.MarketIdeaCreateNestedOneWithoutIdeaInput
 }
 
 export type IdeaUncheckedCreateWithoutNotesInput = {
@@ -908,6 +934,7 @@ export type IdeaUncheckedCreateWithoutNotesInput = {
   openQuestions?: Prisma.IdeaCreateopenQuestionsInput | string[]
   capturedAt?: Date | string
   updatedAt?: Date | string
+  marketIdea?: Prisma.MarketIdeaUncheckedCreateNestedOneWithoutIdeaInput
 }
 
 export type IdeaCreateOrConnectWithoutNotesInput = {
@@ -944,6 +971,7 @@ export type IdeaUpdateWithoutNotesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutIdeasNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutIdeasNestedInput
+  marketIdea?: Prisma.MarketIdeaUpdateOneWithoutIdeaNestedInput
 }
 
 export type IdeaUncheckedUpdateWithoutNotesInput = {
@@ -964,6 +992,107 @@ export type IdeaUncheckedUpdateWithoutNotesInput = {
   openQuestions?: Prisma.IdeaUpdateopenQuestionsInput | string[]
   capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  marketIdea?: Prisma.MarketIdeaUncheckedUpdateOneWithoutIdeaNestedInput
+}
+
+export type IdeaCreateWithoutMarketIdeaInput = {
+  id?: string
+  ref: string
+  name: string
+  headline?: string | null
+  summary?: string | null
+  problem?: string | null
+  audience?: string | null
+  category?: string | null
+  tags?: Prisma.IdeaCreatetagsInput | string[]
+  status?: $Enums.IdeaStatus
+  source?: string | null
+  context?: string | null
+  openQuestions?: Prisma.IdeaCreateopenQuestionsInput | string[]
+  capturedAt?: Date | string
+  updatedAt?: Date | string
+  workspace: Prisma.WorkspaceCreateNestedOneWithoutIdeasInput
+  product: Prisma.ProductCreateNestedOneWithoutIdeasInput
+  notes?: Prisma.IdeaNoteCreateNestedManyWithoutIdeaInput
+}
+
+export type IdeaUncheckedCreateWithoutMarketIdeaInput = {
+  id?: string
+  workspaceId: string
+  productId: string
+  ref: string
+  name: string
+  headline?: string | null
+  summary?: string | null
+  problem?: string | null
+  audience?: string | null
+  category?: string | null
+  tags?: Prisma.IdeaCreatetagsInput | string[]
+  status?: $Enums.IdeaStatus
+  source?: string | null
+  context?: string | null
+  openQuestions?: Prisma.IdeaCreateopenQuestionsInput | string[]
+  capturedAt?: Date | string
+  updatedAt?: Date | string
+  notes?: Prisma.IdeaNoteUncheckedCreateNestedManyWithoutIdeaInput
+}
+
+export type IdeaCreateOrConnectWithoutMarketIdeaInput = {
+  where: Prisma.IdeaWhereUniqueInput
+  create: Prisma.XOR<Prisma.IdeaCreateWithoutMarketIdeaInput, Prisma.IdeaUncheckedCreateWithoutMarketIdeaInput>
+}
+
+export type IdeaUpsertWithoutMarketIdeaInput = {
+  update: Prisma.XOR<Prisma.IdeaUpdateWithoutMarketIdeaInput, Prisma.IdeaUncheckedUpdateWithoutMarketIdeaInput>
+  create: Prisma.XOR<Prisma.IdeaCreateWithoutMarketIdeaInput, Prisma.IdeaUncheckedCreateWithoutMarketIdeaInput>
+  where?: Prisma.IdeaWhereInput
+}
+
+export type IdeaUpdateToOneWithWhereWithoutMarketIdeaInput = {
+  where?: Prisma.IdeaWhereInput
+  data: Prisma.XOR<Prisma.IdeaUpdateWithoutMarketIdeaInput, Prisma.IdeaUncheckedUpdateWithoutMarketIdeaInput>
+}
+
+export type IdeaUpdateWithoutMarketIdeaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  ref?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.IdeaUpdatetagsInput | string[]
+  status?: Prisma.EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
+  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  context?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openQuestions?: Prisma.IdeaUpdateopenQuestionsInput | string[]
+  capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutIdeasNestedInput
+  product?: Prisma.ProductUpdateOneRequiredWithoutIdeasNestedInput
+  notes?: Prisma.IdeaNoteUpdateManyWithoutIdeaNestedInput
+}
+
+export type IdeaUncheckedUpdateWithoutMarketIdeaInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workspaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  ref?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.IdeaUpdatetagsInput | string[]
+  status?: Prisma.EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
+  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  context?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openQuestions?: Prisma.IdeaUpdateopenQuestionsInput | string[]
+  capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notes?: Prisma.IdeaNoteUncheckedUpdateManyWithoutIdeaNestedInput
 }
 
 export type IdeaCreateManyWorkspaceInput = {
@@ -1001,8 +1130,9 @@ export type IdeaUpdateWithoutWorkspaceInput = {
   openQuestions?: Prisma.IdeaUpdateopenQuestionsInput | string[]
   capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  notes?: Prisma.IdeaNoteUpdateManyWithoutIdeaNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutIdeasNestedInput
+  notes?: Prisma.IdeaNoteUpdateManyWithoutIdeaNestedInput
+  marketIdea?: Prisma.MarketIdeaUpdateOneWithoutIdeaNestedInput
 }
 
 export type IdeaUncheckedUpdateWithoutWorkspaceInput = {
@@ -1023,6 +1153,7 @@ export type IdeaUncheckedUpdateWithoutWorkspaceInput = {
   capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.IdeaNoteUncheckedUpdateManyWithoutIdeaNestedInput
+  marketIdea?: Prisma.MarketIdeaUncheckedUpdateOneWithoutIdeaNestedInput
 }
 
 export type IdeaUncheckedUpdateManyWithoutWorkspaceInput = {
@@ -1079,8 +1210,9 @@ export type IdeaUpdateWithoutProductInput = {
   openQuestions?: Prisma.IdeaUpdateopenQuestionsInput | string[]
   capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  notes?: Prisma.IdeaNoteUpdateManyWithoutIdeaNestedInput
   workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutIdeasNestedInput
+  notes?: Prisma.IdeaNoteUpdateManyWithoutIdeaNestedInput
+  marketIdea?: Prisma.MarketIdeaUpdateOneWithoutIdeaNestedInput
 }
 
 export type IdeaUncheckedUpdateWithoutProductInput = {
@@ -1101,6 +1233,7 @@ export type IdeaUncheckedUpdateWithoutProductInput = {
   capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.IdeaNoteUncheckedUpdateManyWithoutIdeaNestedInput
+  marketIdea?: Prisma.MarketIdeaUncheckedUpdateOneWithoutIdeaNestedInput
 }
 
 export type IdeaUncheckedUpdateManyWithoutProductInput = {
@@ -1171,9 +1304,10 @@ export type IdeaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   openQuestions?: boolean
   capturedAt?: boolean
   updatedAt?: boolean
-  notes?: boolean | Prisma.Idea$notesArgs<ExtArgs>
   workspace?: boolean | Prisma.WorkspaceDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  notes?: boolean | Prisma.Idea$notesArgs<ExtArgs>
+  marketIdea?: boolean | Prisma.Idea$marketIdeaArgs<ExtArgs>
   _count?: boolean | Prisma.IdeaCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["idea"]>
 
@@ -1243,9 +1377,10 @@ export type IdeaSelectScalar = {
 
 export type IdeaOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "workspaceId" | "productId" | "ref" | "name" | "headline" | "summary" | "problem" | "audience" | "category" | "tags" | "status" | "source" | "context" | "openQuestions" | "capturedAt" | "updatedAt", ExtArgs["result"]["idea"]>
 export type IdeaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  notes?: boolean | Prisma.Idea$notesArgs<ExtArgs>
   workspace?: boolean | Prisma.WorkspaceDefaultArgs<ExtArgs>
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
+  notes?: boolean | Prisma.Idea$notesArgs<ExtArgs>
+  marketIdea?: boolean | Prisma.Idea$marketIdeaArgs<ExtArgs>
   _count?: boolean | Prisma.IdeaCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type IdeaIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1260,9 +1395,10 @@ export type IdeaIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $IdeaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Idea"
   objects: {
-    notes: Prisma.$IdeaNotePayload<ExtArgs>[]
     workspace: Prisma.$WorkspacePayload<ExtArgs>
     product: Prisma.$ProductPayload<ExtArgs>
+    notes: Prisma.$IdeaNotePayload<ExtArgs>[]
+    marketIdea: Prisma.$MarketIdeaPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1676,9 +1812,10 @@ readonly fields: IdeaFieldRefs;
  */
 export interface Prisma__IdeaClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  notes<T extends Prisma.Idea$notesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Idea$notesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IdeaNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   workspace<T extends Prisma.WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WorkspaceDefaultArgs<ExtArgs>>): Prisma.Prisma__WorkspaceClient<runtime.Types.Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   product<T extends Prisma.ProductDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  notes<T extends Prisma.Idea$notesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Idea$notesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IdeaNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  marketIdea<T extends Prisma.Idea$marketIdeaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Idea$marketIdeaArgs<ExtArgs>>): Prisma.Prisma__MarketIdeaClient<runtime.Types.Result.GetResult<Prisma.$MarketIdeaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2147,6 +2284,25 @@ export type Idea$notesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   take?: number
   skip?: number
   distinct?: Prisma.IdeaNoteScalarFieldEnum | Prisma.IdeaNoteScalarFieldEnum[]
+}
+
+/**
+ * Idea.marketIdea
+ */
+export type Idea$marketIdeaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MarketIdea
+   */
+  select?: Prisma.MarketIdeaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MarketIdea
+   */
+  omit?: Prisma.MarketIdeaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MarketIdeaInclude<ExtArgs> | null
+  where?: Prisma.MarketIdeaWhereInput
 }
 
 /**

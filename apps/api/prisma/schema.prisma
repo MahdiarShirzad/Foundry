@@ -5,72 +5,47 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-
 }
 
-model User {
-  id               String            @id @default(uuid())
-  email            String            @unique
-  passwordHash     String
-  emailVerifiedAt  DateTime?
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
+// ─────────────────────────────────────────
+// Auth
+// ─────────────────────────────────────────
 
-  session          Session[]
-  workspaceMembers WorkspaceMember[]
+model User {
+  id              String   @id @default(uuid())
+  email           String   @unique
+  passwordHash    String
+  emailVerifiedAt DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  sessions               Session[]
+  workspaceMembers       WorkspaceMember[]
   emailVerificationCodes EmailVerificationCode[]
-  passwordResetTokens PasswordResetToken[]
+  passwordResetTokens    PasswordResetToken[]
 }
 
 model Session {
-  id          String    @id @default(uuid())
-  userId      String
-  tokenHash   String    @unique
-  expiresAt   DateTime
-  revokedAt   DateTime?
-  // Set when the token is rotated by a refresh; a duplicate refresh inside the
-  // grace window is a concurrent request from the same browser, not theft.
-  rotatedAt   DateTime?
-  createdAt   DateTime  @default(now())
+  id        String    @id @default(uuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  revokedAt DateTime?
+  rotatedAt DateTime?
+  createdAt DateTime  @default(now())
 
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
 
-model Workspace {
-  id        String            @id @default(uuid())
-  name      String
-  slug      String            @unique
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
-
-  members   WorkspaceMember[]
-  product   Product[]
-  ideas     Idea[]
-}
-
-model WorkspaceMember {
-  id          String    @id @default(uuid())
-  userId      String
-  workspaceId String
-  role        String
-  createdAt   DateTime  @default(now())
-
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, workspaceId])
-  @@index([workspaceId])
-}
-
 model EmailVerificationCode {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   userId    String
   codeHash  String
   expiresAt DateTime
   usedAt    DateTime?
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -84,61 +59,193 @@ model PasswordResetToken {
   expiresAt DateTime
   usedAt    DateTime?
   createdAt DateTime  @default(now())
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([userId])
 }
 
-model Product{
-  id String @id @default(uuid())
-  workspaceId String 
-  name String
-  slug String
+// ─────────────────────────────────────────
+// Workspace
+// ─────────────────────────────────────────
+
+model Workspace {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  workspace Workspace @relation(fields: [workspaceId], references:[id], onDelete:Cascade)
+  members     WorkspaceMember[]
+  products    Product[]
+  ideas       Idea[]
+  marketIdeas MarketIdea[]
+}
+
+model WorkspaceMember {
+  id          String   @id @default(uuid())
+  userId      String
+  workspaceId String
+  role        String
+  createdAt   DateTime @default(now())
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, workspaceId])
+  @@index([workspaceId])
+}
+
+// ─────────────────────────────────────────
+// Product
+// ─────────────────────────────────────────
+
+model Product {
+  id          String   @id @default(uuid())
+  workspaceId String
+  name        String
+  slug        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   ideas     Idea[]
 
   @@unique([workspaceId, slug])
   @@index([workspaceId])
 }
 
-model Idea{
-  id String @id @default(cuid())
-  workspaceId String
-  productId String
-  ref String
-  name String
-  headline String?
-  summary String?
-  problem String?
-  audience String?
-  category String?
-  tags String[]
-  status IdeaStatus @default(INBOX)
-  source String?
-  context String?
-  openQuestions String[]
-  capturedAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  notes IdeaNote[]
+// ─────────────────────────────────────────
+// Stage 01 — Idea Lab
+// ─────────────────────────────────────────
 
-  workspace Workspace @relation(fields: [workspaceId], references: [id])
-  product   Product   @relation(fields: [productId], references: [id])
+model Idea {
+  id            String     @id @default(cuid())
+  workspaceId   String
+  productId     String
+  ref           String
+  name          String
+  headline      String?
+  summary       String?
+  problem       String?
+  audience      String?
+  category      String?
+  tags          String[]
+  status        IdeaStatus @default(INBOX)
+  source        String?
+  context       String?
+  openQuestions String[]
+  capturedAt    DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  workspace  Workspace   @relation(fields: [workspaceId], references: [id])
+  product    Product     @relation(fields: [productId], references: [id])
+  notes      IdeaNote[]
+  marketIdea MarketIdea?
 }
 
 model IdeaNote {
-  id String @id @default(cuid())
-  ideaId String
-  author String
+  id       String   @id @default(cuid())
+  ideaId   String
+  author   String
   initials String
-  date DateTime @default(now())
-  body String
-  idea Idea @relation(fields:[ideaId],references:[id])
+  date     DateTime @default(now())
+  body     String
+
+  idea Idea @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+
+  @@index([ideaId])
 }
 
-enum IdeaStatus{
+enum IdeaStatus {
   INBOX
   EXPLORING
   SHORTLISTED
+}
+
+// ─────────────────────────────────────────
+// Stage 02 — Market Intelligence
+// ─────────────────────────────────────────
+
+model MarketIdea {
+  id          String   @id @default(uuid())
+  ideaId      String   @unique
+  workspaceId String
+  summary     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  idea          Idea           @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  workspace     Workspace      @relation(fields: [workspaceId], references: [id])
+  competitors   Competitor[]
+  segments      Segment[]
+  opportunities Opportunity[]
+  notes         ResearchNote[]
+
+  @@index([workspaceId])
+}
+
+model Competitor {
+  id             String   @id @default(uuid())
+  marketIdeaId   String
+  name           String
+  website        String?
+  description    String?
+  strengths      String[]
+  weaknesses     String[]
+  pricing        String?
+  targetAudience String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  marketIdea MarketIdea @relation(fields: [marketIdeaId], references: [id], onDelete: Cascade)
+
+  @@index([marketIdeaId])
+}
+
+model Segment {
+  id           String   @id @default(uuid())
+  marketIdeaId String
+  name         String
+  description  String
+  size         String?
+  painPoints   String[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  marketIdea    MarketIdea    @relation(fields: [marketIdeaId], references: [id], onDelete: Cascade)
+  opportunities Opportunity[]
+
+  @@index([marketIdeaId])
+}
+
+model Opportunity {
+  id           String   @id @default(uuid())
+  marketIdeaId String
+  segmentId    String?
+  title        String
+  description  String
+  significance String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  marketIdea MarketIdea @relation(fields: [marketIdeaId], references: [id], onDelete: Cascade)
+  segment    Segment?   @relation(fields: [segmentId], references: [id])
+
+  @@index([marketIdeaId])
+}
+
+model ResearchNote {
+  id           String   @id @default(uuid())
+  marketIdeaId String
+  relatedType  String
+  relatedId    String
+  body         String
+  author       String?
+  createdAt    DateTime @default(now())
+
+  marketIdea MarketIdea @relation(fields: [marketIdeaId], references: [id], onDelete: Cascade)
+
+  @@index([marketIdeaId])
+  @@index([relatedType, relatedId])
 }

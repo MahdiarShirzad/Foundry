@@ -183,8 +183,9 @@ export type WorkspaceWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Workspace"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Workspace"> | Date | string
   members?: Prisma.WorkspaceMemberListRelationFilter
-  product?: Prisma.ProductListRelationFilter
+  products?: Prisma.ProductListRelationFilter
   ideas?: Prisma.IdeaListRelationFilter
+  marketIdeas?: Prisma.MarketIdeaListRelationFilter
 }
 
 export type WorkspaceOrderByWithRelationInput = {
@@ -194,8 +195,9 @@ export type WorkspaceOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   members?: Prisma.WorkspaceMemberOrderByRelationAggregateInput
-  product?: Prisma.ProductOrderByRelationAggregateInput
+  products?: Prisma.ProductOrderByRelationAggregateInput
   ideas?: Prisma.IdeaOrderByRelationAggregateInput
+  marketIdeas?: Prisma.MarketIdeaOrderByRelationAggregateInput
 }
 
 export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
@@ -208,8 +210,9 @@ export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Workspace"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Workspace"> | Date | string
   members?: Prisma.WorkspaceMemberListRelationFilter
-  product?: Prisma.ProductListRelationFilter
+  products?: Prisma.ProductListRelationFilter
   ideas?: Prisma.IdeaListRelationFilter
+  marketIdeas?: Prisma.MarketIdeaListRelationFilter
 }, "id" | "slug">
 
 export type WorkspaceOrderByWithAggregationInput = {
@@ -241,8 +244,9 @@ export type WorkspaceCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   members?: Prisma.WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
-  product?: Prisma.ProductCreateNestedManyWithoutWorkspaceInput
+  products?: Prisma.ProductCreateNestedManyWithoutWorkspaceInput
   ideas?: Prisma.IdeaCreateNestedManyWithoutWorkspaceInput
+  marketIdeas?: Prisma.MarketIdeaCreateNestedManyWithoutWorkspaceInput
 }
 
 export type WorkspaceUncheckedCreateInput = {
@@ -252,8 +256,9 @@ export type WorkspaceUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   members?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
-  product?: Prisma.ProductUncheckedCreateNestedManyWithoutWorkspaceInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutWorkspaceInput
   ideas?: Prisma.IdeaUncheckedCreateNestedManyWithoutWorkspaceInput
+  marketIdeas?: Prisma.MarketIdeaUncheckedCreateNestedManyWithoutWorkspaceInput
 }
 
 export type WorkspaceUpdateInput = {
@@ -263,8 +268,9 @@ export type WorkspaceUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
-  product?: Prisma.ProductUpdateManyWithoutWorkspaceNestedInput
+  products?: Prisma.ProductUpdateManyWithoutWorkspaceNestedInput
   ideas?: Prisma.IdeaUpdateManyWithoutWorkspaceNestedInput
+  marketIdeas?: Prisma.MarketIdeaUpdateManyWithoutWorkspaceNestedInput
 }
 
 export type WorkspaceUncheckedUpdateInput = {
@@ -274,8 +280,9 @@ export type WorkspaceUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
-  product?: Prisma.ProductUncheckedUpdateManyWithoutWorkspaceNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutWorkspaceNestedInput
   ideas?: Prisma.IdeaUncheckedUpdateManyWithoutWorkspaceNestedInput
+  marketIdeas?: Prisma.MarketIdeaUncheckedUpdateManyWithoutWorkspaceNestedInput
 }
 
 export type WorkspaceCreateManyInput = {
@@ -345,18 +352,18 @@ export type WorkspaceUpdateOneRequiredWithoutMembersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.WorkspaceUpdateToOneWithWhereWithoutMembersInput, Prisma.WorkspaceUpdateWithoutMembersInput>, Prisma.WorkspaceUncheckedUpdateWithoutMembersInput>
 }
 
-export type WorkspaceCreateNestedOneWithoutProductInput = {
-  create?: Prisma.XOR<Prisma.WorkspaceCreateWithoutProductInput, Prisma.WorkspaceUncheckedCreateWithoutProductInput>
-  connectOrCreate?: Prisma.WorkspaceCreateOrConnectWithoutProductInput
+export type WorkspaceCreateNestedOneWithoutProductsInput = {
+  create?: Prisma.XOR<Prisma.WorkspaceCreateWithoutProductsInput, Prisma.WorkspaceUncheckedCreateWithoutProductsInput>
+  connectOrCreate?: Prisma.WorkspaceCreateOrConnectWithoutProductsInput
   connect?: Prisma.WorkspaceWhereUniqueInput
 }
 
-export type WorkspaceUpdateOneRequiredWithoutProductNestedInput = {
-  create?: Prisma.XOR<Prisma.WorkspaceCreateWithoutProductInput, Prisma.WorkspaceUncheckedCreateWithoutProductInput>
-  connectOrCreate?: Prisma.WorkspaceCreateOrConnectWithoutProductInput
-  upsert?: Prisma.WorkspaceUpsertWithoutProductInput
+export type WorkspaceUpdateOneRequiredWithoutProductsNestedInput = {
+  create?: Prisma.XOR<Prisma.WorkspaceCreateWithoutProductsInput, Prisma.WorkspaceUncheckedCreateWithoutProductsInput>
+  connectOrCreate?: Prisma.WorkspaceCreateOrConnectWithoutProductsInput
+  upsert?: Prisma.WorkspaceUpsertWithoutProductsInput
   connect?: Prisma.WorkspaceWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.WorkspaceUpdateToOneWithWhereWithoutProductInput, Prisma.WorkspaceUpdateWithoutProductInput>, Prisma.WorkspaceUncheckedUpdateWithoutProductInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.WorkspaceUpdateToOneWithWhereWithoutProductsInput, Prisma.WorkspaceUpdateWithoutProductsInput>, Prisma.WorkspaceUncheckedUpdateWithoutProductsInput>
 }
 
 export type WorkspaceCreateNestedOneWithoutIdeasInput = {
@@ -373,14 +380,29 @@ export type WorkspaceUpdateOneRequiredWithoutIdeasNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.WorkspaceUpdateToOneWithWhereWithoutIdeasInput, Prisma.WorkspaceUpdateWithoutIdeasInput>, Prisma.WorkspaceUncheckedUpdateWithoutIdeasInput>
 }
 
+export type WorkspaceCreateNestedOneWithoutMarketIdeasInput = {
+  create?: Prisma.XOR<Prisma.WorkspaceCreateWithoutMarketIdeasInput, Prisma.WorkspaceUncheckedCreateWithoutMarketIdeasInput>
+  connectOrCreate?: Prisma.WorkspaceCreateOrConnectWithoutMarketIdeasInput
+  connect?: Prisma.WorkspaceWhereUniqueInput
+}
+
+export type WorkspaceUpdateOneRequiredWithoutMarketIdeasNestedInput = {
+  create?: Prisma.XOR<Prisma.WorkspaceCreateWithoutMarketIdeasInput, Prisma.WorkspaceUncheckedCreateWithoutMarketIdeasInput>
+  connectOrCreate?: Prisma.WorkspaceCreateOrConnectWithoutMarketIdeasInput
+  upsert?: Prisma.WorkspaceUpsertWithoutMarketIdeasInput
+  connect?: Prisma.WorkspaceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.WorkspaceUpdateToOneWithWhereWithoutMarketIdeasInput, Prisma.WorkspaceUpdateWithoutMarketIdeasInput>, Prisma.WorkspaceUncheckedUpdateWithoutMarketIdeasInput>
+}
+
 export type WorkspaceCreateWithoutMembersInput = {
   id?: string
   name: string
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  product?: Prisma.ProductCreateNestedManyWithoutWorkspaceInput
+  products?: Prisma.ProductCreateNestedManyWithoutWorkspaceInput
   ideas?: Prisma.IdeaCreateNestedManyWithoutWorkspaceInput
+  marketIdeas?: Prisma.MarketIdeaCreateNestedManyWithoutWorkspaceInput
 }
 
 export type WorkspaceUncheckedCreateWithoutMembersInput = {
@@ -389,8 +411,9 @@ export type WorkspaceUncheckedCreateWithoutMembersInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  product?: Prisma.ProductUncheckedCreateNestedManyWithoutWorkspaceInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutWorkspaceInput
   ideas?: Prisma.IdeaUncheckedCreateNestedManyWithoutWorkspaceInput
+  marketIdeas?: Prisma.MarketIdeaUncheckedCreateNestedManyWithoutWorkspaceInput
 }
 
 export type WorkspaceCreateOrConnectWithoutMembersInput = {
@@ -415,8 +438,9 @@ export type WorkspaceUpdateWithoutMembersInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  product?: Prisma.ProductUpdateManyWithoutWorkspaceNestedInput
+  products?: Prisma.ProductUpdateManyWithoutWorkspaceNestedInput
   ideas?: Prisma.IdeaUpdateManyWithoutWorkspaceNestedInput
+  marketIdeas?: Prisma.MarketIdeaUpdateManyWithoutWorkspaceNestedInput
 }
 
 export type WorkspaceUncheckedUpdateWithoutMembersInput = {
@@ -425,11 +449,12 @@ export type WorkspaceUncheckedUpdateWithoutMembersInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  product?: Prisma.ProductUncheckedUpdateManyWithoutWorkspaceNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutWorkspaceNestedInput
   ideas?: Prisma.IdeaUncheckedUpdateManyWithoutWorkspaceNestedInput
+  marketIdeas?: Prisma.MarketIdeaUncheckedUpdateManyWithoutWorkspaceNestedInput
 }
 
-export type WorkspaceCreateWithoutProductInput = {
+export type WorkspaceCreateWithoutProductsInput = {
   id?: string
   name: string
   slug: string
@@ -437,9 +462,10 @@ export type WorkspaceCreateWithoutProductInput = {
   updatedAt?: Date | string
   members?: Prisma.WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
   ideas?: Prisma.IdeaCreateNestedManyWithoutWorkspaceInput
+  marketIdeas?: Prisma.MarketIdeaCreateNestedManyWithoutWorkspaceInput
 }
 
-export type WorkspaceUncheckedCreateWithoutProductInput = {
+export type WorkspaceUncheckedCreateWithoutProductsInput = {
   id?: string
   name: string
   slug: string
@@ -447,25 +473,26 @@ export type WorkspaceUncheckedCreateWithoutProductInput = {
   updatedAt?: Date | string
   members?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
   ideas?: Prisma.IdeaUncheckedCreateNestedManyWithoutWorkspaceInput
+  marketIdeas?: Prisma.MarketIdeaUncheckedCreateNestedManyWithoutWorkspaceInput
 }
 
-export type WorkspaceCreateOrConnectWithoutProductInput = {
+export type WorkspaceCreateOrConnectWithoutProductsInput = {
   where: Prisma.WorkspaceWhereUniqueInput
-  create: Prisma.XOR<Prisma.WorkspaceCreateWithoutProductInput, Prisma.WorkspaceUncheckedCreateWithoutProductInput>
+  create: Prisma.XOR<Prisma.WorkspaceCreateWithoutProductsInput, Prisma.WorkspaceUncheckedCreateWithoutProductsInput>
 }
 
-export type WorkspaceUpsertWithoutProductInput = {
-  update: Prisma.XOR<Prisma.WorkspaceUpdateWithoutProductInput, Prisma.WorkspaceUncheckedUpdateWithoutProductInput>
-  create: Prisma.XOR<Prisma.WorkspaceCreateWithoutProductInput, Prisma.WorkspaceUncheckedCreateWithoutProductInput>
+export type WorkspaceUpsertWithoutProductsInput = {
+  update: Prisma.XOR<Prisma.WorkspaceUpdateWithoutProductsInput, Prisma.WorkspaceUncheckedUpdateWithoutProductsInput>
+  create: Prisma.XOR<Prisma.WorkspaceCreateWithoutProductsInput, Prisma.WorkspaceUncheckedCreateWithoutProductsInput>
   where?: Prisma.WorkspaceWhereInput
 }
 
-export type WorkspaceUpdateToOneWithWhereWithoutProductInput = {
+export type WorkspaceUpdateToOneWithWhereWithoutProductsInput = {
   where?: Prisma.WorkspaceWhereInput
-  data: Prisma.XOR<Prisma.WorkspaceUpdateWithoutProductInput, Prisma.WorkspaceUncheckedUpdateWithoutProductInput>
+  data: Prisma.XOR<Prisma.WorkspaceUpdateWithoutProductsInput, Prisma.WorkspaceUncheckedUpdateWithoutProductsInput>
 }
 
-export type WorkspaceUpdateWithoutProductInput = {
+export type WorkspaceUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
@@ -473,9 +500,10 @@ export type WorkspaceUpdateWithoutProductInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
   ideas?: Prisma.IdeaUpdateManyWithoutWorkspaceNestedInput
+  marketIdeas?: Prisma.MarketIdeaUpdateManyWithoutWorkspaceNestedInput
 }
 
-export type WorkspaceUncheckedUpdateWithoutProductInput = {
+export type WorkspaceUncheckedUpdateWithoutProductsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
@@ -483,6 +511,7 @@ export type WorkspaceUncheckedUpdateWithoutProductInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
   ideas?: Prisma.IdeaUncheckedUpdateManyWithoutWorkspaceNestedInput
+  marketIdeas?: Prisma.MarketIdeaUncheckedUpdateManyWithoutWorkspaceNestedInput
 }
 
 export type WorkspaceCreateWithoutIdeasInput = {
@@ -492,7 +521,8 @@ export type WorkspaceCreateWithoutIdeasInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   members?: Prisma.WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
-  product?: Prisma.ProductCreateNestedManyWithoutWorkspaceInput
+  products?: Prisma.ProductCreateNestedManyWithoutWorkspaceInput
+  marketIdeas?: Prisma.MarketIdeaCreateNestedManyWithoutWorkspaceInput
 }
 
 export type WorkspaceUncheckedCreateWithoutIdeasInput = {
@@ -502,7 +532,8 @@ export type WorkspaceUncheckedCreateWithoutIdeasInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   members?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
-  product?: Prisma.ProductUncheckedCreateNestedManyWithoutWorkspaceInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutWorkspaceInput
+  marketIdeas?: Prisma.MarketIdeaUncheckedCreateNestedManyWithoutWorkspaceInput
 }
 
 export type WorkspaceCreateOrConnectWithoutIdeasInput = {
@@ -528,7 +559,8 @@ export type WorkspaceUpdateWithoutIdeasInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
-  product?: Prisma.ProductUpdateManyWithoutWorkspaceNestedInput
+  products?: Prisma.ProductUpdateManyWithoutWorkspaceNestedInput
+  marketIdeas?: Prisma.MarketIdeaUpdateManyWithoutWorkspaceNestedInput
 }
 
 export type WorkspaceUncheckedUpdateWithoutIdeasInput = {
@@ -538,7 +570,68 @@ export type WorkspaceUncheckedUpdateWithoutIdeasInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   members?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
-  product?: Prisma.ProductUncheckedUpdateManyWithoutWorkspaceNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutWorkspaceNestedInput
+  marketIdeas?: Prisma.MarketIdeaUncheckedUpdateManyWithoutWorkspaceNestedInput
+}
+
+export type WorkspaceCreateWithoutMarketIdeasInput = {
+  id?: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  members?: Prisma.WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
+  products?: Prisma.ProductCreateNestedManyWithoutWorkspaceInput
+  ideas?: Prisma.IdeaCreateNestedManyWithoutWorkspaceInput
+}
+
+export type WorkspaceUncheckedCreateWithoutMarketIdeasInput = {
+  id?: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  members?: Prisma.WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
+  products?: Prisma.ProductUncheckedCreateNestedManyWithoutWorkspaceInput
+  ideas?: Prisma.IdeaUncheckedCreateNestedManyWithoutWorkspaceInput
+}
+
+export type WorkspaceCreateOrConnectWithoutMarketIdeasInput = {
+  where: Prisma.WorkspaceWhereUniqueInput
+  create: Prisma.XOR<Prisma.WorkspaceCreateWithoutMarketIdeasInput, Prisma.WorkspaceUncheckedCreateWithoutMarketIdeasInput>
+}
+
+export type WorkspaceUpsertWithoutMarketIdeasInput = {
+  update: Prisma.XOR<Prisma.WorkspaceUpdateWithoutMarketIdeasInput, Prisma.WorkspaceUncheckedUpdateWithoutMarketIdeasInput>
+  create: Prisma.XOR<Prisma.WorkspaceCreateWithoutMarketIdeasInput, Prisma.WorkspaceUncheckedCreateWithoutMarketIdeasInput>
+  where?: Prisma.WorkspaceWhereInput
+}
+
+export type WorkspaceUpdateToOneWithWhereWithoutMarketIdeasInput = {
+  where?: Prisma.WorkspaceWhereInput
+  data: Prisma.XOR<Prisma.WorkspaceUpdateWithoutMarketIdeasInput, Prisma.WorkspaceUncheckedUpdateWithoutMarketIdeasInput>
+}
+
+export type WorkspaceUpdateWithoutMarketIdeasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  members?: Prisma.WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
+  products?: Prisma.ProductUpdateManyWithoutWorkspaceNestedInput
+  ideas?: Prisma.IdeaUpdateManyWithoutWorkspaceNestedInput
+}
+
+export type WorkspaceUncheckedUpdateWithoutMarketIdeasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  members?: Prisma.WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
+  products?: Prisma.ProductUncheckedUpdateManyWithoutWorkspaceNestedInput
+  ideas?: Prisma.IdeaUncheckedUpdateManyWithoutWorkspaceNestedInput
 }
 
 
@@ -548,14 +641,16 @@ export type WorkspaceUncheckedUpdateWithoutIdeasInput = {
 
 export type WorkspaceCountOutputType = {
   members: number
-  product: number
+  products: number
   ideas: number
+  marketIdeas: number
 }
 
 export type WorkspaceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   members?: boolean | WorkspaceCountOutputTypeCountMembersArgs
-  product?: boolean | WorkspaceCountOutputTypeCountProductArgs
+  products?: boolean | WorkspaceCountOutputTypeCountProductsArgs
   ideas?: boolean | WorkspaceCountOutputTypeCountIdeasArgs
+  marketIdeas?: boolean | WorkspaceCountOutputTypeCountMarketIdeasArgs
 }
 
 /**
@@ -578,7 +673,7 @@ export type WorkspaceCountOutputTypeCountMembersArgs<ExtArgs extends runtime.Typ
 /**
  * WorkspaceCountOutputType without action
  */
-export type WorkspaceCountOutputTypeCountProductArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type WorkspaceCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ProductWhereInput
 }
 
@@ -589,6 +684,13 @@ export type WorkspaceCountOutputTypeCountIdeasArgs<ExtArgs extends runtime.Types
   where?: Prisma.IdeaWhereInput
 }
 
+/**
+ * WorkspaceCountOutputType without action
+ */
+export type WorkspaceCountOutputTypeCountMarketIdeasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MarketIdeaWhereInput
+}
+
 
 export type WorkspaceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -597,8 +699,9 @@ export type WorkspaceSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   createdAt?: boolean
   updatedAt?: boolean
   members?: boolean | Prisma.Workspace$membersArgs<ExtArgs>
-  product?: boolean | Prisma.Workspace$productArgs<ExtArgs>
+  products?: boolean | Prisma.Workspace$productsArgs<ExtArgs>
   ideas?: boolean | Prisma.Workspace$ideasArgs<ExtArgs>
+  marketIdeas?: boolean | Prisma.Workspace$marketIdeasArgs<ExtArgs>
   _count?: boolean | Prisma.WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["workspace"]>
 
@@ -629,8 +732,9 @@ export type WorkspaceSelectScalar = {
 export type WorkspaceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "createdAt" | "updatedAt", ExtArgs["result"]["workspace"]>
 export type WorkspaceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   members?: boolean | Prisma.Workspace$membersArgs<ExtArgs>
-  product?: boolean | Prisma.Workspace$productArgs<ExtArgs>
+  products?: boolean | Prisma.Workspace$productsArgs<ExtArgs>
   ideas?: boolean | Prisma.Workspace$ideasArgs<ExtArgs>
+  marketIdeas?: boolean | Prisma.Workspace$marketIdeasArgs<ExtArgs>
   _count?: boolean | Prisma.WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type WorkspaceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -640,8 +744,9 @@ export type $WorkspacePayload<ExtArgs extends runtime.Types.Extensions.InternalA
   name: "Workspace"
   objects: {
     members: Prisma.$WorkspaceMemberPayload<ExtArgs>[]
-    product: Prisma.$ProductPayload<ExtArgs>[]
+    products: Prisma.$ProductPayload<ExtArgs>[]
     ideas: Prisma.$IdeaPayload<ExtArgs>[]
+    marketIdeas: Prisma.$MarketIdeaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1044,8 +1149,9 @@ readonly fields: WorkspaceFieldRefs;
 export interface Prisma__WorkspaceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   members<T extends Prisma.Workspace$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Workspace$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkspaceMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  product<T extends Prisma.Workspace$productArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Workspace$productArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  products<T extends Prisma.Workspace$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Workspace$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ideas<T extends Prisma.Workspace$ideasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Workspace$ideasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IdeaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  marketIdeas<T extends Prisma.Workspace$marketIdeasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Workspace$marketIdeasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MarketIdeaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1497,9 +1603,9 @@ export type Workspace$membersArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * Workspace.product
+ * Workspace.products
  */
-export type Workspace$productArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Workspace$productsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Product
    */
@@ -1542,6 +1648,30 @@ export type Workspace$ideasArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.IdeaScalarFieldEnum | Prisma.IdeaScalarFieldEnum[]
+}
+
+/**
+ * Workspace.marketIdeas
+ */
+export type Workspace$marketIdeasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MarketIdea
+   */
+  select?: Prisma.MarketIdeaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MarketIdea
+   */
+  omit?: Prisma.MarketIdeaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MarketIdeaInclude<ExtArgs> | null
+  where?: Prisma.MarketIdeaWhereInput
+  orderBy?: Prisma.MarketIdeaOrderByWithRelationInput | Prisma.MarketIdeaOrderByWithRelationInput[]
+  cursor?: Prisma.MarketIdeaWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MarketIdeaScalarFieldEnum | Prisma.MarketIdeaScalarFieldEnum[]
 }
 
 /**

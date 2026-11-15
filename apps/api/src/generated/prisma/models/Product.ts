@@ -250,7 +250,7 @@ export type ProductCreateInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  workspace: Prisma.WorkspaceCreateNestedOneWithoutProductInput
+  workspace: Prisma.WorkspaceCreateNestedOneWithoutProductsInput
   ideas?: Prisma.IdeaCreateNestedManyWithoutProductInput
 }
 
@@ -270,7 +270,7 @@ export type ProductUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutProductNestedInput
+  workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutProductsNestedInput
   ideas?: Prisma.IdeaUpdateManyWithoutProductNestedInput
 }
 
@@ -475,7 +475,7 @@ export type ProductCreateWithoutIdeasInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  workspace: Prisma.WorkspaceCreateNestedOneWithoutProductInput
+  workspace: Prisma.WorkspaceCreateNestedOneWithoutProductsInput
 }
 
 export type ProductUncheckedCreateWithoutIdeasInput = {
@@ -509,7 +509,7 @@ export type ProductUpdateWithoutIdeasInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutProductNestedInput
+  workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutProductsNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutIdeasInput = {
