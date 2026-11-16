@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 
-import MarketIntelligencePage from "@/components/market-intelligence/market-intelligence-page";
+import { MarketIntelligenceRoute } from "@/components/market-intelligence/market-intelligence-page";
+import { MarketIntelligenceSkeleton } from "@/components/market-intelligence/market-intelligence-skeleton";
 
 export const metadata: Metadata = {
   title: "Market Intelligence",
@@ -10,5 +12,15 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <MarketIntelligencePage />;
+  return (
+    <Suspense
+      fallback={
+        <div className="flex flex-col gap-4">
+          <MarketIntelligenceSkeleton />
+        </div>
+      }
+    >
+      <MarketIntelligenceRoute />
+    </Suspense>
+  );
 }

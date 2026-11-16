@@ -10,13 +10,15 @@ import {
 } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
+import type {
+  CreateCompetitorInput,
+  CreateResearchNoteInput,
+  CreateSegmentInput,
+} from "@/lib/market-intelligence/api";
 import {
-  EVIDENCE_META,
-  EVIDENCE_TYPES,
   formatMarketDate,
-  MARKET_TODAY,
-  type EvidenceType,
   type MarketIdea,
+  type RelatedType,
 } from "@/lib/market-intelligence/types";
 
 const LABEL = "text-[12px] text-faint";
@@ -25,6 +27,33 @@ const INPUT =
 const TEXTAREA = `${INPUT} resize-none py-2.5 leading-relaxed`;
 
 type Errors = Record<string, string>;
+
+/** The related select stores `type:id`; the API wants the two parts. */
+function splitRelated(
+  value: string,
+  ideaId: string,
+): { relatedType: RelatedType; relatedId: string } {
+  const separator = value.indexOf(":");
+  const type = separator === -1 ? "idea" : value.slice(0, separator);
+  const id = separator === -1 ? ideaId : value.slice(separator + 1);
+  const relatedType: RelatedType =
+    type === "competitor" || type === "segment" || type === "opportunity"
+      ? type
+      : "idea";
+  return { relatedType, relatedId: id || ideaId };
+}
+
+/** Split a one-per-line textarea into a clean string array. */
+function toLines(value: string): string[] {
+  return value
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+function submitErrorMessage(error: unknown, fallback: string): string {
+  return error instanceof Error && error.message ? error.message : fallback;
+}
 
 function DialogShell({
   eyebrow,
@@ -222,17 +251,17 @@ function OptionalField({
   );
 }
 
-function PreviewNotice({ children }: { children: ReactNode }) {
+function SubmitError({ children }: { children: ReactNode }) {
   const reduce = useReducedMotion();
   return (
     <AnimatePresence initial={false}>
       <motion.p
-        role="status"
+        role="alert"
         initial={reduce ? false : { opacity: 0, y: 3 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0 }}
         transition={{ duration: reduce ? 0 : 0.16 }}
-        className="mb-3 border-l-2 border-accent bg-mint-tint px-3 py-2 text-[11px] leading-relaxed text-fg"
+        className="mb-3 border-l-2 border-danger bg-danger-tint px-3 py-2 text-[11px] leading-relaxed text-danger"
       >
         {children}
       </motion.p>
@@ -243,32 +272,36 @@ function PreviewNotice({ children }: { children: ReactNode }) {
 function DialogFooter({
   onClose,
   submitLabel,
-  notice,
+  error,
+  pending,
 }: {
   onClose: () => void;
   submitLabel: string;
-  notice: string | null;
+  error: string | null;
+  pending: boolean;
 }) {
   return (
     <footer className="shrink-0 border-t border-line bg-bg px-5 py-3.5 sm:px-6">
-      {notice ? <PreviewNotice>{notice}</PreviewNotice> : null}
+      {error ? <SubmitError>{error}</SubmitError> : null}
       <div className="flex flex-col gap-7 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
         <p className="text-[12px] leading-relaxed tracking-[0.13em] text-faint">
-          Preview form · nothing is stored
+          Saved to the market workspace for this idea
         </p>
         <div className="grid grid-cols-2 gap-2 sm:flex sm:items-center">
           <button
             type="button"
             onClick={onClose}
-            className="h-10 border border-line px-4 text-[12px] text-muted transition-colors hover:border-line-2 hover:text-fg sm:h-9"
+            disabled={pending}
+            className="h-10 border border-line px-4 text-[12px] text-muted transition-colors hover:border-line-2 hover:text-fg disabled:opacity-50 sm:h-9"
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="group inline-flex h-10 items-center justify-center gap-2 bg-mint px-4 text-[12.5px] font-medium text-ink transition duration-200 hover:brightness-95 active:translate-y-px sm:h-9"
+            disabled={pending}
+            className="group inline-flex h-10 items-center justify-center gap-2 bg-mint px-4 text-[12.5px] font-medium text-ink transition duration-200 hover:brightness-95 active:translate-y-px disabled:opacity-50 sm:h-9"
           >
-            {submitLabel}
+            {pending ? "Saving…" : submitLabel}
             <span
               aria-hidden
               className="transition-transform duration-200 group-hover:translate-x-0.5"
@@ -287,17 +320,18 @@ function DialogFooter({
 export function AddResearchDialog({
   idea,
   onClose,
+  onSubmit,
 }: {
   idea: MarketIdea;
   onClose: () => void;
+  onSubmit: (input: CreateResearchNoteInput) => Promise<void>;
 }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [source, setSource] = useState("");
   const [related, setRelated] = useState(`idea:${idea.id}`);
-  const [evidence, setEvidence] = useState<EvidenceType>("observation");
   const [errors, setErrors] = useState<Errors>({});
-  const [notice, setNotice] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
 
   const relatedOptions = [
     { value: `idea:${idea.id}`, label: `${idea.name} · idea` },
@@ -315,20 +349,39 @@ export function AddResearchDialog({
     })),
   ];
 
-  function submit(event: FormEvent<HTMLFormElement>) {
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const next: Errors = {};
     if (!title.trim()) next.title = "A note title is required";
     if (!content.trim()) next.content = "Write at least one observation";
     setErrors(next);
     if (Object.keys(next).length) {
-      setNotice(null);
+      setError(null);
       return;
     }
 
-    setNotice(
-      `Preview only — “${title.trim()}” was not saved. Connect a data layer to keep this research note.`,
-    );
+    const { relatedType, relatedId } = splitRelated(related, idea.id);
+
+    try {
+      setPending(true);
+      setError(null);
+      await onSubmit({
+        relatedType,
+        relatedId,
+        // The first line of the body becomes the note title.
+        body: [title.trim(), content.trim()].join("\n\n"),
+      });
+      onClose();
+    } catch (submitError) {
+      setError(
+        submitErrorMessage(
+          submitError,
+          "The research note could not be saved. Try again in a moment.",
+        ),
+      );
+    } finally {
+      setPending(false);
+    }
   }
 
   return (
@@ -381,16 +434,6 @@ export function AddResearchDialog({
             />
           </FormField>
 
-          <OptionalField id="mi-research-source" label="Source label" hint="Optional">
-            <input
-              id="mi-research-source"
-              value={source}
-              onChange={(event) => setSource(event.target.value)}
-              placeholder="e.g. Support workflow walkthrough · meeting notes"
-              className={`${INPUT} h-11`}
-            />
-          </OptionalField>
-
           <div className="grid gap-4 sm:grid-cols-2">
             <OptionalField id="mi-research-related" label="Related entity">
               <select
@@ -410,49 +453,23 @@ export function AddResearchDialog({
             <div>
               <p className={LABEL}>Date</p>
               <p className="mt-1.5 flex h-11 items-center border border-line bg-bg/50 px-3 text-[12px] text-faint">
-                {formatMarketDate(MARKET_TODAY)}
+                {formatMarketDate(new Date().toISOString().slice(0, 10))}
               </p>
             </div>
           </div>
 
-          <fieldset>
-            <legend className={LABEL}>Evidence type</legend>
-            <div className="mt-2 flex flex-wrap gap-1.5">
-              {EVIDENCE_TYPES.map((type) => {
-                const active = evidence === type;
-                return (
-                  <button
-                    key={type}
-                    type="button"
-                    onClick={() => setEvidence(type)}
-                    aria-pressed={active}
-                    className={`inline-flex items-center gap-1.5 border px-2.5 py-1.5 text-[12px] transition-colors ${
-                      active
-                        ? "border-accent bg-mint-tint/50 text-accent"
-                        : "border-line text-faint hover:border-line-2 hover:text-fg"
-                    }`}
-                  >
-                    <span
-                      aria-hidden
-                      className={`size-1 ${EVIDENCE_META[type].marker}`}
-                    />
-                    {EVIDENCE_META[type].label}
-                  </button>
-                );
-              })}
-            </div>
-            <p className="mt-2 text-[10.5px] leading-relaxed text-faint">
-              {EVIDENCE_META[evidence].description}
-            </p>
-          </fieldset>
-
           <p className="border-t border-line pt-3 text-[10.5px] leading-relaxed text-faint">
-            No source is fetched and no search is performed. Source labels are stored as text
-            only.
+            No source is fetched and no search is performed. Notes are stored as
+            text only.
           </p>
         </div>
 
-        <DialogFooter onClose={onClose} submitLabel="Add note" notice={notice} />
+        <DialogFooter
+          onClose={onClose}
+          submitLabel="Add note"
+          error={error}
+          pending={pending}
+        />
       </form>
     </DialogShell>
   );
@@ -460,30 +477,62 @@ export function AddResearchDialog({
 
 /* ---------------------------------------------------------- add competitor */
 
-export function AddCompetitorDialog({ onClose }: { onClose: () => void }) {
+export function AddCompetitorDialog({
+  onClose,
+  onSubmit,
+}: {
+  onClose: () => void;
+  onSubmit: (input: CreateCompetitorInput) => Promise<void>;
+}) {
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
   const [description, setDescription] = useState("");
   const [audience, setAudience] = useState("");
   const [pricing, setPricing] = useState("");
-  const [notes, setNotes] = useState("");
+  const [strengths, setStrengths] = useState("");
+  const [weaknesses, setWeaknesses] = useState("");
   const [errors, setErrors] = useState<Errors>({});
-  const [notice, setNotice] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
 
-  function submit(event: FormEvent<HTMLFormElement>) {
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const next: Errors = {};
     if (!name.trim()) next.name = "A competitor name is required";
     if (!description.trim()) next.description = "Add a short product description";
     setErrors(next);
     if (Object.keys(next).length) {
-      setNotice(null);
+      setError(null);
       return;
     }
 
-    setNotice(
-      `Preview only — “${name.trim()}” was not saved. Nothing was fetched from the website or added to the competitor set.`,
-    );
+    const input: CreateCompetitorInput = {
+      name: name.trim(),
+      description: description.trim(),
+    };
+    if (website.trim()) input.website = website.trim();
+    if (audience.trim()) input.targetAudience = audience.trim();
+    if (pricing.trim()) input.pricing = pricing.trim();
+    const strengthLines = toLines(strengths);
+    if (strengthLines.length) input.strengths = strengthLines;
+    const weaknessLines = toLines(weaknesses);
+    if (weaknessLines.length) input.weaknesses = weaknessLines;
+
+    try {
+      setPending(true);
+      setError(null);
+      await onSubmit(input);
+      onClose();
+    } catch (submitError) {
+      setError(
+        submitErrorMessage(
+          submitError,
+          "The competitor could not be saved. Try again in a moment.",
+        ),
+      );
+    } finally {
+      setPending(false);
+    }
   }
 
   return (
@@ -563,14 +612,25 @@ export function AddCompetitorDialog({ onClose }: { onClose: () => void }) {
             />
           </OptionalField>
 
-          <OptionalField id="mi-comp-notes" label="Observation notes">
+          <OptionalField id="mi-comp-strengths" label="Strengths" hint="One per line">
             <textarea
-              id="mi-comp-notes"
-              value={notes}
-              onChange={(event) => setNotes(event.target.value)}
-              rows={4}
-              placeholder="What did you notice about the positioning, product or pricing?"
-              className={`${TEXTAREA} min-h-[6rem]`}
+              id="mi-comp-strengths"
+              value={strengths}
+              onChange={(event) => setStrengths(event.target.value)}
+              rows={3}
+              placeholder={"A clear public changelog.\nDrafts start from merged work."}
+              className={`${TEXTAREA} min-h-[4rem]`}
+            />
+          </OptionalField>
+
+          <OptionalField id="mi-comp-weaknesses" label="Weaknesses" hint="One per line">
+            <textarea
+              id="mi-comp-weaknesses"
+              value={weaknesses}
+              onChange={(event) => setWeaknesses(event.target.value)}
+              rows={3}
+              placeholder={"Reads like engineering output.\nInternal sharing is manual."}
+              className={`${TEXTAREA} min-h-[4rem]`}
             />
           </OptionalField>
 
@@ -585,7 +645,12 @@ export function AddCompetitorDialog({ onClose }: { onClose: () => void }) {
           </div>
         </div>
 
-        <DialogFooter onClose={onClose} submitLabel="Add competitor" notice={notice} />
+        <DialogFooter
+          onClose={onClose}
+          submitLabel="Add competitor"
+          error={error}
+          pending={pending}
+        />
       </form>
     </DialogShell>
   );
@@ -593,31 +658,55 @@ export function AddCompetitorDialog({ onClose }: { onClose: () => void }) {
 
 /* ------------------------------------------------------------- add segment */
 
-export function AddSegmentDialog({ onClose }: { onClose: () => void }) {
+export function AddSegmentDialog({
+  onClose,
+  onSubmit,
+}: {
+  onClose: () => void;
+  onSubmit: (input: CreateSegmentInput) => Promise<void>;
+}) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [customerType, setCustomerType] = useState("");
+  const [size, setSize] = useState("");
   const [painPoints, setPainPoints] = useState("");
-  const [alternatives, setAlternatives] = useState("");
-  const [needs, setNeeds] = useState("");
-  const [questions, setQuestions] = useState("");
   const [errors, setErrors] = useState<Errors>({});
-  const [notice, setNotice] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
 
-  function submit(event: FormEvent<HTMLFormElement>) {
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const next: Errors = {};
     if (!name.trim()) next.name = "A segment name is required";
     if (!description.trim()) next.description = "Describe the customer situation";
     setErrors(next);
     if (Object.keys(next).length) {
-      setNotice(null);
+      setError(null);
       return;
     }
 
-    setNotice(
-      `Preview only — “${name.trim()}” was not saved. No audience is generated or sized by the interface.`,
-    );
+    const input: CreateSegmentInput = {
+      name: name.trim(),
+      description: description.trim(),
+    };
+    if (size) input.size = size;
+    const painPointLines = toLines(painPoints);
+    if (painPointLines.length) input.painPoints = painPointLines;
+
+    try {
+      setPending(true);
+      setError(null);
+      await onSubmit(input);
+      onClose();
+    } catch (submitError) {
+      setError(
+        submitErrorMessage(
+          submitError,
+          "The segment could not be saved. Try again in a moment.",
+        ),
+      );
+    } finally {
+      setPending(false);
+    }
   }
 
   return (
@@ -665,14 +754,18 @@ export function AddSegmentDialog({ onClose }: { onClose: () => void }) {
             />
           </FormField>
 
-          <OptionalField id="mi-seg-type" label="Customer type" hint="Role in the research">
-            <input
-              id="mi-seg-type"
-              value={customerType}
-              onChange={(event) => setCustomerType(event.target.value)}
-              placeholder="e.g. Buyer · editor"
+          <OptionalField id="mi-seg-size" label="Market size">
+            <select
+              id="mi-seg-size"
+              value={size}
+              onChange={(event) => setSize(event.target.value)}
               className={`${INPUT} h-11`}
-            />
+            >
+              <option value="">Not sized yet</option>
+              <option value="Small">Small</option>
+              <option value="Medium">Medium</option>
+              <option value="Large">Large</option>
+            </select>
           </OptionalField>
 
           <OptionalField id="mi-seg-pain" label="Main pain points" hint="One per line">
@@ -686,46 +779,18 @@ export function AddSegmentDialog({ onClose }: { onClose: () => void }) {
             />
           </OptionalField>
 
-          <OptionalField id="mi-seg-alternatives" label="Current alternatives" hint="One per line">
-            <textarea
-              id="mi-seg-alternatives"
-              value={alternatives}
-              onChange={(event) => setAlternatives(event.target.value)}
-              rows={2}
-              placeholder={"A shared document.\nA public changelog tool."}
-              className={`${TEXTAREA} min-h-[4rem]`}
-            />
-          </OptionalField>
-
-          <OptionalField id="mi-seg-needs" label="Needs & motivations" hint="One per line">
-            <textarea
-              id="mi-seg-needs"
-              value={needs}
-              onChange={(event) => setNeeds(event.target.value)}
-              rows={2}
-              placeholder={"A draft that preserves meaning.\nConfidence that the note is accurate."}
-              className={`${TEXTAREA} min-h-[4rem]`}
-            />
-          </OptionalField>
-
-          <OptionalField id="mi-seg-questions" label="Unanswered questions" hint="One per line">
-            <textarea
-              id="mi-seg-questions"
-              value={questions}
-              onChange={(event) => setQuestions(event.target.value)}
-              rows={2}
-              placeholder={"How much editing is acceptable?\nDoes this person control the budget?"}
-              className={`${TEXTAREA} min-h-[4rem]`}
-            />
-          </OptionalField>
-
           <p className="border-t border-line pt-3 text-[10.5px] leading-relaxed text-faint">
             The form does not calculate market size or generate personas. Every line is text
             entered by hand.
           </p>
         </div>
 
-        <DialogFooter onClose={onClose} submitLabel="Add segment" notice={notice} />
+        <DialogFooter
+          onClose={onClose}
+          submitLabel="Add segment"
+          error={error}
+          pending={pending}
+        />
       </form>
     </DialogShell>
   );

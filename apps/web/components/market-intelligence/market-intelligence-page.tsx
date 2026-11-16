@@ -1,19 +1,30 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
+import { useIdeas } from "@/lib/idea-lab/use-idea";
+import type { Idea } from "@/lib/idea-lab/types";
+import { useProducts } from "@/lib/product/use-products";
+import { useSession } from "@/lib/auth/use-session";
+import { useHydrated } from "@/lib/use-hydrated";
 import {
-  DEMO_MARKET_IDEAS,
-  MARKET_IDEA_OPTIONS,
-  getMarketIdea,
-} from "@/lib/market-intelligence/demo";
+  toMarketIdea,
+  type CreateCompetitorInput,
+  type CreateResearchNoteInput,
+  type CreateSegmentInput,
+} from "@/lib/market-intelligence/api";
+import {
+  useMarketCompetitors,
+  useMarketIdea,
+  useMarketNotes,
+  useMarketSegments,
+} from "@/lib/market-intelligence/use-market";
 import {
   MARKET_SECTION_META,
-  MARKET_VIEW_OPTIONS,
   type MarketIdea,
   type MarketSection,
-  type MarketView,
   type RelatedType,
 } from "@/lib/market-intelligence/types";
 
@@ -45,35 +56,100 @@ const EMPTY_SELECTION: Record<MarketSection, string | null> = {
   notes: null,
 };
 
-export default function MarketIntelligencePage() {
+/** Shape returned by `GET /products`. */
+type Product = {
+  id: string;
+  name: string;
+  slug?: string;
+};
+
+export default function MarketIntelligencePage({
+  productId,
+}: {
+  productId?: string;
+}) {
   const reduce = useReducedMotion();
   const workspaceRef = useRef<HTMLDivElement>(null);
+  const hydrated = useHydrated();
 
-  const [ideaId, setIdeaId] = useState(DEMO_MARKET_IDEAS[0].id);
-  const [view, setView] = useState<MarketView>("workspace");
+  const { data: productsData, isPending: productsPending } = useProducts();
+  const products = (productsData as Product[] | undefined) ?? [];
+
+  // The dashboard stores the active product in `?product=`; fall back to the
+  // first product the same way the other module workspaces do.
+  const activeProductId =
+    productId ?? (hydrated ? products[0]?.id : undefined);
+
+  const {
+    ideas,
+    loading: ideasLoading,
+    error: ideasError,
+    refetch: refetchIdeas,
+  } = useIdeas(activeProductId);
+
+  const session = useSession();
+
+  const [ideaId, setIdeaId] = useState("");
   const [section, setSection] = useState<MarketSection>("overview");
   const [selected, setSelected] =
     useState<Record<MarketSection, string | null>>(EMPTY_SELECTION);
   const [focus, setFocus] = useState<{ section: MarketSection; id: string } | null>(null);
   const [dialog, setDialog] = useState<DialogName | null>(null);
 
-  const baseIdea = getMarketIdea(ideaId);
+  const selectedIdea: Idea | null =
+    ideas.find((idea) => idea.id === ideaId) ?? ideas[0] ?? null;
+  const selectedIdeaId = selectedIdea?.id;
 
-  const idea: MarketIdea = useMemo(() => {
-    if (view === "empty") {
-      return {
-        ...baseIdea,
-        competitors: [],
-        segments: [],
-        opportunities: [],
-        notes: [],
-        openQuestions: [],
-      };
-    }
-    if (view === "empty-competitors") return { ...baseIdea, competitors: [] };
-    if (view === "empty-notes") return { ...baseIdea, notes: [] };
-    return baseIdea;
-  }, [baseIdea, view]);
+  // `null` market means the workspace was never initialized for this idea.
+  const {
+    market,
+    loading: marketLoading,
+    error: marketError,
+    refetch: refetchMarket,
+  } = useMarketIdea(selectedIdeaId);
+
+  const competitors = useMarketCompetitors(selectedIdeaId);
+  const segments = useMarketSegments(selectedIdeaId);
+  const notes = useMarketNotes(selectedIdeaId);
+
+  const idea: MarketIdea = useMemo(
+    () => toMarketIdea(selectedIdea, market),
+    [selectedIdea, market],
+  );
+
+  const ideaOptions = useMemo(
+    () =>
+      ideas.map((item) => ({
+        value: item.id,
+        label: item.name,
+        shortLabel: item.name,
+      })),
+    [ideas],
+  );
+
+  // `marketLoading` is included so switching ideas shows the skeleton instead
+  // of flashing the empty workspace while the next aggregate is in flight.
+  const loading = productId
+    ? ideasLoading || marketLoading
+    : ideasLoading || productsPending || marketLoading;
+  const error = ideasError || marketError;
+  const initialized = market !== null;
+
+  // The first (hydration) render must match the server, whose QueryClient is
+  // always cold. Gate every branch on `hydrated` so both sides render the
+  // skeleton no matter what the browser cache already holds.
+  const renderedView: "loading" | "error" | "no-ideas" | "empty" | "workspace" =
+    !hydrated
+      ? "loading"
+      : loading
+        ? "loading"
+        : error
+          ? "error"
+          : !selectedIdea
+            ? "no-ideas"
+            : !initialized
+              ? "empty"
+              : "workspace";
 
   const counts: Record<MarketSection, number> = {
     overview:
@@ -102,15 +178,6 @@ export default function MarketIntelligencePage() {
     setIdeaId(nextId);
     setSelected(EMPTY_SELECTION);
     setFocus(null);
-  }
-
-  function changeView(next: MarketView) {
-    setView(next);
-    setFocus(null);
-
-    if (next === "empty") setSection("overview");
-    else if (next === "empty-competitors") setSection("competitors");
-    else if (next === "empty-notes") setSection("notes");
   }
 
   function changeSection(next: MarketSection) {
@@ -142,8 +209,30 @@ export default function MarketIntelligencePage() {
     setSelected((current) => ({ ...current, [next]: id }));
   }
 
+  function retry() {
+    setFocus(null);
+    if (ideasError) void refetchIdeas();
+    if (marketError) void refetchMarket();
+  }
+
+  async function handleAddCompetitor(input: CreateCompetitorInput) {
+    await competitors.addCompetitor(input);
+  }
+
+  async function handleAddSegment(input: CreateSegmentInput) {
+    await segments.addSegment(input);
+  }
+
+  async function handleAddResearch(input: CreateResearchNoteInput) {
+    const author =
+      session.status === "authenticated" ? session.session.email : undefined;
+    await notes.addNote(author ? { ...input, author } : input);
+  }
+
   function renderSection() {
-    if (view === "empty") {
+    // An idea whose market workspace was never initialized starts empty; the
+    // first save creates it (the init endpoint is a get-or-create).
+    if (!initialized) {
       return (
         <MarketEmptyWorkspace
           onAddResearch={() => setDialog("research")}
@@ -216,6 +305,35 @@ export default function MarketIntelligencePage() {
     );
   }
 
+  if (renderedView === "no-ideas") {
+    return (
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: reduce ? 0 : 0.28, ease: EASE }}
+        className="border border-line bg-panel px-6 py-14 text-center sm:px-9"
+      >
+        <p className="flex items-center justify-center gap-2.5 text-[12px] text-accent">
+          <span aria-hidden className="size-1.5 bg-mint" />
+          No ideas yet
+        </p>
+        <h2 className="mx-auto mt-3 max-w-[26ch] text-[clamp(1.5rem,2.6vw,2rem)] font-medium leading-[1.08] tracking-[-0.035em] text-fg">
+          Market intelligence starts from an idea.
+        </h2>
+        <p className="mx-auto mt-3 max-w-[46ch] text-[13px] leading-relaxed text-muted">
+          Capture an idea in the Idea Lab first — then organise its competitors,
+          segments, opportunities and research notes here.
+        </p>
+      </motion.div>
+    );
+  }
+
+  if (renderedView === "loading") {
+    // Standalone skeleton: the hydration render must match the server, whose
+    // QueryClient is always cold, so nothing data-dependent renders here.
+    return <MarketIntelligenceSkeleton />;
+  }
+
   return (
     <motion.div
       initial={reduce ? false : { opacity: 0, y: 6 }}
@@ -225,29 +343,17 @@ export default function MarketIntelligencePage() {
     >
       <MarketIntelligenceHeader
         idea={idea}
-        ideas={MARKET_IDEA_OPTIONS}
-        ideaId={ideaId}
+        ideas={ideaOptions}
+        ideaId={selectedIdeaId ?? ""}
         onIdeaChange={changeIdea}
-        view={view}
-        onViewChange={changeView}
         onAddResearch={() => setDialog("research")}
         onAddCompetitor={() => setDialog("competitor")}
       />
 
-      {view !== "loading" && view !== "error" ? <ResearchOverview idea={idea} /> : null}
+      {renderedView !== "error" ? <ResearchOverview idea={idea} /> : null}
 
       <AnimatePresence mode="wait" initial={false}>
-        {view === "loading" ? (
-          <motion.div
-            key="loading"
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: reduce ? 0 : 0.16 }}
-          >
-            <MarketIntelligenceSkeleton />
-          </motion.div>
-        ) : view === "error" ? (
+        {renderedView === "error" ? (
           <motion.div
             key="error"
             initial={reduce ? false : { opacity: 0, y: 4 }}
@@ -256,11 +362,8 @@ export default function MarketIntelligencePage() {
             transition={{ duration: reduce ? 0 : 0.18 }}
           >
             <MarketIntelligenceErrorState
-              onRetry={() => changeView("workspace")}
-              onOverview={() => {
-                changeView("workspace");
-                changeSection("overview");
-              }}
+              onRetry={retry}
+              onOverview={() => changeSection("overview")}
             />
           </motion.div>
         ) : (
@@ -288,7 +391,7 @@ export default function MarketIntelligencePage() {
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
-                  key={`${idea.id}-${view}-${section}`}
+                  key={`${idea.id}-${section}`}
                   initial={reduce ? false : { opacity: 0, y: 4 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
@@ -304,26 +407,51 @@ export default function MarketIntelligencePage() {
 
       <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] text-faint">
         <span aria-hidden className="size-1.5 bg-accent" />
-        {MARKET_SECTION_META[section].label} · {idea.ref} {idea.name}
-        <span aria-hidden className="size-0.5 bg-line-2" />
-        <span>{MARKET_VIEW_OPTIONS.find((option) => option.value === view)?.label}</span>
+        {MARKET_SECTION_META[section].label}
+        {selectedIdea ? (
+          <>
+            {" "}
+            <span aria-hidden className="size-0.5 bg-line-2" /> {idea.ref}{" "}
+            {idea.name}
+          </>
+        ) : null}
       </p>
 
       <AnimatePresence>
         {dialog === "research" ? (
           <AddResearchDialog
             key="add-research"
-            idea={baseIdea}
+            idea={idea}
             onClose={() => setDialog(null)}
+            onSubmit={handleAddResearch}
           />
         ) : null}
         {dialog === "competitor" ? (
-          <AddCompetitorDialog key="add-competitor" onClose={() => setDialog(null)} />
+          <AddCompetitorDialog
+            key="add-competitor"
+            onClose={() => setDialog(null)}
+            onSubmit={handleAddCompetitor}
+          />
         ) : null}
         {dialog === "segment" ? (
-          <AddSegmentDialog key="add-segment" onClose={() => setDialog(null)} />
+          <AddSegmentDialog
+            key="add-segment"
+            onClose={() => setDialog(null)}
+            onSubmit={handleAddSegment}
+          />
         ) : null}
       </AnimatePresence>
     </motion.div>
   );
+}
+
+/**
+ * Route entry for the Market Intelligence workspace. Reads the active product
+ * from the URL (`?product=<id>`) and threads it into the page.
+ * `useSearchParams` suspends during prerendering, so the route renders this
+ * behind a Suspense boundary.
+ */
+export function MarketIntelligenceRoute() {
+  const productId = useSearchParams().get("product") ?? undefined;
+  return <MarketIntelligencePage productId={productId} />;
 }
