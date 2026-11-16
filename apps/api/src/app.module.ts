@@ -12,6 +12,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { WorkspaceModule } from './workspace/workspace.module';
 import { ProductModule } from './product/product.module';
 import { IdeaModule } from './ideas/ideas.module';
+import { MarketIntelligenceModule } from './market-intelligence/ market-intelligence.module';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -30,6 +31,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     WorkspaceModule,
     ProductModule,
     IdeaModule,
+    MarketIntelligenceModule,
   ],
   controllers: [AppController],
   providers: [
