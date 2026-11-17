@@ -18,7 +18,8 @@ const API_BASE_URL =
  *   misleading "Sign in" button.
  *
  * This only reads: a Server Component cannot rotate cookies. The proxy owns
- * refresh rotation for protected routes.
+ * refresh rotation for every page request, so the access token this helper
+ * sees is already fresh whenever the proxy could rotate it.
  */
 export async function getServerSession(): Promise<
   Session | null | undefined
