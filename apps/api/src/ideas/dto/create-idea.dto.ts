@@ -1,10 +1,5 @@
 import { IsArray, IsEnum, IsOptional, IsString } from 'class-validator';
-
-export enum IdeaStatus {
-  INBOX = 'INBOX',
-  EXPLORING = 'EXPLORING',
-  SHORTLISTED = 'SHORTLISTED',
-}
+import { IdeaStatus } from '../../generated/prisma/enums';
 
 export class CreateIdeaDto {
   @IsString()
@@ -31,10 +26,6 @@ export class CreateIdeaDto {
   @IsString()
   @IsOptional()
   audience?: string;
-
-  @IsString()
-  @IsOptional()
-  solution?: string;
 
   @IsString()
   @IsOptional()

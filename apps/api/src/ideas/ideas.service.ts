@@ -52,7 +52,6 @@ export class IdeaService {
         summary: dto.summary,
         problem: dto.problem,
         audience: dto.audience,
-        solution: dto.solution,
         category: dto.category,
         tags: dto.tags ?? [],
         status: dto.status,
