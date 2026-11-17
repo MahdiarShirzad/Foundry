@@ -109,3 +109,18 @@ export type Opportunity = Prisma.OpportunityModel
  * 
  */
 export type ResearchNote = Prisma.ResearchNoteModel
+/**
+ * Model Hypothesis
+ * 
+ */
+export type Hypothesis = Prisma.HypothesisModel
+/**
+ * Model Experiment
+ * 
+ */
+export type Experiment = Prisma.ExperimentModel
+/**
+ * Model EvidenceItem
+ * 
+ */
+export type EvidenceItem = Prisma.EvidenceItemModel

@@ -64,7 +64,10 @@ export const ModelName = {
   Competitor: 'Competitor',
   Segment: 'Segment',
   Opportunity: 'Opportunity',
-  ResearchNote: 'ResearchNote'
+  ResearchNote: 'ResearchNote',
+  Hypothesis: 'Hypothesis',
+  Experiment: 'Experiment',
+  EvidenceItem: 'EvidenceItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -269,6 +272,70 @@ export const ResearchNoteScalarFieldEnum = {
 } as const
 
 export type ResearchNoteScalarFieldEnum = (typeof ResearchNoteScalarFieldEnum)[keyof typeof ResearchNoteScalarFieldEnum]
+
+
+export const HypothesisScalarFieldEnum = {
+  id: 'id',
+  ideaId: 'ideaId',
+  title: 'title',
+  statement: 'statement',
+  customerSegment: 'customerSegment',
+  category: 'category',
+  rationale: 'rationale',
+  importance: 'importance',
+  status: 'status',
+  relatedExperimentIds: 'relatedExperimentIds',
+  linkedFindings: 'linkedFindings',
+  unresolvedQuestions: 'unresolvedQuestions',
+  isDraft: 'isDraft',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HypothesisScalarFieldEnum = (typeof HypothesisScalarFieldEnum)[keyof typeof HypothesisScalarFieldEnum]
+
+
+export const ExperimentScalarFieldEnum = {
+  id: 'id',
+  ideaId: 'ideaId',
+  title: 'title',
+  relatedHypothesisId: 'relatedHypothesisId',
+  objective: 'objective',
+  method: 'method',
+  targetAudience: 'targetAudience',
+  successCriteria: 'successCriteria',
+  expectedEvidence: 'expectedEvidence',
+  status: 'status',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  observations: 'observations',
+  notes: 'notes',
+  isDraft: 'isDraft',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExperimentScalarFieldEnum = (typeof ExperimentScalarFieldEnum)[keyof typeof ExperimentScalarFieldEnum]
+
+
+export const EvidenceItemScalarFieldEnum = {
+  id: 'id',
+  ideaId: 'ideaId',
+  title: 'title',
+  relatedExperimentId: 'relatedExperimentId',
+  relatedHypothesisId: 'relatedHypothesisId',
+  type: 'type',
+  sourceLabel: 'sourceLabel',
+  date: 'date',
+  observation: 'observation',
+  interpretation: 'interpretation',
+  limitations: 'limitations',
+  isDraft: 'isDraft',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EvidenceItemScalarFieldEnum = (typeof EvidenceItemScalarFieldEnum)[keyof typeof EvidenceItemScalarFieldEnum]
 
 
 export const SortOrder = {

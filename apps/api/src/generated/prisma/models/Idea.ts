@@ -274,6 +274,9 @@ export type IdeaWhereInput = {
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   notes?: Prisma.IdeaNoteListRelationFilter
   marketIdea?: Prisma.XOR<Prisma.MarketIdeaNullableScalarRelationFilter, Prisma.MarketIdeaWhereInput> | null
+  hypotheses?: Prisma.HypothesisListRelationFilter
+  experiments?: Prisma.ExperimentListRelationFilter
+  evidence?: Prisma.EvidenceItemListRelationFilter
 }
 
 export type IdeaOrderByWithRelationInput = {
@@ -298,6 +301,9 @@ export type IdeaOrderByWithRelationInput = {
   product?: Prisma.ProductOrderByWithRelationInput
   notes?: Prisma.IdeaNoteOrderByRelationAggregateInput
   marketIdea?: Prisma.MarketIdeaOrderByWithRelationInput
+  hypotheses?: Prisma.HypothesisOrderByRelationAggregateInput
+  experiments?: Prisma.ExperimentOrderByRelationAggregateInput
+  evidence?: Prisma.EvidenceItemOrderByRelationAggregateInput
 }
 
 export type IdeaWhereUniqueInput = Prisma.AtLeast<{
@@ -325,6 +331,9 @@ export type IdeaWhereUniqueInput = Prisma.AtLeast<{
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
   notes?: Prisma.IdeaNoteListRelationFilter
   marketIdea?: Prisma.XOR<Prisma.MarketIdeaNullableScalarRelationFilter, Prisma.MarketIdeaWhereInput> | null
+  hypotheses?: Prisma.HypothesisListRelationFilter
+  experiments?: Prisma.ExperimentListRelationFilter
+  evidence?: Prisma.EvidenceItemListRelationFilter
 }, "id">
 
 export type IdeaOrderByWithAggregationInput = {
@@ -393,6 +402,9 @@ export type IdeaCreateInput = {
   product: Prisma.ProductCreateNestedOneWithoutIdeasInput
   notes?: Prisma.IdeaNoteCreateNestedManyWithoutIdeaInput
   marketIdea?: Prisma.MarketIdeaCreateNestedOneWithoutIdeaInput
+  hypotheses?: Prisma.HypothesisCreateNestedManyWithoutIdeaInput
+  experiments?: Prisma.ExperimentCreateNestedManyWithoutIdeaInput
+  evidence?: Prisma.EvidenceItemCreateNestedManyWithoutIdeaInput
 }
 
 export type IdeaUncheckedCreateInput = {
@@ -415,6 +427,9 @@ export type IdeaUncheckedCreateInput = {
   updatedAt?: Date | string
   notes?: Prisma.IdeaNoteUncheckedCreateNestedManyWithoutIdeaInput
   marketIdea?: Prisma.MarketIdeaUncheckedCreateNestedOneWithoutIdeaInput
+  hypotheses?: Prisma.HypothesisUncheckedCreateNestedManyWithoutIdeaInput
+  experiments?: Prisma.ExperimentUncheckedCreateNestedManyWithoutIdeaInput
+  evidence?: Prisma.EvidenceItemUncheckedCreateNestedManyWithoutIdeaInput
 }
 
 export type IdeaUpdateInput = {
@@ -437,6 +452,9 @@ export type IdeaUpdateInput = {
   product?: Prisma.ProductUpdateOneRequiredWithoutIdeasNestedInput
   notes?: Prisma.IdeaNoteUpdateManyWithoutIdeaNestedInput
   marketIdea?: Prisma.MarketIdeaUpdateOneWithoutIdeaNestedInput
+  hypotheses?: Prisma.HypothesisUpdateManyWithoutIdeaNestedInput
+  experiments?: Prisma.ExperimentUpdateManyWithoutIdeaNestedInput
+  evidence?: Prisma.EvidenceItemUpdateManyWithoutIdeaNestedInput
 }
 
 export type IdeaUncheckedUpdateInput = {
@@ -459,6 +477,9 @@ export type IdeaUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.IdeaNoteUncheckedUpdateManyWithoutIdeaNestedInput
   marketIdea?: Prisma.MarketIdeaUncheckedUpdateOneWithoutIdeaNestedInput
+  hypotheses?: Prisma.HypothesisUncheckedUpdateManyWithoutIdeaNestedInput
+  experiments?: Prisma.ExperimentUncheckedUpdateManyWithoutIdeaNestedInput
+  evidence?: Prisma.EvidenceItemUncheckedUpdateManyWithoutIdeaNestedInput
 }
 
 export type IdeaCreateManyInput = {
@@ -736,6 +757,48 @@ export type IdeaUpdateOneRequiredWithoutMarketIdeaNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.IdeaUpdateToOneWithWhereWithoutMarketIdeaInput, Prisma.IdeaUpdateWithoutMarketIdeaInput>, Prisma.IdeaUncheckedUpdateWithoutMarketIdeaInput>
 }
 
+export type IdeaCreateNestedOneWithoutHypothesesInput = {
+  create?: Prisma.XOR<Prisma.IdeaCreateWithoutHypothesesInput, Prisma.IdeaUncheckedCreateWithoutHypothesesInput>
+  connectOrCreate?: Prisma.IdeaCreateOrConnectWithoutHypothesesInput
+  connect?: Prisma.IdeaWhereUniqueInput
+}
+
+export type IdeaUpdateOneRequiredWithoutHypothesesNestedInput = {
+  create?: Prisma.XOR<Prisma.IdeaCreateWithoutHypothesesInput, Prisma.IdeaUncheckedCreateWithoutHypothesesInput>
+  connectOrCreate?: Prisma.IdeaCreateOrConnectWithoutHypothesesInput
+  upsert?: Prisma.IdeaUpsertWithoutHypothesesInput
+  connect?: Prisma.IdeaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.IdeaUpdateToOneWithWhereWithoutHypothesesInput, Prisma.IdeaUpdateWithoutHypothesesInput>, Prisma.IdeaUncheckedUpdateWithoutHypothesesInput>
+}
+
+export type IdeaCreateNestedOneWithoutExperimentsInput = {
+  create?: Prisma.XOR<Prisma.IdeaCreateWithoutExperimentsInput, Prisma.IdeaUncheckedCreateWithoutExperimentsInput>
+  connectOrCreate?: Prisma.IdeaCreateOrConnectWithoutExperimentsInput
+  connect?: Prisma.IdeaWhereUniqueInput
+}
+
+export type IdeaUpdateOneRequiredWithoutExperimentsNestedInput = {
+  create?: Prisma.XOR<Prisma.IdeaCreateWithoutExperimentsInput, Prisma.IdeaUncheckedCreateWithoutExperimentsInput>
+  connectOrCreate?: Prisma.IdeaCreateOrConnectWithoutExperimentsInput
+  upsert?: Prisma.IdeaUpsertWithoutExperimentsInput
+  connect?: Prisma.IdeaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.IdeaUpdateToOneWithWhereWithoutExperimentsInput, Prisma.IdeaUpdateWithoutExperimentsInput>, Prisma.IdeaUncheckedUpdateWithoutExperimentsInput>
+}
+
+export type IdeaCreateNestedOneWithoutEvidenceInput = {
+  create?: Prisma.XOR<Prisma.IdeaCreateWithoutEvidenceInput, Prisma.IdeaUncheckedCreateWithoutEvidenceInput>
+  connectOrCreate?: Prisma.IdeaCreateOrConnectWithoutEvidenceInput
+  connect?: Prisma.IdeaWhereUniqueInput
+}
+
+export type IdeaUpdateOneRequiredWithoutEvidenceNestedInput = {
+  create?: Prisma.XOR<Prisma.IdeaCreateWithoutEvidenceInput, Prisma.IdeaUncheckedCreateWithoutEvidenceInput>
+  connectOrCreate?: Prisma.IdeaCreateOrConnectWithoutEvidenceInput
+  upsert?: Prisma.IdeaUpsertWithoutEvidenceInput
+  connect?: Prisma.IdeaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.IdeaUpdateToOneWithWhereWithoutEvidenceInput, Prisma.IdeaUpdateWithoutEvidenceInput>, Prisma.IdeaUncheckedUpdateWithoutEvidenceInput>
+}
+
 export type IdeaCreateWithoutWorkspaceInput = {
   id?: string
   ref: string
@@ -755,6 +818,9 @@ export type IdeaCreateWithoutWorkspaceInput = {
   product: Prisma.ProductCreateNestedOneWithoutIdeasInput
   notes?: Prisma.IdeaNoteCreateNestedManyWithoutIdeaInput
   marketIdea?: Prisma.MarketIdeaCreateNestedOneWithoutIdeaInput
+  hypotheses?: Prisma.HypothesisCreateNestedManyWithoutIdeaInput
+  experiments?: Prisma.ExperimentCreateNestedManyWithoutIdeaInput
+  evidence?: Prisma.EvidenceItemCreateNestedManyWithoutIdeaInput
 }
 
 export type IdeaUncheckedCreateWithoutWorkspaceInput = {
@@ -776,6 +842,9 @@ export type IdeaUncheckedCreateWithoutWorkspaceInput = {
   updatedAt?: Date | string
   notes?: Prisma.IdeaNoteUncheckedCreateNestedManyWithoutIdeaInput
   marketIdea?: Prisma.MarketIdeaUncheckedCreateNestedOneWithoutIdeaInput
+  hypotheses?: Prisma.HypothesisUncheckedCreateNestedManyWithoutIdeaInput
+  experiments?: Prisma.ExperimentUncheckedCreateNestedManyWithoutIdeaInput
+  evidence?: Prisma.EvidenceItemUncheckedCreateNestedManyWithoutIdeaInput
 }
 
 export type IdeaCreateOrConnectWithoutWorkspaceInput = {
@@ -846,6 +915,9 @@ export type IdeaCreateWithoutProductInput = {
   workspace: Prisma.WorkspaceCreateNestedOneWithoutIdeasInput
   notes?: Prisma.IdeaNoteCreateNestedManyWithoutIdeaInput
   marketIdea?: Prisma.MarketIdeaCreateNestedOneWithoutIdeaInput
+  hypotheses?: Prisma.HypothesisCreateNestedManyWithoutIdeaInput
+  experiments?: Prisma.ExperimentCreateNestedManyWithoutIdeaInput
+  evidence?: Prisma.EvidenceItemCreateNestedManyWithoutIdeaInput
 }
 
 export type IdeaUncheckedCreateWithoutProductInput = {
@@ -867,6 +939,9 @@ export type IdeaUncheckedCreateWithoutProductInput = {
   updatedAt?: Date | string
   notes?: Prisma.IdeaNoteUncheckedCreateNestedManyWithoutIdeaInput
   marketIdea?: Prisma.MarketIdeaUncheckedCreateNestedOneWithoutIdeaInput
+  hypotheses?: Prisma.HypothesisUncheckedCreateNestedManyWithoutIdeaInput
+  experiments?: Prisma.ExperimentUncheckedCreateNestedManyWithoutIdeaInput
+  evidence?: Prisma.EvidenceItemUncheckedCreateNestedManyWithoutIdeaInput
 }
 
 export type IdeaCreateOrConnectWithoutProductInput = {
@@ -914,6 +989,9 @@ export type IdeaCreateWithoutNotesInput = {
   workspace: Prisma.WorkspaceCreateNestedOneWithoutIdeasInput
   product: Prisma.ProductCreateNestedOneWithoutIdeasInput
   marketIdea?: Prisma.MarketIdeaCreateNestedOneWithoutIdeaInput
+  hypotheses?: Prisma.HypothesisCreateNestedManyWithoutIdeaInput
+  experiments?: Prisma.ExperimentCreateNestedManyWithoutIdeaInput
+  evidence?: Prisma.EvidenceItemCreateNestedManyWithoutIdeaInput
 }
 
 export type IdeaUncheckedCreateWithoutNotesInput = {
@@ -935,6 +1013,9 @@ export type IdeaUncheckedCreateWithoutNotesInput = {
   capturedAt?: Date | string
   updatedAt?: Date | string
   marketIdea?: Prisma.MarketIdeaUncheckedCreateNestedOneWithoutIdeaInput
+  hypotheses?: Prisma.HypothesisUncheckedCreateNestedManyWithoutIdeaInput
+  experiments?: Prisma.ExperimentUncheckedCreateNestedManyWithoutIdeaInput
+  evidence?: Prisma.EvidenceItemUncheckedCreateNestedManyWithoutIdeaInput
 }
 
 export type IdeaCreateOrConnectWithoutNotesInput = {
@@ -972,6 +1053,9 @@ export type IdeaUpdateWithoutNotesInput = {
   workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutIdeasNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutIdeasNestedInput
   marketIdea?: Prisma.MarketIdeaUpdateOneWithoutIdeaNestedInput
+  hypotheses?: Prisma.HypothesisUpdateManyWithoutIdeaNestedInput
+  experiments?: Prisma.ExperimentUpdateManyWithoutIdeaNestedInput
+  evidence?: Prisma.EvidenceItemUpdateManyWithoutIdeaNestedInput
 }
 
 export type IdeaUncheckedUpdateWithoutNotesInput = {
@@ -993,6 +1077,9 @@ export type IdeaUncheckedUpdateWithoutNotesInput = {
   capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   marketIdea?: Prisma.MarketIdeaUncheckedUpdateOneWithoutIdeaNestedInput
+  hypotheses?: Prisma.HypothesisUncheckedUpdateManyWithoutIdeaNestedInput
+  experiments?: Prisma.ExperimentUncheckedUpdateManyWithoutIdeaNestedInput
+  evidence?: Prisma.EvidenceItemUncheckedUpdateManyWithoutIdeaNestedInput
 }
 
 export type IdeaCreateWithoutMarketIdeaInput = {
@@ -1014,6 +1101,9 @@ export type IdeaCreateWithoutMarketIdeaInput = {
   workspace: Prisma.WorkspaceCreateNestedOneWithoutIdeasInput
   product: Prisma.ProductCreateNestedOneWithoutIdeasInput
   notes?: Prisma.IdeaNoteCreateNestedManyWithoutIdeaInput
+  hypotheses?: Prisma.HypothesisCreateNestedManyWithoutIdeaInput
+  experiments?: Prisma.ExperimentCreateNestedManyWithoutIdeaInput
+  evidence?: Prisma.EvidenceItemCreateNestedManyWithoutIdeaInput
 }
 
 export type IdeaUncheckedCreateWithoutMarketIdeaInput = {
@@ -1035,6 +1125,9 @@ export type IdeaUncheckedCreateWithoutMarketIdeaInput = {
   capturedAt?: Date | string
   updatedAt?: Date | string
   notes?: Prisma.IdeaNoteUncheckedCreateNestedManyWithoutIdeaInput
+  hypotheses?: Prisma.HypothesisUncheckedCreateNestedManyWithoutIdeaInput
+  experiments?: Prisma.ExperimentUncheckedCreateNestedManyWithoutIdeaInput
+  evidence?: Prisma.EvidenceItemUncheckedCreateNestedManyWithoutIdeaInput
 }
 
 export type IdeaCreateOrConnectWithoutMarketIdeaInput = {
@@ -1072,6 +1165,9 @@ export type IdeaUpdateWithoutMarketIdeaInput = {
   workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutIdeasNestedInput
   product?: Prisma.ProductUpdateOneRequiredWithoutIdeasNestedInput
   notes?: Prisma.IdeaNoteUpdateManyWithoutIdeaNestedInput
+  hypotheses?: Prisma.HypothesisUpdateManyWithoutIdeaNestedInput
+  experiments?: Prisma.ExperimentUpdateManyWithoutIdeaNestedInput
+  evidence?: Prisma.EvidenceItemUpdateManyWithoutIdeaNestedInput
 }
 
 export type IdeaUncheckedUpdateWithoutMarketIdeaInput = {
@@ -1093,6 +1189,345 @@ export type IdeaUncheckedUpdateWithoutMarketIdeaInput = {
   capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.IdeaNoteUncheckedUpdateManyWithoutIdeaNestedInput
+  hypotheses?: Prisma.HypothesisUncheckedUpdateManyWithoutIdeaNestedInput
+  experiments?: Prisma.ExperimentUncheckedUpdateManyWithoutIdeaNestedInput
+  evidence?: Prisma.EvidenceItemUncheckedUpdateManyWithoutIdeaNestedInput
+}
+
+export type IdeaCreateWithoutHypothesesInput = {
+  id?: string
+  ref: string
+  name: string
+  headline?: string | null
+  summary?: string | null
+  problem?: string | null
+  audience?: string | null
+  category?: string | null
+  tags?: Prisma.IdeaCreatetagsInput | string[]
+  status?: $Enums.IdeaStatus
+  source?: string | null
+  context?: string | null
+  openQuestions?: Prisma.IdeaCreateopenQuestionsInput | string[]
+  capturedAt?: Date | string
+  updatedAt?: Date | string
+  workspace: Prisma.WorkspaceCreateNestedOneWithoutIdeasInput
+  product: Prisma.ProductCreateNestedOneWithoutIdeasInput
+  notes?: Prisma.IdeaNoteCreateNestedManyWithoutIdeaInput
+  marketIdea?: Prisma.MarketIdeaCreateNestedOneWithoutIdeaInput
+  experiments?: Prisma.ExperimentCreateNestedManyWithoutIdeaInput
+  evidence?: Prisma.EvidenceItemCreateNestedManyWithoutIdeaInput
+}
+
+export type IdeaUncheckedCreateWithoutHypothesesInput = {
+  id?: string
+  workspaceId: string
+  productId: string
+  ref: string
+  name: string
+  headline?: string | null
+  summary?: string | null
+  problem?: string | null
+  audience?: string | null
+  category?: string | null
+  tags?: Prisma.IdeaCreatetagsInput | string[]
+  status?: $Enums.IdeaStatus
+  source?: string | null
+  context?: string | null
+  openQuestions?: Prisma.IdeaCreateopenQuestionsInput | string[]
+  capturedAt?: Date | string
+  updatedAt?: Date | string
+  notes?: Prisma.IdeaNoteUncheckedCreateNestedManyWithoutIdeaInput
+  marketIdea?: Prisma.MarketIdeaUncheckedCreateNestedOneWithoutIdeaInput
+  experiments?: Prisma.ExperimentUncheckedCreateNestedManyWithoutIdeaInput
+  evidence?: Prisma.EvidenceItemUncheckedCreateNestedManyWithoutIdeaInput
+}
+
+export type IdeaCreateOrConnectWithoutHypothesesInput = {
+  where: Prisma.IdeaWhereUniqueInput
+  create: Prisma.XOR<Prisma.IdeaCreateWithoutHypothesesInput, Prisma.IdeaUncheckedCreateWithoutHypothesesInput>
+}
+
+export type IdeaUpsertWithoutHypothesesInput = {
+  update: Prisma.XOR<Prisma.IdeaUpdateWithoutHypothesesInput, Prisma.IdeaUncheckedUpdateWithoutHypothesesInput>
+  create: Prisma.XOR<Prisma.IdeaCreateWithoutHypothesesInput, Prisma.IdeaUncheckedCreateWithoutHypothesesInput>
+  where?: Prisma.IdeaWhereInput
+}
+
+export type IdeaUpdateToOneWithWhereWithoutHypothesesInput = {
+  where?: Prisma.IdeaWhereInput
+  data: Prisma.XOR<Prisma.IdeaUpdateWithoutHypothesesInput, Prisma.IdeaUncheckedUpdateWithoutHypothesesInput>
+}
+
+export type IdeaUpdateWithoutHypothesesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  ref?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.IdeaUpdatetagsInput | string[]
+  status?: Prisma.EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
+  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  context?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openQuestions?: Prisma.IdeaUpdateopenQuestionsInput | string[]
+  capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutIdeasNestedInput
+  product?: Prisma.ProductUpdateOneRequiredWithoutIdeasNestedInput
+  notes?: Prisma.IdeaNoteUpdateManyWithoutIdeaNestedInput
+  marketIdea?: Prisma.MarketIdeaUpdateOneWithoutIdeaNestedInput
+  experiments?: Prisma.ExperimentUpdateManyWithoutIdeaNestedInput
+  evidence?: Prisma.EvidenceItemUpdateManyWithoutIdeaNestedInput
+}
+
+export type IdeaUncheckedUpdateWithoutHypothesesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workspaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  ref?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.IdeaUpdatetagsInput | string[]
+  status?: Prisma.EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
+  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  context?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openQuestions?: Prisma.IdeaUpdateopenQuestionsInput | string[]
+  capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notes?: Prisma.IdeaNoteUncheckedUpdateManyWithoutIdeaNestedInput
+  marketIdea?: Prisma.MarketIdeaUncheckedUpdateOneWithoutIdeaNestedInput
+  experiments?: Prisma.ExperimentUncheckedUpdateManyWithoutIdeaNestedInput
+  evidence?: Prisma.EvidenceItemUncheckedUpdateManyWithoutIdeaNestedInput
+}
+
+export type IdeaCreateWithoutExperimentsInput = {
+  id?: string
+  ref: string
+  name: string
+  headline?: string | null
+  summary?: string | null
+  problem?: string | null
+  audience?: string | null
+  category?: string | null
+  tags?: Prisma.IdeaCreatetagsInput | string[]
+  status?: $Enums.IdeaStatus
+  source?: string | null
+  context?: string | null
+  openQuestions?: Prisma.IdeaCreateopenQuestionsInput | string[]
+  capturedAt?: Date | string
+  updatedAt?: Date | string
+  workspace: Prisma.WorkspaceCreateNestedOneWithoutIdeasInput
+  product: Prisma.ProductCreateNestedOneWithoutIdeasInput
+  notes?: Prisma.IdeaNoteCreateNestedManyWithoutIdeaInput
+  marketIdea?: Prisma.MarketIdeaCreateNestedOneWithoutIdeaInput
+  hypotheses?: Prisma.HypothesisCreateNestedManyWithoutIdeaInput
+  evidence?: Prisma.EvidenceItemCreateNestedManyWithoutIdeaInput
+}
+
+export type IdeaUncheckedCreateWithoutExperimentsInput = {
+  id?: string
+  workspaceId: string
+  productId: string
+  ref: string
+  name: string
+  headline?: string | null
+  summary?: string | null
+  problem?: string | null
+  audience?: string | null
+  category?: string | null
+  tags?: Prisma.IdeaCreatetagsInput | string[]
+  status?: $Enums.IdeaStatus
+  source?: string | null
+  context?: string | null
+  openQuestions?: Prisma.IdeaCreateopenQuestionsInput | string[]
+  capturedAt?: Date | string
+  updatedAt?: Date | string
+  notes?: Prisma.IdeaNoteUncheckedCreateNestedManyWithoutIdeaInput
+  marketIdea?: Prisma.MarketIdeaUncheckedCreateNestedOneWithoutIdeaInput
+  hypotheses?: Prisma.HypothesisUncheckedCreateNestedManyWithoutIdeaInput
+  evidence?: Prisma.EvidenceItemUncheckedCreateNestedManyWithoutIdeaInput
+}
+
+export type IdeaCreateOrConnectWithoutExperimentsInput = {
+  where: Prisma.IdeaWhereUniqueInput
+  create: Prisma.XOR<Prisma.IdeaCreateWithoutExperimentsInput, Prisma.IdeaUncheckedCreateWithoutExperimentsInput>
+}
+
+export type IdeaUpsertWithoutExperimentsInput = {
+  update: Prisma.XOR<Prisma.IdeaUpdateWithoutExperimentsInput, Prisma.IdeaUncheckedUpdateWithoutExperimentsInput>
+  create: Prisma.XOR<Prisma.IdeaCreateWithoutExperimentsInput, Prisma.IdeaUncheckedCreateWithoutExperimentsInput>
+  where?: Prisma.IdeaWhereInput
+}
+
+export type IdeaUpdateToOneWithWhereWithoutExperimentsInput = {
+  where?: Prisma.IdeaWhereInput
+  data: Prisma.XOR<Prisma.IdeaUpdateWithoutExperimentsInput, Prisma.IdeaUncheckedUpdateWithoutExperimentsInput>
+}
+
+export type IdeaUpdateWithoutExperimentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  ref?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.IdeaUpdatetagsInput | string[]
+  status?: Prisma.EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
+  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  context?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openQuestions?: Prisma.IdeaUpdateopenQuestionsInput | string[]
+  capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutIdeasNestedInput
+  product?: Prisma.ProductUpdateOneRequiredWithoutIdeasNestedInput
+  notes?: Prisma.IdeaNoteUpdateManyWithoutIdeaNestedInput
+  marketIdea?: Prisma.MarketIdeaUpdateOneWithoutIdeaNestedInput
+  hypotheses?: Prisma.HypothesisUpdateManyWithoutIdeaNestedInput
+  evidence?: Prisma.EvidenceItemUpdateManyWithoutIdeaNestedInput
+}
+
+export type IdeaUncheckedUpdateWithoutExperimentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workspaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  ref?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.IdeaUpdatetagsInput | string[]
+  status?: Prisma.EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
+  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  context?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openQuestions?: Prisma.IdeaUpdateopenQuestionsInput | string[]
+  capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notes?: Prisma.IdeaNoteUncheckedUpdateManyWithoutIdeaNestedInput
+  marketIdea?: Prisma.MarketIdeaUncheckedUpdateOneWithoutIdeaNestedInput
+  hypotheses?: Prisma.HypothesisUncheckedUpdateManyWithoutIdeaNestedInput
+  evidence?: Prisma.EvidenceItemUncheckedUpdateManyWithoutIdeaNestedInput
+}
+
+export type IdeaCreateWithoutEvidenceInput = {
+  id?: string
+  ref: string
+  name: string
+  headline?: string | null
+  summary?: string | null
+  problem?: string | null
+  audience?: string | null
+  category?: string | null
+  tags?: Prisma.IdeaCreatetagsInput | string[]
+  status?: $Enums.IdeaStatus
+  source?: string | null
+  context?: string | null
+  openQuestions?: Prisma.IdeaCreateopenQuestionsInput | string[]
+  capturedAt?: Date | string
+  updatedAt?: Date | string
+  workspace: Prisma.WorkspaceCreateNestedOneWithoutIdeasInput
+  product: Prisma.ProductCreateNestedOneWithoutIdeasInput
+  notes?: Prisma.IdeaNoteCreateNestedManyWithoutIdeaInput
+  marketIdea?: Prisma.MarketIdeaCreateNestedOneWithoutIdeaInput
+  hypotheses?: Prisma.HypothesisCreateNestedManyWithoutIdeaInput
+  experiments?: Prisma.ExperimentCreateNestedManyWithoutIdeaInput
+}
+
+export type IdeaUncheckedCreateWithoutEvidenceInput = {
+  id?: string
+  workspaceId: string
+  productId: string
+  ref: string
+  name: string
+  headline?: string | null
+  summary?: string | null
+  problem?: string | null
+  audience?: string | null
+  category?: string | null
+  tags?: Prisma.IdeaCreatetagsInput | string[]
+  status?: $Enums.IdeaStatus
+  source?: string | null
+  context?: string | null
+  openQuestions?: Prisma.IdeaCreateopenQuestionsInput | string[]
+  capturedAt?: Date | string
+  updatedAt?: Date | string
+  notes?: Prisma.IdeaNoteUncheckedCreateNestedManyWithoutIdeaInput
+  marketIdea?: Prisma.MarketIdeaUncheckedCreateNestedOneWithoutIdeaInput
+  hypotheses?: Prisma.HypothesisUncheckedCreateNestedManyWithoutIdeaInput
+  experiments?: Prisma.ExperimentUncheckedCreateNestedManyWithoutIdeaInput
+}
+
+export type IdeaCreateOrConnectWithoutEvidenceInput = {
+  where: Prisma.IdeaWhereUniqueInput
+  create: Prisma.XOR<Prisma.IdeaCreateWithoutEvidenceInput, Prisma.IdeaUncheckedCreateWithoutEvidenceInput>
+}
+
+export type IdeaUpsertWithoutEvidenceInput = {
+  update: Prisma.XOR<Prisma.IdeaUpdateWithoutEvidenceInput, Prisma.IdeaUncheckedUpdateWithoutEvidenceInput>
+  create: Prisma.XOR<Prisma.IdeaCreateWithoutEvidenceInput, Prisma.IdeaUncheckedCreateWithoutEvidenceInput>
+  where?: Prisma.IdeaWhereInput
+}
+
+export type IdeaUpdateToOneWithWhereWithoutEvidenceInput = {
+  where?: Prisma.IdeaWhereInput
+  data: Prisma.XOR<Prisma.IdeaUpdateWithoutEvidenceInput, Prisma.IdeaUncheckedUpdateWithoutEvidenceInput>
+}
+
+export type IdeaUpdateWithoutEvidenceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  ref?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.IdeaUpdatetagsInput | string[]
+  status?: Prisma.EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
+  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  context?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openQuestions?: Prisma.IdeaUpdateopenQuestionsInput | string[]
+  capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutIdeasNestedInput
+  product?: Prisma.ProductUpdateOneRequiredWithoutIdeasNestedInput
+  notes?: Prisma.IdeaNoteUpdateManyWithoutIdeaNestedInput
+  marketIdea?: Prisma.MarketIdeaUpdateOneWithoutIdeaNestedInput
+  hypotheses?: Prisma.HypothesisUpdateManyWithoutIdeaNestedInput
+  experiments?: Prisma.ExperimentUpdateManyWithoutIdeaNestedInput
+}
+
+export type IdeaUncheckedUpdateWithoutEvidenceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workspaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  productId?: Prisma.StringFieldUpdateOperationsInput | string
+  ref?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.IdeaUpdatetagsInput | string[]
+  status?: Prisma.EnumIdeaStatusFieldUpdateOperationsInput | $Enums.IdeaStatus
+  source?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  context?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  openQuestions?: Prisma.IdeaUpdateopenQuestionsInput | string[]
+  capturedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notes?: Prisma.IdeaNoteUncheckedUpdateManyWithoutIdeaNestedInput
+  marketIdea?: Prisma.MarketIdeaUncheckedUpdateOneWithoutIdeaNestedInput
+  hypotheses?: Prisma.HypothesisUncheckedUpdateManyWithoutIdeaNestedInput
+  experiments?: Prisma.ExperimentUncheckedUpdateManyWithoutIdeaNestedInput
 }
 
 export type IdeaCreateManyWorkspaceInput = {
@@ -1133,6 +1568,9 @@ export type IdeaUpdateWithoutWorkspaceInput = {
   product?: Prisma.ProductUpdateOneRequiredWithoutIdeasNestedInput
   notes?: Prisma.IdeaNoteUpdateManyWithoutIdeaNestedInput
   marketIdea?: Prisma.MarketIdeaUpdateOneWithoutIdeaNestedInput
+  hypotheses?: Prisma.HypothesisUpdateManyWithoutIdeaNestedInput
+  experiments?: Prisma.ExperimentUpdateManyWithoutIdeaNestedInput
+  evidence?: Prisma.EvidenceItemUpdateManyWithoutIdeaNestedInput
 }
 
 export type IdeaUncheckedUpdateWithoutWorkspaceInput = {
@@ -1154,6 +1592,9 @@ export type IdeaUncheckedUpdateWithoutWorkspaceInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.IdeaNoteUncheckedUpdateManyWithoutIdeaNestedInput
   marketIdea?: Prisma.MarketIdeaUncheckedUpdateOneWithoutIdeaNestedInput
+  hypotheses?: Prisma.HypothesisUncheckedUpdateManyWithoutIdeaNestedInput
+  experiments?: Prisma.ExperimentUncheckedUpdateManyWithoutIdeaNestedInput
+  evidence?: Prisma.EvidenceItemUncheckedUpdateManyWithoutIdeaNestedInput
 }
 
 export type IdeaUncheckedUpdateManyWithoutWorkspaceInput = {
@@ -1213,6 +1654,9 @@ export type IdeaUpdateWithoutProductInput = {
   workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutIdeasNestedInput
   notes?: Prisma.IdeaNoteUpdateManyWithoutIdeaNestedInput
   marketIdea?: Prisma.MarketIdeaUpdateOneWithoutIdeaNestedInput
+  hypotheses?: Prisma.HypothesisUpdateManyWithoutIdeaNestedInput
+  experiments?: Prisma.ExperimentUpdateManyWithoutIdeaNestedInput
+  evidence?: Prisma.EvidenceItemUpdateManyWithoutIdeaNestedInput
 }
 
 export type IdeaUncheckedUpdateWithoutProductInput = {
@@ -1234,6 +1678,9 @@ export type IdeaUncheckedUpdateWithoutProductInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notes?: Prisma.IdeaNoteUncheckedUpdateManyWithoutIdeaNestedInput
   marketIdea?: Prisma.MarketIdeaUncheckedUpdateOneWithoutIdeaNestedInput
+  hypotheses?: Prisma.HypothesisUncheckedUpdateManyWithoutIdeaNestedInput
+  experiments?: Prisma.ExperimentUncheckedUpdateManyWithoutIdeaNestedInput
+  evidence?: Prisma.EvidenceItemUncheckedUpdateManyWithoutIdeaNestedInput
 }
 
 export type IdeaUncheckedUpdateManyWithoutProductInput = {
@@ -1262,10 +1709,16 @@ export type IdeaUncheckedUpdateManyWithoutProductInput = {
 
 export type IdeaCountOutputType = {
   notes: number
+  hypotheses: number
+  experiments: number
+  evidence: number
 }
 
 export type IdeaCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   notes?: boolean | IdeaCountOutputTypeCountNotesArgs
+  hypotheses?: boolean | IdeaCountOutputTypeCountHypothesesArgs
+  experiments?: boolean | IdeaCountOutputTypeCountExperimentsArgs
+  evidence?: boolean | IdeaCountOutputTypeCountEvidenceArgs
 }
 
 /**
@@ -1283,6 +1736,27 @@ export type IdeaCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
  */
 export type IdeaCountOutputTypeCountNotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.IdeaNoteWhereInput
+}
+
+/**
+ * IdeaCountOutputType without action
+ */
+export type IdeaCountOutputTypeCountHypothesesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HypothesisWhereInput
+}
+
+/**
+ * IdeaCountOutputType without action
+ */
+export type IdeaCountOutputTypeCountExperimentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ExperimentWhereInput
+}
+
+/**
+ * IdeaCountOutputType without action
+ */
+export type IdeaCountOutputTypeCountEvidenceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EvidenceItemWhereInput
 }
 
 
@@ -1308,6 +1782,9 @@ export type IdeaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   notes?: boolean | Prisma.Idea$notesArgs<ExtArgs>
   marketIdea?: boolean | Prisma.Idea$marketIdeaArgs<ExtArgs>
+  hypotheses?: boolean | Prisma.Idea$hypothesesArgs<ExtArgs>
+  experiments?: boolean | Prisma.Idea$experimentsArgs<ExtArgs>
+  evidence?: boolean | Prisma.Idea$evidenceArgs<ExtArgs>
   _count?: boolean | Prisma.IdeaCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["idea"]>
 
@@ -1381,6 +1858,9 @@ export type IdeaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   notes?: boolean | Prisma.Idea$notesArgs<ExtArgs>
   marketIdea?: boolean | Prisma.Idea$marketIdeaArgs<ExtArgs>
+  hypotheses?: boolean | Prisma.Idea$hypothesesArgs<ExtArgs>
+  experiments?: boolean | Prisma.Idea$experimentsArgs<ExtArgs>
+  evidence?: boolean | Prisma.Idea$evidenceArgs<ExtArgs>
   _count?: boolean | Prisma.IdeaCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type IdeaIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1399,6 +1879,9 @@ export type $IdeaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     product: Prisma.$ProductPayload<ExtArgs>
     notes: Prisma.$IdeaNotePayload<ExtArgs>[]
     marketIdea: Prisma.$MarketIdeaPayload<ExtArgs> | null
+    hypotheses: Prisma.$HypothesisPayload<ExtArgs>[]
+    experiments: Prisma.$ExperimentPayload<ExtArgs>[]
+    evidence: Prisma.$EvidenceItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1816,6 +2299,9 @@ export interface Prisma__IdeaClient<T, Null = never, ExtArgs extends runtime.Typ
   product<T extends Prisma.ProductDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductClient<runtime.Types.Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   notes<T extends Prisma.Idea$notesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Idea$notesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IdeaNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   marketIdea<T extends Prisma.Idea$marketIdeaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Idea$marketIdeaArgs<ExtArgs>>): Prisma.Prisma__MarketIdeaClient<runtime.Types.Result.GetResult<Prisma.$MarketIdeaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  hypotheses<T extends Prisma.Idea$hypothesesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Idea$hypothesesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HypothesisPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  experiments<T extends Prisma.Idea$experimentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Idea$experimentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExperimentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  evidence<T extends Prisma.Idea$evidenceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Idea$evidenceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EvidenceItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2303,6 +2789,78 @@ export type Idea$marketIdeaArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   include?: Prisma.MarketIdeaInclude<ExtArgs> | null
   where?: Prisma.MarketIdeaWhereInput
+}
+
+/**
+ * Idea.hypotheses
+ */
+export type Idea$hypothesesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Hypothesis
+   */
+  select?: Prisma.HypothesisSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Hypothesis
+   */
+  omit?: Prisma.HypothesisOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HypothesisInclude<ExtArgs> | null
+  where?: Prisma.HypothesisWhereInput
+  orderBy?: Prisma.HypothesisOrderByWithRelationInput | Prisma.HypothesisOrderByWithRelationInput[]
+  cursor?: Prisma.HypothesisWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HypothesisScalarFieldEnum | Prisma.HypothesisScalarFieldEnum[]
+}
+
+/**
+ * Idea.experiments
+ */
+export type Idea$experimentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Experiment
+   */
+  select?: Prisma.ExperimentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Experiment
+   */
+  omit?: Prisma.ExperimentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExperimentInclude<ExtArgs> | null
+  where?: Prisma.ExperimentWhereInput
+  orderBy?: Prisma.ExperimentOrderByWithRelationInput | Prisma.ExperimentOrderByWithRelationInput[]
+  cursor?: Prisma.ExperimentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ExperimentScalarFieldEnum | Prisma.ExperimentScalarFieldEnum[]
+}
+
+/**
+ * Idea.evidence
+ */
+export type Idea$evidenceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EvidenceItem
+   */
+  select?: Prisma.EvidenceItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the EvidenceItem
+   */
+  omit?: Prisma.EvidenceItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EvidenceItemInclude<ExtArgs> | null
+  where?: Prisma.EvidenceItemWhereInput
+  orderBy?: Prisma.EvidenceItemOrderByWithRelationInput | Prisma.EvidenceItemOrderByWithRelationInput[]
+  cursor?: Prisma.EvidenceItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EvidenceItemScalarFieldEnum | Prisma.EvidenceItemScalarFieldEnum[]
 }
 
 /**

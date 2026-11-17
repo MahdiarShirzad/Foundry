@@ -16,3 +16,73 @@ export const IdeaStatus = {
 } as const
 
 export type IdeaStatus = (typeof IdeaStatus)[keyof typeof IdeaStatus]
+
+
+export const Importance = {
+  HIGH: 'HIGH',
+  MEDIUM: 'MEDIUM',
+  LOW: 'LOW'
+} as const
+
+export type Importance = (typeof Importance)[keyof typeof Importance]
+
+
+export const HypothesisCategory = {
+  PROBLEM: 'PROBLEM',
+  SOLUTION: 'SOLUTION',
+  MARKET: 'MARKET',
+  BUSINESS_MODEL: 'BUSINESS_MODEL',
+  VALUE_PROPOSITION: 'VALUE_PROPOSITION',
+  CUSTOMER: 'CUSTOMER',
+  TECHNICAL: 'TECHNICAL'
+} as const
+
+export type HypothesisCategory = (typeof HypothesisCategory)[keyof typeof HypothesisCategory]
+
+
+export const HypothesisStatus = {
+  DRAFT: 'DRAFT',
+  ACTIVE: 'ACTIVE',
+  TESTING: 'TESTING',
+  VALIDATED: 'VALIDATED',
+  INVALIDATED: 'INVALIDATED',
+  PAUSED: 'PAUSED'
+} as const
+
+export type HypothesisStatus = (typeof HypothesisStatus)[keyof typeof HypothesisStatus]
+
+
+export const ExperimentMethod = {
+  SURVEY: 'SURVEY',
+  INTERVIEW: 'INTERVIEW',
+  LANDING_PAGE: 'LANDING_PAGE',
+  PROTOTYPE: 'PROTOTYPE',
+  AB_TEST: 'AB_TEST',
+  SMOKE_TEST: 'SMOKE_TEST',
+  OBSERVATION: 'OBSERVATION'
+} as const
+
+export type ExperimentMethod = (typeof ExperimentMethod)[keyof typeof ExperimentMethod]
+
+
+export const ExperimentStatus = {
+  DRAFT: 'DRAFT',
+  PLANNED: 'PLANNED',
+  RUNNING: 'RUNNING',
+  COMPLETE: 'COMPLETE',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type ExperimentStatus = (typeof ExperimentStatus)[keyof typeof ExperimentStatus]
+
+
+export const EvidenceType = {
+  INTERVIEW: 'INTERVIEW',
+  SURVEY: 'SURVEY',
+  OBSERVATION: 'OBSERVATION',
+  METRIC: 'METRIC',
+  DOCUMENT: 'DOCUMENT',
+  OTHER: 'OTHER'
+} as const
+
+export type EvidenceType = (typeof EvidenceType)[keyof typeof EvidenceType]

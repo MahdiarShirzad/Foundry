@@ -410,7 +410,10 @@ export const ModelName = {
   Competitor: 'Competitor',
   Segment: 'Segment',
   Opportunity: 'Opportunity',
-  ResearchNote: 'ResearchNote'
+  ResearchNote: 'ResearchNote',
+  Hypothesis: 'Hypothesis',
+  Experiment: 'Experiment',
+  EvidenceItem: 'EvidenceItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -426,7 +429,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "emailVerificationCode" | "passwordResetToken" | "workspace" | "workspaceMember" | "product" | "idea" | "ideaNote" | "marketIdea" | "competitor" | "segment" | "opportunity" | "researchNote"
+    modelProps: "user" | "session" | "emailVerificationCode" | "passwordResetToken" | "workspace" | "workspaceMember" | "product" | "idea" | "ideaNote" | "marketIdea" | "competitor" | "segment" | "opportunity" | "researchNote" | "hypothesis" | "experiment" | "evidenceItem"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1466,6 +1469,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Hypothesis: {
+      payload: Prisma.$HypothesisPayload<ExtArgs>
+      fields: Prisma.HypothesisFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HypothesisFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HypothesisPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HypothesisFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HypothesisPayload>
+        }
+        findFirst: {
+          args: Prisma.HypothesisFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HypothesisPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HypothesisFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HypothesisPayload>
+        }
+        findMany: {
+          args: Prisma.HypothesisFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HypothesisPayload>[]
+        }
+        create: {
+          args: Prisma.HypothesisCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HypothesisPayload>
+        }
+        createMany: {
+          args: Prisma.HypothesisCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HypothesisCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HypothesisPayload>[]
+        }
+        delete: {
+          args: Prisma.HypothesisDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HypothesisPayload>
+        }
+        update: {
+          args: Prisma.HypothesisUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HypothesisPayload>
+        }
+        deleteMany: {
+          args: Prisma.HypothesisDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HypothesisUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HypothesisUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HypothesisPayload>[]
+        }
+        upsert: {
+          args: Prisma.HypothesisUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HypothesisPayload>
+        }
+        aggregate: {
+          args: Prisma.HypothesisAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHypothesis>
+        }
+        groupBy: {
+          args: Prisma.HypothesisGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HypothesisGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HypothesisCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HypothesisCountAggregateOutputType> | number
+        }
+      }
+    }
+    Experiment: {
+      payload: Prisma.$ExperimentPayload<ExtArgs>
+      fields: Prisma.ExperimentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ExperimentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExperimentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ExperimentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExperimentPayload>
+        }
+        findFirst: {
+          args: Prisma.ExperimentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExperimentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ExperimentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExperimentPayload>
+        }
+        findMany: {
+          args: Prisma.ExperimentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExperimentPayload>[]
+        }
+        create: {
+          args: Prisma.ExperimentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExperimentPayload>
+        }
+        createMany: {
+          args: Prisma.ExperimentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ExperimentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExperimentPayload>[]
+        }
+        delete: {
+          args: Prisma.ExperimentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExperimentPayload>
+        }
+        update: {
+          args: Prisma.ExperimentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExperimentPayload>
+        }
+        deleteMany: {
+          args: Prisma.ExperimentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ExperimentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ExperimentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExperimentPayload>[]
+        }
+        upsert: {
+          args: Prisma.ExperimentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExperimentPayload>
+        }
+        aggregate: {
+          args: Prisma.ExperimentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateExperiment>
+        }
+        groupBy: {
+          args: Prisma.ExperimentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExperimentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ExperimentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExperimentCountAggregateOutputType> | number
+        }
+      }
+    }
+    EvidenceItem: {
+      payload: Prisma.$EvidenceItemPayload<ExtArgs>
+      fields: Prisma.EvidenceItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EvidenceItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EvidenceItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EvidenceItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EvidenceItemPayload>
+        }
+        findFirst: {
+          args: Prisma.EvidenceItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EvidenceItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EvidenceItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EvidenceItemPayload>
+        }
+        findMany: {
+          args: Prisma.EvidenceItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EvidenceItemPayload>[]
+        }
+        create: {
+          args: Prisma.EvidenceItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EvidenceItemPayload>
+        }
+        createMany: {
+          args: Prisma.EvidenceItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EvidenceItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EvidenceItemPayload>[]
+        }
+        delete: {
+          args: Prisma.EvidenceItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EvidenceItemPayload>
+        }
+        update: {
+          args: Prisma.EvidenceItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EvidenceItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.EvidenceItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EvidenceItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EvidenceItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EvidenceItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.EvidenceItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EvidenceItemPayload>
+        }
+        aggregate: {
+          args: Prisma.EvidenceItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEvidenceItem>
+        }
+        groupBy: {
+          args: Prisma.EvidenceItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EvidenceItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EvidenceItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EvidenceItemCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1693,6 +1918,70 @@ export const ResearchNoteScalarFieldEnum = {
 export type ResearchNoteScalarFieldEnum = (typeof ResearchNoteScalarFieldEnum)[keyof typeof ResearchNoteScalarFieldEnum]
 
 
+export const HypothesisScalarFieldEnum = {
+  id: 'id',
+  ideaId: 'ideaId',
+  title: 'title',
+  statement: 'statement',
+  customerSegment: 'customerSegment',
+  category: 'category',
+  rationale: 'rationale',
+  importance: 'importance',
+  status: 'status',
+  relatedExperimentIds: 'relatedExperimentIds',
+  linkedFindings: 'linkedFindings',
+  unresolvedQuestions: 'unresolvedQuestions',
+  isDraft: 'isDraft',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HypothesisScalarFieldEnum = (typeof HypothesisScalarFieldEnum)[keyof typeof HypothesisScalarFieldEnum]
+
+
+export const ExperimentScalarFieldEnum = {
+  id: 'id',
+  ideaId: 'ideaId',
+  title: 'title',
+  relatedHypothesisId: 'relatedHypothesisId',
+  objective: 'objective',
+  method: 'method',
+  targetAudience: 'targetAudience',
+  successCriteria: 'successCriteria',
+  expectedEvidence: 'expectedEvidence',
+  status: 'status',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  observations: 'observations',
+  notes: 'notes',
+  isDraft: 'isDraft',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExperimentScalarFieldEnum = (typeof ExperimentScalarFieldEnum)[keyof typeof ExperimentScalarFieldEnum]
+
+
+export const EvidenceItemScalarFieldEnum = {
+  id: 'id',
+  ideaId: 'ideaId',
+  title: 'title',
+  relatedExperimentId: 'relatedExperimentId',
+  relatedHypothesisId: 'relatedHypothesisId',
+  type: 'type',
+  sourceLabel: 'sourceLabel',
+  date: 'date',
+  observation: 'observation',
+  interpretation: 'interpretation',
+  limitations: 'limitations',
+  isDraft: 'isDraft',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EvidenceItemScalarFieldEnum = (typeof EvidenceItemScalarFieldEnum)[keyof typeof EvidenceItemScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1762,6 +2051,97 @@ export type EnumIdeaStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'IdeaStatus[]'
  */
 export type ListEnumIdeaStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IdeaStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'HypothesisCategory'
+ */
+export type EnumHypothesisCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HypothesisCategory'>
+    
+
+
+/**
+ * Reference to a field of type 'HypothesisCategory[]'
+ */
+export type ListEnumHypothesisCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HypothesisCategory[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Importance'
+ */
+export type EnumImportanceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Importance'>
+    
+
+
+/**
+ * Reference to a field of type 'Importance[]'
+ */
+export type ListEnumImportanceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Importance[]'>
+    
+
+
+/**
+ * Reference to a field of type 'HypothesisStatus'
+ */
+export type EnumHypothesisStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HypothesisStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'HypothesisStatus[]'
+ */
+export type ListEnumHypothesisStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HypothesisStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'ExperimentMethod'
+ */
+export type EnumExperimentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExperimentMethod'>
+    
+
+
+/**
+ * Reference to a field of type 'ExperimentMethod[]'
+ */
+export type ListEnumExperimentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExperimentMethod[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ExperimentStatus'
+ */
+export type EnumExperimentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExperimentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ExperimentStatus[]'
+ */
+export type ListEnumExperimentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExperimentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'EvidenceType'
+ */
+export type EnumEvidenceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EvidenceType'>
+    
+
+
+/**
+ * Reference to a field of type 'EvidenceType[]'
+ */
+export type ListEnumEvidenceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EvidenceType[]'>
     
 
 
@@ -1943,6 +2323,9 @@ export type GlobalOmitConfig = {
   segment?: Prisma.SegmentOmit
   opportunity?: Prisma.OpportunityOmit
   researchNote?: Prisma.ResearchNoteOmit
+  hypothesis?: Prisma.HypothesisOmit
+  experiment?: Prisma.ExperimentOmit
+  evidenceItem?: Prisma.EvidenceItemOmit
 }
 
 /* Types for Logging */
