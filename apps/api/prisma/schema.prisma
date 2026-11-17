@@ -12,12 +12,12 @@ datasource db {
 // ─────────────────────────────────────────
 
 model User {
-  id              String   @id @default(uuid())
-  email           String   @unique
+  id              String    @id @default(uuid())
+  email           String    @unique
   passwordHash    String
   emailVerifiedAt DateTime?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   sessions               Session[]
   workspaceMembers       WorkspaceMember[]
@@ -138,10 +138,13 @@ model Idea {
   capturedAt    DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 
-  workspace  Workspace   @relation(fields: [workspaceId], references: [id])
-  product    Product     @relation(fields: [productId], references: [id])
-  notes      IdeaNote[]
-  marketIdea MarketIdea?
+  workspace   Workspace      @relation(fields: [workspaceId], references: [id])
+  product     Product        @relation(fields: [productId], references: [id])
+  notes       IdeaNote[]
+  marketIdea  MarketIdea?
+  hypotheses  Hypothesis[]
+  experiments Experiment[]
+  evidence    EvidenceItem[]
 }
 
 model IdeaNote {
@@ -248,4 +251,137 @@ model ResearchNote {
 
   @@index([marketIdeaId])
   @@index([relatedType, relatedId])
+}
+
+// ─────────────────────────────────────────
+// Stage 03 — Validation Lab
+// ─────────────────────────────────────────
+
+model Hypothesis {
+  id                   String              @id @default(uuid())
+  ideaId               String
+  title                String
+  statement            String
+  customerSegment      String?
+  category             HypothesisCategory?
+  rationale            String?
+  importance           Importance          @default(MEDIUM)
+  status               HypothesisStatus    @default(DRAFT)
+  relatedExperimentIds String[]
+  linkedFindings       String[]
+  unresolvedQuestions  String[]
+  isDraft              Boolean             @default(false)
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+
+  idea        Idea           @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  experiments Experiment[]
+  evidence    EvidenceItem[]
+
+  @@index([ideaId])
+}
+
+model Experiment {
+  id                  String            @id @default(uuid())
+  ideaId              String
+  title               String
+  relatedHypothesisId String?
+  objective           String?
+  method              ExperimentMethod?
+  targetAudience      String?
+  successCriteria     String?
+  expectedEvidence    String?
+  status              ExperimentStatus  @default(DRAFT)
+  startDate           DateTime?
+  endDate             DateTime?
+  observations        String[]
+  notes               String?
+  isDraft             Boolean           @default(false)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  idea       Idea           @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  hypothesis Hypothesis?    @relation(fields: [relatedHypothesisId], references: [id])
+  evidence   EvidenceItem[]
+
+  @@index([ideaId])
+}
+
+model EvidenceItem {
+  id                  String        @id @default(uuid())
+  ideaId              String
+  title               String
+  relatedExperimentId String?
+  relatedHypothesisId String?
+  type                EvidenceType?
+  sourceLabel         String?
+  date                DateTime?
+  observation         String?
+  interpretation      String?
+  limitations         String?
+  isDraft             Boolean       @default(false)
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  idea       Idea        @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  experiment Experiment? @relation(fields: [relatedExperimentId], references: [id])
+  hypothesis Hypothesis? @relation(fields: [relatedHypothesisId], references: [id])
+
+  @@index([ideaId])
+}
+
+// ─────────────────────────────────────────
+// Enums
+// ─────────────────────────────────────────
+
+enum Importance {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum HypothesisCategory {
+  PROBLEM
+  SOLUTION
+  MARKET
+  BUSINESS_MODEL
+  VALUE_PROPOSITION
+  CUSTOMER
+  TECHNICAL
+}
+
+enum HypothesisStatus {
+  DRAFT
+  ACTIVE
+  TESTING
+  VALIDATED
+  INVALIDATED
+  PAUSED
+}
+
+enum ExperimentMethod {
+  SURVEY
+  INTERVIEW
+  LANDING_PAGE
+  PROTOTYPE
+  AB_TEST
+  SMOKE_TEST
+  OBSERVATION
+}
+
+enum ExperimentStatus {
+  DRAFT
+  PLANNED
+  RUNNING
+  COMPLETE
+  CANCELLED
+}
+
+enum EvidenceType {
+  INTERVIEW
+  SURVEY
+  OBSERVATION
+  METRIC
+  DOCUMENT
+  OTHER
 }
