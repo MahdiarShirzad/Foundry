@@ -161,7 +161,11 @@ export default function IdeaLabPage({
     (idea) => idea.status === "shortlisted",
   ).length;
 
-  const renderedView: LabView = loading
+  // The server always renders the loading skeleton (its per-request QueryClient
+  // has no data), so hold that view until hydration completes — react-query's
+  // hydration snapshot can already contain cached data, which would otherwise
+  // render content that never matches the server HTML.
+  const renderedView: LabView = !hydrated || loading
     ? "loading"
     : error
       ? "error"
