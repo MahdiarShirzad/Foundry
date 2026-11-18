@@ -51,10 +51,10 @@ export function ValidationErrorState({ onRetry }: { onRetry: () => void }) {
     <ErrorState
       eyebrow="Validation workspace unavailable"
       title="The validation workspace could not be loaded"
-      description="This is a presentation-only failure state. No hypothesis, experiment or finding was changed or lost."
+      description="The request failed. No hypothesis, experiment or finding was changed or lost."
       onRetry={onRetry}
-      retryLabel="Return to validation workspace"
-      footnote="No request was made · this state is part of the interface preview"
+      retryLabel="Retry loading workspace"
+      footnote="Check your connection and try again"
     />
   );
 }

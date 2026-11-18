@@ -1,27 +1,29 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
-import { DevToolsPopover, StatePreview } from "@/components/ui/primitives";
-
+import { useIdeas } from "@/lib/idea-lab/use-idea";
+import { useProducts } from "@/lib/product/use-products";
+import { useHydrated } from "@/lib/use-hydrated";
+import { toValidationIdea } from "@/lib/validation/api";
 import {
-  DEMO_EVIDENCE,
-  DEMO_EXPERIMENTS,
-  DEMO_HYPOTHESES,
-  DEMO_VALIDATION_IDEAS,
-  getValidationIdea,
-} from "@/lib/validation-lab/demo";
+  useCreateEvidence,
+  useCreateExperiment,
+  useCreateHypothesis,
+  useEvidence,
+  useExperiments,
+  useHypotheses,
+  useUpdateHypothesis,
+} from "@/lib/validation/hooks";
 import {
   type EvidenceDraft,
-  type EvidenceItem,
-  type Experiment,
   type ExperimentDraft,
-  type Hypothesis,
   type HypothesisDraft,
   type HypothesisStatus,
+  type ValidationIdea,
   type ValidationSection,
-  type ValidationView,
 } from "@/lib/validation-lab/types";
 
 import { ValidationLabHeader } from "./validation-lab-header";
@@ -36,40 +38,88 @@ import { ValidationSummary } from "./sections/validation-summary";
 import { ValidationErrorState, ValidationSkeleton } from "./badges";
 import { EASE } from "./primitives";
 
-const TODAY = "2026-10-30";
+/** Shape returned by `GET /products`. */
+type Product = {
+  id: string;
+  name: string;
+  slug?: string;
+};
 
-const VIEWS: { label: string; value: ValidationView }[] = [
-  { label: "Ready", value: "populated" },
-  { label: "Loading", value: "loading" },
-  { label: "Error", value: "error" },
-];
+const EMPTY_IDEA: ValidationIdea = {
+  id: "",
+  name: "No idea selected",
+  ref: "—",
+  assumption: "Capture an idea in the Idea Lab to start validating its assumptions.",
+  nextTasks: [],
+};
 
-export default function ValidationLabPage() {
+function errorMessage(error: unknown, fallback: string): string {
+  return error instanceof Error && error.message ? error.message : fallback;
+}
+
+export default function ValidationLabPage({
+  productId,
+  ideaId: routeIdeaId,
+}: {
+  productId?: string;
+  ideaId?: string;
+}) {
   const reduce = useReducedMotion();
-  const nextId = useRef(1);
+  const hydrated = useHydrated();
 
-  const [ideaId, setIdeaId] = useState<string>(DEMO_VALIDATION_IDEAS[0].id);
+  const { data: productsData, isPending: productsPending } = useProducts();
+  const products = (productsData as Product[] | undefined) ?? [];
+
+  // The dashboard stores the active product in `?product=`; fall back to the
+  // first product the same way the other module workspaces do.
+  const activeProductId =
+    productId ?? (hydrated ? products[0]?.id : undefined);
+
+  const {
+    ideas,
+    loading: ideasLoading,
+    error: ideasError,
+    refetch: refetchIdeas,
+  } = useIdeas(activeProductId);
+
+  const [selectedIdeaId, setSelectedIdeaId] = useState<string | null>(null);
   const [section, setSection] = useState<ValidationSection>("Overview");
-  const [view, setView] = useState<ValidationView>("populated");
   const [toast, setToast] = useState<{ key: number; message: string } | null>(null);
 
-  // Local collections: the dialogs add presentational records here, nothing else.
-  const [hypotheses, setHypotheses] = useState<Hypothesis[]>(DEMO_HYPOTHESES);
-  const [experiments, setExperiments] = useState<Experiment[]>(DEMO_EXPERIMENTS);
-  const [findings, setFindings] = useState<EvidenceItem[]>(DEMO_EVIDENCE);
+  const activeIdeaId = selectedIdeaId ?? routeIdeaId ?? "";
+  const selectedIdea = ideas.find((item) => item.id === activeIdeaId) ?? ideas[0] ?? null;
+  const selectedIdeaKey = selectedIdea?.id;
+  const idea = selectedIdea ? toValidationIdea(selectedIdea) : EMPTY_IDEA;
 
-  const idea = getValidationIdea(ideaId);
-  const ideaHypotheses = useMemo(
-    () => hypotheses.filter((h) => h.ideaId === ideaId),
-    [hypotheses, ideaId],
-  );
-  const ideaExperiments = useMemo(
-    () => experiments.filter((e) => e.ideaId === ideaId),
-    [experiments, ideaId],
-  );
-  const ideaFindings = useMemo(
-    () => findings.filter((f) => f.ideaId === ideaId),
-    [findings, ideaId],
+  const {
+    hypotheses,
+    loading: hypothesesLoading,
+    error: hypothesesError,
+    refetch: refetchHypotheses,
+  } = useHypotheses(selectedIdeaKey);
+
+  const {
+    experiments,
+    loading: experimentsLoading,
+    error: experimentsError,
+    refetch: refetchExperiments,
+  } = useExperiments(selectedIdeaKey);
+
+  const {
+    evidence: findings,
+    loading: evidenceLoading,
+    error: evidenceError,
+    refetch: refetchEvidence,
+  } = useEvidence(selectedIdeaKey);
+
+  const createHypothesis = useCreateHypothesis(selectedIdeaKey);
+  const createExperiment = useCreateExperiment(selectedIdeaKey);
+  const createEvidence = useCreateEvidence(selectedIdeaKey);
+  const updateHypothesis = useUpdateHypothesis(selectedIdeaKey);
+
+  const ideaOptions = useMemo(
+    () => ideas.map((item) => toValidationIdea(item)),
+    [ideas],
   );
 
   const notify = useCallback((message: string) => {
@@ -82,97 +132,92 @@ export default function ValidationLabPage() {
     return () => window.clearTimeout(timer);
   }, [toast]);
 
-  /* ---------------------------------------------------- local record adds --- */
+  /* ------------------------------------------------------------- persistence --- */
 
-  function addHypothesis(draft: HypothesisDraft) {
-    const id = `h-local-${nextId.current++}`;
-    setHypotheses((current) => [
-      {
-        id,
-        ideaId: ideaId as Hypothesis["ideaId"],
-        ...draft,
-        status: "Unexamined" as HypothesisStatus,
-        relatedExperimentIds: [],
-        linkedFindings: [],
-        unresolvedQuestions: [],
-      },
-      ...current,
-    ]);
-    setView("populated");
-    notify(`Hypothesis added · “${draft.title}” · local state only`);
+  async function addHypothesis(draft: HypothesisDraft) {
+    await createHypothesis.create(draft);
+    notify(`Hypothesis added · “${draft.title}”`);
   }
 
-  function addExperiment(draft: ExperimentDraft) {
-    const id = `e-local-${nextId.current++}`;
-    setExperiments((current) => [
-      {
-        id,
-        ideaId: ideaId as Experiment["ideaId"],
-        ...draft,
-        status: "Draft",
-        expectedEvidence: "Not specified yet",
-        observations: [],
-        notes: "",
-      },
-      ...current,
-    ]);
-    setHypotheses((current) =>
-      current.map((h) =>
-        h.id === draft.relatedHypothesisId
-          ? { ...h, relatedExperimentIds: [...h.relatedExperimentIds, id] }
-          : h,
-      ),
-    );
-    setView("populated");
+  async function addExperiment(draft: ExperimentDraft) {
+    await createExperiment.create({
+      title: draft.title,
+      relatedHypothesisId: draft.relatedHypothesisId || undefined,
+      objective: draft.objective,
+      method: draft.method,
+      targetAudience: draft.targetAudience,
+      successCriteria: draft.successCriteria,
+      startDate: draft.startDate,
+    });
     notify("Experiment created as a draft · designed, not run");
   }
 
-  function addFinding(draft: EvidenceDraft) {
-    const id = `f-local-${nextId.current++}`;
-    setFindings((current) => [{ id, ideaId: ideaId as EvidenceItem["ideaId"], ...draft, date: TODAY }, ...current]);
-    setHypotheses((current) =>
-      current.map((h) =>
-        h.id === draft.relatedHypothesisId && !h.linkedFindings.includes(id)
-          ? { ...h, linkedFindings: [...h.linkedFindings, id] }
-          : h,
-      ),
-    );
-    setView("populated");
+  async function addFinding(draft: EvidenceDraft) {
+    await createEvidence.create({
+      ...draft,
+      date: new Date().toISOString().slice(0, 10),
+    });
     notify("Finding recorded · observation kept separate from interpretation");
   }
 
-  function changeHypothesisStatus(id: string, status: HypothesisStatus) {
-    setHypotheses((current) => current.map((h) => (h.id === id ? { ...h, status } : h)));
-    notify(`Status set to “${status}” · a label you chose, not an evaluation`);
+  async function changeHypothesisStatus(id: string, status: HypothesisStatus) {
+    try {
+      await updateHypothesis.update(id, { status });
+      notify(`Status set to “${status}” · a label you chose, not an evaluation`);
+    } catch (error) {
+      notify(errorMessage(error, "Could not update the hypothesis status"));
+    }
   }
 
   function changeIdea(id: string) {
-    setIdeaId(id);
+    setSelectedIdeaId(id);
     setSection("Overview");
-    setView("populated");
-    notify(`Validation workspace · ${getValidationIdea(id).name} (local view)`);
+    const next = ideas.find((item) => item.id === id);
+    notify(`Validation workspace · ${next?.name ?? "Idea"}`);
+  }
+
+  function retry() {
+    if (ideasError) void refetchIdeas();
+    if (hypothesesError) void refetchHypotheses();
+    if (experimentsError) void refetchExperiments();
+    if (evidenceError) void refetchEvidence();
   }
 
   /* ------------------------------------------------------------------ body --- */
 
+  const loading = productId
+    ? ideasLoading || hypothesesLoading || experimentsLoading || evidenceLoading
+    : ideasLoading ||
+      productsPending ||
+      hypothesesLoading ||
+      experimentsLoading ||
+      evidenceLoading;
+  const error =
+    ideasError || hypothesesError || experimentsError || evidenceError;
+
+  // The first (hydration) render must match the server, whose QueryClient is
+  // always cold. Gate every branch on `hydrated` so both sides render the
+  // skeleton no matter what the browser cache already holds.
+  if (!hydrated || loading) {
+    return <ValidationSkeleton />;
+  }
+
   let body: ReactNode;
-  if (view === "loading") {
-    body = <ValidationSkeleton />;
-  } else if (view === "error") {
-    body = <ValidationErrorState onRetry={() => setView("populated")} />;
+  if (error) {
+    body = <ValidationErrorState onRetry={retry} />;
   } else {
     body = (
       <>
         <ValidationOverview
-          hypotheses={ideaHypotheses}
-          experiments={ideaExperiments}
-          findings={ideaFindings}
+          hypotheses={hypotheses}
+          experiments={experiments}
+          findings={findings}
         />
         <ValidationWorkspaceNavigation section={section} onChange={setSection} />
         <ValidationWorkflow
-          hypotheses={ideaHypotheses.length}
-          experiments={ideaExperiments.length}
-          findings={ideaFindings.length}
+          hypotheses={hypotheses.length}
+          experiments={experiments.length}
+          findings={findings.length}
         />
 
         <AnimatePresence mode="wait" initial={false}>
@@ -188,37 +233,37 @@ export default function ValidationLabPage() {
             {section === "Overview" ? (
               <OverviewWorkspace
                 idea={idea}
-                hypotheses={ideaHypotheses}
-                experiments={ideaExperiments}
-                findings={ideaFindings}
+                hypotheses={hypotheses}
+                experiments={experiments}
+                findings={findings}
               />
             ) : section === "Hypotheses" ? (
               <HypothesisWorkspace
-                hypotheses={ideaHypotheses}
-                experiments={ideaExperiments}
-                findings={ideaFindings}
+                hypotheses={hypotheses}
+                experiments={experiments}
+                findings={findings}
                 onAdd={addHypothesis}
                 onStatusChange={changeHypothesisStatus}
               />
             ) : section === "Experiments" ? (
               <ExperimentWorkspace
-                experiments={ideaExperiments}
-                hypotheses={ideaHypotheses}
+                experiments={experiments}
+                hypotheses={hypotheses}
                 onAdd={addExperiment}
               />
             ) : section === "Evidence & Findings" ? (
               <EvidenceWorkspace
-                findings={ideaFindings}
-                experiments={ideaExperiments}
-                hypotheses={ideaHypotheses}
+                findings={findings}
+                experiments={experiments}
+                hypotheses={hypotheses}
                 onAdd={addFinding}
               />
             ) : (
               <ValidationSummary
                 idea={idea}
-                hypotheses={ideaHypotheses}
-                experiments={ideaExperiments}
-                findings={ideaFindings}
+                hypotheses={hypotheses}
+                experiments={experiments}
+                findings={findings}
               />
             )}
           </motion.div>
@@ -226,18 +271,6 @@ export default function ValidationLabPage() {
       </>
     );
   }
-
-  const statePreview = (
-    <div className="flex flex-wrap items-center justify-between gap-3">
-      <p className="text-[12px] text-faint">Local state · changes are not persisted</p>
-      <DevToolsPopover>
-        <StatePreview value={view} options={VIEWS} onChange={setView} />
-        <p className="mt-3 border-t border-line pt-3 text-[12px] text-faint">
-          Empty workspace · select TideMarket
-        </p>
-      </DevToolsPopover>
-    </div>
-  );
 
   return (
     <motion.div
@@ -248,17 +281,17 @@ export default function ValidationLabPage() {
     >
       <ValidationLabHeader
         idea={idea}
+        ideas={ideaOptions}
         onChangeIdea={changeIdea}
-        hypotheses={ideaHypotheses}
-        experiments={ideaExperiments}
-        findings={ideaFindings}
+        hypotheses={hypotheses}
+        experiments={experiments}
+        findings={findings}
         onSubmitHypothesis={addHypothesis}
         onSubmitExperiment={addExperiment}
         onSubmitFinding={addFinding}
       />
 
       {body}
-      {statePreview}
 
       <AnimatePresence>
         {toast ? (
@@ -278,4 +311,17 @@ export default function ValidationLabPage() {
       </AnimatePresence>
     </motion.div>
   );
+}
+
+/**
+ * Route entry for the Validation Lab workspace. Reads the active product from
+ * the URL (`?product=<id>`) and an optional idea (`?ideaId=<id>`), then threads
+ * both into the page. `useSearchParams` suspends during prerendering, so the
+ * route renders this behind a Suspense boundary.
+ */
+export function ValidationLabRoute() {
+  const params = useSearchParams();
+  const productId = params.get("product") ?? undefined;
+  const ideaId = params.get("ideaId") ?? params.get("idea") ?? undefined;
+  return <ValidationLabPage productId={productId} ideaId={ideaId} />;
 }

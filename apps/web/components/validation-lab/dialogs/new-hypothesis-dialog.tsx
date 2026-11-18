@@ -11,6 +11,7 @@ import {
 
 import {
   ConfirmNotice,
+  ErrorNotice,
   Field,
   PresentationalDialog,
   Select,
@@ -26,7 +27,7 @@ export function NewHypothesisDialog({
   open = true,
 }: {
   onClose: () => void;
-  onSubmit?: (draft: HypothesisDraft) => void;
+  onSubmit?: (draft: HypothesisDraft) => void | Promise<void>;
   open?: boolean;
 }) {
   const [title, setTitle] = useState("");
@@ -37,6 +38,8 @@ export function NewHypothesisDialog({
   const [importance, setImportance] = useState<Hypothesis["importance"]>("High");
   const [errors, setErrors] = useState<Errors>({});
   const [confirmed, setConfirmed] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const titleRef = useRef<HTMLInputElement>(null);
 
   function validate(): Errors {
@@ -47,7 +50,7 @@ export function NewHypothesisDialog({
     return next;
   }
 
-  function handleSubmit(event: React.FormEvent) {
+  async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const found = validate();
     setErrors(found);
@@ -55,16 +58,28 @@ export function NewHypothesisDialog({
       if (found.title) titleRef.current?.focus();
       return;
     }
-    onSubmit?.({
-      title: title.trim(),
-      statement: statement.trim(),
-      category,
-      customerSegment: customerSegment.trim() || "Unspecified segment",
-      rationale: rationale.trim(),
-      importance,
-    });
-    setConfirmed(true);
-    window.setTimeout(() => onClose(), 1600);
+    setSubmitError(null);
+    setPending(true);
+    try {
+      await onSubmit?.({
+        title: title.trim(),
+        statement: statement.trim(),
+        category,
+        customerSegment: customerSegment.trim() || "Unspecified segment",
+        rationale: rationale.trim(),
+        importance,
+      });
+      setConfirmed(true);
+      window.setTimeout(() => onClose(), 1600);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error && error.message
+          ? error.message
+          : "Could not save the hypothesis. Try again.",
+      );
+    } finally {
+      setPending(false);
+    }
   }
 
   if (!open) return null;
@@ -75,7 +90,7 @@ export function NewHypothesisDialog({
       onClose={onClose}
       eyebrow="Stage 03 / Validate"
       title="New Hypothesis"
-      description="Document an assumption that must be tested. Presentational only — nothing is saved or sent anywhere."
+      description="Document an assumption that must be tested. It will be saved to this idea's validation workspace."
       footer={
         <>
           <button
@@ -88,9 +103,10 @@ export function NewHypothesisDialog({
           <button
             form="new-hypothesis-form"
             type="submit"
+            disabled={pending}
             className="rounded-control border border-line px-3 py-1.5 text-[12px] text-fg transition-colors hover:border-accent hover:text-accent"
           >
-            {confirmed ? "Added (local)" : "Add hypothesis"}
+            {pending ? "Saving…" : confirmed ? "Added" : "Add hypothesis"}
           </button>
         </>
       }
@@ -98,10 +114,11 @@ export function NewHypothesisDialog({
       <form id="new-hypothesis-form" onSubmit={handleSubmit} noValidate className="space-y-4">
         {confirmed ? (
           <ConfirmNotice>
-            Hypothesis added to this preview with the status “Unexamined” — local state only,
-            nothing was evaluated or saved remotely.
+            Hypothesis added with the status “Unexamined” — nothing was evaluated
+            automatically.
           </ConfirmNotice>
         ) : null}
+        {submitError ? <ErrorNotice>{submitError}</ErrorNotice> : null}
 
         <Field label="Title" htmlFor="vl-hypothesis-title" error={errors.title}>
           <TextInput

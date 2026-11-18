@@ -12,6 +12,7 @@ import {
 
 import {
   ConfirmNotice,
+  ErrorNotice,
   Field,
   PresentationalDialog,
   Select,
@@ -29,7 +30,7 @@ export function AddFindingDialog({
   open = true,
 }: {
   onClose: () => void;
-  onSubmit?: (draft: EvidenceDraft) => void;
+  onSubmit?: (draft: EvidenceDraft) => void | Promise<void>;
   experiments?: Experiment[];
   hypotheses?: Hypothesis[];
   open?: boolean;
@@ -44,6 +45,8 @@ export function AddFindingDialog({
   const [limitations, setLimitations] = useState("");
   const [errors, setErrors] = useState<Errors>({});
   const [confirmed, setConfirmed] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const titleRef = useRef<HTMLInputElement>(null);
 
   function validate(): Errors {
@@ -56,7 +59,7 @@ export function AddFindingDialog({
     return next;
   }
 
-  function handleSubmit(event: React.FormEvent) {
+  async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const found = validate();
     setErrors(found);
@@ -64,18 +67,32 @@ export function AddFindingDialog({
       if (found.title) titleRef.current?.focus();
       return;
     }
-    onSubmit?.({
-      title: title.trim(),
-      relatedExperimentId: relatedExperimentId || (experiments[0]?.id ?? ""),
-      relatedHypothesisId: relatedHypothesisId || (hypotheses[0]?.id ?? ""),
-      type,
-      sourceLabel: sourceLabel.trim() || "Manual entry",
-      observation: observation.trim(),
-      interpretation: interpretation.trim() || "Not interpreted yet.",
-      limitations: limitations.trim() || "Not stated — consider bias and sample limits.",
-    });
-    setConfirmed(true);
-    window.setTimeout(() => onClose(), 1600);
+    setSubmitError(null);
+    setPending(true);
+    try {
+      await onSubmit?.({
+        title: title.trim(),
+        relatedExperimentId: relatedExperimentId || (experiments[0]?.id ?? ""),
+        relatedHypothesisId: relatedHypothesisId || (hypotheses[0]?.id ?? ""),
+        type,
+        sourceLabel: sourceLabel.trim() || "Manual entry",
+        observation: observation.trim(),
+        interpretation: interpretation.trim() || "Not interpreted yet.",
+        limitations:
+          limitations.trim() ||
+          "Not stated — consider bias and sample limits.",
+      });
+      setConfirmed(true);
+      window.setTimeout(() => onClose(), 1600);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error && error.message
+          ? error.message
+          : "Could not save the finding. Try again.",
+      );
+    } finally {
+      setPending(false);
+    }
   }
 
   if (!open) return null;
@@ -86,7 +103,7 @@ export function AddFindingDialog({
       onClose={onClose}
       eyebrow="Stage 03 / Validate"
       title="Add Finding"
-      description="Record evidence with the observation kept separate from your interpretation. Presentational only — nothing is stored."
+      description="Record evidence with the observation kept separate from your interpretation. It will be saved to this idea's validation workspace."
       footer={
         <>
           <button
@@ -99,9 +116,10 @@ export function AddFindingDialog({
           <button
             form="add-finding-form"
             type="submit"
+            disabled={pending}
             className="rounded-control border border-line px-3 py-1.5 text-[12px] text-fg transition-colors hover:border-accent hover:text-accent"
           >
-            {confirmed ? "Added (local)" : "Add finding"}
+            {pending ? "Saving…" : confirmed ? "Added" : "Add finding"}
           </button>
         </>
       }
@@ -109,10 +127,11 @@ export function AddFindingDialog({
       <form id="add-finding-form" onSubmit={handleSubmit} noValidate className="space-y-4">
         {confirmed ? (
           <ConfirmNotice>
-            Finding added to this preview — local state only. No analysis was run and no
-            conclusion was derived automatically.
+            Finding recorded — no analysis was run and no conclusion was derived
+            automatically.
           </ConfirmNotice>
         ) : null}
+        {submitError ? <ErrorNotice>{submitError}</ErrorNotice> : null}
 
         <Field label="Title" htmlFor="vl-finding-title" error={errors.title}>
           <TextInput

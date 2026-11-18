@@ -39,7 +39,13 @@ export const VALIDATION_IDEAS = [
   },
 ] as const;
 
-export type ValidationIdea = (typeof VALIDATION_IDEAS)[number];
+export type ValidationIdea = {
+  id: string;
+  name: string;
+  ref: string;
+  assumption: string;
+  nextTasks: string[];
+};
 
 export const HYPOTHESIS_CATEGORIES = [
   "Customer Problem",
@@ -66,7 +72,7 @@ export type HypothesisStatus = (typeof HYPOTHESIS_STATUSES)[number];
 
 export type Hypothesis = {
   id: string;
-  ideaId: (typeof VALIDATION_IDEAS)[number]["id"];
+  ideaId: string;
   title: string;
   statement: string;
   customerSegment: string;
@@ -103,7 +109,7 @@ export type ExperimentStatus = (typeof EXPERIMENT_STATUSES)[number];
 
 export type Experiment = {
   id: string;
-  ideaId: (typeof VALIDATION_IDEAS)[number]["id"];
+  ideaId: string;
   title: string;
   relatedHypothesisId: string;
   objective: string;
@@ -131,7 +137,7 @@ export type EvidenceType = (typeof EVIDENCE_TYPES)[number];
 
 export type EvidenceItem = {
   id: string;
-  ideaId: (typeof VALIDATION_IDEAS)[number]["id"];
+  ideaId: string;
   title: string;
   relatedExperimentId: string;
   relatedHypothesisId: string;
@@ -155,8 +161,15 @@ export type ValidationSection = (typeof VALIDATION_SECTIONS)[number];
 
 export type NextStep = "design experiment" | "interview" | "collect feedback" | "review evidence";
 
+export const NEXT_STEPS: NextStep[] = [
+  "design experiment",
+  "interview",
+  "collect feedback",
+  "review evidence",
+];
+
 /* ------------------------------------------------------------ form drafts ---
- * Presentational payloads only: nothing is persisted or sent anywhere.       
+ * Payloads accepted by the dialogs and translated into API DTOs.
  */
 
 export type HypothesisDraft = {

@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 
-import ValidationLabPage from "@/components/validation-lab/validation-lab-page";
+import { ValidationLabRoute } from "@/components/validation-lab/validation-lab-page";
+import { ValidationSkeleton } from "@/components/validation-lab/badges";
 
 export const metadata: Metadata = {
   title: "Validation Lab — Foundry",
@@ -9,6 +11,21 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+// The page reads `?product=`/`?ideaId=` via `useSearchParams` and loads its data
+// on the client, so the segment drops to its Suspense fallback during
+// prerendering. Opt out, like the other client-fetch driven pages.
+export const instant = false;
+
 export default function Page() {
-  return <ValidationLabPage />;
+  return (
+    <Suspense
+      fallback={
+        <div className="flex flex-col gap-4">
+          <ValidationSkeleton />
+        </div>
+      }
+    >
+      <ValidationLabRoute />
+    </Suspense>
+  );
 }

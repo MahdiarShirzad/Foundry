@@ -179,3 +179,7 @@ export function PresentationalDialog(props: React.ComponentProps<typeof SharedDi
 export function ConfirmNotice({ children }: { children: ReactNode }) {
   return <InlineNotice tone="info">{children}</InlineNotice>;
 }
+
+export function ErrorNotice({ children }: { children: ReactNode }) {
+  return <InlineNotice tone="danger">{children}</InlineNotice>;
+}

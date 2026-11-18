@@ -6,7 +6,6 @@ import { AnimatePresence } from "motion/react";
 import { Button, PlusIcon } from "@/components/ui/button";
 import { HeaderSelect, ModuleHeader } from "@/components/ui/primitives";
 
-import { DEMO_VALIDATION_IDEAS } from "@/lib/validation-lab/demo";
 import type {
   EvidenceDraft,
   Experiment,
@@ -23,7 +22,7 @@ import { NewHypothesisDialog } from "./dialogs/new-hypothesis-dialog";
 export function ValidationLabHeader({
   idea,
   onChangeIdea,
-  ideas = DEMO_VALIDATION_IDEAS,
+  ideas = [],
   hypotheses = [],
   experiments = [],
   findings = [],

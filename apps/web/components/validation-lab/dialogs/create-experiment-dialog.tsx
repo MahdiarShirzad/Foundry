@@ -11,6 +11,7 @@ import {
 
 import {
   ConfirmNotice,
+  ErrorNotice,
   Field,
   PresentationalDialog,
   Select,
@@ -27,7 +28,7 @@ export function CreateExperimentDialog({
   open = true,
 }: {
   onClose: () => void;
-  onSubmit?: (draft: ExperimentDraft) => void;
+  onSubmit?: (draft: ExperimentDraft) => void | Promise<void>;
   hypotheses?: Hypothesis[];
   open?: boolean;
 }) {
@@ -40,6 +41,8 @@ export function CreateExperimentDialog({
   const [startDate, setStartDate] = useState("");
   const [errors, setErrors] = useState<Errors>({});
   const [confirmed, setConfirmed] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const titleRef = useRef<HTMLInputElement>(null);
 
   function validate(): Errors {
@@ -52,7 +55,7 @@ export function CreateExperimentDialog({
     return next;
   }
 
-  function handleSubmit(event: React.FormEvent) {
+  async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const found = validate();
     setErrors(found);
@@ -60,17 +63,29 @@ export function CreateExperimentDialog({
       if (found.title) titleRef.current?.focus();
       return;
     }
-    onSubmit?.({
-      title: title.trim(),
-      relatedHypothesisId: relatedHypothesisId || (hypotheses[0]?.id ?? ""),
-      method,
-      objective: objective.trim(),
-      successCriteria: successCriteria.trim(),
-      targetAudience: targetAudience.trim() || "Not specified yet",
-      startDate: startDate || "Not scheduled",
-    });
-    setConfirmed(true);
-    window.setTimeout(() => onClose(), 1600);
+    setSubmitError(null);
+    setPending(true);
+    try {
+      await onSubmit?.({
+        title: title.trim(),
+        relatedHypothesisId: relatedHypothesisId || (hypotheses[0]?.id ?? ""),
+        method,
+        objective: objective.trim(),
+        successCriteria: successCriteria.trim(),
+        targetAudience: targetAudience.trim() || "Not specified yet",
+        startDate: startDate || "Not scheduled",
+      });
+      setConfirmed(true);
+      window.setTimeout(() => onClose(), 1600);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error && error.message
+          ? error.message
+          : "Could not create the experiment. Try again.",
+      );
+    } finally {
+      setPending(false);
+    }
   }
 
   if (!open) return null;
@@ -94,9 +109,10 @@ export function CreateExperimentDialog({
           <button
             form="create-experiment-form"
             type="submit"
+            disabled={pending}
             className="rounded-control border border-line px-3 py-1.5 text-[12px] text-fg transition-colors hover:border-accent hover:text-accent"
           >
-            {confirmed ? "Created (local)" : "Create experiment"}
+            {pending ? "Saving…" : confirmed ? "Created" : "Create experiment"}
           </button>
         </>
       }
@@ -104,10 +120,11 @@ export function CreateExperimentDialog({
       <form id="create-experiment-form" onSubmit={handleSubmit} noValidate className="space-y-4">
         {confirmed ? (
           <ConfirmNotice>
-            Experiment added to this preview with the status “Draft” — it has been designed, not
-            run. Local state only.
+            Experiment added with the status “Draft” — it has been designed, not
+            run.
           </ConfirmNotice>
         ) : null}
+        {submitError ? <ErrorNotice>{submitError}</ErrorNotice> : null}
 
         <Field label="Experiment title" htmlFor="vl-experiment-title" error={errors.title}>
           <TextInput

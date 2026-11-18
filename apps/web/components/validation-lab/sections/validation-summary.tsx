@@ -2,15 +2,15 @@
 
 import { useState } from "react";
 
-import type {
-  EvidenceItem,
-  Experiment,
-  Hypothesis,
-  HypothesisStatus,
-  NextStep,
-  ValidationIdea,
+import {
+  NEXT_STEPS,
+  type EvidenceItem,
+  type Experiment,
+  type Hypothesis,
+  type HypothesisStatus,
+  type NextStep,
+  type ValidationIdea,
 } from "@/lib/validation-lab/types";
-import { DEMO_NEXT_STEPS } from "@/lib/validation-lab/demo";
 
 import { ValidationStatusBadge } from "../badges";
 
@@ -66,7 +66,7 @@ export function ValidationSummary({
   experiments: Experiment[];
   findings: EvidenceItem[];
 }) {
-  const [nextStep, setNextStep] = useState<NextStep>(DEMO_NEXT_STEPS[0]);
+  const [nextStep, setNextStep] = useState<NextStep>(NEXT_STEPS[0]);
 
   function hypothesisOf(id: string) {
     return hypotheses.find((h) => h.id === id) ?? null;
@@ -239,7 +239,7 @@ export function ValidationSummary({
                 onChange={(event) => setNextStep(event.target.value as NextStep)}
                 className="mt-2 w-full border border-line bg-panel px-2 py-2 text-[16px] text-fg outline-none transition-colors hover:border-line-2 focus:border-accent sm:w-auto sm:text-[12.5px]"
               >
-                {DEMO_NEXT_STEPS.map((step) => (
+                {NEXT_STEPS.map((step) => (
                   <option key={step} value={step}>
                     {step}
                   </option>

@@ -85,9 +85,19 @@ export function HypothesisWorkspace({
   const selected =
     hypotheses.find((h) => h.id === selectedId) ?? filtered[0] ?? hypotheses[0] ?? null;
   const relatedExperiments = selected
-    ? experiments.filter((e) => selected.relatedExperimentIds.includes(e.id))
+    ? experiments.filter(
+        (e) =>
+          e.relatedHypothesisId === selected.id ||
+          selected.relatedExperimentIds.includes(e.id),
+      )
     : [];
-  const relatedFindings = selected ? findings.filter((f) => selected.linkedFindings.includes(f.id)) : [];
+  const relatedFindings = selected
+    ? findings.filter(
+        (f) =>
+          f.relatedHypothesisId === selected.id ||
+          selected.linkedFindings.includes(f.id),
+      )
+    : [];
   const filtersActive =
     query !== "" || status !== "all" || category !== "all" || sort !== "importance";
 
