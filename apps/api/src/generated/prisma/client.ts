@@ -199,3 +199,23 @@ export type FeatureRequest = Prisma.FeatureRequestModel
  * 
  */
 export type ProductAreaDefinition = Prisma.ProductAreaDefinitionModel
+/**
+ * Model WeekSample
+ * 
+ */
+export type WeekSample = Prisma.WeekSampleModel
+/**
+ * Model MetricDefinition
+ * 
+ */
+export type MetricDefinition = Prisma.MetricDefinitionModel
+/**
+ * Model Observation
+ * 
+ */
+export type Observation = Prisma.ObservationModel
+/**
+ * Model AnalyticsReport
+ * 
+ */
+export type AnalyticsReport = Prisma.AnalyticsReportModel

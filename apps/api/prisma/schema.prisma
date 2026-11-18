@@ -108,21 +108,25 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  workspace       Workspace               @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  ideas           Idea[]
-  mvpProjects     MVPProject[]
-  initiatives     Initiative[]
-  releases        Release[]
-  milestones      Milestone[]
-  planningNotes   PlanningNote[]
-  launchTasks     LaunchTask[]
-  launchAssets    LaunchAsset[]
-  channels        Channel[]
-  checklistItems  ChecklistItem[]
-  feedbackItems   FeedbackItem[]
-  themes          Theme[]
-  featureRequests FeatureRequest[]
-  productAreas    ProductAreaDefinition[]
+  workspace         Workspace               @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  ideas             Idea[]
+  mvpProjects       MVPProject[]
+  initiatives       Initiative[]
+  releases          Release[]
+  milestones        Milestone[]
+  planningNotes     PlanningNote[]
+  launchTasks       LaunchTask[]
+  launchAssets      LaunchAsset[]
+  channels          Channel[]
+  checklistItems    ChecklistItem[]
+  feedbackItems     FeedbackItem[]
+  themes            Theme[]
+  featureRequests   FeatureRequest[]
+  productAreas      ProductAreaDefinition[]
+  weekSamples       WeekSample[]
+  metricDefinitions MetricDefinition[]
+  observations      Observation[]
+  analyticsReports  AnalyticsReport[]
 
   @@unique([workspaceId, slug])
   @@index([workspaceId])
@@ -638,6 +642,82 @@ model ProductAreaDefinition {
   summary     String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+// ─────────────────────────────────────────
+// Stage 08 — Founder Analytics
+// ─────────────────────────────────────────
+
+model WeekSample {
+  id         String   @id @default(uuid())
+  productId  String
+  start      DateTime
+  active     Int      @default(0)
+  newUsers   Int      @default(0)
+  sessions   Int      @default(0)
+  avgMinutes Float    @default(0)
+  perUser    Float    @default(0)
+  returnRate Float    @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model MetricDefinition {
+  id         String   @id @default(uuid())
+  productId  String
+  name       String
+  definition String?
+  category   String   @default("Activity")
+  unit       String?
+  note       String?
+  seriesKey  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model Observation {
+  id          String   @id @default(uuid())
+  productId   String
+  title       String
+  description String?
+  metricId    String?
+  type        String   @default("Pattern")
+  nextStep    String?
+  sample      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model AnalyticsReport {
+  id          String    @id @default(uuid())
+  productId   String
+  title       String
+  description String?
+  category    String    @default("Growth")
+  period      String?
+  updated     DateTime?
+  paragraphs  String[]  @default([])
+  values      Json?
+  chart       Json?
+  bars        Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 

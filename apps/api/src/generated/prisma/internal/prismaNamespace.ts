@@ -428,7 +428,11 @@ export const ModelName = {
   FeedbackItem: 'FeedbackItem',
   Theme: 'Theme',
   FeatureRequest: 'FeatureRequest',
-  ProductAreaDefinition: 'ProductAreaDefinition'
+  ProductAreaDefinition: 'ProductAreaDefinition',
+  WeekSample: 'WeekSample',
+  MetricDefinition: 'MetricDefinition',
+  Observation: 'Observation',
+  AnalyticsReport: 'AnalyticsReport'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -444,7 +448,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "emailVerificationCode" | "passwordResetToken" | "workspace" | "workspaceMember" | "product" | "idea" | "ideaNote" | "marketIdea" | "competitor" | "segment" | "opportunity" | "researchNote" | "hypothesis" | "experiment" | "evidenceItem" | "mVPProject" | "feature" | "scopeItem" | "initiative" | "release" | "milestone" | "planningNote" | "launchTask" | "launchAsset" | "channel" | "checklistItem" | "feedbackItem" | "theme" | "featureRequest" | "productAreaDefinition"
+    modelProps: "user" | "session" | "emailVerificationCode" | "passwordResetToken" | "workspace" | "workspaceMember" | "product" | "idea" | "ideaNote" | "marketIdea" | "competitor" | "segment" | "opportunity" | "researchNote" | "hypothesis" | "experiment" | "evidenceItem" | "mVPProject" | "feature" | "scopeItem" | "initiative" | "release" | "milestone" | "planningNote" | "launchTask" | "launchAsset" | "channel" | "checklistItem" | "feedbackItem" | "theme" | "featureRequest" | "productAreaDefinition" | "weekSample" | "metricDefinition" | "observation" | "analyticsReport"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2816,6 +2820,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    WeekSample: {
+      payload: Prisma.$WeekSamplePayload<ExtArgs>
+      fields: Prisma.WeekSampleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WeekSampleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeekSamplePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WeekSampleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeekSamplePayload>
+        }
+        findFirst: {
+          args: Prisma.WeekSampleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeekSamplePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WeekSampleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeekSamplePayload>
+        }
+        findMany: {
+          args: Prisma.WeekSampleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeekSamplePayload>[]
+        }
+        create: {
+          args: Prisma.WeekSampleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeekSamplePayload>
+        }
+        createMany: {
+          args: Prisma.WeekSampleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WeekSampleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeekSamplePayload>[]
+        }
+        delete: {
+          args: Prisma.WeekSampleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeekSamplePayload>
+        }
+        update: {
+          args: Prisma.WeekSampleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeekSamplePayload>
+        }
+        deleteMany: {
+          args: Prisma.WeekSampleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WeekSampleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WeekSampleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeekSamplePayload>[]
+        }
+        upsert: {
+          args: Prisma.WeekSampleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeekSamplePayload>
+        }
+        aggregate: {
+          args: Prisma.WeekSampleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWeekSample>
+        }
+        groupBy: {
+          args: Prisma.WeekSampleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WeekSampleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WeekSampleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WeekSampleCountAggregateOutputType> | number
+        }
+      }
+    }
+    MetricDefinition: {
+      payload: Prisma.$MetricDefinitionPayload<ExtArgs>
+      fields: Prisma.MetricDefinitionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MetricDefinitionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MetricDefinitionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MetricDefinitionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MetricDefinitionPayload>
+        }
+        findFirst: {
+          args: Prisma.MetricDefinitionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MetricDefinitionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MetricDefinitionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MetricDefinitionPayload>
+        }
+        findMany: {
+          args: Prisma.MetricDefinitionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MetricDefinitionPayload>[]
+        }
+        create: {
+          args: Prisma.MetricDefinitionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MetricDefinitionPayload>
+        }
+        createMany: {
+          args: Prisma.MetricDefinitionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MetricDefinitionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MetricDefinitionPayload>[]
+        }
+        delete: {
+          args: Prisma.MetricDefinitionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MetricDefinitionPayload>
+        }
+        update: {
+          args: Prisma.MetricDefinitionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MetricDefinitionPayload>
+        }
+        deleteMany: {
+          args: Prisma.MetricDefinitionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MetricDefinitionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MetricDefinitionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MetricDefinitionPayload>[]
+        }
+        upsert: {
+          args: Prisma.MetricDefinitionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MetricDefinitionPayload>
+        }
+        aggregate: {
+          args: Prisma.MetricDefinitionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMetricDefinition>
+        }
+        groupBy: {
+          args: Prisma.MetricDefinitionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MetricDefinitionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MetricDefinitionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MetricDefinitionCountAggregateOutputType> | number
+        }
+      }
+    }
+    Observation: {
+      payload: Prisma.$ObservationPayload<ExtArgs>
+      fields: Prisma.ObservationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ObservationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ObservationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservationPayload>
+        }
+        findFirst: {
+          args: Prisma.ObservationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ObservationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservationPayload>
+        }
+        findMany: {
+          args: Prisma.ObservationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservationPayload>[]
+        }
+        create: {
+          args: Prisma.ObservationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservationPayload>
+        }
+        createMany: {
+          args: Prisma.ObservationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ObservationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservationPayload>[]
+        }
+        delete: {
+          args: Prisma.ObservationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservationPayload>
+        }
+        update: {
+          args: Prisma.ObservationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservationPayload>
+        }
+        deleteMany: {
+          args: Prisma.ObservationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ObservationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ObservationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservationPayload>[]
+        }
+        upsert: {
+          args: Prisma.ObservationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ObservationPayload>
+        }
+        aggregate: {
+          args: Prisma.ObservationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateObservation>
+        }
+        groupBy: {
+          args: Prisma.ObservationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ObservationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ObservationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ObservationCountAggregateOutputType> | number
+        }
+      }
+    }
+    AnalyticsReport: {
+      payload: Prisma.$AnalyticsReportPayload<ExtArgs>
+      fields: Prisma.AnalyticsReportFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AnalyticsReportFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsReportPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AnalyticsReportFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsReportPayload>
+        }
+        findFirst: {
+          args: Prisma.AnalyticsReportFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsReportPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AnalyticsReportFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsReportPayload>
+        }
+        findMany: {
+          args: Prisma.AnalyticsReportFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsReportPayload>[]
+        }
+        create: {
+          args: Prisma.AnalyticsReportCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsReportPayload>
+        }
+        createMany: {
+          args: Prisma.AnalyticsReportCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AnalyticsReportCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsReportPayload>[]
+        }
+        delete: {
+          args: Prisma.AnalyticsReportDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsReportPayload>
+        }
+        update: {
+          args: Prisma.AnalyticsReportUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsReportPayload>
+        }
+        deleteMany: {
+          args: Prisma.AnalyticsReportDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AnalyticsReportUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AnalyticsReportUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsReportPayload>[]
+        }
+        upsert: {
+          args: Prisma.AnalyticsReportUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AnalyticsReportPayload>
+        }
+        aggregate: {
+          args: Prisma.AnalyticsReportAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAnalyticsReport>
+        }
+        groupBy: {
+          args: Prisma.AnalyticsReportGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AnalyticsReportGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AnalyticsReportCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AnalyticsReportCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3375,6 +3675,74 @@ export const ProductAreaDefinitionScalarFieldEnum = {
 export type ProductAreaDefinitionScalarFieldEnum = (typeof ProductAreaDefinitionScalarFieldEnum)[keyof typeof ProductAreaDefinitionScalarFieldEnum]
 
 
+export const WeekSampleScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  start: 'start',
+  active: 'active',
+  newUsers: 'newUsers',
+  sessions: 'sessions',
+  avgMinutes: 'avgMinutes',
+  perUser: 'perUser',
+  returnRate: 'returnRate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WeekSampleScalarFieldEnum = (typeof WeekSampleScalarFieldEnum)[keyof typeof WeekSampleScalarFieldEnum]
+
+
+export const MetricDefinitionScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  name: 'name',
+  definition: 'definition',
+  category: 'category',
+  unit: 'unit',
+  note: 'note',
+  seriesKey: 'seriesKey',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MetricDefinitionScalarFieldEnum = (typeof MetricDefinitionScalarFieldEnum)[keyof typeof MetricDefinitionScalarFieldEnum]
+
+
+export const ObservationScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  title: 'title',
+  description: 'description',
+  metricId: 'metricId',
+  type: 'type',
+  nextStep: 'nextStep',
+  sample: 'sample',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ObservationScalarFieldEnum = (typeof ObservationScalarFieldEnum)[keyof typeof ObservationScalarFieldEnum]
+
+
+export const AnalyticsReportScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  title: 'title',
+  description: 'description',
+  category: 'category',
+  period: 'period',
+  updated: 'updated',
+  paragraphs: 'paragraphs',
+  values: 'values',
+  chart: 'chart',
+  bars: 'bars',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AnalyticsReportScalarFieldEnum = (typeof AnalyticsReportScalarFieldEnum)[keyof typeof AnalyticsReportScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3582,6 +3950,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -3765,6 +4147,10 @@ export type GlobalOmitConfig = {
   theme?: Prisma.ThemeOmit
   featureRequest?: Prisma.FeatureRequestOmit
   productAreaDefinition?: Prisma.ProductAreaDefinitionOmit
+  weekSample?: Prisma.WeekSampleOmit
+  metricDefinition?: Prisma.MetricDefinitionOmit
+  observation?: Prisma.ObservationOmit
+  analyticsReport?: Prisma.AnalyticsReportOmit
 }
 
 /* Types for Logging */

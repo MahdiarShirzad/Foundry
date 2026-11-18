@@ -82,7 +82,11 @@ export const ModelName = {
   FeedbackItem: 'FeedbackItem',
   Theme: 'Theme',
   FeatureRequest: 'FeatureRequest',
-  ProductAreaDefinition: 'ProductAreaDefinition'
+  ProductAreaDefinition: 'ProductAreaDefinition',
+  WeekSample: 'WeekSample',
+  MetricDefinition: 'MetricDefinition',
+  Observation: 'Observation',
+  AnalyticsReport: 'AnalyticsReport'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -619,6 +623,74 @@ export const ProductAreaDefinitionScalarFieldEnum = {
 } as const
 
 export type ProductAreaDefinitionScalarFieldEnum = (typeof ProductAreaDefinitionScalarFieldEnum)[keyof typeof ProductAreaDefinitionScalarFieldEnum]
+
+
+export const WeekSampleScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  start: 'start',
+  active: 'active',
+  newUsers: 'newUsers',
+  sessions: 'sessions',
+  avgMinutes: 'avgMinutes',
+  perUser: 'perUser',
+  returnRate: 'returnRate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WeekSampleScalarFieldEnum = (typeof WeekSampleScalarFieldEnum)[keyof typeof WeekSampleScalarFieldEnum]
+
+
+export const MetricDefinitionScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  name: 'name',
+  definition: 'definition',
+  category: 'category',
+  unit: 'unit',
+  note: 'note',
+  seriesKey: 'seriesKey',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MetricDefinitionScalarFieldEnum = (typeof MetricDefinitionScalarFieldEnum)[keyof typeof MetricDefinitionScalarFieldEnum]
+
+
+export const ObservationScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  title: 'title',
+  description: 'description',
+  metricId: 'metricId',
+  type: 'type',
+  nextStep: 'nextStep',
+  sample: 'sample',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ObservationScalarFieldEnum = (typeof ObservationScalarFieldEnum)[keyof typeof ObservationScalarFieldEnum]
+
+
+export const AnalyticsReportScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  title: 'title',
+  description: 'description',
+  category: 'category',
+  period: 'period',
+  updated: 'updated',
+  paragraphs: 'paragraphs',
+  values: 'values',
+  chart: 'chart',
+  bars: 'bars',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AnalyticsReportScalarFieldEnum = (typeof AnalyticsReportScalarFieldEnum)[keyof typeof AnalyticsReportScalarFieldEnum]
 
 
 export const SortOrder = {
