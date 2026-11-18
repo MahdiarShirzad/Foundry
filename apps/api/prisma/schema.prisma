@@ -108,9 +108,13 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  workspace   Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  ideas       Idea[]
-  mvpProjects MVPProject[]
+  workspace     Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  ideas         Idea[]
+  mvpProjects   MVPProject[]
+  initiatives   Initiative[]
+  releases      Release[]
+  milestones    Milestone[]
+  planningNotes PlanningNote[]
 
   @@unique([workspaceId, slug])
   @@index([workspaceId])
@@ -402,6 +406,83 @@ model ScopeItem {
   project MVPProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([projectId])
+}
+
+// ─────────────────────────────────────────
+// Stage 05 — Product Roadmap
+// ─────────────────────────────────────────
+
+model Initiative {
+  id                    String   @id @default(uuid())
+  productId             String
+  name                  String
+  description           String?
+  objective             String?
+  userProblem           String?
+  priority              String   @default("Medium")
+  status                String   @default("Proposed")
+  period                String   @default("Next")
+  relatedFeatures       String[] @default([])
+  dependencies          String[] @default([])
+  associatedMilestoneId String?
+  rationale             String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model Release {
+  id            String    @id @default(uuid())
+  productId     String
+  name          String
+  version       String?
+  purpose       String?
+  plannedDate   DateTime?
+  initiativeIds String[]  @default([])
+  status        String    @default("Planned")
+  notesPreview  String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model Milestone {
+  id            String    @id @default(uuid())
+  productId     String
+  name          String
+  description   String?
+  targetDate    DateTime?
+  initiativeIds String[]  @default([])
+  status        String    @default("Planned")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model PlanningNote {
+  id            String    @id @default(uuid())
+  productId     String
+  title         String
+  summary       String?
+  relatedItemId String?
+  period        String    @default("Next")
+  date          DateTime?
+  category      String    @default("Strategic Decision")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
 }
 
 // ─────────────────────────────────────────

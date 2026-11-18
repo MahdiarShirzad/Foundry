@@ -70,7 +70,11 @@ export const ModelName = {
   EvidenceItem: 'EvidenceItem',
   MVPProject: 'MVPProject',
   Feature: 'Feature',
-  ScopeItem: 'ScopeItem'
+  ScopeItem: 'ScopeItem',
+  Initiative: 'Initiative',
+  Release: 'Release',
+  Milestone: 'Milestone',
+  PlanningNote: 'PlanningNote'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -403,6 +407,75 @@ export const ScopeItemScalarFieldEnum = {
 } as const
 
 export type ScopeItemScalarFieldEnum = (typeof ScopeItemScalarFieldEnum)[keyof typeof ScopeItemScalarFieldEnum]
+
+
+export const InitiativeScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  name: 'name',
+  description: 'description',
+  objective: 'objective',
+  userProblem: 'userProblem',
+  priority: 'priority',
+  status: 'status',
+  period: 'period',
+  relatedFeatures: 'relatedFeatures',
+  dependencies: 'dependencies',
+  associatedMilestoneId: 'associatedMilestoneId',
+  rationale: 'rationale',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InitiativeScalarFieldEnum = (typeof InitiativeScalarFieldEnum)[keyof typeof InitiativeScalarFieldEnum]
+
+
+export const ReleaseScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  name: 'name',
+  version: 'version',
+  purpose: 'purpose',
+  plannedDate: 'plannedDate',
+  initiativeIds: 'initiativeIds',
+  status: 'status',
+  notesPreview: 'notesPreview',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReleaseScalarFieldEnum = (typeof ReleaseScalarFieldEnum)[keyof typeof ReleaseScalarFieldEnum]
+
+
+export const MilestoneScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  name: 'name',
+  description: 'description',
+  targetDate: 'targetDate',
+  initiativeIds: 'initiativeIds',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MilestoneScalarFieldEnum = (typeof MilestoneScalarFieldEnum)[keyof typeof MilestoneScalarFieldEnum]
+
+
+export const PlanningNoteScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  title: 'title',
+  summary: 'summary',
+  relatedItemId: 'relatedItemId',
+  period: 'period',
+  date: 'date',
+  category: 'category',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PlanningNoteScalarFieldEnum = (typeof PlanningNoteScalarFieldEnum)[keyof typeof PlanningNoteScalarFieldEnum]
 
 
 export const SortOrder = {

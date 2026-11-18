@@ -139,3 +139,23 @@ export type Feature = Prisma.FeatureModel
  * 
  */
 export type ScopeItem = Prisma.ScopeItemModel
+/**
+ * Model Initiative
+ * 
+ */
+export type Initiative = Prisma.InitiativeModel
+/**
+ * Model Release
+ * 
+ */
+export type Release = Prisma.ReleaseModel
+/**
+ * Model Milestone
+ * 
+ */
+export type Milestone = Prisma.MilestoneModel
+/**
+ * Model PlanningNote
+ * 
+ */
+export type PlanningNote = Prisma.PlanningNoteModel
