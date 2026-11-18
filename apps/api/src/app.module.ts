@@ -19,6 +19,7 @@ import { MvpModule } from './mvp/mvp.module';
 import { RoadmapModule } from './roadmap/roadmap.module';
 import { LaunchModule } from './launch/launch.module';
 import { FeedbackModule } from './feedback/feedback.module';
+import { AnalyticsModule } from './analytics/analytics.module';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -44,6 +45,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     RoadmapModule,
     LaunchModule,
     FeedbackModule,
+    AnalyticsModule,
   ],
   controllers: [AppController],
   providers: [
