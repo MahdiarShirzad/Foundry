@@ -1,31 +1,32 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import { DevToolsPopover, StatePreview } from "@/components/ui/primitives";
 
+import { deriveProductAreas } from "@/lib/feedback/api";
+import { feedbackStats } from "@/lib/feedback/derive";
 import {
-  DEMO_FEEDBACK,
-  DEMO_FEEDBACK_THEMES,
-  DEMO_FEATURE_REQUESTS,
-  feedbackStats,
-  getFeedbackForProduct,
-  getProductAreasForProduct,
-  getThemesForProduct,
-  getFeatureRequestsForProduct,
-} from "@/lib/feedback-hub/demo";
+  useCreateFeedback,
+  useFeatureRequests,
+  useFeedback,
+  useProductAreas,
+  useThemes,
+  useUpdateFeatureRequest,
+  useUpdateFeedback,
+  useUpdateTheme,
+} from "@/lib/feedback/hooks";
 import { useProducts } from "@/lib/product/use-products";
+import { useHydrated } from "@/lib/use-hydrated";
 import type {
   FeedbackDraft,
-  FeedbackItem,
   FeedbackPriority,
   FeedbackProduct,
   FeedbackSection,
   FeedbackStatus,
-  FeatureRequest,
   FeatureRequestStatus,
-  Theme,
   ThemeImportance,
 } from "@/lib/feedback-hub/types";
 
@@ -43,7 +44,6 @@ import {
 } from "./badges";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
-const TODAY = "2026-10-29";
 
 type Selection = {
   inbox: string | null;
@@ -90,38 +90,68 @@ function NoProducts() {
   );
 }
 
-export default function FeedbackHubPage() {
+export default function FeedbackHubPage({ productId }: { productId?: string }) {
   const reduce = useReducedMotion();
-  const nextId = useRef(1);
+  const hydrated = useHydrated();
   const { data, isPending } = useProducts();
 
-  const [productId, setProductId] = useState<string | null>(null);
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [section, setSection] = useState<FeedbackSection>("Inbox");
   const [view, setView] = useState<View>("populated");
   const [selection, setSelection] = useState<Selection>(EMPTY_SELECTION);
   const [toast, setToast] = useState<{ key: number; message: string } | null>(null);
 
-  const [items, setItems] = useState<FeedbackItem[]>(DEMO_FEEDBACK);
-  const [themes, setThemes] = useState<Theme[]>(DEMO_FEEDBACK_THEMES);
-  const [requests, setRequests] = useState<FeatureRequest[]>(DEMO_FEATURE_REQUESTS);
-
   // `getAllProducts` is untyped at the client wrapper, so narrow here.
   const products = useMemo(() => (data as Product[] | undefined) ?? [], [data]);
   const productOptions = useMemo(() => products.map(toFeedbackProduct), [products]);
-  const selected = products.find((entry) => entry.id === productId) ?? products[0] ?? null;
+  // The dashboard stores the active product in `?product=`; fall back to the
+  // first product the same way the other module workspaces do.
+  const activeId =
+    selectedProductId ??
+    productId ??
+    (hydrated ? products[0]?.id : undefined) ??
+    "";
+  const selected = products.find((entry) => entry.id === activeId) ?? null;
   const product = selected ? toFeedbackProduct(selected) : null;
-  const activeId = selected?.id ?? "";
 
-  const feedback = useMemo(() => getFeedbackForProduct(items, activeId), [items, activeId]);
-  const productThemes = useMemo(() => getThemesForProduct(themes, activeId), [themes, activeId]);
-  const productRequests = useMemo(
-    () => getFeatureRequestsForProduct(requests, activeId),
-    [requests, activeId],
-  );
+  const {
+    feedback,
+    loading: feedbackLoading,
+    error: feedbackError,
+    refetch: refetchFeedback,
+  } = useFeedback(activeId || undefined);
+  const {
+    themes,
+    loading: themesLoading,
+    error: themesError,
+    refetch: refetchThemes,
+  } = useThemes(activeId || undefined);
+  const {
+    requests,
+    loading: requestsLoading,
+    error: requestsError,
+    refetch: refetchRequests,
+  } = useFeatureRequests(activeId || undefined);
+  const {
+    areas: areaDefinitions,
+    loading: areasLoading,
+    error: areasError,
+    refetch: refetchAreas,
+  } = useProductAreas(activeId || undefined);
+
+  const createFeedback = useCreateFeedback(activeId || undefined);
+  const updateFeedback = useUpdateFeedback(activeId || undefined);
+  const updateTheme = useUpdateTheme(activeId || undefined);
+  const updateFeatureRequest = useUpdateFeatureRequest(activeId || undefined);
+
   const areas = useMemo(
-    () => getProductAreasForProduct(activeId, items, requests),
-    [activeId, items, requests],
+    () => deriveProductAreas(areaDefinitions, feedback, requests),
+    [areaDefinitions, feedback, requests],
   );
+
+  const dataLoading =
+    feedbackLoading || themesLoading || requestsLoading || areasLoading;
+  const dataError = feedbackError || themesError || requestsError || areasError;
 
   const stats = feedbackStats(feedback);
 
@@ -140,73 +170,124 @@ export default function FeedbackHubPage() {
   }
 
   function changeProduct(id: string) {
-    setProductId(id);
+    setSelectedProductId(id);
     setSelection(EMPTY_SELECTION);
     const next = products.find((entry) => entry.id === id);
-    notify(`Switched feedback workspace · ${next?.name ?? "product"} (local view)`);
+    notify(`Switched feedback workspace · ${next?.name ?? "product"}`);
+  }
+
+  function retry() {
+    if (feedbackError) void refetchFeedback();
+    if (themesError) void refetchThemes();
+    if (requestsError) void refetchRequests();
+    if (areasError) void refetchAreas();
   }
 
   /* ---------------------------------------------------- record mutations --- */
 
-  function patchItem(id: string, patch: Partial<FeedbackItem>) {
-    setItems((current) => current.map((f) => (f.id === id ? { ...f, ...patch } : f)));
+  async function handleStatusChange(id: string, status: FeedbackStatus) {
+    try {
+      await updateFeedback.update(id, { status });
+      notify(`Status changed to ${status}`);
+    } catch (error) {
+      console.error("Failed to update feedback status", error);
+    }
   }
 
-  function handleStatusChange(id: string, status: FeedbackStatus) {
-    patchItem(id, { status });
-    notify(`Status changed to ${status} · local state only`);
+  async function handlePriorityChange(id: string, priority: FeedbackPriority) {
+    try {
+      await updateFeedback.update(id, { priority });
+      notify(`Priority changed to ${priority}`);
+    } catch (error) {
+      console.error("Failed to update feedback priority", error);
+    }
   }
 
-  function handlePriorityChange(id: string, priority: FeedbackPriority) {
-    patchItem(id, { priority });
-    notify(`Priority changed to ${priority} · local state only`);
+  async function handleNotesChange(id: string, notes: string) {
+    try {
+      await updateFeedback.update(id, { internalNotes: notes });
+      notify("Internal note saved");
+    } catch (error) {
+      console.error("Failed to update feedback notes", error);
+    }
   }
 
-  function handleNotesChange(id: string, notes: string) {
-    patchItem(id, { internalNotes: notes });
-    notify("Internal note saved to this preview");
+  async function handleFollowUpChange(id: string, action: string) {
+    try {
+      await updateFeedback.update(id, { followUpAction: action });
+      notify(`Next action set · ${action}`);
+    } catch (error) {
+      console.error("Failed to update follow-up action", error);
+    }
   }
 
-  function handleFollowUpChange(id: string, action: string) {
-    patchItem(id, { followUpAction: action });
-    notify(`Next action set · ${action}`);
-  }
-
-  function handleAdd(draft: FeedbackDraft) {
-    const id = `fb-local-${nextId.current++}`;
-    const record: FeedbackItem = {
-      id,
-      productId: activeId,
-      title: draft.title,
-      excerpt:
-        draft.description.length > 140
-          ? `${draft.description.slice(0, 140).trimEnd()}…`
-          : draft.description,
-      description: draft.description,
-      category: draft.category,
-      source: draft.source,
-      date: TODAY,
-      priority: draft.priority,
-      status: "New",
-      productArea: draft.productArea || undefined,
-      internalNotes: "",
-      followUpAction: "No action yet",
-    };
-    setItems((current) => [record, ...current]);
-    setView("populated");
-    setSection("Inbox");
-    select("inbox", id);
-    notify("Feedback added to this preview · nothing was submitted anywhere");
+  async function handleAdd(draft: FeedbackDraft) {
+    try {
+      const record = await createFeedback.create({
+        title: draft.title,
+        excerpt:
+          draft.description.length > 140
+            ? `${draft.description.slice(0, 140).trimEnd()}…`
+            : draft.description,
+        description: draft.description,
+        category: draft.category,
+        source: draft.source,
+        date: new Date().toISOString().slice(0, 10),
+        priority: draft.priority,
+        status: "New",
+        productArea: draft.productArea || undefined,
+        internalNotes: "",
+        followUpAction: "No action yet",
+      });
+      setView("populated");
+      setSection("Inbox");
+      select("inbox", record.id);
+      notify("Feedback added");
+    } catch (error) {
+      console.error("Failed to create feedback", error);
+    }
   }
 
   /* --------------------------------------------------- theme / request --- */
 
-  function patchTheme(id: string, patch: Partial<Theme>) {
-    setThemes((current) => current.map((t) => (t.id === id ? { ...t, ...patch } : t)));
+  async function handleThemeImportance(id: string, importance: ThemeImportance) {
+    try {
+      await updateTheme.update(id, { importance });
+    } catch (error) {
+      console.error("Failed to update theme importance", error);
+    }
   }
 
-  function patchRequest(id: string, patch: Partial<FeatureRequest>) {
-    setRequests((current) => current.map((r) => (r.id === id ? { ...r, ...patch } : r)));
+  async function handleThemeReviewStatus(id: string, status: FeedbackStatus) {
+    try {
+      await updateTheme.update(id, { reviewStatus: status });
+    } catch (error) {
+      console.error("Failed to update theme review status", error);
+    }
+  }
+
+  async function handleThemeNotes(id: string, notes: string) {
+    try {
+      await updateTheme.update(id, { internalNotes: notes });
+    } catch (error) {
+      console.error("Failed to update theme notes", error);
+    }
+  }
+
+  async function handleRequestStatus(id: string, status: FeatureRequestStatus) {
+    try {
+      await updateFeatureRequest.update(id, { status });
+    } catch (error) {
+      console.error("Failed to update request status", error);
+    }
+  }
+
+  async function handleRequestPriority(id: string, priority: FeedbackPriority) {
+    try {
+      await updateFeatureRequest.update(id, { priority });
+    } catch (error) {
+      console.error("Failed to update request priority", error);
+    }
   }
 
   /* -------------------------------------------------------- cross-links --- */
@@ -227,7 +308,7 @@ export default function FeedbackHubPage() {
     select("request", id);
   }
 
-  if (isPending) {
+  if (!hydrated || isPending || (product && dataLoading)) {
     return (
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 6 }}
@@ -254,8 +335,8 @@ export default function FeedbackHubPage() {
   const counts: Record<FeedbackSection, number> = {
     Inbox: feedback.length,
     "Feedback Board": feedback.length,
-    "Themes & Insights": productThemes.length,
-    "Feature Requests": productRequests.length,
+    "Themes & Insights": themes.length,
+    "Feature Requests": requests.length,
     "Product Areas": areas.length,
   };
 
@@ -278,7 +359,7 @@ export default function FeedbackHubPage() {
 
   const statePreview = (
     <div className="flex flex-wrap items-center justify-between gap-3">
-      <p className="text-[12px] text-faint">Local state · changes are not persisted</p>
+      <p className="text-[12px] text-faint">Changes are saved to your product workspace</p>
       <DevToolsPopover>
         <p className="text-[12.5px] font-medium text-fg">Interface preview</p>
         <p className="mt-0.5 text-[12px] text-muted">
@@ -304,8 +385,15 @@ export default function FeedbackHubPage() {
 
   if (view === "loading") {
     body = <FeedbackHubSkeleton />;
-  } else if (view === "error") {
-    body = <FeedbackHubErrorState onRetry={() => setView("populated")} />;
+  } else if (view === "error" || dataError) {
+    body = (
+      <FeedbackHubErrorState
+        onRetry={() => {
+          retry();
+          setView("populated");
+        }}
+      />
+    );
   } else {
     body = (
       <>
@@ -329,7 +417,7 @@ export default function FeedbackHubPage() {
             {section === "Inbox" ? (
               <FeedbackInbox
                 feedback={feedback}
-                requests={productRequests}
+                requests={requests}
                 areaNames={areas.map((a) => a.name)}
                 productName={product.name}
                 selectedId={selection.inbox}
@@ -352,37 +440,32 @@ export default function FeedbackHubPage() {
               />
             ) : section === "Themes & Insights" ? (
               <FeedbackThemesWorkspace
-                themes={productThemes}
+                themes={themes}
                 feedback={feedback}
                 selectedId={selection.theme}
                 onSelect={(id) => select("theme", id)}
                 onImportanceChange={(id, importance: ThemeImportance) => {
-                  patchTheme(id, { importance });
-                  notify(`Importance set to ${importance} · local state only`);
+                  void handleThemeImportance(id, importance);
                 }}
                 onReviewStatusChange={(id, status: FeedbackStatus) => {
-                  patchTheme(id, { reviewStatus: status });
-                  notify(`Theme research status · ${status}`);
+                  void handleThemeReviewStatus(id, status);
                 }}
                 onNotesChange={(id, notes) => {
-                  patchTheme(id, { internalNotes: notes });
-                  notify("Theme notes saved to this preview");
+                  void handleThemeNotes(id, notes);
                 }}
                 onOpenFeedback={openFeedback}
               />
             ) : section === "Feature Requests" ? (
               <FeatureRequestsWorkspace
-                requests={productRequests}
+                requests={requests}
                 feedback={feedback}
                 selectedId={selection.request}
                 onSelect={(id) => select("request", id)}
                 onStatusChange={(id, status: FeatureRequestStatus) => {
-                  patchRequest(id, { status });
-                  notify(`Request status changed to ${status} · local state only`);
+                  void handleRequestStatus(id, status);
                 }}
                 onPriorityChange={(id, priority: FeedbackPriority) => {
-                  patchRequest(id, { priority });
-                  notify(`Request priority changed to ${priority} · local state only`);
+                  void handleRequestPriority(id, priority);
                 }}
                 onOpenFeedback={openFeedback}
               />
@@ -390,7 +473,7 @@ export default function FeedbackHubPage() {
               <ProductAreasWorkspace
                 areas={areas}
                 feedback={feedback}
-                requests={productRequests}
+                requests={requests}
                 selectedId={selection.area}
                 onSelect={(id) => select("area", id)}
                 onOpenFeedback={openFeedback}
@@ -432,4 +515,14 @@ export default function FeedbackHubPage() {
       </AnimatePresence>
     </motion.div>
   );
+}
+
+/**
+ * Route entry for the Feedback Hub workspace. Reads the active product from
+ * the URL (`?product=<id>`) and threads it into the page.
+ */
+export function FeedbackHubRoute() {
+  const params = useSearchParams();
+  const productId = params.get("product") ?? undefined;
+  return <FeedbackHubPage productId={productId} />;
 }

@@ -2,7 +2,7 @@
 
 import { StatStrip } from "@/components/ui/primitives";
 
-import { feedbackStats } from "@/lib/feedback-hub/demo";
+import { feedbackStats } from "@/lib/feedback/derive";
 import type { FeedbackItem, FeedbackProduct } from "@/lib/feedback-hub/types";
 
 export function FeedbackOverview({
