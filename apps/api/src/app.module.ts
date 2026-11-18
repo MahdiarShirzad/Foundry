@@ -17,6 +17,7 @@ import { ValidationModule } from './validation/validation.module';
 import { AiModule } from './ai/ai.module';
 import { MvpModule } from './mvp/mvp.module';
 import { RoadmapModule } from './roadmap/roadmap.module';
+import { LaunchModule } from './launch/launch.module';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -40,6 +41,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     ValidationModule,
     MvpModule,
     RoadmapModule,
+    LaunchModule,
   ],
   controllers: [AppController],
   providers: [
