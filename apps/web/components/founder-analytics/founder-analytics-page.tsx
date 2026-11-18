@@ -1,19 +1,29 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
+import { buildAnalyticsDataset } from "@/lib/analytics/api";
+import {
+  useCreateObservation,
+  useDeleteObservation,
+  useMetrics,
+  useObservations,
+  useReports,
+  useUpdateObservation,
+  useWeekSamples,
+} from "@/lib/analytics/hooks";
 import {
   ANALYTICS_RANGES,
   type AnalyticsProduct,
   type AnalyticsSection,
-  type Observation,
   type ObservationDraft,
   type RangeKey,
   type SeriesKey,
 } from "@/lib/founder-analytics/types";
-import { getAnalyticsDataset } from "@/lib/founder-analytics/demo";
 import { useProducts } from "@/lib/product/use-products";
+import { useHydrated } from "@/lib/use-hydrated";
 
 import { AnalyticsWorkspaceNavigation } from "./analytics-workspace-navigation";
 import { ExportDialog } from "./dialogs/export-dialog";
@@ -26,43 +36,6 @@ import { RetentionSection } from "./sections/retention-section";
 import { UserBehaviorSection } from "./sections/user-behavior-section";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
-
-/** Two hand-written notes so the observation list starts with a few examples. */
-const SEED_OBSERVATIONS: Observation[] = [
-  {
-    id: "obs-seed-1",
-    productId: "helio-notes",
-    title: "Check whether shorter sessions are healthy",
-    description:
-      "Average session length grows slowly while sessions per user grows faster. That can mean a smoother flow or more repeated work — the data cannot tell.",
-    metricId: "avg-duration",
-    type: "Question",
-    nextStep: "Pair duration with feature usage before drawing a conclusion.",
-    sample: true,
-  },
-  {
-    id: "obs-seed-2",
-    productId: "helio-notes",
-    title: "Onboarding interactions deserve a closer look",
-    description:
-      "Onboarding carries the second-largest interaction count, which is expected for a new-account heavy window but worth confirming against real setup completion.",
-    metricId: "feature-usage",
-    type: "Pattern",
-    nextStep: "Compare with the onboarding feedback collected in Feedback Hub.",
-    sample: true,
-  },
-  {
-    id: "obs-seed-3",
-    productId: "atlas-scout",
-    title: "Sessions per user drifts down while reach grows",
-    description:
-      "A larger weekly audience is completing fewer sessions each. Two opposite explanations fit and the data cannot separate them.",
-    metricId: "sessions-per-user",
-    type: "Question",
-    nextStep: "Look at feature usage by segment before treating this as a problem.",
-    sample: true,
-  },
-];
 
 /** Shape returned by `GET /products`. */
 type Product = {
@@ -91,12 +64,12 @@ function NoProducts() {
   );
 }
 
-export default function FounderAnalyticsPage() {
+export default function FounderAnalyticsPage({ productId }: { productId?: string }) {
   const reduce = useReducedMotion();
-  const nextId = useRef(1);
+  const hydrated = useHydrated();
   const { data, isPending } = useProducts();
 
-  const [productId, setProductId] = useState<string | null>(null);
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [range, setRange] = useState<RangeKey>(ANALYTICS_RANGES[1]);
   const [section, setSection] = useState<AnalyticsSection>("Overview");
   const [metricId, setMetricId] = useState("active-users");
@@ -104,18 +77,66 @@ export default function FounderAnalyticsPage() {
   const [areaId, setAreaId] = useState<string | null>(null);
   const [engagementKey, setEngagementKey] = useState<SeriesKey>("perUser");
   const [reportId, setReportId] = useState<string | null>(null);
-  const [observations, setObservations] = useState<Observation[]>(SEED_OBSERVATIONS);
   const [exportOpen, setExportOpen] = useState(false);
   const [toast, setToast] = useState<{ key: number; message: string } | null>(null);
 
   // `getAllProducts` is untyped at the client wrapper, so narrow here.
   const products = useMemo(() => (data as Product[] | undefined) ?? [], [data]);
   const productOptions = useMemo(() => products.map(toAnalyticsProduct), [products]);
-  const selected = products.find((entry) => entry.id === productId) ?? products[0] ?? null;
+  // The dashboard stores the active product in `?product=`; fall back to the
+  // first product the same way the other module workspaces do.
+  const activeId =
+    selectedProductId ??
+    productId ??
+    (hydrated ? products[0]?.id : undefined) ??
+    "";
+  const selected = products.find((entry) => entry.id === activeId) ?? null;
   const product = selected ? toAnalyticsProduct(selected) : null;
-  const activeId = selected?.id ?? "";
-  const dataset = getAnalyticsDataset(activeId);
-  const productObservations = observations.filter((entry) => entry.productId === activeId);
+
+  const {
+    weeks,
+    loading: weeksLoading,
+    error: weeksError,
+    refetch: refetchWeeks,
+  } = useWeekSamples(activeId || undefined);
+  const {
+    metrics,
+    loading: metricsLoading,
+    error: metricsError,
+    refetch: refetchMetrics,
+  } = useMetrics(activeId || undefined);
+  const {
+    observations,
+    loading: observationsLoading,
+    error: observationsError,
+    refetch: refetchObservations,
+  } = useObservations(activeId || undefined);
+  const {
+    reports,
+    loading: reportsLoading,
+    error: reportsError,
+    refetch: refetchReports,
+  } = useReports(activeId || undefined);
+
+  const createObservation = useCreateObservation(activeId || undefined);
+  const updateObservation = useUpdateObservation(activeId || undefined);
+  const deleteObservation = useDeleteObservation(activeId || undefined);
+
+  const dataLoading =
+    weeksLoading || metricsLoading || observationsLoading || reportsLoading;
+  const dataError = weeksError || metricsError || observationsError || reportsError;
+
+  const dataset = useMemo(
+    () =>
+      buildAnalyticsDataset({
+        weeks,
+        metrics,
+        observations,
+        reports,
+      }),
+    [weeks, metrics, observations, reports],
+  );
+
   const windowLabel = dataset ? formatWindow(dataset, range) : "no data";
 
   const notify = useCallback((message: string) => {
@@ -128,8 +149,13 @@ export default function FounderAnalyticsPage() {
     return () => window.clearTimeout(timer);
   }, [toast]);
 
+  useEffect(() => {
+    if (!dataError) return;
+    console.error("Failed to load analytics data", dataError);
+  }, [dataError]);
+
   function changeProduct(id: string) {
-    setProductId(id);
+    setSelectedProductId(id);
     setSegmentId("all");
     setAreaId(null);
     setReportId(null);
@@ -138,7 +164,14 @@ export default function FounderAnalyticsPage() {
     notify(`Analytics view switched to ${next?.name ?? "product"}`);
   }
 
-  if (isPending) {
+  function retry() {
+    if (weeksError) void refetchWeeks();
+    if (metricsError) void refetchMetrics();
+    if (observationsError) void refetchObservations();
+    if (reportsError) void refetchReports();
+  }
+
+  if (!hydrated || isPending || (product && dataLoading)) {
     return (
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 6 }}
@@ -170,25 +203,37 @@ export default function FounderAnalyticsPage() {
     setSection(next === "overview" ? "Overview" : "Product Metrics");
   }
 
-  function createObservation(draft: ObservationDraft) {
-    const id = `obs-${nextId.current++}`;
-    setObservations((current) => [
-      ...current,
-      { id, productId: activeId, ...draft },
-    ]);
-    notify("Observation added to this session · not saved anywhere");
+  async function handleCreateObservation(draft: ObservationDraft) {
+    try {
+      await createObservation.create({
+        ...draft,
+        metricId: draft.metricId || undefined,
+      });
+      notify("Observation added");
+    } catch (error) {
+      console.error("Failed to create observation", error);
+    }
   }
 
-  function updateObservation(id: string, draft: ObservationDraft) {
-    setObservations((current) =>
-      current.map((entry) => (entry.id === id ? { ...entry, ...draft } : entry)),
-    );
-    notify("Observation updated in this session");
+  async function handleUpdateObservation(id: string, draft: ObservationDraft) {
+    try {
+      await updateObservation.update(id, {
+        ...draft,
+        metricId: draft.metricId || undefined,
+      });
+      notify("Observation updated");
+    } catch (error) {
+      console.error("Failed to update observation", error);
+    }
   }
 
-  function deleteObservation(id: string) {
-    setObservations((current) => current.filter((entry) => entry.id !== id));
-    notify("Observation removed from this session");
+  async function handleDeleteObservation(id: string) {
+    try {
+      await deleteObservation.remove(id);
+      notify("Observation removed");
+    } catch (error) {
+      console.error("Failed to delete observation", error);
+    }
   }
 
   let body: React.ReactNode;
@@ -235,12 +280,12 @@ export default function FounderAnalyticsPage() {
         dataset={dataset}
         product={product}
         range={range}
-        observations={productObservations}
+        observations={observations}
         reportId={reportId}
         onReportChange={setReportId}
-        onCreate={createObservation}
-        onUpdate={updateObservation}
-        onDelete={deleteObservation}
+        onCreate={handleCreateObservation}
+        onUpdate={handleUpdateObservation}
+        onDelete={handleDeleteObservation}
         onExport={() => setExportOpen(true)}
       />
     );
@@ -269,7 +314,7 @@ export default function FounderAnalyticsPage() {
 
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
-          key={`${section}-${productId}`}
+          key={`${section}-${activeId}`}
           role="tabpanel"
           id={`analytics-panel-${section}`}
           aria-labelledby={`analytics-tab-${section}`}
@@ -282,6 +327,17 @@ export default function FounderAnalyticsPage() {
         </motion.div>
       </AnimatePresence>
 
+      {dataError ? (
+        <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={retry}
+            className="border border-line px-3 py-1.5 text-[12px] text-fg transition-colors hover:border-accent hover:text-accent"
+          >
+            Retry
+          </button>
+        </div>
+      ) : null}
 
       <ExportDialog
         open={exportOpen}
@@ -307,4 +363,14 @@ export default function FounderAnalyticsPage() {
       </AnimatePresence>
     </motion.div>
   );
+}
+
+/**
+ * Route entry for the Founder Analytics workspace. Reads the active product
+ * from the URL (`?product=<id>`) and threads it into the page.
+ */
+export function FounderAnalyticsRoute() {
+  const params = useSearchParams();
+  const productId = params.get("product") ?? undefined;
+  return <FounderAnalyticsPage productId={productId} />;
 }

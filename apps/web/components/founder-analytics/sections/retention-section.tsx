@@ -5,7 +5,7 @@ import { Panel } from "@/components/dashboard/panel";
 
 import type { AnalyticsProduct, RangeKey, SeriesKey } from "@/lib/founder-analytics/types";
 import type { AnalyticsDataset } from "@/lib/founder-analytics/types";
-import { SERIES_META, getSeriesSlice } from "@/lib/founder-analytics/demo";
+import { SERIES_META, getSeriesSlice } from "@/lib/analytics/selectors";
 
 import CohortTable from "../charts/cohort-table";
 import TrendChart from "../charts/trend-chart";

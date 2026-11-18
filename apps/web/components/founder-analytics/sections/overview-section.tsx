@@ -6,7 +6,7 @@ import KpiStrip from "@/components/dashboard/kpi-strip";
 import { Panel } from "@/components/dashboard/panel";
 
 import type { AnalyticsDataset, AnalyticsProduct, RangeKey } from "@/lib/founder-analytics/types";
-import { getKpis, getSeriesSlice, rangeLabel } from "@/lib/founder-analytics/demo";
+import { getKpis, getSeriesSlice, rangeLabel } from "@/lib/analytics/selectors";
 
 import DistributionBars from "../charts/distribution-bars";
 import TrendChart from "../charts/trend-chart";

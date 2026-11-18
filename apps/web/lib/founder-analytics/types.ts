@@ -235,6 +235,8 @@ export type AnalyticsDataset = {
   observations: SampleObservation[];
   notes: InterpretationNote[];
   reports: AnalyticsReport[];
+  /** Metric definitions loaded for the product; omitted when none are stored. */
+  metricDefinitions?: MetricDefinition[];
 };
 
 export const ANALYTICS_SECTIONS = [

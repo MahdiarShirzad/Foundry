@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { METRIC_CATALOG } from "@/lib/founder-analytics/demo";
+import { METRIC_CATALOG } from "@/lib/analytics/selectors";
 import {
   OBSERVATION_TYPES,
   type Observation,

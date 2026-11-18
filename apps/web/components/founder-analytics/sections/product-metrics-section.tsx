@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import type { AnalyticsProduct, RangeKey } from "@/lib/founder-analytics/types";
 import { METRIC_CATEGORIES } from "@/lib/founder-analytics/types";
 import type { AnalyticsDataset } from "@/lib/founder-analytics/types";
-import { METRIC_CATALOG, getSeriesSlice } from "@/lib/founder-analytics/demo";
+import { METRIC_CATALOG, getSeriesSlice } from "@/lib/analytics/selectors";
 
 import type { DistributionRow } from "../charts/distribution-bars";
 import DistributionBars from "../charts/distribution-bars";
@@ -31,19 +31,24 @@ export function ProductMetricsSection({
   const [compare, setCompare] = useState(false);
   const [breakdownId, setBreakdownId] = useState<string>("");
 
+  // Stored metric definitions win; the static catalog is only a starting set.
+  const catalog = dataset?.metricDefinitions?.length
+    ? dataset.metricDefinitions
+    : METRIC_CATALOG;
+
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
-    return METRIC_CATALOG.filter((metric) => {
+    return catalog.filter((metric) => {
       const matchesQuery = needle
         ? `${metric.name} ${metric.definition}`.toLowerCase().includes(needle)
         : true;
       const matchesCategory = category === "all" || metric.category === category;
       return matchesQuery && matchesCategory;
     });
-  }, [query, category]);
+  }, [catalog, query, category]);
 
   const filtersActive = query !== "" || category !== "all";
-  const selected = METRIC_CATALOG.find((metric) => metric.id === metricId) ?? METRIC_CATALOG[0];
+  const selected = catalog.find((metric) => metric.id === metricId) ?? catalog[0];
 
   if (!dataset) {
     return (
@@ -71,7 +76,7 @@ export function ProductMetricsSection({
             Metric catalog
           </p>
           <p className="mt-1 text-[11px] text-muted">
-            {filtered.length} of {METRIC_CATALOG.length} metrics
+            {filtered.length} of {catalog.length} metrics
           </p>
         </header>
 

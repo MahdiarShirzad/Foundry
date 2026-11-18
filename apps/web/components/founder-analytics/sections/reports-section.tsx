@@ -12,7 +12,7 @@ import type {
   RangeKey,
 } from "@/lib/founder-analytics/types";
 import type { AnalyticsDataset } from "@/lib/founder-analytics/types";
-import { METRIC_CATALOG, SERIES_META, getSeriesSlice } from "@/lib/founder-analytics/demo";
+import { METRIC_CATALOG, SERIES_META, getSeriesSlice } from "@/lib/analytics/selectors";
 
 import DistributionBars from "../charts/distribution-bars";
 import TrendChart from "../charts/trend-chart";
