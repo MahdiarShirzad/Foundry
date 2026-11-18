@@ -13,6 +13,7 @@ import { WorkspaceModule } from './workspace/workspace.module';
 import { ProductModule } from './product/product.module';
 import { IdeaModule } from './ideas/ideas.module';
 import { MarketIntelligenceModule } from './market-intelligence/ market-intelligence.module';
+import { ValidationModule } from './validation/validation.module';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -32,6 +33,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     ProductModule,
     IdeaModule,
     MarketIntelligenceModule,
+    ValidationModule,
   ],
   controllers: [AppController],
   providers: [
