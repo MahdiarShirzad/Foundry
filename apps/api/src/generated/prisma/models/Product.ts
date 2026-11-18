@@ -197,6 +197,10 @@ export type ProductWhereInput = {
   releases?: Prisma.ReleaseListRelationFilter
   milestones?: Prisma.MilestoneListRelationFilter
   planningNotes?: Prisma.PlanningNoteListRelationFilter
+  launchTasks?: Prisma.LaunchTaskListRelationFilter
+  launchAssets?: Prisma.LaunchAssetListRelationFilter
+  channels?: Prisma.ChannelListRelationFilter
+  checklistItems?: Prisma.ChecklistItemListRelationFilter
 }
 
 export type ProductOrderByWithRelationInput = {
@@ -213,6 +217,10 @@ export type ProductOrderByWithRelationInput = {
   releases?: Prisma.ReleaseOrderByRelationAggregateInput
   milestones?: Prisma.MilestoneOrderByRelationAggregateInput
   planningNotes?: Prisma.PlanningNoteOrderByRelationAggregateInput
+  launchTasks?: Prisma.LaunchTaskOrderByRelationAggregateInput
+  launchAssets?: Prisma.LaunchAssetOrderByRelationAggregateInput
+  channels?: Prisma.ChannelOrderByRelationAggregateInput
+  checklistItems?: Prisma.ChecklistItemOrderByRelationAggregateInput
 }
 
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -233,6 +241,10 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   releases?: Prisma.ReleaseListRelationFilter
   milestones?: Prisma.MilestoneListRelationFilter
   planningNotes?: Prisma.PlanningNoteListRelationFilter
+  launchTasks?: Prisma.LaunchTaskListRelationFilter
+  launchAssets?: Prisma.LaunchAssetListRelationFilter
+  channels?: Prisma.ChannelListRelationFilter
+  checklistItems?: Prisma.ChecklistItemListRelationFilter
 }, "id" | "workspaceId_slug">
 
 export type ProductOrderByWithAggregationInput = {
@@ -272,6 +284,10 @@ export type ProductCreateInput = {
   releases?: Prisma.ReleaseCreateNestedManyWithoutProductInput
   milestones?: Prisma.MilestoneCreateNestedManyWithoutProductInput
   planningNotes?: Prisma.PlanningNoteCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateInput = {
@@ -287,6 +303,10 @@ export type ProductUncheckedCreateInput = {
   releases?: Prisma.ReleaseUncheckedCreateNestedManyWithoutProductInput
   milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProductInput
   planningNotes?: Prisma.PlanningNoteUncheckedCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskUncheckedCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductUpdateInput = {
@@ -302,6 +322,10 @@ export type ProductUpdateInput = {
   releases?: Prisma.ReleaseUpdateManyWithoutProductNestedInput
   milestones?: Prisma.MilestoneUpdateManyWithoutProductNestedInput
   planningNotes?: Prisma.PlanningNoteUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateInput = {
@@ -317,6 +341,10 @@ export type ProductUncheckedUpdateInput = {
   releases?: Prisma.ReleaseUncheckedUpdateManyWithoutProductNestedInput
   milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProductNestedInput
   planningNotes?: Prisma.PlanningNoteUncheckedUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUncheckedUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUncheckedUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyInput = {
@@ -518,6 +546,62 @@ export type ProductUpdateOneRequiredWithoutPlanningNotesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutPlanningNotesInput, Prisma.ProductUpdateWithoutPlanningNotesInput>, Prisma.ProductUncheckedUpdateWithoutPlanningNotesInput>
 }
 
+export type ProductCreateNestedOneWithoutLaunchTasksInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutLaunchTasksInput, Prisma.ProductUncheckedCreateWithoutLaunchTasksInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutLaunchTasksInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutLaunchTasksNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutLaunchTasksInput, Prisma.ProductUncheckedCreateWithoutLaunchTasksInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutLaunchTasksInput
+  upsert?: Prisma.ProductUpsertWithoutLaunchTasksInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutLaunchTasksInput, Prisma.ProductUpdateWithoutLaunchTasksInput>, Prisma.ProductUncheckedUpdateWithoutLaunchTasksInput>
+}
+
+export type ProductCreateNestedOneWithoutLaunchAssetsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutLaunchAssetsInput, Prisma.ProductUncheckedCreateWithoutLaunchAssetsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutLaunchAssetsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutLaunchAssetsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutLaunchAssetsInput, Prisma.ProductUncheckedCreateWithoutLaunchAssetsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutLaunchAssetsInput
+  upsert?: Prisma.ProductUpsertWithoutLaunchAssetsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutLaunchAssetsInput, Prisma.ProductUpdateWithoutLaunchAssetsInput>, Prisma.ProductUncheckedUpdateWithoutLaunchAssetsInput>
+}
+
+export type ProductCreateNestedOneWithoutChannelsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutChannelsInput, Prisma.ProductUncheckedCreateWithoutChannelsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutChannelsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutChannelsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutChannelsInput, Prisma.ProductUncheckedCreateWithoutChannelsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutChannelsInput
+  upsert?: Prisma.ProductUpsertWithoutChannelsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutChannelsInput, Prisma.ProductUpdateWithoutChannelsInput>, Prisma.ProductUncheckedUpdateWithoutChannelsInput>
+}
+
+export type ProductCreateNestedOneWithoutChecklistItemsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutChecklistItemsInput, Prisma.ProductUncheckedCreateWithoutChecklistItemsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutChecklistItemsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutChecklistItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutChecklistItemsInput, Prisma.ProductUncheckedCreateWithoutChecklistItemsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutChecklistItemsInput
+  upsert?: Prisma.ProductUpsertWithoutChecklistItemsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutChecklistItemsInput, Prisma.ProductUpdateWithoutChecklistItemsInput>, Prisma.ProductUncheckedUpdateWithoutChecklistItemsInput>
+}
+
 export type ProductCreateWithoutWorkspaceInput = {
   id?: string
   name: string
@@ -530,6 +614,10 @@ export type ProductCreateWithoutWorkspaceInput = {
   releases?: Prisma.ReleaseCreateNestedManyWithoutProductInput
   milestones?: Prisma.MilestoneCreateNestedManyWithoutProductInput
   planningNotes?: Prisma.PlanningNoteCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutWorkspaceInput = {
@@ -544,6 +632,10 @@ export type ProductUncheckedCreateWithoutWorkspaceInput = {
   releases?: Prisma.ReleaseUncheckedCreateNestedManyWithoutProductInput
   milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProductInput
   planningNotes?: Prisma.PlanningNoteUncheckedCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskUncheckedCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutWorkspaceInput = {
@@ -596,6 +688,10 @@ export type ProductCreateWithoutIdeasInput = {
   releases?: Prisma.ReleaseCreateNestedManyWithoutProductInput
   milestones?: Prisma.MilestoneCreateNestedManyWithoutProductInput
   planningNotes?: Prisma.PlanningNoteCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutIdeasInput = {
@@ -610,6 +706,10 @@ export type ProductUncheckedCreateWithoutIdeasInput = {
   releases?: Prisma.ReleaseUncheckedCreateNestedManyWithoutProductInput
   milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProductInput
   planningNotes?: Prisma.PlanningNoteUncheckedCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskUncheckedCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutIdeasInput = {
@@ -640,6 +740,10 @@ export type ProductUpdateWithoutIdeasInput = {
   releases?: Prisma.ReleaseUpdateManyWithoutProductNestedInput
   milestones?: Prisma.MilestoneUpdateManyWithoutProductNestedInput
   planningNotes?: Prisma.PlanningNoteUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutIdeasInput = {
@@ -654,6 +758,10 @@ export type ProductUncheckedUpdateWithoutIdeasInput = {
   releases?: Prisma.ReleaseUncheckedUpdateManyWithoutProductNestedInput
   milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProductNestedInput
   planningNotes?: Prisma.PlanningNoteUncheckedUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUncheckedUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUncheckedUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutMvpProjectsInput = {
@@ -668,6 +776,10 @@ export type ProductCreateWithoutMvpProjectsInput = {
   releases?: Prisma.ReleaseCreateNestedManyWithoutProductInput
   milestones?: Prisma.MilestoneCreateNestedManyWithoutProductInput
   planningNotes?: Prisma.PlanningNoteCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutMvpProjectsInput = {
@@ -682,6 +794,10 @@ export type ProductUncheckedCreateWithoutMvpProjectsInput = {
   releases?: Prisma.ReleaseUncheckedCreateNestedManyWithoutProductInput
   milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProductInput
   planningNotes?: Prisma.PlanningNoteUncheckedCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskUncheckedCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutMvpProjectsInput = {
@@ -712,6 +828,10 @@ export type ProductUpdateWithoutMvpProjectsInput = {
   releases?: Prisma.ReleaseUpdateManyWithoutProductNestedInput
   milestones?: Prisma.MilestoneUpdateManyWithoutProductNestedInput
   planningNotes?: Prisma.PlanningNoteUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutMvpProjectsInput = {
@@ -726,6 +846,10 @@ export type ProductUncheckedUpdateWithoutMvpProjectsInput = {
   releases?: Prisma.ReleaseUncheckedUpdateManyWithoutProductNestedInput
   milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProductNestedInput
   planningNotes?: Prisma.PlanningNoteUncheckedUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUncheckedUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUncheckedUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutInitiativesInput = {
@@ -740,6 +864,10 @@ export type ProductCreateWithoutInitiativesInput = {
   releases?: Prisma.ReleaseCreateNestedManyWithoutProductInput
   milestones?: Prisma.MilestoneCreateNestedManyWithoutProductInput
   planningNotes?: Prisma.PlanningNoteCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutInitiativesInput = {
@@ -754,6 +882,10 @@ export type ProductUncheckedCreateWithoutInitiativesInput = {
   releases?: Prisma.ReleaseUncheckedCreateNestedManyWithoutProductInput
   milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProductInput
   planningNotes?: Prisma.PlanningNoteUncheckedCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskUncheckedCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutInitiativesInput = {
@@ -784,6 +916,10 @@ export type ProductUpdateWithoutInitiativesInput = {
   releases?: Prisma.ReleaseUpdateManyWithoutProductNestedInput
   milestones?: Prisma.MilestoneUpdateManyWithoutProductNestedInput
   planningNotes?: Prisma.PlanningNoteUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutInitiativesInput = {
@@ -798,6 +934,10 @@ export type ProductUncheckedUpdateWithoutInitiativesInput = {
   releases?: Prisma.ReleaseUncheckedUpdateManyWithoutProductNestedInput
   milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProductNestedInput
   planningNotes?: Prisma.PlanningNoteUncheckedUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUncheckedUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUncheckedUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutReleasesInput = {
@@ -812,6 +952,10 @@ export type ProductCreateWithoutReleasesInput = {
   initiatives?: Prisma.InitiativeCreateNestedManyWithoutProductInput
   milestones?: Prisma.MilestoneCreateNestedManyWithoutProductInput
   planningNotes?: Prisma.PlanningNoteCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutReleasesInput = {
@@ -826,6 +970,10 @@ export type ProductUncheckedCreateWithoutReleasesInput = {
   initiatives?: Prisma.InitiativeUncheckedCreateNestedManyWithoutProductInput
   milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProductInput
   planningNotes?: Prisma.PlanningNoteUncheckedCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskUncheckedCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutReleasesInput = {
@@ -856,6 +1004,10 @@ export type ProductUpdateWithoutReleasesInput = {
   initiatives?: Prisma.InitiativeUpdateManyWithoutProductNestedInput
   milestones?: Prisma.MilestoneUpdateManyWithoutProductNestedInput
   planningNotes?: Prisma.PlanningNoteUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutReleasesInput = {
@@ -870,6 +1022,10 @@ export type ProductUncheckedUpdateWithoutReleasesInput = {
   initiatives?: Prisma.InitiativeUncheckedUpdateManyWithoutProductNestedInput
   milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProductNestedInput
   planningNotes?: Prisma.PlanningNoteUncheckedUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUncheckedUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUncheckedUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutMilestonesInput = {
@@ -884,6 +1040,10 @@ export type ProductCreateWithoutMilestonesInput = {
   initiatives?: Prisma.InitiativeCreateNestedManyWithoutProductInput
   releases?: Prisma.ReleaseCreateNestedManyWithoutProductInput
   planningNotes?: Prisma.PlanningNoteCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutMilestonesInput = {
@@ -898,6 +1058,10 @@ export type ProductUncheckedCreateWithoutMilestonesInput = {
   initiatives?: Prisma.InitiativeUncheckedCreateNestedManyWithoutProductInput
   releases?: Prisma.ReleaseUncheckedCreateNestedManyWithoutProductInput
   planningNotes?: Prisma.PlanningNoteUncheckedCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskUncheckedCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutMilestonesInput = {
@@ -928,6 +1092,10 @@ export type ProductUpdateWithoutMilestonesInput = {
   initiatives?: Prisma.InitiativeUpdateManyWithoutProductNestedInput
   releases?: Prisma.ReleaseUpdateManyWithoutProductNestedInput
   planningNotes?: Prisma.PlanningNoteUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutMilestonesInput = {
@@ -942,6 +1110,10 @@ export type ProductUncheckedUpdateWithoutMilestonesInput = {
   initiatives?: Prisma.InitiativeUncheckedUpdateManyWithoutProductNestedInput
   releases?: Prisma.ReleaseUncheckedUpdateManyWithoutProductNestedInput
   planningNotes?: Prisma.PlanningNoteUncheckedUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUncheckedUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUncheckedUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateWithoutPlanningNotesInput = {
@@ -956,6 +1128,10 @@ export type ProductCreateWithoutPlanningNotesInput = {
   initiatives?: Prisma.InitiativeCreateNestedManyWithoutProductInput
   releases?: Prisma.ReleaseCreateNestedManyWithoutProductInput
   milestones?: Prisma.MilestoneCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutPlanningNotesInput = {
@@ -970,6 +1146,10 @@ export type ProductUncheckedCreateWithoutPlanningNotesInput = {
   initiatives?: Prisma.InitiativeUncheckedCreateNestedManyWithoutProductInput
   releases?: Prisma.ReleaseUncheckedCreateNestedManyWithoutProductInput
   milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskUncheckedCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutPlanningNotesInput = {
@@ -1000,6 +1180,10 @@ export type ProductUpdateWithoutPlanningNotesInput = {
   initiatives?: Prisma.InitiativeUpdateManyWithoutProductNestedInput
   releases?: Prisma.ReleaseUpdateManyWithoutProductNestedInput
   milestones?: Prisma.MilestoneUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutPlanningNotesInput = {
@@ -1014,6 +1198,362 @@ export type ProductUncheckedUpdateWithoutPlanningNotesInput = {
   initiatives?: Prisma.InitiativeUncheckedUpdateManyWithoutProductNestedInput
   releases?: Prisma.ReleaseUncheckedUpdateManyWithoutProductNestedInput
   milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUncheckedUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUncheckedUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutLaunchTasksInput = {
+  id?: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  workspace: Prisma.WorkspaceCreateNestedOneWithoutProductsInput
+  ideas?: Prisma.IdeaCreateNestedManyWithoutProductInput
+  mvpProjects?: Prisma.MVPProjectCreateNestedManyWithoutProductInput
+  initiatives?: Prisma.InitiativeCreateNestedManyWithoutProductInput
+  releases?: Prisma.ReleaseCreateNestedManyWithoutProductInput
+  milestones?: Prisma.MilestoneCreateNestedManyWithoutProductInput
+  planningNotes?: Prisma.PlanningNoteCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutLaunchTasksInput = {
+  id?: string
+  workspaceId: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ideas?: Prisma.IdeaUncheckedCreateNestedManyWithoutProductInput
+  mvpProjects?: Prisma.MVPProjectUncheckedCreateNestedManyWithoutProductInput
+  initiatives?: Prisma.InitiativeUncheckedCreateNestedManyWithoutProductInput
+  releases?: Prisma.ReleaseUncheckedCreateNestedManyWithoutProductInput
+  milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProductInput
+  planningNotes?: Prisma.PlanningNoteUncheckedCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutLaunchTasksInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutLaunchTasksInput, Prisma.ProductUncheckedCreateWithoutLaunchTasksInput>
+}
+
+export type ProductUpsertWithoutLaunchTasksInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutLaunchTasksInput, Prisma.ProductUncheckedUpdateWithoutLaunchTasksInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutLaunchTasksInput, Prisma.ProductUncheckedCreateWithoutLaunchTasksInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutLaunchTasksInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutLaunchTasksInput, Prisma.ProductUncheckedUpdateWithoutLaunchTasksInput>
+}
+
+export type ProductUpdateWithoutLaunchTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutProductsNestedInput
+  ideas?: Prisma.IdeaUpdateManyWithoutProductNestedInput
+  mvpProjects?: Prisma.MVPProjectUpdateManyWithoutProductNestedInput
+  initiatives?: Prisma.InitiativeUpdateManyWithoutProductNestedInput
+  releases?: Prisma.ReleaseUpdateManyWithoutProductNestedInput
+  milestones?: Prisma.MilestoneUpdateManyWithoutProductNestedInput
+  planningNotes?: Prisma.PlanningNoteUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutLaunchTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workspaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ideas?: Prisma.IdeaUncheckedUpdateManyWithoutProductNestedInput
+  mvpProjects?: Prisma.MVPProjectUncheckedUpdateManyWithoutProductNestedInput
+  initiatives?: Prisma.InitiativeUncheckedUpdateManyWithoutProductNestedInput
+  releases?: Prisma.ReleaseUncheckedUpdateManyWithoutProductNestedInput
+  milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProductNestedInput
+  planningNotes?: Prisma.PlanningNoteUncheckedUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUncheckedUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutLaunchAssetsInput = {
+  id?: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  workspace: Prisma.WorkspaceCreateNestedOneWithoutProductsInput
+  ideas?: Prisma.IdeaCreateNestedManyWithoutProductInput
+  mvpProjects?: Prisma.MVPProjectCreateNestedManyWithoutProductInput
+  initiatives?: Prisma.InitiativeCreateNestedManyWithoutProductInput
+  releases?: Prisma.ReleaseCreateNestedManyWithoutProductInput
+  milestones?: Prisma.MilestoneCreateNestedManyWithoutProductInput
+  planningNotes?: Prisma.PlanningNoteCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutLaunchAssetsInput = {
+  id?: string
+  workspaceId: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ideas?: Prisma.IdeaUncheckedCreateNestedManyWithoutProductInput
+  mvpProjects?: Prisma.MVPProjectUncheckedCreateNestedManyWithoutProductInput
+  initiatives?: Prisma.InitiativeUncheckedCreateNestedManyWithoutProductInput
+  releases?: Prisma.ReleaseUncheckedCreateNestedManyWithoutProductInput
+  milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProductInput
+  planningNotes?: Prisma.PlanningNoteUncheckedCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutLaunchAssetsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutLaunchAssetsInput, Prisma.ProductUncheckedCreateWithoutLaunchAssetsInput>
+}
+
+export type ProductUpsertWithoutLaunchAssetsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutLaunchAssetsInput, Prisma.ProductUncheckedUpdateWithoutLaunchAssetsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutLaunchAssetsInput, Prisma.ProductUncheckedCreateWithoutLaunchAssetsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutLaunchAssetsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutLaunchAssetsInput, Prisma.ProductUncheckedUpdateWithoutLaunchAssetsInput>
+}
+
+export type ProductUpdateWithoutLaunchAssetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutProductsNestedInput
+  ideas?: Prisma.IdeaUpdateManyWithoutProductNestedInput
+  mvpProjects?: Prisma.MVPProjectUpdateManyWithoutProductNestedInput
+  initiatives?: Prisma.InitiativeUpdateManyWithoutProductNestedInput
+  releases?: Prisma.ReleaseUpdateManyWithoutProductNestedInput
+  milestones?: Prisma.MilestoneUpdateManyWithoutProductNestedInput
+  planningNotes?: Prisma.PlanningNoteUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutLaunchAssetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workspaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ideas?: Prisma.IdeaUncheckedUpdateManyWithoutProductNestedInput
+  mvpProjects?: Prisma.MVPProjectUncheckedUpdateManyWithoutProductNestedInput
+  initiatives?: Prisma.InitiativeUncheckedUpdateManyWithoutProductNestedInput
+  releases?: Prisma.ReleaseUncheckedUpdateManyWithoutProductNestedInput
+  milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProductNestedInput
+  planningNotes?: Prisma.PlanningNoteUncheckedUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUncheckedUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutChannelsInput = {
+  id?: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  workspace: Prisma.WorkspaceCreateNestedOneWithoutProductsInput
+  ideas?: Prisma.IdeaCreateNestedManyWithoutProductInput
+  mvpProjects?: Prisma.MVPProjectCreateNestedManyWithoutProductInput
+  initiatives?: Prisma.InitiativeCreateNestedManyWithoutProductInput
+  releases?: Prisma.ReleaseCreateNestedManyWithoutProductInput
+  milestones?: Prisma.MilestoneCreateNestedManyWithoutProductInput
+  planningNotes?: Prisma.PlanningNoteCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutChannelsInput = {
+  id?: string
+  workspaceId: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ideas?: Prisma.IdeaUncheckedCreateNestedManyWithoutProductInput
+  mvpProjects?: Prisma.MVPProjectUncheckedCreateNestedManyWithoutProductInput
+  initiatives?: Prisma.InitiativeUncheckedCreateNestedManyWithoutProductInput
+  releases?: Prisma.ReleaseUncheckedCreateNestedManyWithoutProductInput
+  milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProductInput
+  planningNotes?: Prisma.PlanningNoteUncheckedCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskUncheckedCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetUncheckedCreateNestedManyWithoutProductInput
+  checklistItems?: Prisma.ChecklistItemUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutChannelsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutChannelsInput, Prisma.ProductUncheckedCreateWithoutChannelsInput>
+}
+
+export type ProductUpsertWithoutChannelsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutChannelsInput, Prisma.ProductUncheckedUpdateWithoutChannelsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutChannelsInput, Prisma.ProductUncheckedCreateWithoutChannelsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutChannelsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutChannelsInput, Prisma.ProductUncheckedUpdateWithoutChannelsInput>
+}
+
+export type ProductUpdateWithoutChannelsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutProductsNestedInput
+  ideas?: Prisma.IdeaUpdateManyWithoutProductNestedInput
+  mvpProjects?: Prisma.MVPProjectUpdateManyWithoutProductNestedInput
+  initiatives?: Prisma.InitiativeUpdateManyWithoutProductNestedInput
+  releases?: Prisma.ReleaseUpdateManyWithoutProductNestedInput
+  milestones?: Prisma.MilestoneUpdateManyWithoutProductNestedInput
+  planningNotes?: Prisma.PlanningNoteUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutChannelsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workspaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ideas?: Prisma.IdeaUncheckedUpdateManyWithoutProductNestedInput
+  mvpProjects?: Prisma.MVPProjectUncheckedUpdateManyWithoutProductNestedInput
+  initiatives?: Prisma.InitiativeUncheckedUpdateManyWithoutProductNestedInput
+  releases?: Prisma.ReleaseUncheckedUpdateManyWithoutProductNestedInput
+  milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProductNestedInput
+  planningNotes?: Prisma.PlanningNoteUncheckedUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUncheckedUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUncheckedUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutChecklistItemsInput = {
+  id?: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  workspace: Prisma.WorkspaceCreateNestedOneWithoutProductsInput
+  ideas?: Prisma.IdeaCreateNestedManyWithoutProductInput
+  mvpProjects?: Prisma.MVPProjectCreateNestedManyWithoutProductInput
+  initiatives?: Prisma.InitiativeCreateNestedManyWithoutProductInput
+  releases?: Prisma.ReleaseCreateNestedManyWithoutProductInput
+  milestones?: Prisma.MilestoneCreateNestedManyWithoutProductInput
+  planningNotes?: Prisma.PlanningNoteCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutChecklistItemsInput = {
+  id?: string
+  workspaceId: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ideas?: Prisma.IdeaUncheckedCreateNestedManyWithoutProductInput
+  mvpProjects?: Prisma.MVPProjectUncheckedCreateNestedManyWithoutProductInput
+  initiatives?: Prisma.InitiativeUncheckedCreateNestedManyWithoutProductInput
+  releases?: Prisma.ReleaseUncheckedCreateNestedManyWithoutProductInput
+  milestones?: Prisma.MilestoneUncheckedCreateNestedManyWithoutProductInput
+  planningNotes?: Prisma.PlanningNoteUncheckedCreateNestedManyWithoutProductInput
+  launchTasks?: Prisma.LaunchTaskUncheckedCreateNestedManyWithoutProductInput
+  launchAssets?: Prisma.LaunchAssetUncheckedCreateNestedManyWithoutProductInput
+  channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutChecklistItemsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutChecklistItemsInput, Prisma.ProductUncheckedCreateWithoutChecklistItemsInput>
+}
+
+export type ProductUpsertWithoutChecklistItemsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutChecklistItemsInput, Prisma.ProductUncheckedUpdateWithoutChecklistItemsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutChecklistItemsInput, Prisma.ProductUncheckedCreateWithoutChecklistItemsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutChecklistItemsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutChecklistItemsInput, Prisma.ProductUncheckedUpdateWithoutChecklistItemsInput>
+}
+
+export type ProductUpdateWithoutChecklistItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutProductsNestedInput
+  ideas?: Prisma.IdeaUpdateManyWithoutProductNestedInput
+  mvpProjects?: Prisma.MVPProjectUpdateManyWithoutProductNestedInput
+  initiatives?: Prisma.InitiativeUpdateManyWithoutProductNestedInput
+  releases?: Prisma.ReleaseUpdateManyWithoutProductNestedInput
+  milestones?: Prisma.MilestoneUpdateManyWithoutProductNestedInput
+  planningNotes?: Prisma.PlanningNoteUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutChecklistItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workspaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ideas?: Prisma.IdeaUncheckedUpdateManyWithoutProductNestedInput
+  mvpProjects?: Prisma.MVPProjectUncheckedUpdateManyWithoutProductNestedInput
+  initiatives?: Prisma.InitiativeUncheckedUpdateManyWithoutProductNestedInput
+  releases?: Prisma.ReleaseUncheckedUpdateManyWithoutProductNestedInput
+  milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProductNestedInput
+  planningNotes?: Prisma.PlanningNoteUncheckedUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUncheckedUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyWorkspaceInput = {
@@ -1036,6 +1576,10 @@ export type ProductUpdateWithoutWorkspaceInput = {
   releases?: Prisma.ReleaseUpdateManyWithoutProductNestedInput
   milestones?: Prisma.MilestoneUpdateManyWithoutProductNestedInput
   planningNotes?: Prisma.PlanningNoteUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutWorkspaceInput = {
@@ -1050,6 +1594,10 @@ export type ProductUncheckedUpdateWithoutWorkspaceInput = {
   releases?: Prisma.ReleaseUncheckedUpdateManyWithoutProductNestedInput
   milestones?: Prisma.MilestoneUncheckedUpdateManyWithoutProductNestedInput
   planningNotes?: Prisma.PlanningNoteUncheckedUpdateManyWithoutProductNestedInput
+  launchTasks?: Prisma.LaunchTaskUncheckedUpdateManyWithoutProductNestedInput
+  launchAssets?: Prisma.LaunchAssetUncheckedUpdateManyWithoutProductNestedInput
+  channels?: Prisma.ChannelUncheckedUpdateManyWithoutProductNestedInput
+  checklistItems?: Prisma.ChecklistItemUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutWorkspaceInput = {
@@ -1072,6 +1620,10 @@ export type ProductCountOutputType = {
   releases: number
   milestones: number
   planningNotes: number
+  launchTasks: number
+  launchAssets: number
+  channels: number
+  checklistItems: number
 }
 
 export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1081,6 +1633,10 @@ export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   releases?: boolean | ProductCountOutputTypeCountReleasesArgs
   milestones?: boolean | ProductCountOutputTypeCountMilestonesArgs
   planningNotes?: boolean | ProductCountOutputTypeCountPlanningNotesArgs
+  launchTasks?: boolean | ProductCountOutputTypeCountLaunchTasksArgs
+  launchAssets?: boolean | ProductCountOutputTypeCountLaunchAssetsArgs
+  channels?: boolean | ProductCountOutputTypeCountChannelsArgs
+  checklistItems?: boolean | ProductCountOutputTypeCountChecklistItemsArgs
 }
 
 /**
@@ -1135,6 +1691,34 @@ export type ProductCountOutputTypeCountPlanningNotesArgs<ExtArgs extends runtime
   where?: Prisma.PlanningNoteWhereInput
 }
 
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountLaunchTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LaunchTaskWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountLaunchAssetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LaunchAssetWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountChannelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChannelWhereInput
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountChecklistItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChecklistItemWhereInput
+}
+
 
 export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1150,6 +1734,10 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   releases?: boolean | Prisma.Product$releasesArgs<ExtArgs>
   milestones?: boolean | Prisma.Product$milestonesArgs<ExtArgs>
   planningNotes?: boolean | Prisma.Product$planningNotesArgs<ExtArgs>
+  launchTasks?: boolean | Prisma.Product$launchTasksArgs<ExtArgs>
+  launchAssets?: boolean | Prisma.Product$launchAssetsArgs<ExtArgs>
+  channels?: boolean | Prisma.Product$channelsArgs<ExtArgs>
+  checklistItems?: boolean | Prisma.Product$checklistItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
@@ -1191,6 +1779,10 @@ export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   releases?: boolean | Prisma.Product$releasesArgs<ExtArgs>
   milestones?: boolean | Prisma.Product$milestonesArgs<ExtArgs>
   planningNotes?: boolean | Prisma.Product$planningNotesArgs<ExtArgs>
+  launchTasks?: boolean | Prisma.Product$launchTasksArgs<ExtArgs>
+  launchAssets?: boolean | Prisma.Product$launchAssetsArgs<ExtArgs>
+  channels?: boolean | Prisma.Product$channelsArgs<ExtArgs>
+  checklistItems?: boolean | Prisma.Product$checklistItemsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1210,6 +1802,10 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     releases: Prisma.$ReleasePayload<ExtArgs>[]
     milestones: Prisma.$MilestonePayload<ExtArgs>[]
     planningNotes: Prisma.$PlanningNotePayload<ExtArgs>[]
+    launchTasks: Prisma.$LaunchTaskPayload<ExtArgs>[]
+    launchAssets: Prisma.$LaunchAssetPayload<ExtArgs>[]
+    channels: Prisma.$ChannelPayload<ExtArgs>[]
+    checklistItems: Prisma.$ChecklistItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1619,6 +2215,10 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   releases<T extends Prisma.Product$releasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$releasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReleasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   milestones<T extends Prisma.Product$milestonesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$milestonesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MilestonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   planningNotes<T extends Prisma.Product$planningNotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$planningNotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlanningNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  launchTasks<T extends Prisma.Product$launchTasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$launchTasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LaunchTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  launchAssets<T extends Prisma.Product$launchAssetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$launchAssetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LaunchAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  channels<T extends Prisma.Product$channelsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$channelsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChannelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  checklistItems<T extends Prisma.Product$checklistItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$checklistItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2196,6 +2796,102 @@ export type Product$planningNotesArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.PlanningNoteScalarFieldEnum | Prisma.PlanningNoteScalarFieldEnum[]
+}
+
+/**
+ * Product.launchTasks
+ */
+export type Product$launchTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LaunchTask
+   */
+  select?: Prisma.LaunchTaskSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LaunchTask
+   */
+  omit?: Prisma.LaunchTaskOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LaunchTaskInclude<ExtArgs> | null
+  where?: Prisma.LaunchTaskWhereInput
+  orderBy?: Prisma.LaunchTaskOrderByWithRelationInput | Prisma.LaunchTaskOrderByWithRelationInput[]
+  cursor?: Prisma.LaunchTaskWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LaunchTaskScalarFieldEnum | Prisma.LaunchTaskScalarFieldEnum[]
+}
+
+/**
+ * Product.launchAssets
+ */
+export type Product$launchAssetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LaunchAsset
+   */
+  select?: Prisma.LaunchAssetSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LaunchAsset
+   */
+  omit?: Prisma.LaunchAssetOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LaunchAssetInclude<ExtArgs> | null
+  where?: Prisma.LaunchAssetWhereInput
+  orderBy?: Prisma.LaunchAssetOrderByWithRelationInput | Prisma.LaunchAssetOrderByWithRelationInput[]
+  cursor?: Prisma.LaunchAssetWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LaunchAssetScalarFieldEnum | Prisma.LaunchAssetScalarFieldEnum[]
+}
+
+/**
+ * Product.channels
+ */
+export type Product$channelsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Channel
+   */
+  select?: Prisma.ChannelSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Channel
+   */
+  omit?: Prisma.ChannelOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChannelInclude<ExtArgs> | null
+  where?: Prisma.ChannelWhereInput
+  orderBy?: Prisma.ChannelOrderByWithRelationInput | Prisma.ChannelOrderByWithRelationInput[]
+  cursor?: Prisma.ChannelWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChannelScalarFieldEnum | Prisma.ChannelScalarFieldEnum[]
+}
+
+/**
+ * Product.checklistItems
+ */
+export type Product$checklistItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChecklistItem
+   */
+  select?: Prisma.ChecklistItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChecklistItem
+   */
+  omit?: Prisma.ChecklistItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChecklistItemInclude<ExtArgs> | null
+  where?: Prisma.ChecklistItemWhereInput
+  orderBy?: Prisma.ChecklistItemOrderByWithRelationInput | Prisma.ChecklistItemOrderByWithRelationInput[]
+  cursor?: Prisma.ChecklistItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChecklistItemScalarFieldEnum | Prisma.ChecklistItemScalarFieldEnum[]
 }
 
 /**

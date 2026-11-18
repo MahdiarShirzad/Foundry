@@ -159,3 +159,23 @@ export type Milestone = Prisma.MilestoneModel
  * 
  */
 export type PlanningNote = Prisma.PlanningNoteModel
+/**
+ * Model LaunchTask
+ * 
+ */
+export type LaunchTask = Prisma.LaunchTaskModel
+/**
+ * Model LaunchAsset
+ * 
+ */
+export type LaunchAsset = Prisma.LaunchAssetModel
+/**
+ * Model Channel
+ * 
+ */
+export type Channel = Prisma.ChannelModel
+/**
+ * Model ChecklistItem
+ * 
+ */
+export type ChecklistItem = Prisma.ChecklistItemModel

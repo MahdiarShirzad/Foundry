@@ -74,7 +74,11 @@ export const ModelName = {
   Initiative: 'Initiative',
   Release: 'Release',
   Milestone: 'Milestone',
-  PlanningNote: 'PlanningNote'
+  PlanningNote: 'PlanningNote',
+  LaunchTask: 'LaunchTask',
+  LaunchAsset: 'LaunchAsset',
+  Channel: 'Channel',
+  ChecklistItem: 'ChecklistItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -476,6 +480,71 @@ export const PlanningNoteScalarFieldEnum = {
 } as const
 
 export type PlanningNoteScalarFieldEnum = (typeof PlanningNoteScalarFieldEnum)[keyof typeof PlanningNoteScalarFieldEnum]
+
+
+export const LaunchTaskScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  title: 'title',
+  description: 'description',
+  phase: 'phase',
+  date: 'date',
+  status: 'status',
+  owner: 'owner',
+  relatedAssetId: 'relatedAssetId',
+  relatedChannelId: 'relatedChannelId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LaunchTaskScalarFieldEnum = (typeof LaunchTaskScalarFieldEnum)[keyof typeof LaunchTaskScalarFieldEnum]
+
+
+export const LaunchAssetScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  title: 'title',
+  type: 'type',
+  preview: 'preview',
+  status: 'status',
+  lastUpdated: 'lastUpdated',
+  relatedChannelId: 'relatedChannelId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LaunchAssetScalarFieldEnum = (typeof LaunchAssetScalarFieldEnum)[keyof typeof LaunchAssetScalarFieldEnum]
+
+
+export const ChannelScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  name: 'name',
+  campaignObjective: 'campaignObjective',
+  targetAudience: 'targetAudience',
+  plannedActivity: 'plannedActivity',
+  phase: 'phase',
+  status: 'status',
+  relatedAssetIds: 'relatedAssetIds',
+  date: 'date',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChannelScalarFieldEnum = (typeof ChannelScalarFieldEnum)[keyof typeof ChannelScalarFieldEnum]
+
+
+export const ChecklistItemScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  category: 'category',
+  item: 'item',
+  completed: 'completed',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChecklistItemScalarFieldEnum = (typeof ChecklistItemScalarFieldEnum)[keyof typeof ChecklistItemScalarFieldEnum]
 
 
 export const SortOrder = {

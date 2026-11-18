@@ -420,7 +420,11 @@ export const ModelName = {
   Initiative: 'Initiative',
   Release: 'Release',
   Milestone: 'Milestone',
-  PlanningNote: 'PlanningNote'
+  PlanningNote: 'PlanningNote',
+  LaunchTask: 'LaunchTask',
+  LaunchAsset: 'LaunchAsset',
+  Channel: 'Channel',
+  ChecklistItem: 'ChecklistItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -436,7 +440,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "emailVerificationCode" | "passwordResetToken" | "workspace" | "workspaceMember" | "product" | "idea" | "ideaNote" | "marketIdea" | "competitor" | "segment" | "opportunity" | "researchNote" | "hypothesis" | "experiment" | "evidenceItem" | "mVPProject" | "feature" | "scopeItem" | "initiative" | "release" | "milestone" | "planningNote"
+    modelProps: "user" | "session" | "emailVerificationCode" | "passwordResetToken" | "workspace" | "workspaceMember" | "product" | "idea" | "ideaNote" | "marketIdea" | "competitor" | "segment" | "opportunity" | "researchNote" | "hypothesis" | "experiment" | "evidenceItem" | "mVPProject" | "feature" | "scopeItem" | "initiative" | "release" | "milestone" | "planningNote" | "launchTask" | "launchAsset" | "channel" | "checklistItem"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2216,6 +2220,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LaunchTask: {
+      payload: Prisma.$LaunchTaskPayload<ExtArgs>
+      fields: Prisma.LaunchTaskFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LaunchTaskFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchTaskPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LaunchTaskFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchTaskPayload>
+        }
+        findFirst: {
+          args: Prisma.LaunchTaskFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchTaskPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LaunchTaskFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchTaskPayload>
+        }
+        findMany: {
+          args: Prisma.LaunchTaskFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchTaskPayload>[]
+        }
+        create: {
+          args: Prisma.LaunchTaskCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchTaskPayload>
+        }
+        createMany: {
+          args: Prisma.LaunchTaskCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LaunchTaskCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchTaskPayload>[]
+        }
+        delete: {
+          args: Prisma.LaunchTaskDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchTaskPayload>
+        }
+        update: {
+          args: Prisma.LaunchTaskUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchTaskPayload>
+        }
+        deleteMany: {
+          args: Prisma.LaunchTaskDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LaunchTaskUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LaunchTaskUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchTaskPayload>[]
+        }
+        upsert: {
+          args: Prisma.LaunchTaskUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchTaskPayload>
+        }
+        aggregate: {
+          args: Prisma.LaunchTaskAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLaunchTask>
+        }
+        groupBy: {
+          args: Prisma.LaunchTaskGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LaunchTaskGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LaunchTaskCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LaunchTaskCountAggregateOutputType> | number
+        }
+      }
+    }
+    LaunchAsset: {
+      payload: Prisma.$LaunchAssetPayload<ExtArgs>
+      fields: Prisma.LaunchAssetFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LaunchAssetFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchAssetPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LaunchAssetFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchAssetPayload>
+        }
+        findFirst: {
+          args: Prisma.LaunchAssetFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchAssetPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LaunchAssetFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchAssetPayload>
+        }
+        findMany: {
+          args: Prisma.LaunchAssetFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchAssetPayload>[]
+        }
+        create: {
+          args: Prisma.LaunchAssetCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchAssetPayload>
+        }
+        createMany: {
+          args: Prisma.LaunchAssetCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LaunchAssetCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchAssetPayload>[]
+        }
+        delete: {
+          args: Prisma.LaunchAssetDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchAssetPayload>
+        }
+        update: {
+          args: Prisma.LaunchAssetUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchAssetPayload>
+        }
+        deleteMany: {
+          args: Prisma.LaunchAssetDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LaunchAssetUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LaunchAssetUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchAssetPayload>[]
+        }
+        upsert: {
+          args: Prisma.LaunchAssetUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LaunchAssetPayload>
+        }
+        aggregate: {
+          args: Prisma.LaunchAssetAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLaunchAsset>
+        }
+        groupBy: {
+          args: Prisma.LaunchAssetGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LaunchAssetGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LaunchAssetCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LaunchAssetCountAggregateOutputType> | number
+        }
+      }
+    }
+    Channel: {
+      payload: Prisma.$ChannelPayload<ExtArgs>
+      fields: Prisma.ChannelFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ChannelFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChannelPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ChannelFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChannelPayload>
+        }
+        findFirst: {
+          args: Prisma.ChannelFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChannelPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ChannelFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChannelPayload>
+        }
+        findMany: {
+          args: Prisma.ChannelFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChannelPayload>[]
+        }
+        create: {
+          args: Prisma.ChannelCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChannelPayload>
+        }
+        createMany: {
+          args: Prisma.ChannelCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ChannelCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChannelPayload>[]
+        }
+        delete: {
+          args: Prisma.ChannelDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChannelPayload>
+        }
+        update: {
+          args: Prisma.ChannelUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChannelPayload>
+        }
+        deleteMany: {
+          args: Prisma.ChannelDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ChannelUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ChannelUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChannelPayload>[]
+        }
+        upsert: {
+          args: Prisma.ChannelUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChannelPayload>
+        }
+        aggregate: {
+          args: Prisma.ChannelAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChannel>
+        }
+        groupBy: {
+          args: Prisma.ChannelGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChannelGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ChannelCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChannelCountAggregateOutputType> | number
+        }
+      }
+    }
+    ChecklistItem: {
+      payload: Prisma.$ChecklistItemPayload<ExtArgs>
+      fields: Prisma.ChecklistItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ChecklistItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChecklistItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ChecklistItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChecklistItemPayload>
+        }
+        findFirst: {
+          args: Prisma.ChecklistItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChecklistItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ChecklistItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChecklistItemPayload>
+        }
+        findMany: {
+          args: Prisma.ChecklistItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChecklistItemPayload>[]
+        }
+        create: {
+          args: Prisma.ChecklistItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChecklistItemPayload>
+        }
+        createMany: {
+          args: Prisma.ChecklistItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ChecklistItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChecklistItemPayload>[]
+        }
+        delete: {
+          args: Prisma.ChecklistItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChecklistItemPayload>
+        }
+        update: {
+          args: Prisma.ChecklistItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChecklistItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.ChecklistItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ChecklistItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ChecklistItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChecklistItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.ChecklistItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChecklistItemPayload>
+        }
+        aggregate: {
+          args: Prisma.ChecklistItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChecklistItem>
+        }
+        groupBy: {
+          args: Prisma.ChecklistItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChecklistItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ChecklistItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChecklistItemCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2640,6 +2940,71 @@ export const PlanningNoteScalarFieldEnum = {
 export type PlanningNoteScalarFieldEnum = (typeof PlanningNoteScalarFieldEnum)[keyof typeof PlanningNoteScalarFieldEnum]
 
 
+export const LaunchTaskScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  title: 'title',
+  description: 'description',
+  phase: 'phase',
+  date: 'date',
+  status: 'status',
+  owner: 'owner',
+  relatedAssetId: 'relatedAssetId',
+  relatedChannelId: 'relatedChannelId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LaunchTaskScalarFieldEnum = (typeof LaunchTaskScalarFieldEnum)[keyof typeof LaunchTaskScalarFieldEnum]
+
+
+export const LaunchAssetScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  title: 'title',
+  type: 'type',
+  preview: 'preview',
+  status: 'status',
+  lastUpdated: 'lastUpdated',
+  relatedChannelId: 'relatedChannelId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LaunchAssetScalarFieldEnum = (typeof LaunchAssetScalarFieldEnum)[keyof typeof LaunchAssetScalarFieldEnum]
+
+
+export const ChannelScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  name: 'name',
+  campaignObjective: 'campaignObjective',
+  targetAudience: 'targetAudience',
+  plannedActivity: 'plannedActivity',
+  phase: 'phase',
+  status: 'status',
+  relatedAssetIds: 'relatedAssetIds',
+  date: 'date',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChannelScalarFieldEnum = (typeof ChannelScalarFieldEnum)[keyof typeof ChannelScalarFieldEnum]
+
+
+export const ChecklistItemScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  category: 'category',
+  item: 'item',
+  completed: 'completed',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChecklistItemScalarFieldEnum = (typeof ChecklistItemScalarFieldEnum)[keyof typeof ChecklistItemScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3022,6 +3387,10 @@ export type GlobalOmitConfig = {
   release?: Prisma.ReleaseOmit
   milestone?: Prisma.MilestoneOmit
   planningNote?: Prisma.PlanningNoteOmit
+  launchTask?: Prisma.LaunchTaskOmit
+  launchAsset?: Prisma.LaunchAssetOmit
+  channel?: Prisma.ChannelOmit
+  checklistItem?: Prisma.ChecklistItemOmit
 }
 
 /* Types for Logging */
