@@ -16,6 +16,7 @@ import { MarketIntelligenceModule } from './market-intelligence/ market-intellig
 import { ValidationModule } from './validation/validation.module';
 import { AiModule } from './ai/ai.module';
 import { MvpModule } from './mvp/mvp.module';
+import { RoadmapModule } from './roadmap/roadmap.module';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -38,6 +39,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     MarketIntelligenceModule,
     ValidationModule,
     MvpModule,
+    RoadmapModule,
   ],
   controllers: [AppController],
   providers: [
