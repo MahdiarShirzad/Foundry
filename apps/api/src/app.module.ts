@@ -14,6 +14,7 @@ import { ProductModule } from './product/product.module';
 import { IdeaModule } from './ideas/ideas.module';
 import { MarketIntelligenceModule } from './market-intelligence/ market-intelligence.module';
 import { ValidationModule } from './validation/validation.module';
+import { AiModule } from './ai/ai.module';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -28,6 +29,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     }),
     HealthModule,
     PrismaModule,
+    AiModule,
     AuthModule,
     WorkspaceModule,
     ProductModule,
