@@ -67,7 +67,10 @@ export const ModelName = {
   ResearchNote: 'ResearchNote',
   Hypothesis: 'Hypothesis',
   Experiment: 'Experiment',
-  EvidenceItem: 'EvidenceItem'
+  EvidenceItem: 'EvidenceItem',
+  MVPProject: 'MVPProject',
+  Feature: 'Feature',
+  ScopeItem: 'ScopeItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -338,12 +341,84 @@ export const EvidenceItemScalarFieldEnum = {
 export type EvidenceItemScalarFieldEnum = (typeof EvidenceItemScalarFieldEnum)[keyof typeof EvidenceItemScalarFieldEnum]
 
 
+export const MVPProjectScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  name: 'name',
+  ref: 'ref',
+  status: 'status',
+  concept: 'concept',
+  problem: 'problem',
+  targetAudience: 'targetAudience',
+  valueProp: 'valueProp',
+  mvpObjective: 'mvpObjective',
+  currentScope: 'currentScope',
+  essentialCapabilities: 'essentialCapabilities',
+  explicitExclusions: 'explicitExclusions',
+  successCriteria: 'successCriteria',
+  structure: 'structure',
+  openDecisions: 'openDecisions',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MVPProjectScalarFieldEnum = (typeof MVPProjectScalarFieldEnum)[keyof typeof MVPProjectScalarFieldEnum]
+
+
+export const FeatureScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  name: 'name',
+  description: 'description',
+  userProblem: 'userProblem',
+  targetUser: 'targetUser',
+  area: 'area',
+  priority: 'priority',
+  scope: 'scope',
+  status: 'status',
+  userStory: 'userStory',
+  acceptanceCriteria: 'acceptanceCriteria',
+  behavior: 'behavior',
+  edgeCases: 'edgeCases',
+  dependencies: 'dependencies',
+  openQuestions: 'openQuestions',
+  designNotes: 'designNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FeatureScalarFieldEnum = (typeof FeatureScalarFieldEnum)[keyof typeof FeatureScalarFieldEnum]
+
+
+export const ScopeItemScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  name: 'name',
+  explanation: 'explanation',
+  category: 'category',
+  status: 'status',
+  featureId: 'featureId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ScopeItemScalarFieldEnum = (typeof ScopeItemScalarFieldEnum)[keyof typeof ScopeItemScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -360,4 +435,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

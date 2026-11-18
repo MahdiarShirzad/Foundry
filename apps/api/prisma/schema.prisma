@@ -108,8 +108,9 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  ideas     Idea[]
+  workspace   Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  ideas       Idea[]
+  mvpProjects MVPProject[]
 
   @@unique([workspaceId, slug])
   @@index([workspaceId])
@@ -328,6 +329,79 @@ model EvidenceItem {
   hypothesis Hypothesis? @relation(fields: [relatedHypothesisId], references: [id])
 
   @@index([ideaId])
+}
+
+// ─────────────────────────────────────────
+// Stage 04 — MVP Studio
+// ─────────────────────────────────────────
+
+model MVPProject {
+  id                    String   @id @default(uuid())
+  productId             String
+  name                  String
+  ref                   String?
+  status                String   @default("Scoping")
+  concept               String?
+  problem               String?
+  targetAudience        String?
+  valueProp             String?
+  mvpObjective          String?
+  currentScope          String?
+  essentialCapabilities String[] @default([])
+  explicitExclusions    String[] @default([])
+  successCriteria       String[] @default([])
+  structure             Json?
+  openDecisions         String[] @default([])
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  product  Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  features Feature[]
+  scope    ScopeItem[]
+
+  @@index([productId])
+}
+
+model Feature {
+  id                 String   @id @default(uuid())
+  projectId          String
+  name               String
+  description        String?
+  userProblem        String?
+  targetUser         String?
+  area               String?
+  priority           String   @default("Medium")
+  scope              String   @default("Could Have")
+  status             String   @default("Proposed")
+  userStory          String?
+  acceptanceCriteria String[] @default([])
+  behavior           String?
+  edgeCases          String[] @default([])
+  dependencies       String[] @default([])
+  openQuestions      String[] @default([])
+  designNotes        String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  project MVPProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model ScopeItem {
+  id          String   @id @default(uuid())
+  projectId   String
+  name        String
+  explanation String?
+  category    String   @default("included")
+  status      String   @default("Proposed")
+  featureId   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project MVPProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
 }
 
 // ─────────────────────────────────────────

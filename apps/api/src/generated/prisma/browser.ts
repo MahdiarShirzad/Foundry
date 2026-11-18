@@ -102,3 +102,18 @@ export type Experiment = Prisma.ExperimentModel
  * 
  */
 export type EvidenceItem = Prisma.EvidenceItemModel
+/**
+ * Model MVPProject
+ * 
+ */
+export type MVPProject = Prisma.MVPProjectModel
+/**
+ * Model Feature
+ * 
+ */
+export type Feature = Prisma.FeatureModel
+/**
+ * Model ScopeItem
+ * 
+ */
+export type ScopeItem = Prisma.ScopeItemModel

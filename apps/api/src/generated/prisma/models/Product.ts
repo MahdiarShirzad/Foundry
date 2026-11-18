@@ -192,6 +192,7 @@ export type ProductWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   workspace?: Prisma.XOR<Prisma.WorkspaceScalarRelationFilter, Prisma.WorkspaceWhereInput>
   ideas?: Prisma.IdeaListRelationFilter
+  mvpProjects?: Prisma.MVPProjectListRelationFilter
 }
 
 export type ProductOrderByWithRelationInput = {
@@ -203,6 +204,7 @@ export type ProductOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   workspace?: Prisma.WorkspaceOrderByWithRelationInput
   ideas?: Prisma.IdeaOrderByRelationAggregateInput
+  mvpProjects?: Prisma.MVPProjectOrderByRelationAggregateInput
 }
 
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -218,6 +220,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   workspace?: Prisma.XOR<Prisma.WorkspaceScalarRelationFilter, Prisma.WorkspaceWhereInput>
   ideas?: Prisma.IdeaListRelationFilter
+  mvpProjects?: Prisma.MVPProjectListRelationFilter
 }, "id" | "workspaceId_slug">
 
 export type ProductOrderByWithAggregationInput = {
@@ -252,6 +255,7 @@ export type ProductCreateInput = {
   updatedAt?: Date | string
   workspace: Prisma.WorkspaceCreateNestedOneWithoutProductsInput
   ideas?: Prisma.IdeaCreateNestedManyWithoutProductInput
+  mvpProjects?: Prisma.MVPProjectCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateInput = {
@@ -262,6 +266,7 @@ export type ProductUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ideas?: Prisma.IdeaUncheckedCreateNestedManyWithoutProductInput
+  mvpProjects?: Prisma.MVPProjectUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductUpdateInput = {
@@ -272,6 +277,7 @@ export type ProductUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutProductsNestedInput
   ideas?: Prisma.IdeaUpdateManyWithoutProductNestedInput
+  mvpProjects?: Prisma.MVPProjectUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateInput = {
@@ -282,6 +288,7 @@ export type ProductUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ideas?: Prisma.IdeaUncheckedUpdateManyWithoutProductNestedInput
+  mvpProjects?: Prisma.MVPProjectUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyInput = {
@@ -413,6 +420,20 @@ export type ProductUpdateOneRequiredWithoutIdeasNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutIdeasInput, Prisma.ProductUpdateWithoutIdeasInput>, Prisma.ProductUncheckedUpdateWithoutIdeasInput>
 }
 
+export type ProductCreateNestedOneWithoutMvpProjectsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutMvpProjectsInput, Prisma.ProductUncheckedCreateWithoutMvpProjectsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutMvpProjectsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutMvpProjectsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutMvpProjectsInput, Prisma.ProductUncheckedCreateWithoutMvpProjectsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutMvpProjectsInput
+  upsert?: Prisma.ProductUpsertWithoutMvpProjectsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutMvpProjectsInput, Prisma.ProductUpdateWithoutMvpProjectsInput>, Prisma.ProductUncheckedUpdateWithoutMvpProjectsInput>
+}
+
 export type ProductCreateWithoutWorkspaceInput = {
   id?: string
   name: string
@@ -420,6 +441,7 @@ export type ProductCreateWithoutWorkspaceInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ideas?: Prisma.IdeaCreateNestedManyWithoutProductInput
+  mvpProjects?: Prisma.MVPProjectCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutWorkspaceInput = {
@@ -429,6 +451,7 @@ export type ProductUncheckedCreateWithoutWorkspaceInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   ideas?: Prisma.IdeaUncheckedCreateNestedManyWithoutProductInput
+  mvpProjects?: Prisma.MVPProjectUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutWorkspaceInput = {
@@ -476,6 +499,7 @@ export type ProductCreateWithoutIdeasInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   workspace: Prisma.WorkspaceCreateNestedOneWithoutProductsInput
+  mvpProjects?: Prisma.MVPProjectCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutIdeasInput = {
@@ -485,6 +509,7 @@ export type ProductUncheckedCreateWithoutIdeasInput = {
   slug: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  mvpProjects?: Prisma.MVPProjectUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutIdeasInput = {
@@ -510,6 +535,7 @@ export type ProductUpdateWithoutIdeasInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutProductsNestedInput
+  mvpProjects?: Prisma.MVPProjectUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutIdeasInput = {
@@ -519,6 +545,63 @@ export type ProductUncheckedUpdateWithoutIdeasInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mvpProjects?: Prisma.MVPProjectUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateWithoutMvpProjectsInput = {
+  id?: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  workspace: Prisma.WorkspaceCreateNestedOneWithoutProductsInput
+  ideas?: Prisma.IdeaCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutMvpProjectsInput = {
+  id?: string
+  workspaceId: string
+  name: string
+  slug: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  ideas?: Prisma.IdeaUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutMvpProjectsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutMvpProjectsInput, Prisma.ProductUncheckedCreateWithoutMvpProjectsInput>
+}
+
+export type ProductUpsertWithoutMvpProjectsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutMvpProjectsInput, Prisma.ProductUncheckedUpdateWithoutMvpProjectsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutMvpProjectsInput, Prisma.ProductUncheckedCreateWithoutMvpProjectsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutMvpProjectsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutMvpProjectsInput, Prisma.ProductUncheckedUpdateWithoutMvpProjectsInput>
+}
+
+export type ProductUpdateWithoutMvpProjectsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workspace?: Prisma.WorkspaceUpdateOneRequiredWithoutProductsNestedInput
+  ideas?: Prisma.IdeaUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutMvpProjectsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workspaceId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ideas?: Prisma.IdeaUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyWorkspaceInput = {
@@ -536,6 +619,7 @@ export type ProductUpdateWithoutWorkspaceInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ideas?: Prisma.IdeaUpdateManyWithoutProductNestedInput
+  mvpProjects?: Prisma.MVPProjectUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutWorkspaceInput = {
@@ -545,6 +629,7 @@ export type ProductUncheckedUpdateWithoutWorkspaceInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ideas?: Prisma.IdeaUncheckedUpdateManyWithoutProductNestedInput
+  mvpProjects?: Prisma.MVPProjectUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutWorkspaceInput = {
@@ -562,10 +647,12 @@ export type ProductUncheckedUpdateManyWithoutWorkspaceInput = {
 
 export type ProductCountOutputType = {
   ideas: number
+  mvpProjects: number
 }
 
 export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   ideas?: boolean | ProductCountOutputTypeCountIdeasArgs
+  mvpProjects?: boolean | ProductCountOutputTypeCountMvpProjectsArgs
 }
 
 /**
@@ -585,6 +672,13 @@ export type ProductCountOutputTypeCountIdeasArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.IdeaWhereInput
 }
 
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountMvpProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MVPProjectWhereInput
+}
+
 
 export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -595,6 +689,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   updatedAt?: boolean
   workspace?: boolean | Prisma.WorkspaceDefaultArgs<ExtArgs>
   ideas?: boolean | Prisma.Product$ideasArgs<ExtArgs>
+  mvpProjects?: boolean | Prisma.Product$mvpProjectsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
@@ -631,6 +726,7 @@ export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   workspace?: boolean | Prisma.WorkspaceDefaultArgs<ExtArgs>
   ideas?: boolean | Prisma.Product$ideasArgs<ExtArgs>
+  mvpProjects?: boolean | Prisma.Product$mvpProjectsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -645,6 +741,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     workspace: Prisma.$WorkspacePayload<ExtArgs>
     ideas: Prisma.$IdeaPayload<ExtArgs>[]
+    mvpProjects: Prisma.$MVPProjectPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1049,6 +1146,7 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   workspace<T extends Prisma.WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.WorkspaceDefaultArgs<ExtArgs>>): Prisma.Prisma__WorkspaceClient<runtime.Types.Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   ideas<T extends Prisma.Product$ideasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$ideasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IdeaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  mvpProjects<T extends Prisma.Product$mvpProjectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$mvpProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MVPProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1506,6 +1604,30 @@ export type Product$ideasArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.IdeaScalarFieldEnum | Prisma.IdeaScalarFieldEnum[]
+}
+
+/**
+ * Product.mvpProjects
+ */
+export type Product$mvpProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MVPProject
+   */
+  select?: Prisma.MVPProjectSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MVPProject
+   */
+  omit?: Prisma.MVPProjectOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MVPProjectInclude<ExtArgs> | null
+  where?: Prisma.MVPProjectWhereInput
+  orderBy?: Prisma.MVPProjectOrderByWithRelationInput | Prisma.MVPProjectOrderByWithRelationInput[]
+  cursor?: Prisma.MVPProjectWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MVPProjectScalarFieldEnum | Prisma.MVPProjectScalarFieldEnum[]
 }
 
 /**
