@@ -3,19 +3,18 @@
 import { Button, PlusIcon } from "@/components/ui/button";
 import { HeaderSelect, ModuleHeader } from "@/components/ui/primitives";
 
-import { DEMO_MVP_PROJECTS } from "@/lib/mvp-studio/demo";
 import type { MVPProject } from "@/lib/mvp-studio/types";
 
 export function MVPStudioHeader({
   project,
-  projects = DEMO_MVP_PROJECTS,
+  projects,
   onChangeProject,
   counts,
   onAddFeature,
   onDefineScope,
 }: {
   project: MVPProject;
-  projects?: MVPProject[];
+  projects: MVPProject[];
   onChangeProject: (id: string) => void;
   counts: { total: number; inMvp: number; inProgress: number; completed: number };
   onAddFeature: () => void;

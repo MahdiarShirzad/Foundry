@@ -1,14 +1,21 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import { DevToolsPopover, StatePreview } from "@/components/ui/primitives";
+import { useProducts } from "@/lib/product/use-products";
+import { useHydrated } from "@/lib/use-hydrated";
 import {
-  DEMO_FEATURES,
-  DEMO_MVP_PROJECTS,
-  DEMO_SCOPE_EXTRAS,
-} from "@/lib/mvp-studio/demo";
+  useCreateFeature,
+  useFeatures,
+  useProjects,
+  useScopeItems,
+  useUpdateFeature,
+  useUpdateProject,
+  useUpdateScopeItem,
+} from "@/lib/mvp/hooks";
 import {
   MVP_VIEWS,
   SCOPE_CATEGORIES,
@@ -17,7 +24,6 @@ import {
   type Feature,
   type FeatureDraft,
   type FeatureStatus,
-  type MVPProject,
   type MVPProjectPatch,
   type MVPSection,
   type MVPView,
@@ -39,48 +45,108 @@ import { BuildProgressBoard } from "./sections/build-progress-board";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-/**
- * MVP Studio — Stage 04. Frontend UI only: static mock data plus lightweight
- * React local state for presentational interactions. Nothing is persisted,
- * generated, or sent anywhere.
- */
-export default function MVPStudioPage() {
-  const reduce = useReducedMotion();
+/** Shape returned by `GET /products`. */
+type Product = {
+  id: string;
+  name: string;
+  slug?: string;
+};
 
-  const [projectId, setProjectId] = useState<string>(DEMO_MVP_PROJECTS[0].id);
+function errorMessage(error: unknown, fallback: string): string {
+  return error instanceof Error && error.message ? error.message : fallback;
+}
+
+function NoProjects() {
+  return (
+    <div className="border border-dashed border-line bg-panel px-5 py-10 text-center">
+      <p className="text-[13px] leading-relaxed text-muted">
+        No MVP projects yet — create one to start scoping your first version.
+      </p>
+    </div>
+  );
+}
+
+export default function MVPStudioPage({ productId }: { productId?: string }) {
+  const reduce = useReducedMotion();
+  const hydrated = useHydrated();
+
+  const { data: productsData, isPending: productsPending } = useProducts();
+  const products = (productsData as Product[] | undefined) ?? [];
+
+  // The dashboard stores the active product in `?product=`; fall back to the
+  // first product the same way the other module workspaces do.
+  const activeProductId =
+    productId ?? (hydrated ? products[0]?.id : undefined);
+
+  const [projectId, setProjectId] = useState<string | null>(null);
   const [section, setSection] = useState<MVPSection>("Overview");
   const [view, setView] = useState<MVPView>("ready");
   const [addOpen, setAddOpen] = useState(false);
   const [scopeOpen, setScopeOpen] = useState(false);
   const [toast, setToast] = useState<{ key: number; message: string } | null>(null);
 
-  /* Local stores — the only place any of this data lives. */
-  const [projects, setProjects] = useState<MVPProject[]>(DEMO_MVP_PROJECTS);
-  const [features, setFeatures] = useState<Feature[]>(DEMO_FEATURES);
-  const [scopeExtras, setScopeExtras] = useState<ScopeItem[]>(DEMO_SCOPE_EXTRAS);
+  const {
+    projects,
+    loading: projectsLoading,
+    error: projectsError,
+    refetch: refetchProjects,
+  } = useProjects(activeProductId);
 
-  const project = projects.find((item) => item.id === projectId) ?? projects[0];
+  const project =
+    projects.find((item) => item.id === projectId) ?? projects[0] ?? null;
+  const activeProjectId = project?.id;
+
+  const {
+    features,
+    loading: featuresLoading,
+    error: featuresError,
+    refetch: refetchFeatures,
+  } = useFeatures(activeProductId, activeProjectId);
+
+  const {
+    scopeItems: storedScope,
+    loading: scopeLoading,
+    error: scopeError,
+    refetch: refetchScope,
+  } = useScopeItems(activeProductId, activeProjectId);
+
+  const createFeature = useCreateFeature(activeProductId, activeProjectId);
+  const updateFeature = useUpdateFeature(activeProductId, activeProjectId);
+  const updateScopeItem = useUpdateScopeItem(activeProductId, activeProjectId);
+  const updateProject = useUpdateProject(activeProductId);
+
   const isEmptyPreview = view === "empty";
 
   const projectFeatures = useMemo(
-    () => (isEmptyPreview ? [] : features.filter((f) => f.projectId === projectId)),
-    [features, projectId, isEmptyPreview],
+    () => (isEmptyPreview ? [] : features),
+    [features, isEmptyPreview],
   );
 
   const scopeItems = useMemo<ScopeItem[]>(() => {
     if (isEmptyPreview) return [];
-    const fromFeatures: ScopeItem[] = projectFeatures.map((f) => ({
-      id: `scope-${f.id}`,
-      projectId: f.projectId,
-      name: f.name,
-      explanation: f.description,
-      category: scopeCategoryOf(f.scope),
-      status: f.status,
-      featureId: f.id,
-    }));
-    const extras = scopeExtras.filter((item) => item.projectId === projectId);
+
+    // Persisted scope rows win over the feature-derived rows they mirror.
+    const persistedByFeature = new Map(
+      storedScope
+        .filter((item) => item.featureId)
+        .map((item) => [item.featureId as string, item]),
+    );
+
+    const fromFeatures: ScopeItem[] = projectFeatures
+      .filter((feature) => !persistedByFeature.has(feature.id))
+      .map((feature) => ({
+        id: `scope-${feature.id}`,
+        projectId: feature.projectId,
+        name: feature.name,
+        explanation: feature.description,
+        category: scopeCategoryOf(feature.scope),
+        status: feature.status,
+        featureId: feature.id,
+      }));
+
+    const extras = storedScope.filter((item) => !item.featureId);
     return [...fromFeatures, ...extras];
-  }, [projectFeatures, scopeExtras, projectId, isEmptyPreview]);
+  }, [projectFeatures, storedScope, isEmptyPreview]);
 
   const counts = useMemo(
     () => ({
@@ -93,7 +159,7 @@ export default function MVPStudioPage() {
   );
 
   const tabCounts: Record<MVPSection, number> = {
-    Overview: project.openDecisions.length,
+    Overview: project?.openDecisions.length ?? 0,
     "Feature Backlog": projectFeatures.length,
     "MVP Scope": scopeItems.length,
     Specifications: projectFeatures.length,
@@ -114,72 +180,126 @@ export default function MVPStudioPage() {
 
   /* ----------------------------------------------------------- mutations --- */
 
-  function patchFeature(id: string, patch: Partial<Feature>, message?: string) {
-    setFeatures((current) =>
-      current.map((feature) => (feature.id === id ? { ...feature, ...patch } : feature)),
-    );
-    if (message) notify(message);
+  async function patchFeature(
+    id: string,
+    patch: Partial<Feature>,
+    message?: string,
+  ) {
+    try {
+      await updateFeature.update(id, patch);
+      if (message) notify(message);
+    } catch (error) {
+      console.error("Failed to update feature", error);
+      notify(errorMessage(error, "Could not update the feature"));
+    }
   }
 
   function changeStatus(id: string, status: FeatureStatus) {
-    patchFeature(id, { status }, describePatch(id, { status }));
+    void patchFeature(id, { status }, describePatch(id, { status }));
   }
 
-  function addFeature(draft: FeatureDraft) {
-    const id = `f-local-${Date.now()}`;
-    const record: Feature = {
-      id,
-      projectId: project.id,
-      area: project.structure.areas[0]?.name ?? "Core",
-      status: "Proposed",
-      behavior: "",
-      edgeCases: [],
-      dependencies: [],
-      openQuestions: [],
-      designNotes: "",
-      ...draft,
-    };
-    setFeatures((current) => [record, ...current]);
-    setAddOpen(false);
-    setView("ready");
-    setSection("Feature Backlog");
-    notify(`“${record.name}” added to the backlog · preview only, nothing was saved`);
-  }
-
-  function moveScopeItem(item: ScopeItem, category: ScopeCategory) {
-    if (item.featureId) {
-      patchFeature(
-        item.featureId,
-        { scope: SCOPE_TO_FEATURE_SCOPE[category] },
-        `“${item.name}” → ${labelFor(category)} · local state only`,
-      );
-      return;
+  async function addFeature(draft: FeatureDraft) {
+    if (!project) return;
+    try {
+      await createFeature.create({
+        ...draft,
+        area: project.structure.areas[0]?.name || "Core",
+        status: "Proposed",
+      });
+      setAddOpen(false);
+      setView("ready");
+      setSection("Feature Backlog");
+      notify(`“${draft.name}” added to the backlog`);
+    } catch (error) {
+      console.error("Failed to create feature", error);
+      notify(errorMessage(error, "Could not add the feature"));
     }
-    setScopeExtras((current) =>
-      current.map((extra) => (extra.id === item.id ? { ...extra, category } : extra)),
-    );
-    notify(`“${item.name}” → ${labelFor(category)} · local state only`);
   }
 
-  function saveScopeDefinition(patch: MVPProjectPatch) {
-    setProjects((current) =>
-      current.map((item) => (item.id === project.id ? { ...item, ...patch } : item)),
-    );
-    setScopeOpen(false);
-    notify("MVP scope definition updated in this preview · not persisted");
+  async function moveScopeItem(item: ScopeItem, category: ScopeCategory) {
+    try {
+      if (item.featureId) {
+        await updateFeature.update(item.featureId, {
+          scope: SCOPE_TO_FEATURE_SCOPE[category],
+        });
+      } else {
+        await updateScopeItem.update(item.id, { category });
+      }
+      notify(`“${item.name}” → ${labelFor(category)}`);
+    } catch (error) {
+      console.error("Failed to move scope item", error);
+      notify(errorMessage(error, "Could not move the scope item"));
+    }
+  }
+
+  async function saveScopeDefinition(patch: MVPProjectPatch) {
+    if (!project) return;
+    try {
+      await updateProject.update(project.id, patch);
+      setScopeOpen(false);
+      notify("MVP scope definition updated");
+    } catch (error) {
+      console.error("Failed to update MVP scope", error);
+      notify(errorMessage(error, "Could not update the MVP scope"));
+    }
   }
 
   function changeProject(id: string) {
     setProjectId(id);
+    setSection("Overview");
     const next = projects.find((item) => item.id === id);
-    notify(`Switched to ${next?.name ?? "idea"} · local preview`);
+    notify(`Switched to ${next?.name ?? "project"}`);
   }
 
   function jump(next: MVPSection) {
     setSection(next);
   }
 
+  function retry() {
+    if (projectsError) void refetchProjects();
+    if (featuresError) void refetchFeatures();
+    if (scopeError) void refetchScope();
+  }
+
   /* -------------------------------------------------------------- render --- */
+
+  if (!hydrated || productsPending || projectsLoading || featuresLoading || scopeLoading) {
+    return (
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col gap-4"
+      >
+        <MVPStudioSkeleton />
+      </motion.div>
+    );
+  }
+
+  const error = projectsError || featuresError || scopeError;
+
+  if (error) {
+    return (
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col gap-4"
+      >
+        <MVPStudioErrorState onRetry={retry} />
+      </motion.div>
+    );
+  }
+
+  if (!project) {
+    return (
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col gap-4"
+      >
+        <NoProjects />
+      </motion.div>
+    );
+  }
 
   const header = (
     <MVPStudioHeader
@@ -194,7 +314,7 @@ export default function MVPStudioPage() {
 
   const statePreview = (
     <div className="flex flex-wrap items-center justify-between gap-3">
-      <p className="text-[12px] text-faint">Local state · changes are not persisted</p>
+      <p className="text-[12px] text-faint">Changes are saved to your product workspace</p>
       <DevToolsPopover>
         <StatePreview value={view} options={MVP_VIEWS} onChange={setView} label="State" />
       </DevToolsPopover>
@@ -212,7 +332,7 @@ export default function MVPStudioPage() {
 
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
-            key={`${projectId}-${view}-${section}`}
+            key={`${project?.id}-${view}-${section}`}
             role="tabpanel"
             id={`mvp-panel-${section}`}
             aria-labelledby={`mvp-tab-${section}`}
@@ -264,11 +384,11 @@ export default function MVPStudioPage() {
   function describePatch(id: string, patch: Partial<Feature>): string | undefined {
     if (patch.status) {
       const feature = features.find((item) => item.id === id);
-      return `“${feature?.name ?? "Feature"}” → ${patch.status} · local state only`;
+      return `“${feature?.name ?? "Feature"}” → ${patch.status}`;
     }
     if (patch.scope) {
       const feature = features.find((item) => item.id === id);
-      return `“${feature?.name ?? "Feature"}” → ${patch.scope} · local state only`;
+      return `“${feature?.name ?? "Feature"}” → ${patch.scope}`;
     }
     return undefined;
   }
@@ -336,6 +456,17 @@ export default function MVPStudioPage() {
       </AnimatePresence>
     </motion.div>
   );
+}
+
+/**
+ * Route entry for the MVP Studio workspace. Reads the active product from the
+ * URL (`?product=<id>`) and threads it into the page. `useSearchParams`
+ * suspends during prerendering, so the route renders this behind Suspense.
+ */
+export function MVPStudioRoute() {
+  const params = useSearchParams();
+  const productId = params.get("product") ?? undefined;
+  return <MVPStudioPage productId={productId} />;
 }
 
 function labelFor(category: ScopeCategory) {

@@ -1,6 +1,6 @@
 /** Presentation types for the MVP Studio workspace. UI labels and mock data only. */
 
-export type MVPProjectId = "helio-notes" | "atlas-scout";
+export type MVPProjectId = string;
 
 export type MVPStructure = {
   areas: { id: string; name: string; blurb: string }[];
