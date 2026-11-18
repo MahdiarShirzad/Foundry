@@ -50,7 +50,7 @@ export type NoteCategory = (typeof NOTE_CATEGORIES)[number];
 
 export type Initiative = {
   id: string;
-  productId: (typeof ROADMAP_PRODUCTS)[number]["id"];
+  productId: string;
   name: string;
   description: string;
   objective: string;
@@ -66,7 +66,7 @@ export type Initiative = {
 
 export type Release = {
   id: string;
-  productId: (typeof ROADMAP_PRODUCTS)[number]["id"];
+  productId: string;
   name: string;
   version: string;
   purpose: string;
@@ -78,7 +78,7 @@ export type Release = {
 
 export type Milestone = {
   id: string;
-  productId: (typeof ROADMAP_PRODUCTS)[number]["id"];
+  productId: string;
   name: string;
   description: string;
   targetDate: string;
@@ -88,7 +88,7 @@ export type Milestone = {
 
 export type PlanningNote = {
   id: string;
-  productId: (typeof ROADMAP_PRODUCTS)[number]["id"];
+  productId: string;
   title: string;
   summary: string;
   relatedItemId: string | null;

@@ -1,17 +1,14 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import { DevToolsPopover, StatePreview } from "@/components/ui/primitives";
 
 import { useProducts } from "@/lib/product/use-products";
-import {
-  getInitiativesForProduct,
-  getMilestonesForProduct,
-  getNotesForProduct,
-  getReleasesForProduct,
-} from "@/lib/product-roadmap/demo";
+import { useInitiatives, useMilestones, usePlanningNotes, useReleases } from "@/lib/roadmap/hooks";
+import { useHydrated } from "@/lib/use-hydrated";
 import type { RoadmapProduct, RoadmapSection } from "@/lib/product-roadmap/types";
 
 import { ProductRoadmapHeader } from "./product-roadmap-header";
@@ -63,26 +60,64 @@ function NoProducts() {
   );
 }
 
-export default function ProductRoadmapPage() {
+export default function ProductRoadmapPage({ productId }: { productId?: string }) {
   const reduce = useReducedMotion();
+  const hydrated = useHydrated();
   const { data, isPending } = useProducts();
-  const [productId, setProductId] = useState<string | null>(null);
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [section, setSection] = useState<RoadmapSection>("Roadmap");
   const [view, setView] = useState<"populated" | "loading" | "error">("populated");
 
   // `getAllProducts` is untyped at the client wrapper, so narrow here.
   const products = useMemo(() => (data as Product[] | undefined) ?? [], [data]);
   const productOptions = useMemo(() => products.map(toRoadmapProduct), [products]);
-  const selected = products.find((entry) => entry.id === productId) ?? products[0] ?? null;
+  // The dashboard stores the active product in `?product=`; fall back to the
+  // first product the same way the other module workspaces do.
+  const activeId =
+    selectedProductId ??
+    productId ??
+    (hydrated ? products[0]?.id : undefined) ??
+    "";
+  const selected = products.find((entry) => entry.id === activeId) ?? null;
   const product = selected ? toRoadmapProduct(selected) : null;
-  const activeId = selected?.id ?? "";
 
-  const initiatives = useMemo(() => getInitiativesForProduct(activeId), [activeId]);
-  const releases = useMemo(() => getReleasesForProduct(activeId), [activeId]);
-  const milestones = useMemo(() => getMilestonesForProduct(activeId), [activeId]);
-  const notes = useMemo(() => getNotesForProduct(activeId), [activeId]);
+  const {
+    initiatives,
+    loading: initiativesLoading,
+    error: initiativesError,
+    refetch: refetchInitiatives,
+  } = useInitiatives(activeId || undefined);
+  const {
+    releases,
+    loading: releasesLoading,
+    error: releasesError,
+    refetch: refetchReleases,
+  } = useReleases(activeId || undefined);
+  const {
+    milestones,
+    loading: milestonesLoading,
+    error: milestonesError,
+    refetch: refetchMilestones,
+  } = useMilestones(activeId || undefined);
+  const {
+    notes,
+    loading: notesLoading,
+    error: notesError,
+    refetch: refetchNotes,
+  } = usePlanningNotes(activeId || undefined);
 
-  if (isPending) {
+  const dataLoading =
+    initiativesLoading || releasesLoading || milestonesLoading || notesLoading;
+  const dataError = initiativesError || releasesError || milestonesError || notesError;
+
+  function retry() {
+    if (initiativesError) void refetchInitiatives();
+    if (releasesError) void refetchReleases();
+    if (milestonesError) void refetchMilestones();
+    if (notesError) void refetchNotes();
+  }
+
+  if (!hydrated || isPending || (product && dataLoading)) {
     return (
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 6 }}
@@ -106,7 +141,7 @@ export default function ProductRoadmapPage() {
     );
   }
 
-  if (view === "loading") {
+  if (dataError || view === "error") {
     return (
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 6 }}
@@ -115,27 +150,15 @@ export default function ProductRoadmapPage() {
       >
         <ProductRoadmapHeader
           product={product}
-          onChangeProduct={setProductId}
+          onChangeProduct={setSelectedProductId}
           products={productOptions}
         />
-        <ProductRoadmapSkeleton />
-      </motion.div>
-    );
-  }
-
-  if (view === "error") {
-    return (
-      <motion.div
-        initial={reduce ? false : { opacity: 0, y: 6 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col gap-4"
-      >
-        <ProductRoadmapHeader
-          product={product}
-          onChangeProduct={setProductId}
-          products={productOptions}
+        <ProductRoadmapErrorState
+          onRetry={() => {
+            retry();
+            setView("populated");
+          }}
         />
-        <ProductRoadmapErrorState onRetry={() => setView("populated")} />
         <div className="flex justify-end">
           <DevToolsPopover>
             <StatePreview
@@ -149,6 +172,23 @@ export default function ProductRoadmapPage() {
     );
   }
 
+  if (view === "loading") {
+    return (
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex flex-col gap-4"
+      >
+        <ProductRoadmapHeader
+          product={product}
+          onChangeProduct={setSelectedProductId}
+          products={productOptions}
+        />
+        <ProductRoadmapSkeleton />
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       initial={reduce ? false : { opacity: 0, y: 6 }}
@@ -158,7 +198,7 @@ export default function ProductRoadmapPage() {
     >
       <ProductRoadmapHeader
         product={product}
-        onChangeProduct={setProductId}
+        onChangeProduct={setSelectedProductId}
         products={productOptions}
       />
       <RoadmapOverview
@@ -212,4 +252,15 @@ export default function ProductRoadmapPage() {
       </div>
     </motion.div>
   );
+}
+
+/**
+ * Route entry for the Product Roadmap workspace. Reads the active product from
+ * the URL (`?product=<id>`) and threads it into the page. `useSearchParams`
+ * suspends during prerendering, so the route renders this behind Suspense.
+ */
+export function ProductRoadmapRoute() {
+  const params = useSearchParams();
+  const productId = params.get("product") ?? undefined;
+  return <ProductRoadmapPage productId={productId} />;
 }
