@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 
-import LaunchCenterPage from "@/components/launch-center/launch-center-page";
+import { LaunchCenterRoute } from "@/components/launch-center/launch-center-page";
+import { LaunchCenterSkeleton } from "@/components/launch-center/badges";
 
 export const metadata: Metadata = {
   title: "Launch Center — Foundry",
@@ -9,6 +11,20 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+// The page reads `?product=` via `useSearchParams` and loads its data on the
+// client, so the segment drops to its Suspense fallback during prerendering.
+export const instant = false;
+
 export default function Page() {
-  return <LaunchCenterPage />;
+  return (
+    <Suspense
+      fallback={
+        <div className="flex flex-col gap-4">
+          <LaunchCenterSkeleton />
+        </div>
+      }
+    >
+      <LaunchCenterRoute />
+    </Suspense>
+  );
 }

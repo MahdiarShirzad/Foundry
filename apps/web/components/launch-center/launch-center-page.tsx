@@ -1,18 +1,20 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import { DevToolsPopover, StatePreview } from "@/components/ui/primitives";
 
 import { useProducts } from "@/lib/product/use-products";
+import { useHydrated } from "@/lib/use-hydrated";
 import {
-  DEMO_CHECKLIST_ITEMS,
-  getChannelsForProduct,
-  getChecklistItemsForProduct,
-  getLaunchAssetsForProduct,
-  getLaunchTasksForProduct,
-} from "@/lib/launch-center/demo";
+  useAssets,
+  useChannels,
+  useChecklist,
+  useTasks,
+  useUpdateChecklistItem,
+} from "@/lib/launch/hooks";
 import type { LaunchProduct, LaunchSection } from "@/lib/launch-center/types";
 import { LaunchCenterHeader } from "./launch-center-header";
 import { LaunchBrief } from "./launch-brief";
@@ -64,39 +66,69 @@ function NoProducts() {
   );
 }
 
-export default function LaunchCenterPage() {
+export default function LaunchCenterPage({ productId }: { productId?: string }) {
   const reduce = useReducedMotion();
+  const hydrated = useHydrated();
   const { data, isPending } = useProducts();
-  const [productId, setProductId] = useState<string | null>(null);
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [section, setSection] = useState<LaunchSection>("Overview");
   const [view, setView] = useState<"populated" | "loading" | "error">("populated");
-  const [completedIds, setCompletedIds] = useState<Set<string>>(
-    () => new Set(DEMO_CHECKLIST_ITEMS.filter((item) => item.completed).map((item) => item.id)),
-  );
 
   // `getAllProducts` is untyped at the client wrapper, so narrow here.
   const products = useMemo(() => (data as Product[] | undefined) ?? [], [data]);
   const productOptions = useMemo(() => products.map(toLaunchProduct), [products]);
-  const selected = products.find((entry) => entry.id === productId) ?? products[0] ?? null;
+  // The dashboard stores the active product in `?product=`; fall back to the
+  // first product the same way the other module workspaces do.
+  const activeId =
+    selectedProductId ??
+    productId ??
+    (hydrated ? products[0]?.id : undefined) ??
+    "";
+  const selected = products.find((entry) => entry.id === activeId) ?? null;
   const product = selected ? toLaunchProduct(selected) : null;
-  const activeId = selected?.id ?? "";
 
-  const tasks = useMemo(() => getLaunchTasksForProduct(activeId), [activeId]);
-  const assets = useMemo(() => getLaunchAssetsForProduct(activeId), [activeId]);
-  const channels = useMemo(() => getChannelsForProduct(activeId), [activeId]);
-  const checklist = useMemo(() => getChecklistItemsForProduct(activeId), [activeId]);
-  const checklistCompleted = checklist.filter((item) => completedIds.has(item.id)).length;
+  const { tasks, loading: tasksLoading, error: tasksError, refetch: refetchTasks } =
+    useTasks(activeId || undefined);
+  const { assets, loading: assetsLoading, error: assetsError, refetch: refetchAssets } =
+    useAssets(activeId || undefined);
+  const {
+    channels,
+    loading: channelsLoading,
+    error: channelsError,
+    refetch: refetchChannels,
+  } = useChannels(activeId || undefined);
+  const {
+    checklist,
+    loading: checklistLoading,
+    error: checklistError,
+    refetch: refetchChecklist,
+  } = useChecklist(activeId || undefined);
 
-  function toggleChecklistItem(id: string) {
-    setCompletedIds((previous) => {
-      const next = new Set(previous);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+  const updateChecklistItem = useUpdateChecklistItem(activeId || undefined);
+
+  const dataLoading =
+    tasksLoading || assetsLoading || channelsLoading || checklistLoading;
+  const dataError = tasksError || assetsError || channelsError || checklistError;
+  const checklistCompleted = checklist.filter((item) => item.completed).length;
+
+  async function toggleChecklistItem(id: string) {
+    const item = checklist.find((entry) => entry.id === id);
+    if (!item) return;
+    try {
+      await updateChecklistItem.update(id, { completed: !item.completed });
+    } catch (error) {
+      console.error("Failed to update checklist item", error);
+    }
   }
 
-  if (isPending) {
+  function retry() {
+    if (tasksError) void refetchTasks();
+    if (assetsError) void refetchAssets();
+    if (channelsError) void refetchChannels();
+    if (checklistError) void refetchChecklist();
+  }
+
+  if (!hydrated || isPending || (product && dataLoading)) {
     return (
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 6 }}
@@ -130,14 +162,14 @@ export default function LaunchCenterPage() {
         <LaunchCenterHeader
           product={product}
           products={productOptions}
-          onChangeProduct={setProductId}
+          onChangeProduct={setSelectedProductId}
         />
         <LaunchCenterSkeleton />
       </motion.div>
     );
   }
 
-  if (view === "error") {
+  if (dataError || view === "error") {
     return (
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 6 }}
@@ -147,9 +179,14 @@ export default function LaunchCenterPage() {
         <LaunchCenterHeader
           product={product}
           products={productOptions}
-          onChangeProduct={setProductId}
+          onChangeProduct={setSelectedProductId}
         />
-        <LaunchCenterErrorState onRetry={() => setView("populated")} />
+        <LaunchCenterErrorState
+          onRetry={() => {
+            retry();
+            setView("populated");
+          }}
+        />
         <div className="flex justify-end">
           <DevToolsPopover>
             <StatePreview
@@ -173,7 +210,7 @@ export default function LaunchCenterPage() {
       <LaunchCenterHeader
         product={product}
         products={productOptions}
-        onChangeProduct={setProductId}
+        onChangeProduct={setSelectedProductId}
       />
 
       <LaunchOverview
@@ -220,8 +257,10 @@ export default function LaunchCenterPage() {
           ) : section === "Checklist" ? (
             <LaunchChecklist
               items={checklist}
-              completedIds={completedIds}
-              onToggle={toggleChecklistItem}
+              completedIds={
+                new Set(checklist.filter((item) => item.completed).map((item) => item.id))
+              }
+              onToggle={(id) => void toggleChecklistItem(id)}
             />
           ) : section === "Launch Assets" ? (
             <LaunchAssetWorkspace assets={assets} channels={channels} />
@@ -242,4 +281,14 @@ export default function LaunchCenterPage() {
       </div>
     </motion.div>
   );
+}
+
+/**
+ * Route entry for the Launch Center workspace. Reads the active product from
+ * the URL (`?product=<id>`) and threads it into the page.
+ */
+export function LaunchCenterRoute() {
+  const params = useSearchParams();
+  const productId = params.get("product") ?? undefined;
+  return <LaunchCenterPage productId={productId} />;
 }

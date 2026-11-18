@@ -45,7 +45,7 @@ export type LaunchAssetStatus = (typeof LAUNCH_ASSET_STATUSES)[number];
 
 export type LaunchTask = {
   id: string;
-  productId: (typeof LAUNCH_PRODUCTS)[number]["id"];
+  productId: string;
   title: string;
   description: string;
   phase: LaunchPhase;
@@ -58,7 +58,7 @@ export type LaunchTask = {
 
 export type LaunchAsset = {
   id: string;
-  productId: (typeof LAUNCH_PRODUCTS)[number]["id"];
+  productId: string;
   title: string;
   type: string;
   preview: string;
@@ -69,7 +69,7 @@ export type LaunchAsset = {
 
 export type Channel = {
   id: string;
-  productId: (typeof LAUNCH_PRODUCTS)[number]["id"];
+  productId: string;
   name: string;
   campaignObjective: string;
   targetAudience: string;
@@ -82,7 +82,7 @@ export type Channel = {
 
 export type ChecklistItem = {
   id: string;
-  productId: (typeof LAUNCH_PRODUCTS)[number]["id"];
+  productId: string;
   category: string;
   item: string;
   completed: boolean;
