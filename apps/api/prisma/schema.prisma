@@ -108,17 +108,21 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  workspace      Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  ideas          Idea[]
-  mvpProjects    MVPProject[]
-  initiatives    Initiative[]
-  releases       Release[]
-  milestones     Milestone[]
-  planningNotes  PlanningNote[]
-  launchTasks    LaunchTask[]
-  launchAssets   LaunchAsset[]
-  channels       Channel[]
-  checklistItems ChecklistItem[]
+  workspace       Workspace               @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  ideas           Idea[]
+  mvpProjects     MVPProject[]
+  initiatives     Initiative[]
+  releases        Release[]
+  milestones      Milestone[]
+  planningNotes   PlanningNote[]
+  launchTasks     LaunchTask[]
+  launchAssets    LaunchAsset[]
+  channels        Channel[]
+  checklistItems  ChecklistItem[]
+  feedbackItems   FeedbackItem[]
+  themes          Theme[]
+  featureRequests FeatureRequest[]
+  productAreas    ProductAreaDefinition[]
 
   @@unique([workspaceId, slug])
   @@index([workspaceId])
@@ -556,6 +560,84 @@ model ChecklistItem {
   completed Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+// ─────────────────────────────────────────
+// Stage 07 — Feedback Hub
+// ─────────────────────────────────────────
+
+model FeedbackItem {
+  id             String    @id @default(uuid())
+  productId      String
+  title          String
+  excerpt        String?
+  description    String?
+  category       String    @default("General Feedback")
+  source         String?
+  date           DateTime?
+  priority       String    @default("Medium")
+  status         String    @default("New")
+  productArea    String?
+  internalNotes  String?
+  followUpAction String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model Theme {
+  id                 String   @id @default(uuid())
+  productId          String
+  name               String
+  explanation        String?
+  relatedFeedbackIds String[] @default([])
+  productArea        String?
+  importance         String   @default("Medium")
+  reviewStatus       String   @default("New")
+  internalNotes      String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model FeatureRequest {
+  id                  String   @id @default(uuid())
+  productId           String
+  title               String
+  description         String?
+  userProblem         String?
+  requestedCapability String?
+  relatedFeedbackIds  String[] @default([])
+  productArea         String?
+  priority            String   @default("Medium")
+  status              String   @default("New")
+  roadmapReference    String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+}
+
+model ProductAreaDefinition {
+  id          String   @id @default(uuid())
+  productId   String
+  name        String
+  description String?
+  summary     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 

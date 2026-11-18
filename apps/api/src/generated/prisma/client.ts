@@ -179,3 +179,23 @@ export type Channel = Prisma.ChannelModel
  * 
  */
 export type ChecklistItem = Prisma.ChecklistItemModel
+/**
+ * Model FeedbackItem
+ * 
+ */
+export type FeedbackItem = Prisma.FeedbackItemModel
+/**
+ * Model Theme
+ * 
+ */
+export type Theme = Prisma.ThemeModel
+/**
+ * Model FeatureRequest
+ * 
+ */
+export type FeatureRequest = Prisma.FeatureRequestModel
+/**
+ * Model ProductAreaDefinition
+ * 
+ */
+export type ProductAreaDefinition = Prisma.ProductAreaDefinitionModel

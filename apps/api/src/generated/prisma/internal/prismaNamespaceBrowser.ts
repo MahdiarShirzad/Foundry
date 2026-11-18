@@ -78,7 +78,11 @@ export const ModelName = {
   LaunchTask: 'LaunchTask',
   LaunchAsset: 'LaunchAsset',
   Channel: 'Channel',
-  ChecklistItem: 'ChecklistItem'
+  ChecklistItem: 'ChecklistItem',
+  FeedbackItem: 'FeedbackItem',
+  Theme: 'Theme',
+  FeatureRequest: 'FeatureRequest',
+  ProductAreaDefinition: 'ProductAreaDefinition'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -545,6 +549,76 @@ export const ChecklistItemScalarFieldEnum = {
 } as const
 
 export type ChecklistItemScalarFieldEnum = (typeof ChecklistItemScalarFieldEnum)[keyof typeof ChecklistItemScalarFieldEnum]
+
+
+export const FeedbackItemScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  title: 'title',
+  excerpt: 'excerpt',
+  description: 'description',
+  category: 'category',
+  source: 'source',
+  date: 'date',
+  priority: 'priority',
+  status: 'status',
+  productArea: 'productArea',
+  internalNotes: 'internalNotes',
+  followUpAction: 'followUpAction',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FeedbackItemScalarFieldEnum = (typeof FeedbackItemScalarFieldEnum)[keyof typeof FeedbackItemScalarFieldEnum]
+
+
+export const ThemeScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  name: 'name',
+  explanation: 'explanation',
+  relatedFeedbackIds: 'relatedFeedbackIds',
+  productArea: 'productArea',
+  importance: 'importance',
+  reviewStatus: 'reviewStatus',
+  internalNotes: 'internalNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ThemeScalarFieldEnum = (typeof ThemeScalarFieldEnum)[keyof typeof ThemeScalarFieldEnum]
+
+
+export const FeatureRequestScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  title: 'title',
+  description: 'description',
+  userProblem: 'userProblem',
+  requestedCapability: 'requestedCapability',
+  relatedFeedbackIds: 'relatedFeedbackIds',
+  productArea: 'productArea',
+  priority: 'priority',
+  status: 'status',
+  roadmapReference: 'roadmapReference',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FeatureRequestScalarFieldEnum = (typeof FeatureRequestScalarFieldEnum)[keyof typeof FeatureRequestScalarFieldEnum]
+
+
+export const ProductAreaDefinitionScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  name: 'name',
+  description: 'description',
+  summary: 'summary',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProductAreaDefinitionScalarFieldEnum = (typeof ProductAreaDefinitionScalarFieldEnum)[keyof typeof ProductAreaDefinitionScalarFieldEnum]
 
 
 export const SortOrder = {

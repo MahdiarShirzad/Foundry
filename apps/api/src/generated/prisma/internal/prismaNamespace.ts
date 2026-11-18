@@ -424,7 +424,11 @@ export const ModelName = {
   LaunchTask: 'LaunchTask',
   LaunchAsset: 'LaunchAsset',
   Channel: 'Channel',
-  ChecklistItem: 'ChecklistItem'
+  ChecklistItem: 'ChecklistItem',
+  FeedbackItem: 'FeedbackItem',
+  Theme: 'Theme',
+  FeatureRequest: 'FeatureRequest',
+  ProductAreaDefinition: 'ProductAreaDefinition'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -440,7 +444,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "emailVerificationCode" | "passwordResetToken" | "workspace" | "workspaceMember" | "product" | "idea" | "ideaNote" | "marketIdea" | "competitor" | "segment" | "opportunity" | "researchNote" | "hypothesis" | "experiment" | "evidenceItem" | "mVPProject" | "feature" | "scopeItem" | "initiative" | "release" | "milestone" | "planningNote" | "launchTask" | "launchAsset" | "channel" | "checklistItem"
+    modelProps: "user" | "session" | "emailVerificationCode" | "passwordResetToken" | "workspace" | "workspaceMember" | "product" | "idea" | "ideaNote" | "marketIdea" | "competitor" | "segment" | "opportunity" | "researchNote" | "hypothesis" | "experiment" | "evidenceItem" | "mVPProject" | "feature" | "scopeItem" | "initiative" | "release" | "milestone" | "planningNote" | "launchTask" | "launchAsset" | "channel" | "checklistItem" | "feedbackItem" | "theme" | "featureRequest" | "productAreaDefinition"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2516,6 +2520,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    FeedbackItem: {
+      payload: Prisma.$FeedbackItemPayload<ExtArgs>
+      fields: Prisma.FeedbackItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FeedbackItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FeedbackItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackItemPayload>
+        }
+        findFirst: {
+          args: Prisma.FeedbackItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FeedbackItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackItemPayload>
+        }
+        findMany: {
+          args: Prisma.FeedbackItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackItemPayload>[]
+        }
+        create: {
+          args: Prisma.FeedbackItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackItemPayload>
+        }
+        createMany: {
+          args: Prisma.FeedbackItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FeedbackItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackItemPayload>[]
+        }
+        delete: {
+          args: Prisma.FeedbackItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackItemPayload>
+        }
+        update: {
+          args: Prisma.FeedbackItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.FeedbackItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FeedbackItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FeedbackItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.FeedbackItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackItemPayload>
+        }
+        aggregate: {
+          args: Prisma.FeedbackItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFeedbackItem>
+        }
+        groupBy: {
+          args: Prisma.FeedbackItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FeedbackItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FeedbackItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FeedbackItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    Theme: {
+      payload: Prisma.$ThemePayload<ExtArgs>
+      fields: Prisma.ThemeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ThemeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThemePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ThemeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThemePayload>
+        }
+        findFirst: {
+          args: Prisma.ThemeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThemePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ThemeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThemePayload>
+        }
+        findMany: {
+          args: Prisma.ThemeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThemePayload>[]
+        }
+        create: {
+          args: Prisma.ThemeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThemePayload>
+        }
+        createMany: {
+          args: Prisma.ThemeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ThemeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThemePayload>[]
+        }
+        delete: {
+          args: Prisma.ThemeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThemePayload>
+        }
+        update: {
+          args: Prisma.ThemeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThemePayload>
+        }
+        deleteMany: {
+          args: Prisma.ThemeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ThemeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ThemeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThemePayload>[]
+        }
+        upsert: {
+          args: Prisma.ThemeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ThemePayload>
+        }
+        aggregate: {
+          args: Prisma.ThemeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTheme>
+        }
+        groupBy: {
+          args: Prisma.ThemeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ThemeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ThemeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ThemeCountAggregateOutputType> | number
+        }
+      }
+    }
+    FeatureRequest: {
+      payload: Prisma.$FeatureRequestPayload<ExtArgs>
+      fields: Prisma.FeatureRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FeatureRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FeatureRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.FeatureRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FeatureRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureRequestPayload>
+        }
+        findMany: {
+          args: Prisma.FeatureRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureRequestPayload>[]
+        }
+        create: {
+          args: Prisma.FeatureRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureRequestPayload>
+        }
+        createMany: {
+          args: Prisma.FeatureRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FeatureRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.FeatureRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureRequestPayload>
+        }
+        update: {
+          args: Prisma.FeatureRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.FeatureRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FeatureRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FeatureRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.FeatureRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeatureRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.FeatureRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFeatureRequest>
+        }
+        groupBy: {
+          args: Prisma.FeatureRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FeatureRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FeatureRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FeatureRequestCountAggregateOutputType> | number
+        }
+      }
+    }
+    ProductAreaDefinition: {
+      payload: Prisma.$ProductAreaDefinitionPayload<ExtArgs>
+      fields: Prisma.ProductAreaDefinitionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProductAreaDefinitionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductAreaDefinitionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProductAreaDefinitionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductAreaDefinitionPayload>
+        }
+        findFirst: {
+          args: Prisma.ProductAreaDefinitionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductAreaDefinitionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProductAreaDefinitionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductAreaDefinitionPayload>
+        }
+        findMany: {
+          args: Prisma.ProductAreaDefinitionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductAreaDefinitionPayload>[]
+        }
+        create: {
+          args: Prisma.ProductAreaDefinitionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductAreaDefinitionPayload>
+        }
+        createMany: {
+          args: Prisma.ProductAreaDefinitionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProductAreaDefinitionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductAreaDefinitionPayload>[]
+        }
+        delete: {
+          args: Prisma.ProductAreaDefinitionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductAreaDefinitionPayload>
+        }
+        update: {
+          args: Prisma.ProductAreaDefinitionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductAreaDefinitionPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProductAreaDefinitionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProductAreaDefinitionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProductAreaDefinitionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductAreaDefinitionPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProductAreaDefinitionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductAreaDefinitionPayload>
+        }
+        aggregate: {
+          args: Prisma.ProductAreaDefinitionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProductAreaDefinition>
+        }
+        groupBy: {
+          args: Prisma.ProductAreaDefinitionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductAreaDefinitionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProductAreaDefinitionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductAreaDefinitionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3005,6 +3305,76 @@ export const ChecklistItemScalarFieldEnum = {
 export type ChecklistItemScalarFieldEnum = (typeof ChecklistItemScalarFieldEnum)[keyof typeof ChecklistItemScalarFieldEnum]
 
 
+export const FeedbackItemScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  title: 'title',
+  excerpt: 'excerpt',
+  description: 'description',
+  category: 'category',
+  source: 'source',
+  date: 'date',
+  priority: 'priority',
+  status: 'status',
+  productArea: 'productArea',
+  internalNotes: 'internalNotes',
+  followUpAction: 'followUpAction',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FeedbackItemScalarFieldEnum = (typeof FeedbackItemScalarFieldEnum)[keyof typeof FeedbackItemScalarFieldEnum]
+
+
+export const ThemeScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  name: 'name',
+  explanation: 'explanation',
+  relatedFeedbackIds: 'relatedFeedbackIds',
+  productArea: 'productArea',
+  importance: 'importance',
+  reviewStatus: 'reviewStatus',
+  internalNotes: 'internalNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ThemeScalarFieldEnum = (typeof ThemeScalarFieldEnum)[keyof typeof ThemeScalarFieldEnum]
+
+
+export const FeatureRequestScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  title: 'title',
+  description: 'description',
+  userProblem: 'userProblem',
+  requestedCapability: 'requestedCapability',
+  relatedFeedbackIds: 'relatedFeedbackIds',
+  productArea: 'productArea',
+  priority: 'priority',
+  status: 'status',
+  roadmapReference: 'roadmapReference',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FeatureRequestScalarFieldEnum = (typeof FeatureRequestScalarFieldEnum)[keyof typeof FeatureRequestScalarFieldEnum]
+
+
+export const ProductAreaDefinitionScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  name: 'name',
+  description: 'description',
+  summary: 'summary',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProductAreaDefinitionScalarFieldEnum = (typeof ProductAreaDefinitionScalarFieldEnum)[keyof typeof ProductAreaDefinitionScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -3391,6 +3761,10 @@ export type GlobalOmitConfig = {
   launchAsset?: Prisma.LaunchAssetOmit
   channel?: Prisma.ChannelOmit
   checklistItem?: Prisma.ChecklistItemOmit
+  feedbackItem?: Prisma.FeedbackItemOmit
+  theme?: Prisma.ThemeOmit
+  featureRequest?: Prisma.FeatureRequestOmit
+  productAreaDefinition?: Prisma.ProductAreaDefinitionOmit
 }
 
 /* Types for Logging */
